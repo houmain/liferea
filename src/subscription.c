@@ -282,7 +282,10 @@ subscription_process_update_result (const struct updateResult * const result, gp
 	update_state_set_lastmodified (subscription->updateState, update_state_get_lastmodified (result->updateState));
 	update_state_set_cookies (subscription->updateState, update_state_get_cookies (result->updateState));
 	update_state_set_etag (subscription->updateState, update_state_get_etag (result->updateState));
-	g_get_current_time (&subscription->updateState->lastPoll);
+
+	/* reset update counter when there was no connection error */
+	if (result->httpstatus != 0)
+		subscription_reset_update_counter(subscription, &now);
 
 	// FIXME: use new-items signal in itemview class
 	itemview_update_node_info (subscription->node);
@@ -301,7 +304,6 @@ void
 subscription_update (subscriptionPtr subscription, guint flags)
 {
 	updateRequestPtr		request;
-	GTimeVal			now;
 
 	if (!subscription)
 		return;
@@ -313,9 +315,6 @@ subscription_update (subscriptionPtr subscription, guint flags)
 
 	if (subscription_can_be_updated (subscription)) {
 		liferea_shell_set_status_bar (_("Updating \"%s\""), node_get_title (subscription->node));
-
-		g_get_current_time (&now);
-		subscription_reset_update_counter (subscription, &now);
 
 		request = update_request_new ();
 		request->updateState = update_state_copy (subscription->updateState);
