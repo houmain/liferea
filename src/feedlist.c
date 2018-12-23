@@ -213,9 +213,6 @@ feedlist_init (FeedList *fl)
 		} else {
 			debug0 (DEBUG_UPDATE, "initial update: prevented because we are offline");
 		}
-	} else {
-		debug0 (DEBUG_UPDATE, "initial update: resetting feed counter");
-		feedlist_reset_update_counters (NULL);
 	}
 
 	/* 5. Purge old nodes from the database */

@@ -497,7 +497,7 @@ subscriptionPtr
 subscription_import (xmlNodePtr xml, gboolean trusted)
 {
 	subscriptionPtr	subscription;
-	xmlChar		*source, *homepage, *filter, *intervalStr, *tmp;
+	xmlChar		*source, *homepage, *filter, *intervalStr, *lastUpdateStr, *tmp;
 
 	subscription = subscription_new (NULL, NULL, NULL);
 
@@ -539,6 +539,10 @@ subscription_import (xmlNodePtr xml, gboolean trusted)
 		subscription_set_update_interval (subscription, common_parse_long (intervalStr, -1));
 		xmlFree (intervalStr);
 
+		lastUpdateStr = xmlGetProp (xml, BAD_CAST "lastUpdate");
+		g_time_val_from_iso8601(lastUpdateStr, &subscription->updateState->lastPoll);
+		xmlFree (lastUpdateStr);
+
 		/* no proxy flag */
 		tmp = xmlGetProp (xml, BAD_CAST "dontUseProxy");
 		if (tmp && !xmlStrcmp (tmp, BAD_CAST "true"))
@@ -557,6 +561,7 @@ void
 subscription_export (subscriptionPtr subscription, xmlNodePtr xml, gboolean trusted)
 {
 	gchar *interval = g_strdup_printf ("%d", subscription_get_update_interval (subscription));
+	gchar *lastUpdate = g_time_val_to_iso8601(&subscription->updateState->lastPoll);
 
 	xmlNewProp (xml, BAD_CAST "xmlUrl", BAD_CAST subscription_get_source (subscription));
 
@@ -570,6 +575,7 @@ subscription_export (subscriptionPtr subscription, xmlNodePtr xml, gboolean trus
 
 	if(trusted) {
 		xmlNewProp (xml, BAD_CAST"updateInterval", BAD_CAST interval);
+		xmlNewProp (xml, BAD_CAST"lastUpdate", BAD_CAST lastUpdate);
 
 		if (subscription->updateOptions->dontUseProxy)
 			xmlNewProp (xml, BAD_CAST"dontUseProxy", BAD_CAST"true");
@@ -583,6 +589,7 @@ subscription_export (subscriptionPtr subscription, xmlNodePtr xml, gboolean trus
 	}
 
 	g_free (interval);
+	g_free (lastUpdate);
 }
 
 void
