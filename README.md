@@ -27,7 +27,7 @@ help you asap.
 
 ###### _Mandatory Dependencies_
 
-   gtk3 libxml2 libxslt1-dev libsqlite3-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgirepository1.0
+   libxml2-dev libxslt1-dev libsqlite3-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgirepository1.0
    libpeas-dev gsettings-desktop-schemas-dev python3
 
    
@@ -191,44 +191,22 @@ If you see memory leakage please take the time to do a run
 to identify leaks and send in the output.
 
 
-Browser Integration
--------------------
-
-Liferea allows subscribing directly from Firefox and browser with similar mechanism
-
-###### _Firefox_
-
-If you want to subscribe from within Firefox you can configure it to add
-subscriptions to Liferea directly. To do so click the feed icon in the 
-location entry. Firefox will then present a menu where you can configure a 
-manual command instead of the Live Bookmarks to add subscriptions. 
-
-There enter
-
-    liferea-add-feed
-
-
 How to Get Support
 ------------------
 
-When using distribution packages:
+## When using distribution packages
 
-   Do not post bug reports in the Liferea bug tracker, use the bug reporting
-   system of your distribution instead. We (upstream) cannot fix distribution
-   packages!
+Do not post bug reports in the Liferea bug tracker, use the bug reporting
+system of your distribution instead. We (upstream) cannot fix distribution
+packages!
 
-Before getting support for stable releases: 
+## Before raising an issue
 
-   Install the latest stable release and check if the problem is solved already. 
-   Please do not ask for help for older releases!
+Install the latest stable release and check if the problem is solved already.
+Please do not ask for help for older releases!
 
-At the moment there are two major support channels:
+## Issue Tracker
 
-+ The mailing list (https://lists.sourceforge.net/lists/listinfo/liferea-devel).
-  Good for posting compilation problems and starting longer discussions.
-    
-+ The GitHub bug tracker (https://github.com/lwindolf/liferea/issues) where you
-  can post bug reports for all problems you find. Ensure to look for any
-  existing reports on your problem!
-
-Hopefully we can help with your problem.
+Once you verified the latest stable release still has the problem
+please raise an issue in the GitHub bug tracker
+(https://github.com/lwindolf/liferea/issues).

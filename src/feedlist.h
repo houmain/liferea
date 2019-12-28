@@ -1,7 +1,7 @@
 /*
  * @file feedlist.h  subscriptions as an hierarchic tree
  *
- * Copyright (C) 2005-2014 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2005-2018 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-#define FEED_LIST_TYPE		(feedlist_get_type ())
+#define FEED_LIST_TYPE (feedlist_get_type ())
 G_DECLARE_FINAL_TYPE (FeedList, feedlist, FEED, LIST, GObject)
 
 /**
@@ -39,7 +39,7 @@ G_DECLARE_FINAL_TYPE (FeedList, feedlist, FEED, LIST, GObject)
  *
  * Returns: (transfer full): the feed list instance
  */
-FeedList * feedlist_create (void);
+FeedList * feedlist_create (gpointer feedListView);
 
 /**
  * feedlist_get_selected: (skip)
@@ -131,6 +131,18 @@ nodePtr feedlist_find_node (nodePtr parent, feedListFindType type, const gchar *
  * Adds a new subscription to the feed list.
  */
 void feedlist_add_subscription (const gchar *source, const gchar *filter, updateOptionsPtr options, gint flags);
+
+/**
+ * feedlist_add_subscription: (skip)
+ * @source:	        the subscriptions source URL
+ * @filter: (nullable):	NULL or the filter for the subscription
+ * @options: (nullable): NULL or the update options
+ * @flags:		download request flags
+ *
+ * Adds a new subscription to the feed list, if there are no subscriptions with
+ * the same URL, or opens a confirmation dialog else.
+ */
+void feedlist_add_subscription_check_duplicate(const gchar *source, const gchar *filter, updateOptionsPtr options, gint flags);
 
 /**
  * feedlist_add_folder:
@@ -246,16 +258,6 @@ void feedlist_mark_all_read (nodePtr node);
  *
  */
 #define feedlist_foreach_data(func, user_data) node_foreach_child_data(feedlist_get_root(), func, user_data)
-
-/* UI callbacks */
-
-/**
- * feedlist_selection_changed: (skip)
- * @node:	the new selected node
- *
- * Callback for feed list selection change .
- */
-void feedlist_selection_changed (nodePtr node);
 
 /**
  * feedlist_find_unread_feed: (skip)

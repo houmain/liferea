@@ -1,7 +1,7 @@
 /*
  * @file feedlist.c  subscriptions as an hierarchic tree
  *
- * Copyright (C) 2005-2018 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2005-2019 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2005-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -209,7 +209,7 @@ feedlist_init (FeedList *fl)
 		/* Update all feeds */
 		if (network_monitor_is_online ()) {
 			debug0 (DEBUG_UPDATE, "initial update: updating all feeds");
-			node_update_subscription (feedlist_get_root (), GUINT_TO_POINTER (0));
+			node_auto_update_subscription (feedlist_get_root ());
 		} else {
 			debug0 (DEBUG_UPDATE, "initial update: prevented because we are offline");
 		}
@@ -406,6 +406,19 @@ feedlist_add_subscription (const gchar *source, const gchar *filter, updateOptio
 }
 
 void
+feedlist_add_subscription_check_duplicate(const gchar *source, const gchar *filter, updateOptionsPtr options, gint flags)
+{
+	nodePtr duplicate_url_node = NULL;
+
+	duplicate_url_node = feedlist_find_node (feedlist_get_root (), NODE_BY_URL, source);
+	if (duplicate_url_node == NULL) {
+		feedlist_add_subscription (source, filter, options, FEED_REQ_PRIORITY_HIGH);
+	} else {
+        feed_list_view_add_duplicate_url_subscription (subscription_new (source, filter, options), duplicate_url_node);
+	}
+}
+
+void
 feedlist_node_imported (nodePtr node)
 {
 	feed_list_view_add_node (node);
@@ -498,7 +511,7 @@ feedlist_find_unread_feed (nodePtr folder)
 	if (list) {
 		// Pass 1: try after selected node in list
 		if (SELECTED) {
-			GSList *s = g_slist_find_custom (list, SELECTED->id, g_strcmp0);
+			GSList *s = g_slist_find_custom (list, SELECTED->id, (GCompareFunc)g_strcmp0);
 			if (s)
 				s = g_slist_next (s);
 			if (s)
@@ -530,31 +543,38 @@ feedlist_unselect (void)
 	liferea_shell_update_allitems_actions (FALSE, FALSE);
 }
 
-void
-feedlist_selection_changed (nodePtr node)
+static void
+feedlist_selection_changed (gpointer obj, gchar * nodeId, gpointer data)
 {
 	debug_enter ("feedlist_selection_changed");
 
-	debug1 (DEBUG_GUI, "new selected node: %s", node?node_get_title (node):"none");
-	if (node != SELECTED) {
+	nodePtr node = node_from_id (nodeId);
+	if (node) {
+		if (node != SELECTED) {
+			debug1 (DEBUG_GUI, "new selected node: %s", node?node_get_title (node):"none");
 
-		/* When the user selects a feed in the feed list we
-		   assume that he got notified of the new items or
-		   isn't interested in the event anymore... */
-		if (0 != feedlist->newCount)
-			feedlist_reset_new_item_count ();
+			/* When the user selects a feed in the feed list we
+			   assume that he got notified of the new items or
+			   isn't interested in the event anymore... */
+			if (0 != feedlist->newCount)
+				feedlist_reset_new_item_count ();
 
-		/* Unload visible items. */
-		itemlist_unload (TRUE);
+			/* Unload visible items. */
+			itemlist_unload (TRUE);
 
-		/* Load items of new selected node. */
-		SELECTED = node;
-		if (SELECTED) {
-			itemlist_set_view_mode (node_get_view_mode (SELECTED));
-			itemlist_load (SELECTED);
+			/* Load items of new selected node. */
+			SELECTED = node;
+			if (SELECTED) {
+				itemlist_set_view_mode (node_get_view_mode (SELECTED));
+				itemlist_load (SELECTED);
+			} else {
+				itemview_clear ();
+			}
 		} else {
-			itemview_clear ();
+			debug1 (DEBUG_GUI, "selected node stayed: %s", node?node_get_title (node):"none");
 		}
+	} else {
+		debug1 (DEBUG_GUI, "failed to resolve node id: %s", nodeId);
 	}
 
 	debug_exit ("feedlist_selection_changed");
@@ -637,7 +657,11 @@ feedlist_reset_update_counters (nodePtr node)
 }
 
 FeedList *
-feedlist_create (void)
+feedlist_create (gpointer flv)
 {
-	return FEED_LIST (g_object_new (FEED_LIST_TYPE, NULL));
+	FeedList *fl = FEED_LIST (g_object_new (FEED_LIST_TYPE, NULL));
+
+    g_signal_connect (flv, "selection-changed", G_CALLBACK (feedlist_selection_changed), fl);
+
+	return fl;
 }

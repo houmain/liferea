@@ -1,7 +1,7 @@
 /**
  * @file enclosure-list-view.c enclosures/podcast handling GUI
  *
- * Copyright (C) 2005-2016 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2005-2019 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ G_DEFINE_TYPE (EnclosureListView, enclosure_list_view, G_TYPE_OBJECT);
 static void
 enclosure_list_view_finalize (GObject *object)
 {
-	// FIXME: free enclosures GSList
+	g_slist_free_full (ENCLOSURE_LIST_VIEW (object)->enclosures, (GDestroyNotify)enclosure_free);
 }
 
 static void
@@ -97,7 +97,7 @@ enclosure_list_view_get_selected_enclosure (EnclosureListView *elv, GtkTreeIter 
 }
 
 static gboolean
-on_enclosure_list_button_press (GtkWidget *treeview, GdkEventButton *event, gpointer user_data)
+on_enclosure_list_button_press (GtkWidget *treeview, GdkEvent *event, gpointer user_data)
 {
 	GdkEventButton		*eb = (GdkEventButton *)event;
 	GtkTreePath		*path;
@@ -108,14 +108,14 @@ on_enclosure_list_button_press (GtkWidget *treeview, GdkEventButton *event, gpoi
 		return FALSE;
 
 	/* avoid handling header clicks */
-	if (event->window != gtk_tree_view_get_bin_window (GTK_TREE_VIEW (treeview)))
+	if (eb->window != gtk_tree_view_get_bin_window (GTK_TREE_VIEW (treeview)))
 		return FALSE;
 
-	if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (treeview), (gint)event->x, (gint)event->y, &path, NULL, NULL, NULL))
+	if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (treeview), (gint)eb->x, (gint)eb->y, &path, NULL, NULL, NULL))
 		return FALSE;
 
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (elv->treestore), &iter, path))
-		ui_popup_enclosure_menu (enclosure_list_view_get_selected_enclosure (elv, &iter), eb->button, eb->time);
+		ui_popup_enclosure_menu (enclosure_list_view_get_selected_enclosure (elv, &iter), event);
 
 	return TRUE;
 }
@@ -129,7 +129,7 @@ on_enclosure_list_popup_menu (GtkWidget *widget, gpointer user_data)
 	EnclosureListView 	*elv = (EnclosureListView *)user_data;
 
 	if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (treeview), &model, &iter)) {
-		ui_popup_enclosure_menu (enclosure_list_view_get_selected_enclosure (elv, &iter), 3, 0);
+		ui_popup_enclosure_menu (enclosure_list_view_get_selected_enclosure (elv, &iter), NULL);
 		return TRUE;
 	}
 
@@ -243,12 +243,7 @@ enclosure_list_view_load (EnclosureListView *elv, itemPtr item)
 
 	/* cleanup old content */
 	gtk_tree_store_clear (elv->treestore);
-	list = elv->enclosures;
-	while (list) {
-		enclosure_free ((enclosurePtr)list->data);
-		list = g_slist_next (list);
-	}
-	g_slist_free (elv->enclosures);
+	g_slist_free_full (elv->enclosures, (GDestroyNotify)enclosure_free);
 	elv->enclosures = NULL;
 
 	/* load list into tree view */
@@ -334,6 +329,37 @@ enclosure_list_view_select (EnclosureListView *elv, guint position)
 		return;
 
 	gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (elv->treeview)), &iter);
+}
+
+void
+enclosure_list_view_select_next (EnclosureListView *elv)
+{
+	GtkTreeIter selected_iter;
+	GtkTreeSelection *selection;
+	GtkTreeModel *model;
+
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (elv->treeview));
+
+	if (gtk_tree_selection_get_selected (selection, &model, &selected_iter) &&
+	    gtk_tree_model_iter_next (model, &selected_iter))
+		gtk_tree_selection_select_iter (selection, &selected_iter);
+	else
+		enclosure_list_view_select (elv, 0);
+}
+
+void
+enclosure_list_view_open_next (EnclosureListView *elv)
+{
+	GtkTreeIter selected_iter;
+
+	enclosure_list_view_select_next (elv);
+
+	if (gtk_tree_selection_get_selected (
+	      gtk_tree_view_get_selection (GTK_TREE_VIEW (elv->treeview)), NULL, &selected_iter)) {
+		enclosurePtr enclosure;
+		enclosure = enclosure_list_view_get_selected_enclosure (elv, &selected_iter);
+		on_popup_open_enclosure ((gpointer) enclosure);
+	}
 }
 
 void

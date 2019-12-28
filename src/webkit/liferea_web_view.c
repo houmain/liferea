@@ -226,7 +226,8 @@ liferea_web_view_on_menu (WebKitWebView 	*view,
 
 	menu = gtk_menu_new_from_model (G_MENU_MODEL (menu_model));
 	gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (view), NULL);
-	gtk_menu_popup(GTK_MENU (menu), NULL,NULL,NULL,NULL, ((GdkEventButton *)event)->button, ((GdkEventButton*)event)->time);
+
+	gtk_menu_popup_at_pointer (GTK_MENU (menu), event);
 
 	return TRUE; // TRUE to ignore WebKit's menu as we make our own menu.
 }

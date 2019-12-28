@@ -43,21 +43,12 @@
 
 #define UI_POPUP_ITEM_IS_TOGGLE		1
 
-
 static void
-ui_popup_menu_at_pos (GtkWidget *menu, GtkMenuPositionFunc func, guint button, guint32 activate_time, gpointer user_data)
+ui_popup_menu (GtkWidget *menu, const GdkEvent *event)
 {
 	g_signal_connect_after (G_OBJECT(menu), "unmap-event", G_CALLBACK(gtk_widget_destroy), NULL);
-
 	gtk_widget_show_all (menu);
-
-	gtk_menu_popup (GTK_MENU(menu), NULL, NULL, func, user_data, button, activate_time);
-}
-
-static void
-ui_popup_menu (GtkWidget *menu, guint button, guint32 activate_time)
-{
-	ui_popup_menu_at_pos(menu, NULL, button, activate_time, NULL);
+	gtk_menu_popup_at_pointer (GTK_MENU(menu), event);
 }
 
 static GtkWidget*
@@ -85,11 +76,14 @@ static const GActionEntry ui_popup_item_gaction_entries[] = {
 	{"copy-item-to-newsbin", on_action_copy_to_newsbin, "(umt)", NULL, NULL},
 	{"toggle-item-read-status", on_toggle_unread_status, "t", NULL, NULL},
 	{"toggle-item-flag", on_toggle_item_flag, "t", NULL, NULL},
-	{"remove-item", on_action_remove_item, "t", NULL, NULL}
+	{"remove-item", on_action_remove_item, "t", NULL, NULL},
+	{"open-item-in-tab", on_action_launch_item_in_tab, "t", NULL, NULL},
+	{"open-item-in-browser", on_action_launch_item_in_browser, "t", NULL, NULL},
+	{"open-item-in-external-browser", on_action_launch_item_in_external_browser, "t", NULL, NULL}
 };
 
 void
-ui_popup_item_menu (itemPtr item, guint button, guint32 activate_time)
+ui_popup_item_menu (itemPtr item, const GdkEvent *event)
 {
 	GtkWidget	*menu;
 	GMenu		*menu_model, *section;
@@ -106,15 +100,15 @@ ui_popup_item_menu (itemPtr item, guint button, guint32 activate_time)
 
 	section = g_menu_new ();
 	g_menu_item_set_label (menu_item, _("Open In _Tab"));
-	g_menu_item_set_action_and_target (menu_item, "app.open-link-in-tab", "s", item_link);
+	g_menu_item_set_action_and_target (menu_item, "item.open-item-in-tab", "t", (guint64) item->id);
 	g_menu_append_item (section, menu_item);
 
 	g_menu_item_set_label (menu_item, _("_Open In Browser"));
-	g_menu_item_set_action_and_target (menu_item, "app.open-link-in-browser", "s", item_link);
+	g_menu_item_set_action_and_target (menu_item, "item.open-item-in-browser", "t", (guint64) item->id);
 	g_menu_append_item (section, menu_item);
 
 	g_menu_item_set_label (menu_item, _("Open In _External Browser"));
-	g_menu_item_set_action_and_target (menu_item, "app.open-link-in-external-browser", "s", item_link);
+	g_menu_item_set_action_and_target (menu_item, "item.open-item-in-external-browser", "t", (guint64) item->id);
 	g_menu_append_item (section, menu_item);
 
 	if(author){
@@ -193,12 +187,11 @@ ui_popup_item_menu (itemPtr item, guint button, guint32 activate_time)
 	/* The menu has to be attached to an application window or one of its children for access to app actions.*/
 	gtk_menu_attach_to_widget (GTK_MENU (menu), liferea_shell_lookup ("mainwindow"), NULL);
 	g_object_unref (menu_model);
-	ui_popup_menu (menu, button, activate_time);
+	ui_popup_menu (menu, event);
 }
 
 void
-ui_popup_enclosure_menu (enclosurePtr enclosure, guint button,
-			 guint32 activate_time)
+ui_popup_enclosure_menu (enclosurePtr enclosure, const GdkEvent *event)
 {
 	GtkWidget	*menu;
 
@@ -208,7 +201,7 @@ ui_popup_enclosure_menu (enclosurePtr enclosure, guint button,
 	ui_popup_add_menuitem (menu, _("Save As..."), on_popup_save_enclosure, enclosure, 0);
 	ui_popup_add_menuitem (menu, _("Copy Link Location"), on_popup_copy_enclosure, enclosure, 0);
 
-	ui_popup_menu (menu, button, activate_time);
+	ui_popup_menu (menu, event);
 }
 
 /* popup callback wrappers */
@@ -261,7 +254,7 @@ static const GActionEntry ui_popup_node_gaction_entries[] = {
  * node type.
  */
 static void
-ui_popup_node_menu (nodePtr node, gboolean validSelection, guint button, guint32 activate_time)
+ui_popup_node_menu (nodePtr node, gboolean validSelection, const GdkEvent *event)
 {
 	GtkWidget		*menu;
 	GMenu 			*menu_model, *section;
@@ -362,13 +355,13 @@ ui_popup_node_menu (nodePtr node, gboolean validSelection, guint button, guint32
 	gtk_menu_attach_to_widget (GTK_MENU (menu), liferea_shell_lookup ("mainwindow"), NULL);
 	g_object_unref (menu_model);
 
-	ui_popup_menu (menu, button, activate_time);
+	ui_popup_menu (menu, event);
 }
 
 /* mouse button handler */
 gboolean
 on_mainfeedlist_button_press_event (GtkWidget *widget,
-                                    GdkEventButton *event,
+                                    GdkEvent *event,
                                     gpointer user_data)
 {
 	GdkEventButton 	*eb;
@@ -387,7 +380,7 @@ on_mainfeedlist_button_press_event (GtkWidget *widget,
 	eb = (GdkEventButton*)event;
 
 	/* determine node */
-	if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (treeview), event->x, event->y, &path, NULL, NULL, NULL)) {
+	if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (treeview), eb->x, eb->y, &path, NULL, NULL, NULL)) {
 		model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
 		gtk_tree_model_get_iter (model, &iter, path);
 		gtk_tree_path_free (path);
@@ -419,7 +412,7 @@ on_mainfeedlist_button_press_event (GtkWidget *widget,
 			}
 
 			gtk_widget_grab_focus (widget);
-			ui_popup_node_menu (node, selected, eb->button, eb->time);
+			ui_popup_node_menu (node, selected, event);
 			break;
 	}
 
@@ -447,6 +440,6 @@ on_mainfeedlist_popup_menu (GtkWidget *widget,
 		node = feedlist_get_root ();
 	}
 
-	ui_popup_node_menu (node, selected, 3, gtk_get_current_event_time ());
+	ui_popup_node_menu (node, selected, NULL);
 	return TRUE;
 }
