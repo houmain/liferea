@@ -26,6 +26,7 @@
 #include "ui/liferea_shell.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <libpeas/peas-extension-set.h>
 
@@ -224,6 +225,9 @@ liferea_shell_restore_position (void)
 	/* load window position */
 	int x, y, w, h;
 	gboolean last_window_maximized;
+	GdkWindow *gdk_window;
+	GdkMonitor *monitor;
+	GdkRectangle work_area;
 
 	conf_get_int_value (LAST_WINDOW_X, &x);
 	conf_get_int_value (LAST_WINDOW_Y, &y);
@@ -235,14 +239,17 @@ liferea_shell_restore_position (void)
 
 	/* Restore position only if the width and height were saved */
 	if (w != 0 && h != 0) {
+		gdk_window = gtk_widget_get_window (GTK_WIDGET (shell->window));
+		monitor = gdk_display_get_monitor_at_window (gtk_widget_get_display (GTK_WIDGET(shell->window)), gdk_window);
+		gdk_monitor_get_workarea (monitor, &work_area);
 
-		if (x >= gdk_screen_width ())
-			x = gdk_screen_width () - 100;
+		if (x >= work_area.width)
+			x = work_area.width - 100;
 		else if (x + w < 0)
 			x  = 100;
 
-		if (y >= gdk_screen_height ())
-			y = gdk_screen_height () - 100;
+		if (y >= work_area.height)
+			y = work_area.height - 100;
 		else if (y + w < 0)
 			y  = 100;
 
@@ -263,12 +270,15 @@ liferea_shell_restore_position (void)
 
 }
 
-static void
+void
 liferea_shell_save_position (void)
 {
-	GtkWidget	*pane;
-	gint		x, y, w, h;
-	gboolean	last_window_maximized;
+	GtkWidget		*pane;
+	gint			x, y, w, h;
+	gboolean		last_window_maximized;
+	GdkWindow 		*gdk_window;
+	GdkMonitor 		*monitor;
+	GdkRectangle	work_area;
 
 	/* save pane proportions */
 	pane = liferea_shell_lookup ("leftpane");
@@ -301,9 +311,13 @@ liferea_shell_save_position (void)
 	gtk_window_get_position (shell->window, &x, &y);
 	gtk_window_get_size (shell->window, &w, &h);
 
+	gdk_window = gtk_widget_get_window (GTK_WIDGET (shell->window));
+	monitor = gdk_display_get_monitor_at_window (gtk_widget_get_display (GTK_WIDGET(shell->window)), gdk_window);
+	gdk_monitor_get_workarea (monitor, &work_area);
+
 	if (x+w<0 || y+h<0 ||
-	    x > gdk_screen_width () ||
-	    y > gdk_screen_height ())
+	    x > work_area.width ||
+	    y > work_area.height)
 		return;
 
 	debug4 (DEBUG_GUI, "Saving window size and position: %dx%d %d:%d", w, h, x, y);
@@ -518,16 +532,17 @@ liferea_shell_set_important_status_bar (const char *format, ...)
 	g_idle_add ((GSourceFunc)liferea_shell_set_status_bar_important_cb, (gpointer)text);
 }
 
+/* For zoom in : zoom = 1, for zoom out : zoom= -1, for reset : zoom = 0 */
 static void
-liferea_shell_do_zoom (gboolean in)
+liferea_shell_do_zoom (gint zoom)
 {
 	/* We must apply the zoom either to the item view
 	   or to an open tab, depending on the browser tabs
 	   GtkNotebook page that is active... */
 	if (!browser_tabs_get_active_htmlview ())
-		itemview_do_zoom (in);
+		itemview_do_zoom (zoom);
 	else
-		browser_tabs_do_zoom (in);
+		browser_tabs_do_zoom (zoom);
 }
 
 static gboolean
@@ -645,23 +660,6 @@ on_key_press_event (GtkWidget *widget, GdkEventKey *event, gpointer data)
 					return TRUE;
 				}
 				break;
-		}
-
-		/* some <Ctrl> hotkeys that overrule the HTML view */
-		if ((event->state & GDK_CONTROL_MASK) == GDK_CONTROL_MASK) {
-			switch (event->keyval) {
-				case GDK_KEY_KP_Add:
-				case GDK_KEY_equal:
-				case GDK_KEY_plus:
-					liferea_shell_do_zoom (TRUE);
-					return TRUE;
-					break;
-				case GDK_KEY_KP_Subtract:
-				case GDK_KEY_minus:
-					liferea_shell_do_zoom (FALSE);
-					return TRUE;
-					break;
-			}
 		}
 
 		/* prevent usage of navigation keys in entries */
@@ -785,15 +783,21 @@ on_menu_fullscreen_activate (GSimpleAction *action, GVariant *parameter, gpointe
 }
 
 static void
-on_menu_zoomin_selected (GSimpleAction *action, GVariant *parameter, gpointer user_data)
+on_action_zoomin_activate (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
-	liferea_shell_do_zoom (TRUE);
+	liferea_shell_do_zoom (1);
 }
 
 static void
-on_menu_zoomout_selected (GSimpleAction *action, GVariant *parameter, gpointer user_data)
+on_action_zoomout_activate (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
-	liferea_shell_do_zoom (FALSE);
+	liferea_shell_do_zoom (-1);
+}
+
+static void
+on_action_zoomreset_activate (GSimpleAction *action, GVariant *parameter, gpointer user_data)
+{
+	liferea_shell_do_zoom (0);
 }
 
 static void
@@ -908,8 +912,9 @@ static const GActionEntry liferea_shell_gaction_entries[] = {
 	{"prev-read-item", on_prev_read_item_activate, NULL, NULL, NULL},
 	{"next-read-item", on_next_read_item_activate, NULL, NULL, NULL},
 	{"next-unread-item", on_next_unread_item_activate, NULL, NULL, NULL},
-	{"zoom-in", on_menu_zoomin_selected, NULL, NULL, NULL},
-	{"zoom-out", on_menu_zoomout_selected, NULL, NULL, NULL},
+	{"zoom-in", on_action_zoomin_activate, NULL, NULL, NULL},
+	{"zoom-out", on_action_zoomout_activate, NULL, NULL, NULL},
+	{"zoom-reset", on_action_zoomreset_activate, NULL, NULL, NULL},
 	{"show-update-monitor", on_menu_show_update_monitor, NULL, NULL, NULL},
 	{"show-preferences", on_prefbtn_clicked, NULL, NULL, NULL},
 	{"search-feeds", on_searchbtn_clicked, NULL, NULL, NULL},
@@ -923,7 +928,15 @@ static const GActionEntry liferea_shell_gaction_entries[] = {
 	{"set-view-mode", NULL, "s", "@s 'normal'", on_view_activate},
 	/* Parameter type must be NULL for toggle. */
 	{"fullscreen", NULL, NULL, "@b false", on_menu_fullscreen_activate},
-	{"reduced-feed-list", NULL, NULL, "@b false", on_feedlist_reduced_activate}
+	{"reduced-feed-list", NULL, NULL, "@b false", on_feedlist_reduced_activate},
+
+	{"toggle-item-read-status", on_toggle_unread_status, "t", NULL, NULL},
+	{"toggle-item-flag", on_toggle_item_flag, "t", NULL, NULL},
+	{"remove-item", on_action_remove_item, "t", NULL, NULL},
+	{"launch-item-in-tab", on_action_launch_item_in_tab, "t", NULL, NULL},
+	{"launch-item-in-browser", on_action_launch_item_in_browser, "t", NULL, NULL},
+	{"launch-item-in-external-browser", on_action_launch_item_in_external_browser, "t", NULL, NULL},
+	{"open-item-enclosure", on_action_open_enclosure, "t", NULL, NULL},
 };
 
 static const GActionEntry liferea_shell_add_gaction_entries[] = {
@@ -1068,7 +1081,11 @@ liferea_shell_restore_state (const gchar *overrideWindowState)
 	g_free (toolbar_style);
 
 	debug0 (DEBUG_GUI, "Restoring window position");
-
+	/* Realize needed so that the window structure can be
+	   accessed... otherwise we get a GTK warning when window is
+	   shown by clicking on notification icon or when theme
+	   colors are fetched. */
+	gtk_widget_realize (GTK_WIDGET (shell->window));
 	liferea_shell_restore_position ();
 
 	/* Apply horrible window state parameter logic:
@@ -1092,11 +1109,6 @@ liferea_shell_restore_state (const gchar *overrideWindowState)
 	switch (resultState) {
 		case MAINWINDOW_HIDDEN:
 			debug0 (DEBUG_GUI, "Restoring window state 'hidden (to tray)'");
-			/* Realize needed so that the window structure can be
-			   accessed... otherwise we get a GTK warning when window is
-			   shown by clicking on notification icon or when theme
-			   colors are fetched. */
-			gtk_widget_realize (GTK_WIDGET (shell->window));
 			gtk_widget_hide (GTK_WIDGET (shell->window));
 			break;
 		case MAINWINDOW_SHOWN:
@@ -1136,8 +1148,9 @@ static const gchar * liferea_accels_prev_read_item[] = {"<Control><Shift>n", NUL
 static const gchar * liferea_accels_toggle_item_read_status[] = {"<Control>m", NULL};
 static const gchar * liferea_accels_toggle_item_flag[] = {"<Control>t", NULL};
 static const gchar * liferea_accels_fullscreen[] = {"F11", NULL};
-static const gchar * liferea_accels_zoom_in[] = {"<Control>plus", NULL};
+static const gchar * liferea_accels_zoom_in[] = {"<Control>plus", "<Control>equal",NULL};
 static const gchar * liferea_accels_zoom_out[] = {"<Control>minus", NULL};
+static const gchar * liferea_accels_zoom_reset[] = {"<Control>0", NULL};
 static const gchar * liferea_accels_search_feeds[] = {"<Control>f", NULL};
 static const gchar * liferea_accels_show_help_contents[] = {"F1", NULL};
 static const gchar * liferea_accels_open_selected_item_enclosure[] = {"<Control>o", NULL};
@@ -1207,6 +1220,7 @@ liferea_shell_create (GtkApplication *app, const gchar *overrideWindowState, gin
 	gtk_application_set_accels_for_action (app, "app.fullscreen", liferea_accels_fullscreen);
 	gtk_application_set_accels_for_action (app, "app.zoom-in", liferea_accels_zoom_in);
 	gtk_application_set_accels_for_action (app, "app.zoom-out", liferea_accels_zoom_out);
+	gtk_application_set_accels_for_action (app, "app.zoom-reset", liferea_accels_zoom_reset);
 	gtk_application_set_accels_for_action (app, "app.search-feeds", liferea_accels_search_feeds);
 	gtk_application_set_accels_for_action (app, "app.show-help-contents", liferea_accels_show_help_contents);
 	gtk_application_set_accels_for_action (app, "app.open-selected-item-enclosure", liferea_accels_open_selected_item_enclosure);
@@ -1351,30 +1365,48 @@ liferea_shell_present (void)
 	gtk_window_present (shell->window);
 }
 
+static gboolean
+liferea_shell_window_is_on_other_desktop(GdkWindow *gdkwindow)
+{
+#ifdef GDK_WINDOWING_X11
+	return GDK_IS_X11_DISPLAY (gdk_window_get_display (gdkwindow)) &&
+	    (gdk_x11_window_get_desktop (gdkwindow) !=
+	     gdk_x11_screen_get_current_desktop (gdk_window_get_screen (gdkwindow)));
+#else
+	return FALSE;
+#endif
+}
+
+static void
+liferea_shell_window_move_to_current_desktop(GdkWindow *gdkwindow)
+{
+#ifdef GDK_WINDOWING_X11
+	if (GDK_IS_X11_DISPLAY (gdk_window_get_display (gdkwindow)))
+	    gdk_x11_window_move_to_current_desktop (gdkwindow);
+#endif
+}
+
+void liferea_shell_show_window (void)
+{
+	GtkWidget *mainwindow = GTK_WIDGET (shell->window);
+	GdkWindow *gdkwindow = gtk_widget_get_window (mainwindow);
+
+	liferea_shell_window_move_to_current_desktop (gdkwindow);
+	if (!gtk_widget_get_visible (GTK_WIDGET (mainwindow)))
+		liferea_shell_restore_position ();
+	gtk_window_deiconify (GTK_WINDOW (mainwindow));
+	gtk_window_present (shell->window);
+}
+
 void
 liferea_shell_toggle_visibility (void)
 {
 	GtkWidget *mainwindow = GTK_WIDGET (shell->window);
+	GdkWindow *gdkwindow = gtk_widget_get_window (mainwindow);
 
-	if (gdk_window_get_state (gtk_widget_get_window (mainwindow)) & GDK_WINDOW_STATE_ICONIFIED) {
-		/* The window is either iconified, or on another workspace */
-		/* Raise it in one click */
-		if (gtk_widget_get_visible (mainwindow)) {
-			liferea_shell_save_position ();
-			gtk_widget_hide (mainwindow);
-		}
-		liferea_shell_restore_position ();
-		/* Note: Without deiconify() desktop moving doesn't work in
-		   GNOME+metacity. The window would be moved correctly by
-		   present() but not become visible. */
-		gtk_window_deiconify (GTK_WINDOW (mainwindow));
-		gtk_window_present (GTK_WINDOW (mainwindow));
-	}
-	else if (!gtk_widget_get_visible (mainwindow)) {
-		/* The window is neither iconified nor on another workspace, but is not visible */
-		liferea_shell_restore_position ();
-		gtk_window_deiconify (GTK_WINDOW (mainwindow));
-		gtk_window_present (shell->window);
+	if (liferea_shell_window_is_on_other_desktop (gdkwindow) ||
+	    !gtk_widget_get_visible (mainwindow)) {
+		liferea_shell_show_window ();
 	} else {
 		liferea_shell_save_position ();
 		gtk_widget_hide (mainwindow);
@@ -1385,4 +1417,25 @@ GtkWidget *
 liferea_shell_get_window (void)
 {
 	return GTK_WIDGET (shell->window);
+}
+
+void
+liferea_shell_set_view_mode (nodeViewType newMode)
+{
+	GAction       *action;
+
+	action = g_action_map_lookup_action (G_ACTION_MAP(shell->generalActions), "set-view-mode");
+
+	switch (newMode)
+	{
+	  case NODE_VIEW_MODE_NORMAL:
+	  case NODE_VIEW_MODE_DEFAULT:
+	  case NODE_VIEW_MODE_COMBINED:
+	    /* Combined is removed, default to normal */
+		g_action_change_state (action, g_variant_new_string("normal"));
+		break;
+	  case NODE_VIEW_MODE_WIDE:
+		g_action_change_state (action, g_variant_new_string("wide"));
+		break;
+	}
 }

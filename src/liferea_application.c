@@ -53,10 +53,6 @@ struct _LifereaApplication {
 	gulong		debug_flags;
 };
 
-struct _LifereaApplicationClass {
-	GtkApplicationClass parent;
-};
-
 G_DEFINE_TYPE (LifereaApplication, liferea_application, GTK_TYPE_APPLICATION)
 
 static LifereaApplication *liferea_app = NULL;
@@ -293,7 +289,7 @@ liferea_application_init (LifereaApplication *self)
 		{ "debug-conf", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Print debugging messages for the configuration handling"), NULL },
 		{ "debug-db", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Print debugging messages of the database handling"), NULL },
 		{ "debug-gui", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Print debugging messages of all GUI functions"), NULL },
-		{ "debug-html", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Enables HTML rendering debugging. Each time Liferea renders HTML output it will also dump the generated HTML into ~/.cache/liferea/output.xhtml"), NULL },
+		{ "debug-html", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Enables HTML rendering debugging. Each time Liferea renders HTML output it will also dump the generated HTML into ~/.cache/liferea/output.html"), NULL },
 		{ "debug-net", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Print debugging messages of all network activity"), NULL },
 		{ "debug-parsing", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Print debugging messages of all parsing functions"), NULL },
 		{ "debug-performance", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, debug_entries_parse_callback, N_("Print debugging messages when a function takes too long to process"), NULL },
@@ -344,7 +340,7 @@ liferea_application_new (int argc, char *argv[])
 
 	g_assert (NULL == liferea_app);
 
-	liferea_app = g_object_new (LIFEREA_TYPE_APPLICATION,
+	liferea_app = g_object_new (LIFEREA_APPLICATION_TYPE,
 		                    "flags", G_APPLICATION_HANDLES_OPEN,
 		                    "application-id", "net.sourceforge.liferea",
 		                    NULL);

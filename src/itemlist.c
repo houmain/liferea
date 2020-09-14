@@ -56,7 +56,7 @@
    is done by the 'item view'.
  */
 
-#define ITEMLIST_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE ((object), ITEMLIST_TYPE, ItemListPrivate))
+#define ITEMLIST_GET_PRIVATE itemlist_get_instance_private
 
 struct ItemListPrivate
 {
@@ -76,7 +76,7 @@ struct ItemListPrivate
 static GObjectClass *parent_class = NULL;
 static ItemList *itemlist = NULL;
 
-G_DEFINE_TYPE (ItemList, itemlist, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_CODE (ItemList, itemlist, G_TYPE_OBJECT, G_ADD_PRIVATE (ItemList));
 
 static void
 itemlist_init (ItemList *il)
@@ -142,8 +142,6 @@ itemlist_class_init (ItemListClass *klass)
 	parent_class = g_type_class_peek_parent (klass);
 
 	object_class->finalize = itemlist_finalize;
-
-	g_type_class_add_private (object_class, sizeof(ItemListPrivate));
 }
 
 /* member wrappers */
@@ -318,10 +316,7 @@ itemlist_load (nodePtr node)
 	itemlist->priv->currentNode = node;
 	itemview_set_displayed_node (itemlist->priv->currentNode);
 
-	if (NODE_VIEW_MODE_COMBINED != node_get_view_mode (node))
-		itemview_set_mode (ITEMVIEW_NODE_INFO);
-	else
-		itemview_set_mode (ITEMVIEW_ALL_ITEMS);
+	itemview_set_mode (ITEMVIEW_NODE_INFO);
 
 	itemSet = node_get_itemset (itemlist->priv->currentNode);
 	itemlist_merge_itemset (itemSet);
@@ -599,8 +594,8 @@ itemlist_get_view_mode (void)
 	return itemlist->priv->viewMode;
 }
 
-void
-itemlist_set_view_mode (guint newMode)
+static void
+itemlist_set_view_mode (nodeViewType newMode)
 {
 	nodePtr		node;
 	itemPtr		item;
@@ -631,9 +626,18 @@ itemlist_set_view_mode (guint newMode)
 void
 on_view_activate (GSimpleAction *action, GVariant *value, gpointer user_data)
 {
-
 	const gchar *s_val = g_variant_get_string (value, NULL);
-	gint val = 0;
+	GVariant *cur_state = g_action_get_state (G_ACTION(action));
+	const gchar *s_cur_state = g_variant_get_string (cur_state,NULL);
+	/* If requested state is the same as current state, leave without doing
+	 * anything. */
+	if (!g_strcmp0 (s_val,s_cur_state)) {
+		g_variant_unref (cur_state);
+		return;
+	}
+	g_variant_unref (cur_state);
+
+	nodeViewType val = 0;
 	if (!g_strcmp0 ("normal",s_val))
 	{
 		val = NODE_VIEW_MODE_NORMAL;
@@ -644,10 +648,26 @@ on_view_activate (GSimpleAction *action, GVariant *value, gpointer user_data)
 	}
 	if (!g_strcmp0 ("combined",s_val))
 	{
-		val = NODE_VIEW_MODE_COMBINED;
+		/* Combined is removed : default to normal */
+		val = NODE_VIEW_MODE_NORMAL;
 	}
 	itemlist_set_view_mode (val);
-	g_simple_action_set_state (action, value);
+
+	/* Getting the actual value to reflect current state even if for some
+	 * reason, other functions couldn't make the requested change.
+	 * May be overkill. */
+	val = itemlist_get_view_mode ();
+	switch (val)
+	{
+	  case NODE_VIEW_MODE_NORMAL:
+	  case NODE_VIEW_MODE_DEFAULT:
+	  case NODE_VIEW_MODE_COMBINED:
+		g_simple_action_set_state (action, g_variant_new_string("normal"));
+		break;
+	  case NODE_VIEW_MODE_WIDE:
+		g_simple_action_set_state (action, g_variant_new_string("wide"));
+		break;
+	}
 }
 
 static void

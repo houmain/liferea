@@ -565,7 +565,7 @@ feedlist_selection_changed (gpointer obj, gchar * nodeId, gpointer data)
 			/* Load items of new selected node. */
 			SELECTED = node;
 			if (SELECTED) {
-				itemlist_set_view_mode (node_get_view_mode (SELECTED));
+				liferea_shell_set_view_mode (node_get_view_mode (SELECTED));
 				itemlist_load (SELECTED);
 			} else {
 				itemview_clear ();
@@ -647,12 +647,12 @@ feedlist_save (void)
 void
 feedlist_reset_update_counters (nodePtr node)
 {
-	GTimeVal now;
+	guint64 now;
 
 	if (!node)
 		node = feedlist_get_root ();
 
-	g_get_current_time (&now);
+	now = g_get_real_time();
 	node_foreach_child_data (node, node_reset_update_counter, &now);
 }
 
@@ -661,7 +661,7 @@ feedlist_create (gpointer flv)
 {
 	FeedList *fl = FEED_LIST (g_object_new (FEED_LIST_TYPE, NULL));
 
-    g_signal_connect (flv, "selection-changed", G_CALLBACK (feedlist_selection_changed), fl);
+	g_signal_connect (flv, "selection-changed", G_CALLBACK (feedlist_selection_changed), fl);
 
 	return fl;
 }

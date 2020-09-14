@@ -54,6 +54,14 @@ G_DECLARE_FINAL_TYPE (LifereaShell, liferea_shell, LIFEREA, SHELL, GObject)
 GtkWidget * liferea_shell_lookup (const gchar *name);
 
 /**
+ * liferea_shell_save_position
+ *
+ * Save the position of the Liferea main window.
+ */
+void
+liferea_shell_save_position (void);
+
+/**
  * liferea_shell_create: (skip)
  * @app:	                the GtkApplication to attach the main window to
  * @overrideWindowState:	optional parameter for window state (or NULL)
@@ -76,6 +84,13 @@ void liferea_shell_destroy (void);
  * Presents the main window if it is hidden.
  */
 void liferea_shell_present (void);
+
+/**
+ * liferea_shell_show_window:
+ *
+ * Show the main window.
+ */
+void liferea_shell_show_window (void);
 
 /**
  * liferea_shell_toggle_visibility:
@@ -178,7 +193,15 @@ void liferea_shell_set_important_status_bar (const char *format, ...);
  */
 GtkWidget * liferea_shell_get_window (void);
 
-void liferea_shutdown (void);
+/**
+ * liferea_shell_set_view_mode:
+ * @newMode:	the new mode
+ *
+ * Changes the view mode programmatically. Used to change the mode when
+ * selecting another feed. Convenience function to trigger the stateful action
+ * set-view-mode.
+ */
+void liferea_shell_set_view_mode (nodeViewType newMode);
 
 G_END_DECLS
 

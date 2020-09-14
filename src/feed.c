@@ -65,7 +65,6 @@ feed_import (nodePtr node, nodePtr parent, xmlNodePtr xml, gboolean trusted)
 
 	feed = feed_new ();
 	feed->fhp = feed_type_str_to_fhp (typeStr);
-	xmlFree (typeStr);
 
 	node_set_data (node, feed);
 	node_set_subscription (node, subscription_import (xml, trusted));
@@ -116,6 +115,7 @@ feed_import (nodePtr node, nodePtr parent, xmlNodePtr xml, gboolean trusted)
 	        	subscription_get_source (node->subscription),
 		        typeStr,
 		        subscription_get_update_interval (node->subscription));
+	xmlFree (typeStr);
 }
 
 static void
@@ -331,14 +331,14 @@ feed_process_update_result (subscriptionPtr subscription, const struct updateRes
 		} else {
 			/* Feed found, process it */
 			itemSetPtr	itemSet;
-			gboolean	html5_enabled;
 
 			node->available = TRUE;
 
 			/* merge the resulting items into the node's item set */
 			itemSet = node_get_itemset (node);
 			node->newCount = itemset_merge_items (itemSet, ctxt->items, ctxt->feed->valid, ctxt->feed->markAsRead);
-			itemlist_merge_itemset (itemSet);
+			if (node->newCount)
+				itemlist_merge_itemset (itemSet);
 			itemset_free (itemSet);
 
 			/* restore user defined properties if necessary */
