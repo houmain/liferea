@@ -25,7 +25,6 @@
 #include "common.h"
 #include "feed.h"
 #include "feedlist.h"
-#include "htmlview.h"
 #include "itemlist.h"
 #include "node.h"
 #include "node_view.h"
@@ -48,7 +47,7 @@ search_clean_results (vfolderPtr vfolder)
 
 	/* Clean up old search result data and display... */
 	if (vfolder->node == itemlist_get_displayed_node ())
-		itemlist_unload (FALSE);
+		itemlist_unload ();
 
 	/* FIXME: Don't simply free the result search folder
 	   as the search query might still be active. Instead

@@ -1,7 +1,7 @@
 /*
  * @file feedlist.c  subscriptions as an hierarchic tree
  *
- * Copyright (C) 2005-2019 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2005-2022 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2005-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -61,6 +61,7 @@ struct _FeedList {
 enum {
 	NEW_ITEMS,		/*<< node has new items after update */
 	NODE_UPDATED,	/*<< node display info (title, unread count) has changed */
+	ITEMS_UPDATED,	/*<< all items were updated (i.e. marked all read) */
 	LAST_SIGNAL
 };
 
@@ -103,13 +104,12 @@ feedlist_finalize (GObject *object)
 	if (feedlist->selectedNode)
 		conf_set_str_value (LAST_NODE_SELECTED, feedlist->selectedNode->id);
 
-
 	/* And destroy everything */
 	feedlist_foreach (feedlist_free_node);
 	node_free (ROOTNODE);
 	ROOTNODE = NULL;
 
-	/* This might also be a good place to get for some other cleanup */
+	/* This might also be a good place to use for some other cleanup */
 	comments_deinit ();
 }
 
@@ -140,6 +140,18 @@ feedlist_class_init (FeedListClass *klass)
 		NULL,
 		NULL,
 		g_cclosure_marshal_VOID__STRING,
+		G_TYPE_NONE,
+		1,
+		G_TYPE_STRING);
+
+	feedlist_signals[ITEMS_UPDATED] =
+		g_signal_new ("items-updated",
+		G_OBJECT_CLASS_TYPE (object_class),
+		(GSignalFlags)(G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
+		0,
+		NULL,
+		NULL,
+		g_cclosure_marshal_VOID__POINTER,
 		G_TYPE_NONE,
 		1,
 		G_TYPE_STRING);
@@ -333,15 +345,19 @@ feedlist_mark_all_read (nodePtr node)
 
 	feedlist_reset_new_item_count ();
 
+	if (!IS_FEED (node))
+		itemview_select_item (NULL);
+
 	if (node != ROOTNODE)
 		node_mark_all_read (node);
 	else
 		node_foreach_child (ROOTNODE, node_mark_all_read);
 
 	feedlist_foreach (feedlist_update_node_counters);
-	itemview_select_item (NULL);
 	itemview_update_all_items ();
 	itemview_update ();
+
+	g_signal_emit_by_name (feedlist, "items-updated", node->id);
 }
 
 /* statistic handling methods */
@@ -408,13 +424,13 @@ feedlist_add_subscription (const gchar *source, const gchar *filter, updateOptio
 void
 feedlist_add_subscription_check_duplicate(const gchar *source, const gchar *filter, updateOptionsPtr options, gint flags)
 {
-	nodePtr duplicate_url_node = NULL;
+	nodePtr duplicateNode = NULL;
 
-	duplicate_url_node = feedlist_find_node (feedlist_get_root (), NODE_BY_URL, source);
-	if (duplicate_url_node == NULL) {
+	duplicateNode = feedlist_find_node (feedlist_get_root (), NODE_BY_URL, source);
+	if (!duplicateNode) {
 		feedlist_add_subscription (source, filter, options, FEED_REQ_PRIORITY_HIGH);
 	} else {
-        feed_list_view_add_duplicate_url_subscription (subscription_new (source, filter, options), duplicate_url_node);
+		feed_list_view_add_duplicate_url_subscription (subscription_new (source, filter, options), duplicateNode);
 	}
 }
 
@@ -494,7 +510,7 @@ feedlist_collect_unread (nodePtr node, gpointer user_data)
 	}
 	if (!node->subscription)
 		return;
-	if (!node->unreadCount && !g_str_equal (node->id, SELECTED->id))
+	if (!node->unreadCount && SELECTED && !g_str_equal (node->id, SELECTED->id))
 		return;
 
 	*list = g_slist_append (*list, g_strdup (node->id));
@@ -537,10 +553,8 @@ feedlist_unselect (void)
 	itemview_set_displayed_node (NULL);
 	itemview_update ();
 
-	itemlist_unload (FALSE /* mark all read */);
+	itemlist_unload ();
 	feed_list_view_select (NULL);
-	liferea_shell_update_feed_menu (TRUE, FALSE, FALSE);
-	liferea_shell_update_allitems_actions (FALSE, FALSE);
 }
 
 static void
@@ -560,16 +574,14 @@ feedlist_selection_changed (gpointer obj, gchar * nodeId, gpointer data)
 				feedlist_reset_new_item_count ();
 
 			/* Unload visible items. */
-			itemlist_unload (TRUE);
+			itemlist_unload ();
 
 			/* Load items of new selected node. */
 			SELECTED = node;
-			if (SELECTED) {
-				liferea_shell_set_view_mode (node_get_view_mode (SELECTED));
+			if (SELECTED)
 				itemlist_load (SELECTED);
-			} else {
+			else
 				itemview_clear ();
-			}
 		} else {
 			debug1 (DEBUG_GUI, "selected node stayed: %s", node?node_get_title (node):"none");
 		}
@@ -583,6 +595,9 @@ feedlist_selection_changed (gpointer obj, gchar * nodeId, gpointer data)
 static gboolean
 feedlist_schedule_save_cb (gpointer user_data)
 {
+	if (!feedlist || !ROOTNODE)
+		return FALSE;
+
 	/* step 1: request each node to save its state, that is
 	   mostly needed for nodes that are node sources */
 	feedlist_foreach (node_save);

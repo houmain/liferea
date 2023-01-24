@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: liferea\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 12:24+0200\n"
+"POT-Creation-Date: 2022-10-26 01:24+0200\n"
 "PO-Revision-Date: 2009-06-04 01:08+0000\n"
 "Last-Translator: António Lima <amrlima@gmail.com>\n"
 "Language-Team: Portuguese <liferea-devel@lists.sourceforge.net>\n"
@@ -17,63 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: ../liferea.appdata.xml.in.h:1
-#, fuzzy
-msgid "RSS feed reader"
-msgstr "Leitor de Fontes"
-
-#: ../liferea.appdata.xml.in.h:2
-msgid ""
-"Liferea is an abbreviation for Linux Feed Reader. It is a news aggregator "
-"for online news feeds. It supports a number of different feed formats "
-"including RSS/RDF, CDF and Atom. There are many other news readers "
-"available, but these others are not available for Linux or require many "
-"extra libraries to be installed. Liferea tries to fill this gap by creating "
-"a fast, easy to use, easy to install news aggregator for GTK/GNOME."
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:3
-msgid "Distinguishing features:"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:4
-#, fuzzy
-msgid "Read articles when offline"
-msgstr "Liferea está desligado"
-
-#: ../liferea.appdata.xml.in.h:5
-#, fuzzy
-msgid "Synchronizes with TheOldReader"
-msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
-
-#: ../liferea.appdata.xml.in.h:6
-#, fuzzy
-msgid "Synchronizes with TinyTinyRSS"
-msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
-
-#: ../liferea.appdata.xml.in.h:7
-#, fuzzy
-msgid "Synchronizes with InoReader"
-msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
-
-#: ../liferea.appdata.xml.in.h:8
-#, fuzzy
-msgid "Synchronizes with Reedah"
-msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
-
-#: ../liferea.appdata.xml.in.h:9
-msgid "Permanently save headlines in news bins"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:10
-msgid "Match items using search folders"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:11
-#, fuzzy
-msgid "Play Podcasts"
-msgstr "Podcast"
 
 #: ../net.sourceforge.liferea.desktop.in.h:1 ../src/liferea_application.c:349
 #: ../glade/mainwindow.ui.h:1
@@ -96,166 +39,237 @@ msgstr ""
 msgid "news;feed;aggregator;blog;podcast;syndication;rss;atom"
 msgstr ""
 
-#: ../xslt/feed.xml.in.h:1
+#: ../plugins/getfocus.py:95
+msgid "Opacity:"
+msgstr ""
+
+#: ../plugins/getfocus.py:96
+msgid "Opacity"
+msgstr ""
+
+#: ../plugins/getfocus.py:106
+msgid "Min"
+msgstr ""
+
+#: ../plugins/getfocus.py:111
+msgid "Max"
+msgstr ""
+
+#: ../plugins/getfocus.py:117
+msgid "Save"
+msgstr ""
+
+#: ../plugins/headerbar.py:67 ../glade/liferea_menu.ui.h:20
+#: ../glade/liferea_toolbar.ui.h:5
+msgid "Previous Item"
+msgstr ""
+
+#: ../plugins/headerbar.py:73 ../glade/liferea_menu.ui.h:21
+#: ../glade/liferea_toolbar.ui.h:6
+#, fuzzy
+msgid "Next Item"
+msgstr "_Avançar Para Item Não Lido"
+
+#: ../plugins/headerbar.py:81 ../glade/liferea_menu.ui.h:19
+#: ../glade/liferea_toolbar.ui.h:7
+msgid "_Next Unread Item"
+msgstr "_Avançar Para Item Não Lido"
+
+#: ../plugins/headerbar.py:89 ../glade/liferea_menu.ui.h:14
+#: ../glade/liferea_toolbar.ui.h:3
+msgid "_Mark Items Read"
+msgstr "_Marcar Itens Como Lidos"
+
+#: ../plugins/headerbar.py:113 ../glade/liferea_menu.ui.h:40
+#: ../glade/liferea_toolbar.ui.h:10
+msgid "Search All Feeds..."
+msgstr "Procurar em Todas as Fontes..."
+
+#: ../plugins/libnotify.py:42
+#, fuzzy
+msgid "Feed Updates"
+msgstr "Actualização de Fonte"
+
+#: ../plugins/plugin-installer.py:55
+msgid "Plugins"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:72
+msgid "Plugin Installer"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:86
+msgid "Activate Plugins"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:87
+#, fuzzy
+msgid "Download Plugins"
+msgstr "_Transferir usando"
+
+#: ../plugins/plugin-installer.py:105
+#, python-format
+msgid "Bad fields for plugin entry %s"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128
+msgid "All"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128 ../glade/properties.ui.h:39
+msgid "Advanced"
+msgstr "Avançado"
+
+#: ../plugins/plugin-installer.py:128
+msgid "Menu"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128
+#, fuzzy
+msgid "Notifications"
+msgstr "<span weight=\"bold\">Configuração das Notificações</span>"
+
+#: ../plugins/plugin-installer.py:136
+msgid "Filter by category"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:143
+msgid "_Install"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:147
+msgid "_Uninstall"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:248
+#, python-format
 msgid ""
-"This feed is discontinued. It's no longer available. Liferea won't update it "
-"anymore but you can still access the cached headlines."
+"Missing package manager '%s'. Cannot check nor install necessary "
+"dependencies!"
 msgstr ""
-"Esta fonte foi interrompida, e não se encontra disponível. O Liferea não a "
-"actualizará mais, mas poderá ainda aceder aos títulos em cache."
 
-#: ../xslt/feed.xml.in.h:2
+#: ../plugins/plugin-installer.py:264
+#, python-format
+msgid "Missing package '%s'. Do you want to install it? (Will run '%s')"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:271
+#, python-format
 msgid ""
-"The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
-"value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/></b>"
-msgstr ""
-"A última actualização desta subscrição falhou!<br/><b>Código de erro HTTP "
-"<xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
-"></b>"
-
-#: ../xslt/feed.xml.in.h:3
-msgid "There were errors while parsing this feed!"
-msgstr "Foram encontrados alguns erros ao processar esta fonte!"
-
-#: ../xslt/feed.xml.in.h:4
-msgid "Parser Error Details"
-msgstr "Detalhes dos Erros do Analisador"
-
-#: ../xslt/feed.xml.in.h:5
-msgid "Details"
-msgstr "Detalhes"
-
-#: ../xslt/feed.xml.in.h:6
-msgid "You may want to contact the author/webmaster of the feed about this!"
+"Package installation failed (%s)! Check console output for further problem "
+"details!"
 msgstr ""
 
-#: ../xslt/feed.xml.in.h:7
-msgid "There were errors while filtering this feed!"
-msgstr "Foram encontrados alguns erros ao filtrar esta fonte!"
-
-#: ../xslt/feed.xml.in.h:8
-msgid "Filter Error Details"
-msgstr "Detalhes dos Erros do Filtro"
-
-#: ../xslt/feed.xml.in.h:9
-msgid "Feed:"
-msgstr "Fonte:"
-
-#: ../xslt/feed.xml.in.h:10 ../xslt/source.xml.in.h:1
-msgid "Source:"
-msgstr "Fontes:"
-
-#: ../xslt/feed.xml.in.h:11
-msgid "Publisher"
-msgstr "Editores"
-
-#: ../xslt/feed.xml.in.h:12
-msgid "Copyright"
-msgstr "Copyright"
-
-#: ../xslt/source.xml.in.h:2 ../xslt/folder.xml.in.h:2
-msgid "children with"
-msgstr "filhos com"
-
-#: ../xslt/source.xml.in.h:3 ../xslt/folder.xml.in.h:3
-#: ../xslt/vfolder.xml.in.h:2
-msgid "unread headlines"
-msgstr "títulos não lidos"
-
-#: ../xslt/folder.xml.in.h:1
-msgid "Folder:"
-msgstr "Pasta:"
-
-#: ../xslt/item.xml.in.h:1 ../glade/properties.ui.h:21
-msgid "Source"
-msgstr "Fonte"
-
-#: ../xslt/item.xml.in.h:2
-msgid "Feed"
-msgstr "Fonte"
-
-#: ../xslt/item.xml.in.h:3
-msgid "Filed under"
-msgstr "Arquivado sob"
-
-#: ../xslt/item.xml.in.h:4
-msgid "Author"
-msgstr "Autor"
-
-#: ../xslt/item.xml.in.h:5
-msgid "Shared by"
-msgstr "Partilhado por"
-
-#: ../xslt/item.xml.in.h:6
-msgid "Via"
-msgstr "Via"
-
-#: ../xslt/item.xml.in.h:7
-msgid "Related"
-msgstr "Relacionado"
-
-#: ../xslt/item.xml.in.h:8
-msgid "Also posted in"
-msgstr "Também publicado em"
-
-#: ../xslt/item.xml.in.h:9
-msgid "Creator"
-msgstr "Criador"
-
-#: ../xslt/item.xml.in.h:10
-msgid "Coordinates"
+#: ../plugins/plugin-installer.py:274
+#, python-format
+msgid "Failed to check plugin dependencies (%s)!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:11
-msgid "Map"
+#: ../plugins/plugin-installer.py:283
+msgid "Command \"git\" not found, please install it!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:12
-msgid "View count"
+#: ../plugins/plugin-installer.py:292
+#, python-format
+msgid "Copying %s to %s"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:13
-msgid "Rating"
+#: ../plugins/plugin-installer.py:295
+#, python-format
+msgid "Failed to copy plugin directory (%s)!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:14
-msgid "Comments"
-msgstr "Comentários"
+#: ../plugins/plugin-installer.py:304
+#, python-format
+msgid "Failed to copy plugin .py file (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:15
-msgid "Updating..."
-msgstr "A Actualizar..."
+#: ../plugins/plugin-installer.py:314
+#, python-format
+msgid "Failed to copy .plugin file (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:16
-msgid "Section"
-msgstr "Secção"
+#: ../plugins/plugin-installer.py:325
+#, fuzzy, python-format
+msgid "Creating schema directory %s"
+msgstr "Não foi possível criar o directório de cache \"%s\"!"
 
-#: ../xslt/item.xml.in.h:17
-msgid "Department"
-msgstr "Departamento"
+#: ../plugins/plugin-installer.py:327
+#, python-format
+msgid "Installing schema %s"
+msgstr ""
 
-#: ../xslt/newsbin.xml.in.h:1
-msgid "News Bin:"
-msgstr "Recipiente de Notícias:"
+#: ../plugins/plugin-installer.py:331
+msgid "Compiling schemas..."
+msgstr ""
 
-#: ../xslt/newsbin.xml.in.h:2
+#: ../plugins/plugin-installer.py:336
+#, python-format
+msgid "Failed to install schema files (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:346
+#, python-format
+msgid "Failed to enable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:352
+#, python-format
+msgid "Plugin '%s' is now installed. Ensure to restart Liferea!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:366
+#, python-format
+msgid "Failed to disable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:373 ../plugins/plugin-installer.py:393
+#, fuzzy, python-format
+msgid "Deleting '%s'"
+msgstr "A apagar entrada"
+
+#: ../plugins/plugin-installer.py:376
+#, python-format
+msgid "Failed to remove directory '%s' (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:386
+msgid "Failed to remove .py file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:396
+msgid "Failed to remove .plugin file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:405
+msgid "Sorry! Plugin removal failed!."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:407
 msgid ""
-"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
-"list context menu."
+"Plugin was removed. Please restart Liferea once for it to take full effect!."
 msgstr ""
-"Adicione itens a este recipiente de notícias seleccionando \"Copiar para o "
-"Recipiente de Notícias\" da lista de itens no menu de contexto."
 
-#: ../xslt/vfolder.xml.in.h:1
-msgid "Search Folder:"
-msgstr "Pasta de Procura:"
+#: ../plugins/trayicon.py:132
+#, fuzzy
+msgid "Show / Hide"
+msgstr "Mostrar detalhes"
+
+#: ../plugins/trayicon.py:133
+msgid "Minimize to tray on close"
+msgstr ""
+
+#: ../plugins/trayicon.py:134
+#, fuzzy
+msgid "Quit"
+msgstr "_Sair"
 
 #: ../src/browser.c:81 ../src/browser.c:98
 #, c-format
 msgid "Browser command failed: %s"
 msgstr "Falha ao iniciar o navegador: %s"
 
-#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1044
+#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1078
 #, c-format
 msgid "Starting: \"%s\""
 msgstr "A iniciar: \"%s\""
@@ -265,12 +279,12 @@ msgstr "A iniciar: \"%s\""
 msgid "Authorization Error"
 msgstr "Erro de Autorização"
 
-#: ../src/common.c:66
+#: ../src/common.c:68
 #, c-format
 msgid "Cannot create cache directory \"%s\"!"
 msgstr "Não foi possível criar o directório de cache \"%s\"!"
 
-#: ../src/conf.c:183
+#: ../src/conf.c:147
 msgid ""
 "Your version of WebKitGTK+ doesn't support changing the proxy settings from "
 "Liferea. The system's default proxy settings will be used."
@@ -324,100 +338,64 @@ msgid ""
 "correctly! You can change it in the 'Download' tab in Tools/Preferences."
 msgstr ""
 
-#: ../src/export.c:188
+#: ../src/export.c:187
 #, fuzzy, c-format
 msgid "Error renaming %s to %s: %s\n"
 msgstr "Erro ao renomear %s para %s\n"
 
-#: ../src/export.c:417 ../src/export.c:419
+#: ../src/export.c:409 ../src/export.c:411
 #, c-format
 msgid "XML error while reading OPML file! Could not import \"%s\"!"
 msgstr "Erro de XML ao ler o ficheiro OPML! Não foi possível importar \"%s\"!"
 
-#: ../src/export.c:425 ../src/export.c:427
+#: ../src/export.c:417 ../src/export.c:419
 #, c-format
 msgid ""
 "Empty document! OPML document \"%s\" should not be empty when importing."
 msgstr ""
 "Documento vazio! O documento OPML \"%s\" não deve estar vazio ao importar."
 
-#: ../src/export.c:448 ../src/export.c:450
+#: ../src/export.c:440 ../src/export.c:442
 #, c-format
 msgid "\"%s\" is not a valid OPML document! Liferea cannot import this file!"
 msgstr ""
 "\"%s\" não é um documento OPML válido! O Liferea não pode importar este "
 "ficheiro!"
 
-#: ../src/export.c:469
+#: ../src/export.c:461
 msgid "Imported feed list"
 msgstr "Lista de fontes importadas"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import Feed List"
 msgstr "Importar Lista de Fontes"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import"
 msgstr "Importar"
 
-#: ../src/export.c:481 ../src/export.c:498 ../src/fl_sources/opml_source.c:379
+#: ../src/export.c:473 ../src/export.c:490 ../src/fl_sources/opml_source.c:379
 #, fuzzy
 msgid "OPML Files"
 msgstr "Escolher Ficheiro OPML"
 
-#: ../src/export.c:489
+#: ../src/export.c:481
 msgid "Error while exporting feed list!"
 msgstr "Erro ao exportar a lista de fontes!"
 
-#: ../src/export.c:491
+#: ../src/export.c:483
 msgid "Feed List exported!"
 msgstr "Lista de fontes exportada!"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export Feed List"
 msgstr "Exportar Lista de Fontes"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export"
 msgstr "Exportar"
 
-#: ../src/feed.c:324
-msgid ""
-"<p>Could not detect the type of this feed! Please check if the source really "
-"points to a resource provided in one of the supported syndication formats!</"
-"p>XML Parser Output:<br /><div class='xmlparseroutput'>"
-msgstr ""
-"<p>Não foi possível detectar o tipo desta fonte! Por favor, verifique se a "
-"fonte realmente aponta para um recurso fornecido num dos formatos de "
-"subscrição suportados!</p> Saída do Analisador de XML:<br /><div "
-"class='xmlparseroutput'>"
-
-#: ../src/feed.c:351
-#, c-format
-msgid "\"%s\" updated..."
-msgstr "\"%s\" actualizado..."
-
-#: ../src/feed.c:358
-#, c-format
-msgid "\"%s\" is not available"
-msgstr "\"%s\" não está disponível"
-
-#: ../src/feed_parser.c:142
-msgid ""
-"The URL you want Liferea to subscribe to points to a webpage and the auto "
-"discovery found no feeds on this page. Maybe this webpage just does not "
-"support feed auto discovery."
-msgstr ""
-"O URL que deseja subscrever com o Liferea aponta para uma página web mas a "
-"pesquisa automática não encontrou nenhuma fonte nesta página. Talvez esta "
-"página web não suporte a pesquisa automática de fontes."
-
-#: ../src/feed_parser.c:194
-#, c-format
-msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
-msgstr "Erro de XML ao ler a fonte! Não foi possível carregar a fonte \"%s\"!"
-
-#: ../src/feed_parser.c:199 ../src/feed_parser.c:248
+#: ../src/feed_parser.c:202
 msgid "Empty document!"
 msgstr "Documento vazio!"
 
@@ -425,16 +403,110 @@ msgstr "Documento vazio!"
 msgid "Invalid XML!"
 msgstr "XML inválido!"
 
-#: ../src/feed_parser.c:271
-msgid "Source points to HTML document."
-msgstr "Fonte aponta para um documento em HTML."
+#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
+#: ../glade/simple_subscription.ui.h:1
+msgid "New Subscription"
+msgstr "Nova Subscrição"
 
-#: ../src/feed_parser.c:274
-msgid "Could not determine the feed type."
-msgstr "Não foi possível determinar o tipo de fonte."
+#: ../src/fl_sources/google_source.c:192 ../src/fl_sources/reedah_source.c:120
+#: ../src/fl_sources/theoldreader_source.c:122
+#, fuzzy
+msgid "Login failed!"
+msgstr "Falha ao efectuar aceder ao Google Reader!"
+
+#: ../src/fl_sources/google_source.c:404
+#, fuzzy
+msgid "Google Reader API"
+msgstr "Google Reader"
+
+#: ../src/fl_sources/google_source_feed.c:159
+msgid "Could not parse JSON returned by Google Reader API!"
+msgstr ""
+
+#: ../src/fl_sources/node_source.c:117
+msgid "Miniflux"
+msgstr ""
+
+#: ../src/fl_sources/node_source.c:332
+msgid "No feed list source types found!"
+msgstr "Nenhum tipo de lista de fontes encontrado!"
+
+#: ../src/fl_sources/node_source.c:361
+msgid "Source Type"
+msgstr "Tipo de Fonte"
+
+#: ../src/fl_sources/node_source.c:412
+#, c-format
+msgid "Login for '%s' has not yet completed! Please wait until login is done."
+msgstr ""
+
+#. FIXME: something is not perfect, because if you immediately
+#. remove the subscription tree afterwards there is a double free
+#: ../src/fl_sources/node_source.c:578
+#, c-format
+msgid "The '%s' subscription was successfully converted to local feeds!"
+msgstr ""
+
+#: ../src/fl_sources/opml_source.c:319
+msgid "Planet, BlogRoll, OPML"
+msgstr "Planeta, BlogRoll (lista de blogs), OPML"
+
+#: ../src/fl_sources/opml_source.c:379
+msgid "Choose OPML File"
+msgstr "Escolher Ficheiro OPML"
+
+#: ../src/fl_sources/opml_source.c:379 ../src/ui/subscription_dialog.c:355
+msgid "_Open"
+msgstr ""
+
+#: ../src/fl_sources/opml_source.h:28
+msgid "New OPML Subscription"
+msgstr "Nova Subscrição OPML"
+
+#: ../src/fl_sources/reedah_source.c:335
+msgid "Reedah"
+msgstr ""
+
+#: ../src/fl_sources/reedah_source_feed.c:154
+msgid "Could not parse JSON returned by Reedah API!"
+msgstr ""
+
+#: ../src/fl_sources/theoldreader_source.c:364
+#, fuzzy
+msgid "TheOldReader"
+msgstr "Leitor de Fontes"
+
+#: ../src/fl_sources/ttrss_source.c:227 ../src/fl_sources/ttrss_source.c:293
+msgid "TinyTinyRSS HTTP API not reachable!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:234
+msgid ""
+"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
+"URL!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:300
+msgid "TinyTinyRSS unsubscribing feed failed!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:318
+#, c-format
+msgid ""
+"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
+"%s or later!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:472
+msgid "Tiny Tiny RSS"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source_feed.c:150
+msgid "Could not parse JSON returned by TinyTinyRSS API!"
+msgstr ""
 
 #. if we don't find a feed with unread items do nothing
-#: ../src/itemlist.c:393
+#: ../src/itemlist.c:425
 #, fuzzy
 msgid "There are no unread items"
 msgstr "Não há artigos não lidos "
@@ -534,39 +606,39 @@ msgid "Print debugging messages for the given topic"
 msgstr "Imprimir mensagens de depuração para o tópico dado"
 
 #. Some libsoup transport errors
-#: ../src/net.c:463
+#: ../src/net.c:470
 msgid "The update request was cancelled"
 msgstr "O pedido de actualização foi cancelado"
 
-#: ../src/net.c:464
+#: ../src/net.c:471
 msgid "Unable to resolve destination host name"
 msgstr "Incapaz de resolver o nome de máquina de destino"
 
-#: ../src/net.c:465
+#: ../src/net.c:472
 msgid "Unable to resolve proxy host name"
 msgstr "Incapaz de resolver o nome de máquina proxy"
 
-#: ../src/net.c:466
+#: ../src/net.c:473
 msgid "Unable to connect to remote host"
 msgstr "Incapaz de ligar à máquina remota"
 
-#: ../src/net.c:467
+#: ../src/net.c:474
 msgid "Unable to connect to proxy"
 msgstr "Incapaz de ligar ao proxy"
 
-#: ../src/net.c:468
+#: ../src/net.c:475
 msgid ""
-"A network error occurred, or the other end closed the connection unexpectedly"
+"SSL/TLS negotiation failed. Possible outdated or unsupported encryption "
+"algorithm. Check your operating system settings."
 msgstr ""
-"Ocorreu um erro de rede, ou o outro lado terminou a ligação inesperadamente"
 
 #. http 3xx redirection
-#: ../src/net.c:471
+#: ../src/net.c:478
 msgid "The resource moved permanently to a new location"
 msgstr "O recurso foi movido permanentemente para uma nova localização"
 
 #. http 4xx client error
-#: ../src/net.c:474
+#: ../src/net.c:481
 msgid ""
 "You are unauthorized to download this feed. Please update your username and "
 "password in the feed properties dialog box"
@@ -574,142 +646,217 @@ msgstr ""
 "Não está autorizado a transferir esta fonte. Por favor, actualize o seu nome "
 "de utilizador e senha na caixa de diálogo de propriedades da fonte."
 
-#: ../src/net.c:476
+#: ../src/net.c:483
 msgid "Payment required"
 msgstr "Pagamento necessário"
 
-#: ../src/net.c:477
+#: ../src/net.c:484
 msgid "You're not allowed to access this resource"
 msgstr "Não tem autorização para aceder a este recurso"
 
-#: ../src/net.c:478
+#: ../src/net.c:485
 msgid "Resource Not Found"
 msgstr "Recurso Não Encontrado"
 
-#: ../src/net.c:479
+#: ../src/net.c:486
 msgid "Method Not Allowed"
 msgstr "Método Não Permitido"
 
-#: ../src/net.c:480
+#: ../src/net.c:487
 msgid "Not Acceptable"
 msgstr "Não Aceitável"
 
-#: ../src/net.c:481
+#: ../src/net.c:488
 msgid "Proxy authentication required"
 msgstr "Autenticação proxy requerida"
 
-#: ../src/net.c:482
+#: ../src/net.c:489
 msgid "Request timed out"
 msgstr "Tempo Esgotado"
 
-#: ../src/net.c:483
-msgid "Gone. Resource doesn't exist. Please unsubscribe!"
-msgstr "Esta fonte não existe. Por favor, remova a sua subscrição!"
+#: ../src/net.c:490
+#, fuzzy
+msgid ""
+"The webserver indicates this feed is discontinued. It's no longer available. "
+"Liferea won't update it anymore but you can still access the cached "
+"headlines."
+msgstr ""
+"Esta fonte foi interrompida, e não se encontra disponível. O Liferea não a "
+"actualizará mais, mas poderá ainda aceder aos títulos em cache."
 
-#: ../src/net.c:488
+#. http 5xx server errors
+#: ../src/net.c:493
+#, fuzzy
+msgid "Internal Server Error"
+msgstr "Erro do Servidor"
+
+#: ../src/net.c:494
+msgid "Not Implemented"
+msgstr ""
+
+#: ../src/net.c:495
+msgid "Bad Gateway"
+msgstr ""
+
+#: ../src/net.c:496
+#, fuzzy
+msgid "Service Unavailable"
+msgstr "Nome _Serviço"
+
+#: ../src/net.c:497
+msgid "Gateway Timeout"
+msgstr ""
+
+#: ../src/net.c:498
+msgid "HTTP Version Not Supported"
+msgstr ""
+
+#: ../src/net.c:503
 msgid "There was an internal error in the update process"
 msgstr "Ocorreu um erro interno no processo de actualização"
 
-#: ../src/net.c:490
+#: ../src/net.c:505
 msgid "Feed not available: Server requested unsupported redirection!"
 msgstr ""
 "Fonte não disponível: O Servidor solicitou um redireccionamento não "
 "suportado!"
 
-#: ../src/net.c:492
+#: ../src/net.c:507
 msgid "Client Error"
 msgstr "Erro do Cliente"
 
-#: ../src/net.c:494
+#: ../src/net.c:509
 msgid "Server Error"
 msgstr "Erro do Servidor"
 
-#: ../src/net.c:496
+#: ../src/net.c:511
 msgid "An unknown networking error happened!"
 msgstr "Ocorreu um erro desconhecido de rede!"
 
+#: ../src/newsbin.c:136
+#, fuzzy
+msgid "News Bin Properties"
+msgstr "Propriedades da Subscrição"
+
+#: ../src/newsbin.c:140 ../glade/new_newsbin.ui.h:1
+msgid "Create News Bin"
+msgstr "Criar Recipiente de Notícias"
+
+#: ../src/node.c:664
+#, c-format
+msgid "Failed to create feed file: %s"
+msgstr ""
+
+#: ../src/node.c:683
+#, fuzzy
+msgid "Feed file exported from Liferea"
+msgstr "Lista de fontes exportada!"
+
+#: ../src/node.c:698
+#, fuzzy, c-format
+msgid "Error while saving feed file"
+msgstr "Erro ao exportar a lista de fontes!"
+
+#: ../src/parsers/atom10.c:240
+msgid "Website"
+msgstr ""
+
+#: ../src/parsers/ns_ag.c:70
+msgid "%b %d %H:%M"
+msgstr "%d de %b %H:%M"
+
 #. in-memory check function	feedlist.opml rule id         		  rule menu label       	positive menu option    negative menu option    has param
 #. ========================================================================================================================================================================================
-#: ../src/rule.c:198
+#: ../src/rule.c:274
 msgid "Item"
 msgstr "Item"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does contain"
 msgstr "contém"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does not contain"
 msgstr "não contém"
 
-#: ../src/rule.c:199
+#: ../src/rule.c:275
 msgid "Item title"
 msgstr "Título do item"
 
-#: ../src/rule.c:200
+#: ../src/rule.c:276
 msgid "Item body"
 msgstr "Corpo do item"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:277
+#, fuzzy
+msgid "Item author"
+msgstr "Corpo do item"
+
+#: ../src/rule.c:278
 msgid "Read status"
 msgstr "Estado de leitura"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is unread"
 msgstr "não lido"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is read"
 msgstr "lido"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "Flag status"
 msgstr "Marcador de Estado"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is flagged"
 msgstr "sinalizado"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is unflagged"
 msgstr "não sinalizado"
 
-#: ../src/rule.c:203
-msgid "Podcast"
-msgstr "Podcast"
+#: ../src/rule.c:280
+#, fuzzy
+msgid "Enclosure"
+msgstr "Componentes"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "included"
 msgstr "incluído"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "not included"
 msgstr "não incluído"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:281
+msgid "Podcast"
+msgstr "Podcast"
+
+#: ../src/rule.c:282
 msgid "Category"
 msgstr "Categoria"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is set"
 msgstr "está definido"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is not set"
 msgstr "não está definido"
 
-#: ../src/rule.c:205
+#: ../src/rule.c:283
 msgid "Feed title"
 msgstr "Título do item"
 
-#: ../src/rule.c:206
+#: ../src/rule.c:284
 #, fuzzy
 msgid "Feed source"
 msgstr "<b>Fonte</b>"
 
-#: ../src/rule.c:207
+#: ../src/rule.c:285
 msgid "Parent folder title"
 msgstr ""
 
@@ -725,15 +872,7 @@ msgid ""
 msgstr ""
 "A fonte \"%s\" foi descontinuada e não será mais actualizada pelo Liferea!"
 
-#: ../src/subscription.c:173
-msgid ""
-"There was a problem while reading this subscription. Please check the URL "
-"and console output."
-msgstr ""
-"Foi encontrado um problema ao ler esta subscrição. Por favor, verifique o "
-"URL e a saída da consola."
-
-#: ../src/subscription.c:196
+#: ../src/subscription.c:188
 #, c-format
 msgid "The URL of \"%s\" has changed permanently and was updated"
 msgstr "O URL de \"%s\" mudou permanentemente e foi actualizado"
@@ -743,53 +882,33 @@ msgstr "O URL de \"%s\" mudou permanentemente e foi actualizado"
 msgid "\"%s\" is discontinued. Liferea won't updated it anymore!"
 msgstr "\"%s\" foi interrompido e não será mais actualizado pelo Liferea!"
 
-#: ../src/subscription.c:207
+#: ../src/subscription.c:208
 #, c-format
 msgid "\"%s\" has not changed since last update"
 msgstr "\"%s\" não foi modificado desde a última actualização"
 
-#: ../src/subscription.c:263
+#: ../src/subscription.c:221 ../src/subscription.c:296
+#, fuzzy, c-format
+msgid "Updating (%d / %d) ..."
+msgstr "A Actualizar..."
+
+#: ../src/subscription.c:298
+#, fuzzy, c-format
+msgid "Updating '%s'..."
+msgstr "A Actualizar..."
+
+#: ../src/ui/auth_dialog.c:114
 #, c-format
-msgid "Updating \"%s\""
-msgstr "A Actualizar \"%s\""
+msgid "Enter the username and password for \"%s\" (%s):"
+msgstr "Digite o nome de utilizador e senha para \"%s\" (%s):"
 
-#: ../src/update.c:297
-#, c-format
-msgid "Error opening temp file %s to use for filtering!"
-msgstr "Erro ao abrir ficheiro temporário %s para usar na filtragem!"
+#: ../src/ui/auth_dialog.c:116
+msgid "Unknown source"
+msgstr "Fonte desconhecida"
 
-#: ../src/update.c:320
-#, c-format
-msgid "%s exited with status %d"
-msgstr "%s saiu com estado %d"
-
-#: ../src/update.c:326 ../src/update.c:327 ../src/update.c:442
-#, c-format
-msgid "Error: Could not open pipe \"%s\""
-msgstr "Erro: Não foi possível abrir a linha de processamento \"%s\""
-
-#. FIXME: maybe setting request->returncode would be better
-#: ../src/update.c:466
-#, c-format
-msgid "Error: Could not open file \"%s\""
-msgstr "Erro: Não foi possível abrir o ficheiro \"%s\""
-
-#: ../src/update.c:472
-#, c-format
-msgid "Error: There is no file \"%s\""
-msgstr "Erro: O ficheiro \"%s\" não existe"
-
-#: ../src/vfolder.c:54
-msgid "New Search Folder"
-msgstr "Nova Pasta de Procura"
-
-#: ../src/xml.c:410
-msgid "[There were more errors. Output was truncated!]"
-msgstr "[Houveram mais erros. A saída foi truncada!]"
-
-#: ../src/xml.c:563
-msgid "XML Parser: Could not parse document:\n"
-msgstr "Analisador XML: Não foi possível analisar o documento:\n"
+#: ../src/ui/browser_tabs.c:262 ../src/ui/popup_menu.c:282
+msgid "Untitled"
+msgstr ""
 
 #: ../src/ui/enclosure_list_view.c:168
 msgid "Attachments"
@@ -834,174 +953,164 @@ msgstr "Escolher Ficheiro"
 msgid "File Extension .%s"
 msgstr "<b>Extensão de Ficheiro .%s</b>"
 
-#: ../src/ui/icons.c:54
-#, c-format
-msgid "Couldn't find pixmap file: %s"
-msgstr "Não foi possível localizar o ficheiro de imagem: %s"
-
-#: ../src/ui/liferea_shell.c:396
-#, c-format
-msgid " (%d new)"
-msgid_plural " (%d new)"
-msgstr[0] "(%d novo)"
-msgstr[1] "(%d novos)"
-
-#: ../src/ui/liferea_shell.c:401
-#, c-format
-msgid "%d unread%s"
-msgid_plural "%d unread%s"
-msgstr[0] "%d não lido%s"
-msgstr[1] "%d não lidos%s"
-
-#: ../src/ui/liferea_shell.c:758
-msgid "Help Topics"
-msgstr "Tópicos de Ajuda"
-
-#: ../src/ui/liferea_shell.c:764
-msgid "Quick Reference"
-msgstr "Referência Rápida"
-
-#: ../src/ui/liferea_shell.c:770
-msgid "FAQ"
-msgstr "FAQ"
-
-#: ../src/ui/liferea_shell.c:1041
-#, fuzzy, c-format
-msgid "Email command failed: %s"
-msgstr "Falha ao iniciar o navegador: %s"
-
-#: ../src/ui/search_dialog.c:107
-#, fuzzy
-msgid "Saved Search"
-msgstr "Procura Avançada"
-
-#: ../src/ui/auth_dialog.c:114
-#, c-format
-msgid "Enter the username and password for \"%s\" (%s):"
-msgstr "Digite o nome de utilizador e senha para \"%s\" (%s):"
-
-#: ../src/ui/auth_dialog.c:116
-msgid "Unknown source"
-msgstr "Fonte desconhecida"
-
-#: ../src/ui/ui_common.c:168 ../src/ui/feed_list_view.c:911
-#: ../src/ui/feed_list_view.c:965
-#, fuzzy
-msgid "_Cancel"
-msgstr "C_ancelar Todos"
-
-#: ../src/ui/ui_common.c:211
-#, fuzzy
-msgid "All Files"
-msgstr "Ficheiro _Local"
-
-#: ../src/ui/feed_list_view.c:432
+#: ../src/ui/feed_list_view.c:428
 msgid "Liferea is in offline mode. No update possible."
 msgstr "O Liferea está em modo desligado. Não é possível actualizar."
 
-#: ../src/ui/feed_list_view.c:478
+#: ../src/ui/feed_list_view.c:474
 #, fuzzy
 msgid "all feeds"
 msgstr "Procurar em Todas as Fontes"
 
-#: ../src/ui/feed_list_view.c:479
+#: ../src/ui/feed_list_view.c:475
 #, fuzzy, c-format
 msgid "Mark %s as read ?"
 msgstr "Ma_rcar todos como lidos"
 
-#: ../src/ui/feed_list_view.c:483
+#: ../src/ui/feed_list_view.c:479
 #, fuzzy, c-format
 msgid "Are you sure you want to mark all items in %s as read ?"
 msgstr "Tem a certeza que deseja apagar \"%s\"?"
 
-#: ../src/ui/feed_list_view.c:621
+#: ../src/ui/feed_list_view.c:617
 msgid "(Empty)"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:832
+#: ../src/ui/feed_list_view.c:828
 #, c-format
 msgid ""
 "%s\n"
 "<i>Rebuilding</i>"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:901
+#: ../src/ui/feed_list_view.c:897
 msgid "Deleting entry"
 msgstr "A apagar entrada"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\" and its contents?"
 msgstr "Tem a certeza que deseja apagar \"%s\" e todo o seu conteúdo?"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\"?"
 msgstr "Tem a certeza que deseja apagar \"%s\"?"
 
-#: ../src/ui/feed_list_view.c:912 ../src/ui/popup_menu.c:335
+#: ../src/ui/feed_list_view.c:907 ../src/ui/feed_list_view.c:961
+#: ../src/ui/popup_menu.c:260
+#, fuzzy
+msgid "_Cancel"
+msgstr "C_ancelar Todos"
+
+#: ../src/ui/feed_list_view.c:908 ../src/ui/popup_menu.c:411
 msgid "_Delete"
 msgstr "_Apagar"
 
-#: ../src/ui/feed_list_view.c:914
+#: ../src/ui/feed_list_view.c:910
 msgid "Deletion Confirmation"
 msgstr "Confirmar Exclusão"
 
-#: ../src/ui/feed_list_view.c:953
+#: ../src/ui/feed_list_view.c:949
 #, c-format
 msgid ""
 "Are you sure that you want to add a new subscription with URL \"%s\"? "
 "Another subscription with the same URL already exists (\"%s\")."
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:966
+#: ../src/ui/feed_list_view.c:962
 msgid "_Add"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:968
+#: ../src/ui/feed_list_view.c:964
 #, fuzzy
 msgid "Adding Duplicate Subscription Confirmation"
 msgstr "Confirmar Exclusão"
 
-#: ../src/ui/item_list_view.c:115
+#: ../src/ui/icons.c:54
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Não foi possível localizar o ficheiro de imagem: %s"
+
+#: ../src/ui/item_list_view.c:113
 msgid "This item has no link specified!"
 msgstr "Este item não possui um link especificado!"
 
-#: ../src/ui/item_list_view.c:482
+#: ../src/ui/item_list_view.c:479
 msgid "*** No title ***"
 msgstr "*** Sem título ***"
 
-#: ../src/ui/item_list_view.c:486
+#: ../src/ui/item_list_view.c:483
 msgid " <span background='red' color='black'> important </span> "
 msgstr ""
 
-#: ../src/ui/item_list_view.c:865
+#: ../src/ui/item_list_view.c:842
 msgid "Headline"
 msgstr "Títulos"
 
-#: ../src/ui/item_list_view.c:887
+#: ../src/ui/item_list_view.c:860
 msgid "Date"
 msgstr "Data"
 
-#: ../src/ui/item_list_view.c:1056
+#: ../src/ui/item_list_view.c:1029
 msgid "You must select a feed to delete its items!"
 msgstr "Seleccione um fonte para apagar os seus itens!"
 
-#: ../src/ui/item_list_view.c:1072 ../src/ui/item_list_view.c:1150
-#: ../src/ui/item_list_view.c:1165
+#: ../src/ui/item_list_view.c:1045 ../src/ui/item_list_view.c:1123
+#: ../src/ui/item_list_view.c:1138
 msgid "No item has been selected"
 msgstr "Nenhum item foi selecionado"
 
-#: ../src/ui/popup_menu.c:102
+#: ../src/ui/liferea_browser.c:482
+#, fuzzy
+msgid "Content download failed! Try disabling reader mode."
+msgstr "Escolha o directório de transferência"
+
+#: ../src/ui/liferea_browser.c:495
+msgid "Content extraction failed! Try disabling reader mode."
+msgstr ""
+
+#: ../src/ui/liferea_shell.c:409
+#, c-format
+msgid " (%d new)"
+msgid_plural " (%d new)"
+msgstr[0] "(%d novo)"
+msgstr[1] "(%d novos)"
+
+#: ../src/ui/liferea_shell.c:414
+#, c-format
+msgid "%d unread%s"
+msgid_plural "%d unread%s"
+msgstr[0] "%d não lido%s"
+msgstr[1] "%d não lidos%s"
+
+#: ../src/ui/liferea_shell.c:785
+msgid "Help Topics"
+msgstr "Tópicos de Ajuda"
+
+#: ../src/ui/liferea_shell.c:791
+msgid "Quick Reference"
+msgstr "Referência Rápida"
+
+#: ../src/ui/liferea_shell.c:797
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../src/ui/liferea_shell.c:1075
+#, fuzzy, c-format
+msgid "Email command failed: %s"
+msgstr "Falha ao iniciar o navegador: %s"
+
+#: ../src/ui/popup_menu.c:102 ../glade/liferea_menu.ui.h:25
 msgid "Open In _Tab"
 msgstr ""
 
-#: ../src/ui/popup_menu.c:106
+#: ../src/ui/popup_menu.c:106 ../glade/liferea_menu.ui.h:26
 #, fuzzy
 msgid "_Open In Browser"
 msgstr "_Abrir No Navegador"
 
-#: ../src/ui/popup_menu.c:110
+#: ../src/ui/popup_menu.c:110 ../glade/liferea_menu.ui.h:27
 #, fuzzy
 msgid "Open In _External Browser"
 msgstr "<span weight=\"bold\">Configurações do Navegador Externo</span>"
@@ -1024,11 +1133,11 @@ msgstr "_Marcar Link em %s"
 msgid "Copy Item _Location"
 msgstr "_Copiar Localização do Link"
 
-#: ../src/ui/popup_menu.c:163
+#: ../src/ui/popup_menu.c:163 ../glade/liferea_menu.ui.h:22
 msgid "Toggle _Read Status"
 msgstr "Alte_rnar para Lido ou Não Lido"
 
-#: ../src/ui/popup_menu.c:167
+#: ../src/ui/popup_menu.c:167 ../glade/liferea_menu.ui.h:23
 msgid "Toggle Item _Flag"
 msgstr "Alternar Sinalizador do Item"
 
@@ -1048,56 +1157,77 @@ msgstr "Guardar Como..."
 msgid "Copy Link Location"
 msgstr "Copiar Localização do Link"
 
-#: ../src/ui/popup_menu.c:280
+#: ../src/ui/popup_menu.c:257
+msgid "Save items to file"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:262
+msgid "_Save"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:271
+msgid "RSS 2.0 files"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:277
+#, fuzzy
+msgid "All files"
+msgstr "Ficheiro _Local"
+
+#: ../src/ui/popup_menu.c:353 ../glade/liferea_menu.ui.h:13
 msgid "_Update"
 msgstr "_Actualizar"
 
-#: ../src/ui/popup_menu.c:282
+#: ../src/ui/popup_menu.c:355
 msgid "_Update Folder"
 msgstr "Act_ualizar Pasta"
 
-#: ../src/ui/popup_menu.c:292
+#: ../src/ui/popup_menu.c:365
 msgid "New _Subscription..."
 msgstr "_Nova Subscrição..."
 
-#: ../src/ui/popup_menu.c:295
+#: ../src/ui/popup_menu.c:368 ../glade/liferea_menu.ui.h:5
 msgid "New _Folder..."
 msgstr "Nova _Pasta..."
 
-#: ../src/ui/popup_menu.c:298
+#: ../src/ui/popup_menu.c:371 ../glade/liferea_menu.ui.h:6
 msgid "New S_earch Folder..."
 msgstr "Nova Pasta de Procura..."
 
-#: ../src/ui/popup_menu.c:299
+#: ../src/ui/popup_menu.c:372
 msgid "New S_ource..."
 msgstr "Nova Fo_nte..."
 
-#: ../src/ui/popup_menu.c:300
+#: ../src/ui/popup_menu.c:373 ../glade/liferea_menu.ui.h:8
 msgid "New _News Bin..."
 msgstr "_Novo Recipiente de Notícias..."
 
-#: ../src/ui/popup_menu.c:303
+#: ../src/ui/popup_menu.c:376
 msgid "_New"
 msgstr "_Nova"
 
-#: ../src/ui/popup_menu.c:312
+#: ../src/ui/popup_menu.c:385
 #, fuzzy
 msgid "Sort Feeds"
 msgstr "Importar Lista de Fontes"
 
-#: ../src/ui/popup_menu.c:320
+#: ../src/ui/popup_menu.c:393
 msgid "_Mark All As Read"
 msgstr "_Marcar Todas Como Lidas"
 
-#: ../src/ui/popup_menu.c:327
+#: ../src/ui/popup_menu.c:395
+msgid "_Export Items To File"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:403
 msgid "_Rebuild"
 msgstr ""
 
-#: ../src/ui/popup_menu.c:336
+#: ../src/ui/popup_menu.c:412 ../glade/liferea_menu.ui.h:17
 msgid "_Properties"
 msgstr "_Propriedades"
 
-#: ../src/ui/popup_menu.c:343
+#: ../src/ui/popup_menu.c:419
 #, fuzzy
 msgid "Convert To Local Subscriptions..."
 msgstr "_Nova Subscrição..."
@@ -1156,31 +1286,32 @@ msgstr "Visualização _Normal"
 msgid "Wide View"
 msgstr "Visualização Alargada"
 
-#: ../src/ui/preferences_dialog.c:112
-#, fuzzy
-msgid "Combined View"
-msgstr "Visualização _Combinada"
-
-#: ../src/ui/preferences_dialog.c:467
+#: ../src/ui/preferences_dialog.c:487
 #, fuzzy
 msgid "Default Browser"
 msgstr "Navegador por Omissão do GNOME"
 
-#: ../src/ui/preferences_dialog.c:469
+#: ../src/ui/preferences_dialog.c:489
 msgid "Manual"
 msgstr "Manual"
 
-#: ../src/ui/preferences_dialog.c:716
+#: ../src/ui/preferences_dialog.c:752
 msgid "Type"
 msgstr "Tipo"
 
-#: ../src/ui/preferences_dialog.c:719
+#: ../src/ui/preferences_dialog.c:755
 msgid "Program"
 msgstr "Programa"
 
-#: ../src/ui/subscription_dialog.c:355 ../src/fl_sources/opml_source.c:379
-msgid "_Open"
-msgstr ""
+#: ../src/ui/rule_editor.c:257
+#, fuzzy
+msgid "Remove"
+msgstr "_Remover"
+
+#: ../src/ui/search_dialog.c:106
+#, fuzzy
+msgid "Saved Search"
+msgstr "Procura Avançada"
 
 #: ../src/ui/subscription_dialog.c:427
 #, c-format
@@ -1196,186 +1327,111 @@ msgstr[1] ""
 msgid "This feed specifies no default update interval."
 msgstr "Esta fonte não possui um intervalo de actualização por omissão."
 
-#: ../src/ui/browser_tabs.c:262
-msgid "Untitled"
-msgstr ""
-
-#: ../src/parsers/atom10.c:241 ../src/parsers/pie_feed.c:141
-msgid "Website"
-msgstr ""
-
-#: ../src/parsers/ns_ag.c:70
-msgid "%b %d %H:%M"
-msgstr "%d de %b %H:%M"
-
-#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
-#: ../glade/simple_subscription.ui.h:1
-msgid "New Subscription"
-msgstr "Nova Subscrição"
-
-#: ../src/fl_sources/google_source.c:111
-msgid "Google Reader"
-msgstr "Google Reader"
-
-#: ../src/fl_sources/opml_source.c:319
-msgid "Planet, BlogRoll, OPML"
-msgstr "Planeta, BlogRoll (lista de blogs), OPML"
-
-#: ../src/fl_sources/opml_source.c:379
-msgid "Choose OPML File"
-msgstr "Escolher Ficheiro OPML"
-
-#: ../src/fl_sources/opml_source.h:28
-msgid "New OPML Subscription"
-msgstr "Nova Subscrição OPML"
-
-#: ../src/fl_sources/node_source.c:334
-msgid "No feed list source types found!"
-msgstr "Nenhum tipo de lista de fontes encontrado!"
-
-#: ../src/fl_sources/node_source.c:363
-msgid "Source Type"
-msgstr "Tipo de Fonte"
-
-#: ../src/fl_sources/node_source.c:414
-#, c-format
-msgid "Login for '%s' has not yet completed! Please wait until login is done."
-msgstr ""
-
-#. FIXME: something is not perfect, because if you immediately
-#. remove the subscription tree afterwards there is a double free
-#: ../src/fl_sources/node_source.c:580
-#, c-format
-msgid "The '%s' subscription was successfully converted to local feeds!"
-msgstr ""
-
-#: ../src/fl_sources/reedah_source.c:103
-#: ../src/fl_sources/theoldreader_source.c:104
+#: ../src/ui/ui_common.c:206
 #, fuzzy
-msgid "Login failed!"
-msgstr "Falha ao efectuar aceder ao Google Reader!"
+msgid "All Files"
+msgstr "Ficheiro _Local"
 
-#: ../src/fl_sources/reedah_source.c:312
-msgid "Reedah"
-msgstr ""
-
-#: ../src/fl_sources/reedah_source_feed.c:154
-msgid "Could not parse JSON returned by Reedah API!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:224 ../src/fl_sources/ttrss_source.c:283
-msgid "TinyTinyRSS HTTP API not reachable!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:231
-msgid ""
-"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
-"URL!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:290
-msgid "TinyTinyRSS unsubscribing feed failed!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:307
+#: ../src/update.c:370
 #, c-format
-msgid ""
-"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
-"%s or later!"
-msgstr ""
+msgid "Error opening temp file %s to use for filtering!"
+msgstr "Erro ao abrir ficheiro temporário %s para usar na filtragem!"
 
-#: ../src/fl_sources/ttrss_source.c:427
-msgid "Tiny Tiny RSS"
-msgstr ""
+#: ../src/update.c:392
+#, c-format
+msgid "%s exited with status %d"
+msgstr "%s saiu com estado %d"
 
-#: ../src/fl_sources/ttrss_source_feed.c:150
-msgid "Could not parse JSON returned by TinyTinyRSS API!"
-msgstr ""
+#: ../src/update.c:398 ../src/update.c:399 ../src/update.c:621
+#, c-format
+msgid "Error: Could not open pipe \"%s\""
+msgstr "Erro: Não foi possível abrir a linha de processamento \"%s\""
 
-#: ../src/fl_sources/theoldreader_source.c:310
-#, fuzzy
-msgid "TheOldReader"
-msgstr "Leitor de Fontes"
+#. FIXME: maybe setting request->returncode would be better
+#: ../src/update.c:652
+#, c-format
+msgid "Error: Could not open file \"%s\""
+msgstr "Erro: Não foi possível abrir o ficheiro \"%s\""
 
-#: ../src/webkit/liferea_web_view.c:176
+#: ../src/update.c:658
+#, c-format
+msgid "Error: There is no file \"%s\""
+msgstr "Erro: O ficheiro \"%s\" não existe"
+
+#: ../src/vfolder.c:54
+msgid "New Search Folder"
+msgstr "Nova Pasta de Procura"
+
+#: ../src/webkit/liferea_web_view.c:163
 #, fuzzy
 msgid "Open Link In _Tab"
 msgstr "Abrir Link Em _Separador"
 
-#: ../src/webkit/liferea_web_view.c:177
+#: ../src/webkit/liferea_web_view.c:164
 #, fuzzy
 msgid "Open Link In Browser"
 msgstr "_Abrir Link No Navegador"
 
-#: ../src/webkit/liferea_web_view.c:178
+#: ../src/webkit/liferea_web_view.c:165
 #, fuzzy
 msgid "Open Link In External Browser"
 msgstr "_Abrir Link No Navegador"
 
-#: ../src/webkit/liferea_web_view.c:184
+#: ../src/webkit/liferea_web_view.c:171
 #, c-format
 msgid "_Bookmark Link at %s"
 msgstr "_Marcar Link em %s"
 
-#: ../src/webkit/liferea_web_view.c:191
+#: ../src/webkit/liferea_web_view.c:178
 msgid "_Copy Link Location"
 msgstr "_Copiar Localização do Link"
 
-#: ../src/webkit/liferea_web_view.c:194
+#: ../src/webkit/liferea_web_view.c:181
 #, fuzzy
 msgid "_View Image"
 msgstr "_Ver"
 
-#: ../src/webkit/liferea_web_view.c:195
+#: ../src/webkit/liferea_web_view.c:182
 #, fuzzy
 msgid "_Copy Image Location"
 msgstr "_Copiar Localização do Link"
 
-#: ../src/webkit/liferea_web_view.c:198
+#: ../src/webkit/liferea_web_view.c:185
 #, fuzzy
 msgid "S_ave Link As"
 msgstr "Guardar Como..."
 
-#: ../src/webkit/liferea_web_view.c:201
+#: ../src/webkit/liferea_web_view.c:188
 msgid "S_ave Image As"
 msgstr ""
 
-#: ../src/webkit/liferea_web_view.c:208
+#: ../src/webkit/liferea_web_view.c:195
 msgid "_Subscribe..."
 msgstr "_Subscrever..."
 
-#: ../src/webkit/liferea_web_view.c:212
+#: ../src/webkit/liferea_web_view.c:199
 msgid "_Copy"
 msgstr ""
 
-#: ../src/webkit/liferea_web_view.c:218
+#: ../src/webkit/liferea_web_view.c:205
 msgid "_Increase Text Size"
 msgstr "_Aumentar Tamanho do Texto"
 
-#: ../src/webkit/liferea_web_view.c:219
+#: ../src/webkit/liferea_web_view.c:206
 msgid "_Decrease Text Size"
 msgstr "_Diminuir Tamanho do Texto"
 
-#: ../plugins/headerbar.py:63
-msgid "Previous Item"
+#: ../src/webkit/liferea_web_view.c:213
+msgid "_Reader Mode"
 msgstr ""
 
-#: ../plugins/headerbar.py:69
-#, fuzzy
-msgid "Next Item"
-msgstr "_Avançar Para Item Não Lido"
+#: ../src/xml.c:426
+msgid "[There were more errors. Output was truncated!]"
+msgstr "[Houveram mais erros. A saída foi truncada!]"
 
-#: ../plugins/headerbar.py:77
-msgid "_Next Unread Item"
-msgstr "_Avançar Para Item Não Lido"
-
-#: ../plugins/headerbar.py:85
-msgid "_Mark Items Read"
-msgstr "_Marcar Itens Como Lidos"
-
-#: ../plugins/headerbar.py:104
-msgid "Search All Feeds..."
-msgstr "Procurar em Todas as Fontes..."
+#: ../src/xml.c:594
+msgid "XML Parser: Could not parse document:\n"
+msgstr "Analisador XML: Não foi possível analisar o documento:\n"
 
 #: ../glade/about.ui.h:1
 msgid "About"
@@ -1436,6 +1492,177 @@ msgid "_Do this automatically for enclosures like this from now on."
 msgstr ""
 "_Fazer isso automaticamente para componentes como este de agora em diante."
 
+#: ../glade/google_source.ui.h:1
+#, fuzzy
+msgid "Add Google Reader API Account"
+msgstr "Adicionar Conta do Google Reader"
+
+#: ../glade/google_source.ui.h:2
+msgid ""
+"Please enter the details of the new Google Reader API compatible "
+"subscription."
+msgstr ""
+
+#: ../glade/google_source.ui.h:3 ../glade/reedah_source.ui.h:3
+#: ../glade/theoldreader_source.ui.h:3 ../glade/ttrss_source.ui.h:4
+msgid "_Password"
+msgstr "_Senha"
+
+#: ../glade/google_source.ui.h:4 ../glade/reedah_source.ui.h:4
+#: ../glade/theoldreader_source.ui.h:4
+msgid "_Username (Email)"
+msgstr "Nome de _Utilizador (E-mail)"
+
+#: ../glade/google_source.ui.h:5
+#, fuzzy
+msgid "_Server"
+msgstr "Erro do Servidor"
+
+#: ../glade/google_source.ui.h:6
+#, fuzzy
+msgid "_Name"
+msgstr "_Nome"
+
+#: ../glade/liferea_menu.ui.h:1
+msgid "_Subscriptions"
+msgstr "_Subscrições"
+
+#: ../glade/liferea_menu.ui.h:2 ../glade/liferea_toolbar.ui.h:8
+msgid "Update _All"
+msgstr "Ac_tualizar Todas"
+
+#: ../glade/liferea_menu.ui.h:3
+msgid "Mark All As _Read"
+msgstr "Ma_rcar Todos Como Lidos"
+
+#: ../glade/liferea_menu.ui.h:4 ../glade/liferea_toolbar.ui.h:1
+msgid "_New Subscription..."
+msgstr "_Nova Subscrição..."
+
+#: ../glade/liferea_menu.ui.h:7
+msgid "New _Source..."
+msgstr "Nova Fo_nte..."
+
+#: ../glade/liferea_menu.ui.h:9
+msgid "_Import Feed List..."
+msgstr "_Importar Lista de Fontes..."
+
+#: ../glade/liferea_menu.ui.h:10
+msgid "_Export Feed List..."
+msgstr "_Exportar Lista de Fontes.."
+
+#: ../glade/liferea_menu.ui.h:11
+msgid "_Quit"
+msgstr "_Sair"
+
+#: ../glade/liferea_menu.ui.h:12
+msgid "_Feed"
+msgstr "_Fonte"
+
+#: ../glade/liferea_menu.ui.h:15
+msgid "Remove _All Items"
+msgstr "Remover _Todos Itens"
+
+#: ../glade/liferea_menu.ui.h:16
+msgid "_Remove"
+msgstr "_Remover"
+
+#: ../glade/liferea_menu.ui.h:18
+msgid "_Item"
+msgstr "_Itens"
+
+#: ../glade/liferea_menu.ui.h:24
+msgid "R_emove"
+msgstr "R_emover"
+
+#: ../glade/liferea_menu.ui.h:28
+msgid "_View"
+msgstr "_Ver"
+
+#: ../glade/liferea_menu.ui.h:29
+msgid "_Fullscreen"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:30
+msgid "Zoom _In"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:31
+msgid "Zoom _Out"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:32
+#, fuzzy
+msgid "_Normal size"
+msgstr "Visualização _Normal"
+
+#: ../glade/liferea_menu.ui.h:33
+msgid "_Normal View"
+msgstr "Visualização _Normal"
+
+#: ../glade/liferea_menu.ui.h:34
+msgid "_Wide View"
+msgstr "Visualização Alargada"
+
+#: ../glade/liferea_menu.ui.h:35
+msgid "_Reduced Feed List"
+msgstr "Lista de Fontes _Reduzida"
+
+#: ../glade/liferea_menu.ui.h:36
+msgid "_Tools"
+msgstr "Ferramentas"
+
+#: ../glade/liferea_menu.ui.h:37
+msgid "_Update Monitor"
+msgstr "Monitor de Actualização"
+
+#: ../glade/liferea_menu.ui.h:38
+msgid "_Preferences"
+msgstr "_Preferências"
+
+#: ../glade/liferea_menu.ui.h:39
+msgid "S_earch"
+msgstr "_Procurar"
+
+#: ../glade/liferea_menu.ui.h:41
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: ../glade/liferea_menu.ui.h:42
+msgid "_Contents"
+msgstr "_Índice"
+
+#: ../glade/liferea_menu.ui.h:43
+msgid "_Quick Reference"
+msgstr "R_eferência Rápida"
+
+#: ../glade/liferea_menu.ui.h:44
+msgid "_FAQ"
+msgstr "_FAQ"
+
+#: ../glade/liferea_menu.ui.h:45
+msgid "_About"
+msgstr "_Sobre"
+
+#: ../glade/liferea_toolbar.ui.h:2
+msgid "Adds a subscription to the feed list."
+msgstr "Adiciona uma nova subscrição à lista de fontes."
+
+#: ../glade/liferea_toolbar.ui.h:4
+msgid ""
+"Marks all items of the selected feed list node / in the item list as read."
+msgstr ""
+"Marca todos os itens do nó da lista de subscrição seleccionada / na lista de "
+"itens como lidos."
+
+#: ../glade/liferea_toolbar.ui.h:9
+msgid "Updates all subscriptions."
+msgstr "Actualizar todas as subscrições."
+
+#: ../glade/liferea_toolbar.ui.h:11
+msgid "Show the search dialog."
+msgstr "Exibe o diálogo de procura."
+
 #: ../glade/mainwindow.ui.h:2
 msgid "page 1"
 msgstr ""
@@ -1444,11 +1671,7 @@ msgstr ""
 msgid "page 2"
 msgstr ""
 
-#: ../glade/mainwindow.ui.h:4
-msgid "page 3"
-msgstr ""
-
-#: ../glade/mainwindow.ui.h:5 ../glade/prefs.ui.h:23
+#: ../glade/mainwindow.ui.h:4 ../glade/prefs.ui.h:25
 msgid "Headlines"
 msgstr "Títulos"
 
@@ -1473,13 +1696,14 @@ msgstr "Nova Pasta"
 msgid "_Folder name:"
 msgstr "N_ome da pasta:"
 
-#: ../glade/new_newsbin.ui.h:1
-msgid "Create News Bin"
-msgstr "Criar Recipiente de Notícias"
-
 #: ../glade/new_newsbin.ui.h:2
 msgid "_News Bin Name:"
 msgstr "_Nome do Recipiente de Notícias:"
+
+#: ../glade/new_newsbin.ui.h:3
+#, fuzzy
+msgid "_Always show in Reduced Feed List"
+msgstr "Lista de Fontes _Reduzida"
 
 #: ../glade/new_subscription.ui.h:2 ../glade/properties.ui.h:11
 #, fuzzy
@@ -1653,75 +1877,75 @@ msgid "_Default View Mode:"
 msgstr ""
 
 #: ../glade/prefs.ui.h:21
+msgid "_Defer removing read items from folders and search folders."
+msgstr ""
+
+#: ../glade/prefs.ui.h:22
+msgid "Ask for confirmation when marking all items as read."
+msgstr ""
+
+#: ../glade/prefs.ui.h:23
 #, fuzzy
 msgid "Web Integration"
 msgstr "Orientação"
 
-#: ../glade/prefs.ui.h:22
+#: ../glade/prefs.ui.h:24
 msgid "_Post Bookmarks to"
 msgstr "_Publicar Marcadores em"
 
-#: ../glade/prefs.ui.h:24
+#: ../glade/prefs.ui.h:26
 #, fuzzy
 msgid "Internal Browser Settings"
 msgstr "<span weight=\"bold\">Configurações do Navegador Interno</span>"
 
-#: ../glade/prefs.ui.h:25
+#: ../glade/prefs.ui.h:27
 msgid "Open links in Liferea's _window."
 msgstr "Abrir links na _janela do Liferea."
 
-#: ../glade/prefs.ui.h:26
-msgid "_Disable Javascript."
-msgstr "_Desactivar Javascript."
+#: ../glade/prefs.ui.h:28
+msgid "_Never run external Javascript."
+msgstr ""
 
-#: ../glade/prefs.ui.h:27
+#: ../glade/prefs.ui.h:29
 #, fuzzy
 msgid "_Enable browser plugins."
 msgstr "<span weight=\"bold\">Configurações do Navegador Externo</span>"
 
-#: ../glade/prefs.ui.h:28
+#: ../glade/prefs.ui.h:30
 #, fuzzy
 msgid "External Browser Settings"
 msgstr "<span weight=\"bold\">Configurações do Navegador Externo</span>"
 
-#: ../glade/prefs.ui.h:29
+#: ../glade/prefs.ui.h:31
 msgid "_Browser:"
 msgstr "_Navegador:"
 
-#: ../glade/prefs.ui.h:30
+#: ../glade/prefs.ui.h:32
 #, fuzzy
 msgid "_Manual:"
 msgstr "Manual"
 
-#: ../glade/prefs.ui.h:32
+#: ../glade/prefs.ui.h:34
 #, no-c-format
 msgid "<small>(%s for URL)</small>"
 msgstr ""
 
-#: ../glade/prefs.ui.h:33
+#: ../glade/prefs.ui.h:35
 msgid "Browser"
 msgstr "Navegador"
 
-#: ../glade/prefs.ui.h:34
+#: ../glade/prefs.ui.h:36
 #, fuzzy
 msgid "Toolbar Settings"
 msgstr "Etiquetas dos botões da barra de ferramentas:"
 
-#: ../glade/prefs.ui.h:35
+#: ../glade/prefs.ui.h:37
 msgid "_Hide toolbar."
 msgstr "_Ocultar barra de ferramentas."
 
-#: ../glade/prefs.ui.h:36
+#: ../glade/prefs.ui.h:38
 msgid "Toolbar _button labels:"
 msgstr "Etiquetas dos botões da barra de ferramentas:"
-
-#: ../glade/prefs.ui.h:37
-msgid "Other"
-msgstr ""
-
-#: ../glade/prefs.ui.h:38
-msgid "Ask for confirmation when marking all items as read"
-msgstr ""
 
 #: ../glade/prefs.ui.h:39
 msgid "Desktop"
@@ -1779,33 +2003,59 @@ msgid "Privacy Settings"
 msgstr "<span weight=\"bold\">Configurações de Exibição de Pastas</span>"
 
 #: ../glade/prefs.ui.h:52
-msgid "Tell sites that I do _not want to be tracked"
+msgid "Tell sites that I do _not want to be tracked."
 msgstr ""
 
 #: ../glade/prefs.ui.h:53
-msgid "Privacy"
+msgid "_Intelligent Tracking Prevention. "
 msgstr ""
 
 #: ../glade/prefs.ui.h:54
+msgid ""
+"This enables the WebKit feature described <a href=\"https://webkit.org/"
+"tracking-prevention/\">here</a>."
+msgstr ""
+
+#: ../glade/prefs.ui.h:55
+msgid ""
+"Intelligent tracking prevention is only available with WebKitGtk+ 2.30 or "
+"higher."
+msgstr ""
+
+#: ../glade/prefs.ui.h:56
+msgid "Use _Reader mode."
+msgstr ""
+
+#: ../glade/prefs.ui.h:57
+msgid ""
+"This enables <a href=\"https://github.com/mozilla/readability\">stripping</"
+"a> all non-content elements (like scripts, fonts, tracking)"
+msgstr ""
+
+#: ../glade/prefs.ui.h:58
+msgid "Privacy"
+msgstr ""
+
+#: ../glade/prefs.ui.h:59
 #, fuzzy
 msgid "Downloading Enclosures"
 msgstr "A Transferir Componente"
 
-#: ../glade/prefs.ui.h:55
+#: ../glade/prefs.ui.h:60
 msgid "_Download using"
 msgstr "_Transferir usando"
 
-#: ../glade/prefs.ui.h:57
+#: ../glade/prefs.ui.h:62
 #, no-c-format
 msgid "custom-command %s"
 msgstr ""
 
-#: ../glade/prefs.ui.h:58
+#: ../glade/prefs.ui.h:63
 #, fuzzy
 msgid "Opening Enclosures"
 msgstr "Abrir Componente..."
 
-#: ../glade/prefs.ui.h:59
+#: ../glade/prefs.ui.h:64
 msgid "Enclosures"
 msgstr "Componentes"
 
@@ -1853,6 +2103,10 @@ msgstr ""
 "O Liferea pode usar plug-ins de filtros externos para aceder a fontes e "
 "directórios com formatos não suportados.  Leia a documentação para mais "
 "informações."
+
+#: ../glade/properties.ui.h:21 ../xslt/item.xml.in.h:1
+msgid "Source"
+msgstr "Fonte"
 
 #: ../glade/properties.ui.h:22
 msgid ""
@@ -1912,10 +2166,6 @@ msgstr "_Marcar itens transferidos com lidos."
 msgid "Extract full content from HTML5 and Google AMP"
 msgstr ""
 
-#: ../glade/properties.ui.h:39
-msgid "Advanced"
-msgstr "Avançado"
-
 #: ../glade/reedah_source.ui.h:1
 #, fuzzy
 msgid "Add Reedah Account"
@@ -1925,15 +2175,6 @@ msgstr "Adicionar Conta do Google Reader"
 #, fuzzy
 msgid "Please enter your Reedah account settings."
 msgstr "Por favor insira a configuração de sua conta do Google Reader."
-
-#: ../glade/reedah_source.ui.h:3 ../glade/theoldreader_source.ui.h:3
-#: ../glade/ttrss_source.ui.h:4
-msgid "_Password"
-msgstr "_Senha"
-
-#: ../glade/reedah_source.ui.h:4 ../glade/theoldreader_source.ui.h:4
-msgid "_Username (Email)"
-msgstr "Nome de _Utilizador (E-mail)"
 
 #: ../glade/rename_node.ui.h:1
 msgid "Rename"
@@ -1951,18 +2192,36 @@ msgstr "Propriedades da Pasta Virtual"
 msgid "Search _Name:"
 msgstr "Procurar _Nome:"
 
-#: ../glade/search_folder.ui.h:3 ../glade/search.ui.h:3
+#: ../glade/search_folder.ui.h:3
 #, fuzzy
-msgid "Find Items that meet the following criteria"
-msgstr "<b>Procurar itens que correspondam ao seguinte critério</b>"
+msgid "Search Rules"
+msgstr "%d Resultado da Procura"
 
-#: ../glade/search_folder.ui.h:4 ../glade/search.ui.h:4
+#: ../glade/search_folder.ui.h:4
+msgid "Rules"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:5
+msgid "All rules for this search folder"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:6
+#, fuzzy
+msgid "Rule Matching"
+msgstr "_Qualquer Regra Coincidente"
+
+#: ../glade/search_folder.ui.h:7 ../glade/search.ui.h:4
 msgid "A_ny Rule Matches"
 msgstr "_Qualquer Regra Coincidente"
 
-#: ../glade/search_folder.ui.h:5 ../glade/search.ui.h:5
+#: ../glade/search_folder.ui.h:8 ../glade/search.ui.h:5
 msgid "_All Rules Must Match"
 msgstr "_Todas as Regras Coincidem"
+
+#: ../glade/search_folder.ui.h:9
+#, fuzzy
+msgid "Hide read items"
+msgstr "O_cultar itens já lidos."
 
 #: ../glade/search.ui.h:1
 msgid "Advanced Search"
@@ -1971,6 +2230,11 @@ msgstr "Procura Avançada"
 #: ../glade/search.ui.h:2
 msgid "_Search Folder..."
 msgstr "Pasta de _Procura..."
+
+#: ../glade/search.ui.h:3
+#, fuzzy
+msgid "Find Items that meet the following criteria"
+msgstr "<b>Procurar itens que correspondam ao seguinte critério</b>"
 
 #: ../glade/simple_search.ui.h:1
 msgid "Search All Feeds"
@@ -2064,6 +2328,276 @@ msgstr "<b>Pedidos Pendentes</b>"
 msgid "_Downloading Now"
 msgstr "<b>A Transferir Agora</b>"
 
+#: ../xslt/feed.xml.in.h:1
+msgid "Feed:"
+msgstr "Fonte:"
+
+#: ../xslt/feed.xml.in.h:2 ../xslt/source.xml.in.h:1
+msgid "Source:"
+msgstr "Fontes:"
+
+#: ../xslt/feed.xml.in.h:3
+msgid "Publisher"
+msgstr "Editores"
+
+#: ../xslt/feed.xml.in.h:4
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../xslt/feed.xml.in.h:5
+#, fuzzy
+msgid "There was a problem when fetching this subscription!"
+msgstr ""
+"Foi encontrado um problema ao ler esta subscrição. Por favor, verifique o "
+"URL e a saída da consola."
+
+#: ../xslt/feed.xml.in.h:6
+#, fuzzy
+msgid "1. Authentication"
+msgstr "Autenticação"
+
+#: ../xslt/feed.xml.in.h:7
+#, fuzzy
+msgid "2. Download"
+msgstr "Transferência"
+
+#: ../xslt/feed.xml.in.h:8
+msgid "3. Feed Discovery"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:9
+msgid "4. Parsing"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:10
+#, fuzzy
+msgid "Details:"
+msgstr "Detalhes"
+
+#: ../xslt/feed.xml.in.h:11
+msgid "Authentication failed. Please check the credentials and try again!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:12
+#, fuzzy
+msgid "There was an error when downloading the feed source:"
+msgstr "Foram encontrados alguns erros ao processar esta fonte!"
+
+#: ../xslt/feed.xml.in.h:13
+#, fuzzy
+msgid "There was an error when running the feed filter command:"
+msgstr "Foram encontrados alguns erros ao processar esta fonte!"
+
+#: ../xslt/feed.xml.in.h:14
+msgid ""
+"The source does not point directly to a feed or a webpage with a link to a "
+"feed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:15
+msgid "Sorry, the feed could not be parsed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:16
+msgid "You may want to contact the author/webmaster of the feed about this!"
+msgstr ""
+
+#: ../xslt/folder.xml.in.h:1
+msgid "Folder:"
+msgstr "Pasta:"
+
+#: ../xslt/folder.xml.in.h:2 ../xslt/source.xml.in.h:2
+msgid "children with"
+msgstr "filhos com"
+
+#: ../xslt/folder.xml.in.h:3 ../xslt/source.xml.in.h:3
+#: ../xslt/vfolder.xml.in.h:2
+msgid "unread headlines"
+msgstr "títulos não lidos"
+
+#: ../xslt/item.xml.in.h:2
+msgid "Feed"
+msgstr "Fonte"
+
+#: ../xslt/item.xml.in.h:3
+msgid "Filed under"
+msgstr "Arquivado sob"
+
+#: ../xslt/item.xml.in.h:4
+msgid "Author"
+msgstr "Autor"
+
+#: ../xslt/item.xml.in.h:5
+msgid "Shared by"
+msgstr "Partilhado por"
+
+#: ../xslt/item.xml.in.h:6
+msgid "Via"
+msgstr "Via"
+
+#: ../xslt/item.xml.in.h:7
+msgid "Related"
+msgstr "Relacionado"
+
+#: ../xslt/item.xml.in.h:8
+msgid "Also posted in"
+msgstr "Também publicado em"
+
+#: ../xslt/item.xml.in.h:9
+msgid "Creator"
+msgstr "Criador"
+
+#: ../xslt/item.xml.in.h:10
+msgid "Coordinates"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:11
+msgid "Map"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:12
+msgid "View count"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:13
+msgid "Rating"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:14
+msgid "Comments"
+msgstr "Comentários"
+
+#: ../xslt/item.xml.in.h:15
+msgid "Updating..."
+msgstr "A Actualizar..."
+
+#: ../xslt/item.xml.in.h:16
+msgid "Section"
+msgstr "Secção"
+
+#: ../xslt/item.xml.in.h:17
+msgid "Department"
+msgstr "Departamento"
+
+#: ../xslt/newsbin.xml.in.h:1
+msgid "News Bin:"
+msgstr "Recipiente de Notícias:"
+
+#: ../xslt/newsbin.xml.in.h:2
+msgid ""
+"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
+"list context menu."
+msgstr ""
+"Adicione itens a este recipiente de notícias seleccionando \"Copiar para o "
+"Recipiente de Notícias\" da lista de itens no menu de contexto."
+
+#: ../xslt/vfolder.xml.in.h:1
+msgid "Search Folder:"
+msgstr "Pasta de Procura:"
+
+#, fuzzy
+#~ msgid "RSS feed reader"
+#~ msgstr "Leitor de Fontes"
+
+#, fuzzy
+#~ msgid "Read articles when offline"
+#~ msgstr "Liferea está desligado"
+
+#, fuzzy
+#~ msgid "Synchronizes with TheOldReader"
+#~ msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
+
+#, fuzzy
+#~ msgid "Synchronizes with TinyTinyRSS"
+#~ msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
+
+#, fuzzy
+#~ msgid "Synchronizes with InoReader"
+#~ msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
+
+#, fuzzy
+#~ msgid "Synchronizes with Reedah"
+#~ msgstr "<span weight=\"bold\">Sincronizado com Máquinas Próximas</span>"
+
+#, fuzzy
+#~ msgid "Play Podcasts"
+#~ msgstr "Podcast"
+
+#, c-format
+#~ msgid "\"%s\" is not available"
+#~ msgstr "\"%s\" não está disponível"
+
+#, c-format
+#~ msgid "\"%s\" updated..."
+#~ msgstr "\"%s\" actualizado..."
+
+#~ msgid ""
+#~ "A network error occurred, or the other end closed the connection "
+#~ "unexpectedly"
+#~ msgstr ""
+#~ "Ocorreu um erro de rede, ou o outro lado terminou a ligação "
+#~ "inesperadamente"
+
+#~ msgid ""
+#~ "The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
+#~ "value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
+#~ "></b>"
+#~ msgstr ""
+#~ "A última actualização desta subscrição falhou!<br/><b>Código de erro HTTP "
+#~ "<xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of "
+#~ "select=\"httpError\"/></b>"
+
+#~ msgid "Parser Error Details"
+#~ msgstr "Detalhes dos Erros do Analisador"
+
+#~ msgid "There were errors while filtering this feed!"
+#~ msgstr "Foram encontrados alguns erros ao filtrar esta fonte!"
+
+#~ msgid "Filter Error Details"
+#~ msgstr "Detalhes dos Erros do Filtro"
+
+#~ msgid ""
+#~ "<p>Could not detect the type of this feed! Please check if the source "
+#~ "really points to a resource provided in one of the supported syndication "
+#~ "formats!</p>XML Parser Output:<br /><div class='xmlparseroutput'>"
+#~ msgstr ""
+#~ "<p>Não foi possível detectar o tipo desta fonte! Por favor, verifique se "
+#~ "a fonte realmente aponta para um recurso fornecido num dos formatos de "
+#~ "subscrição suportados!</p> Saída do Analisador de XML:<br /><div "
+#~ "class='xmlparseroutput'>"
+
+#~ msgid ""
+#~ "The URL you want Liferea to subscribe to points to a webpage and the auto "
+#~ "discovery found no feeds on this page. Maybe this webpage just does not "
+#~ "support feed auto discovery."
+#~ msgstr ""
+#~ "O URL que deseja subscrever com o Liferea aponta para uma página web mas "
+#~ "a pesquisa automática não encontrou nenhuma fonte nesta página. Talvez "
+#~ "esta página web não suporte a pesquisa automática de fontes."
+
+#~ msgid "Source points to HTML document."
+#~ msgstr "Fonte aponta para um documento em HTML."
+
+#~ msgid "Could not determine the feed type."
+#~ msgstr "Não foi possível determinar o tipo de fonte."
+
+#~ msgid "Gone. Resource doesn't exist. Please unsubscribe!"
+#~ msgstr "Esta fonte não existe. Por favor, remova a sua subscrição!"
+
+#~ msgid "Updating \"%s\""
+#~ msgstr "A Actualizar \"%s\""
+
+#~ msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
+#~ msgstr ""
+#~ "Erro de XML ao ler a fonte! Não foi possível carregar a fonte \"%s\"!"
+
+#, fuzzy
+#~ msgid "Combined View"
+#~ msgstr "Visualização _Combinada"
+
+#~ msgid "_Disable Javascript."
+#~ msgstr "_Desactivar Javascript."
+
 #~ msgid "GUI"
 #~ msgstr "Interface Gráfica"
 
@@ -2074,50 +2608,17 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Updating favicon for \"%s\""
 #~ msgstr "A actualizar o ícone da fonte \"%s\""
 
-#~ msgid "_Subscriptions"
-#~ msgstr "_Subscrições"
-
-#~ msgid "Update _All"
-#~ msgstr "Ac_tualizar Todas"
-
-#~ msgid "Updates all subscriptions."
-#~ msgstr "Actualizar todas as subscrições."
-
-#~ msgid "Mark All As _Read"
-#~ msgstr "Ma_rcar Todos Como Lidos"
-
 #~ msgid "Marks read every item of every subscription."
 #~ msgstr "Marca todos itens de todas as subscrições como lidos."
-
-#~ msgid "_Import Feed List..."
-#~ msgstr "_Importar Lista de Fontes..."
 
 #~ msgid "Imports an OPML feed list."
 #~ msgstr "Importa uma lista OPML de fontes."
 
-#~ msgid "_Export Feed List..."
-#~ msgstr "_Exportar Lista de Fontes.."
-
 #~ msgid "Exports the feed list as OPML."
 #~ msgstr "Exporta a lista de fontes como OPML."
 
-#~ msgid "_Quit"
-#~ msgstr "_Sair"
-
-#~ msgid "_Feed"
-#~ msgstr "_Fonte"
-
-#~ msgid "Remove _All Items"
-#~ msgstr "Remover _Todos Itens"
-
 #~ msgid "Removes all items of the currently selected feed."
 #~ msgstr "Remove todos os item seleccionados da fonte actual."
-
-#~ msgid "_Item"
-#~ msgstr "_Itens"
-
-#~ msgid "_View"
-#~ msgstr "_Ver"
 
 #~ msgid "Increases the text size of the item view."
 #~ msgstr "Aumenta o tamanho do texto de exibição do item."
@@ -2125,62 +2626,26 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Decreases the text size of the item view."
 #~ msgstr "Diminui o tamanho do texto de exibição do item."
 
-#~ msgid "_Tools"
-#~ msgstr "Ferramentas"
-
-#~ msgid "_Update Monitor"
-#~ msgstr "Monitor de Actualização"
-
 #~ msgid "Show a list of all feeds currently in the update queue"
 #~ msgstr "Exibe uma lista de todas as fontes na fila de actualização"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Preferências"
 
 #~ msgid "Edit Preferences."
 #~ msgstr "Editar Preferências."
 
-#~ msgid "S_earch"
-#~ msgstr "_Procurar"
-
-#~ msgid "Show the search dialog."
-#~ msgstr "Exibe o diálogo de procura."
-
-#~ msgid "_Help"
-#~ msgstr "_Ajuda"
-
-#~ msgid "_Contents"
-#~ msgstr "_Índice"
-
 #~ msgid "View help for this application."
 #~ msgstr "Veja a ajuda para esta aplicação."
-
-#~ msgid "_Quick Reference"
-#~ msgstr "R_eferência Rápida"
 
 #~ msgid "View a list of all Liferea shortcuts."
 #~ msgstr "Exibir uma lista de atalhos do Liferea."
 
-#~ msgid "_FAQ"
-#~ msgstr "_FAQ"
-
 #~ msgid "View the FAQ for this application."
 #~ msgstr "Exibir as FAQ desta aplicação."
-
-#~ msgid "_About"
-#~ msgstr "_Sobre"
 
 #~ msgid "Shows an about dialog."
 #~ msgstr "Mostra o diálogo 'sobre'."
 
-#~ msgid "_Normal View"
-#~ msgstr "Visualização _Normal"
-
 #~ msgid "Set view mode to mail client mode."
 #~ msgstr "Define o modo de visualização para o modo de cliente de e-mail."
-
-#~ msgid "_Wide View"
-#~ msgstr "Visualização Alargada"
 
 #~ msgid "Set view mode to use three vertical panes."
 #~ msgstr "Define o modo de visualização para usar três painéis verticais."
@@ -2191,17 +2656,8 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Set view mode to two pane mode."
 #~ msgstr "Define o modo de visualização para um modo com dois painéis."
 
-#~ msgid "_Reduced Feed List"
-#~ msgstr "Lista de Fontes _Reduzida"
-
 #~ msgid "Hide feeds with no unread items."
 #~ msgstr "Ocultar fontes sem artigos não lidos "
-
-#~ msgid "_New Subscription..."
-#~ msgstr "_Nova Subscrição..."
-
-#~ msgid "Adds a subscription to the feed list."
-#~ msgstr "Adiciona uma nova subscrição à lista de fontes."
 
 #~ msgid "Adds a folder to the feed list."
 #~ msgstr "Adiciona uma pasta à lista de fontes."
@@ -2209,20 +2665,11 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Adds a new search folder to the feed list."
 #~ msgstr "Adicionar uma nova pasta de procura à lista de fontes."
 
-#~ msgid "New _Source..."
-#~ msgstr "Nova Fo_nte..."
-
 #~ msgid "Adds a new feed list source."
 #~ msgstr "Adicionar uma nova fonte de lista de fontes."
 
 #~ msgid "Adds a new news bin."
 #~ msgstr "Adiciona um novo recipiente de notícias."
-
-#~ msgid ""
-#~ "Marks all items of the selected feed list node / in the item list as read."
-#~ msgstr ""
-#~ "Marca todos os itens do nó da lista de subscrição seleccionada / na lista "
-#~ "de itens como lidos."
 
 #~ msgid ""
 #~ "Updates the selected subscription or all subscriptions of the selected "
@@ -2234,9 +2681,6 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Opens the property dialog for the selected subscription."
 #~ msgstr "Abre o diálogo de propriedades para a subscrição seleccionada."
 
-#~ msgid "_Remove"
-#~ msgstr "_Remover"
-
 #~ msgid "Removes the selected subscription."
 #~ msgstr "Remove as subscrições seleccionadas."
 
@@ -2245,9 +2689,6 @@ msgstr "<b>A Transferir Agora</b>"
 
 #~ msgid "Toggles the flag status of the selected item."
 #~ msgstr "Alterna o sinalizador de estado do item seleccionado."
-
-#~ msgid "R_emove"
-#~ msgstr "R_emover"
 
 #~ msgid "Removes the selected item."
 #~ msgstr "Remove os itens seleccionados."
@@ -2283,9 +2724,6 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgstr ""
 #~ "Nota: <i>O nome de utilizador e senha serão guardados no seu ficheiro de "
 #~ "subscrições sem encriptação.</i>"
-
-#~ msgid "Add Google Reader Account"
-#~ msgstr "Adicionar Conta do Google Reader"
 
 #~ msgid "Please enter your Google Reader account settings."
 #~ msgstr "Por favor insira a configuração de sua conta do Google Reader."
@@ -2486,12 +2924,6 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Open feed"
 #~ msgstr "Abrir fonte"
 
-#~ msgid "Feed Update"
-#~ msgstr "Actualização de Fonte"
-
-#~ msgid "Show details"
-#~ msgstr "Mostrar detalhes"
-
 #~ msgid "_Enforce popup notification for this subscription."
 #~ msgstr "_Forçar notificação popup para esta subscrição."
 
@@ -2505,10 +2937,6 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgstr ""
 #~ "Copyright (c) 2003-2009\n"
 #~ "A Equipa do Liferea\n"
-
-#, fuzzy
-#~ msgid "Notification Settings"
-#~ msgstr "<span weight=\"bold\">Configuração das Notificações</span>"
 
 #~ msgid "Show a _popup window with new headlines."
 #~ msgstr "Mostra uma janela de _popup com novos títulos."
@@ -2573,9 +3001,6 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid "Download finished."
 #~ msgstr "_Transferir usando"
 
-#~ msgid "Choose download directory"
-#~ msgstr "Escolha o directório de transferência"
-
 #~ msgid ""
 #~ "_Manual:\n"
 #~ "(%s for URL)"
@@ -2588,9 +3013,6 @@ msgstr "<b>A Transferir Agora</b>"
 
 #~ msgid "_Enable Local LAN Synchronization"
 #~ msgstr "_Activar Sincronização de Rede Local"
-
-#~ msgid "_Service Name"
-#~ msgstr "Nome _Serviço"
 
 #~ msgid "Sync"
 #~ msgstr "Sincronizar"
@@ -2657,11 +3079,6 @@ msgstr "<b>A Transferir Agora</b>"
 #~ msgid_plural "%d Search Results for \"%s\""
 #~ msgstr[0] "%d Resultado da Procura por \"%s\""
 #~ msgstr[1] "%d Resultados da Procura por \"%s\""
-
-#~ msgid "%d Search Result"
-#~ msgid_plural "%d Search Results"
-#~ msgstr[0] "%d Resultado da Procura"
-#~ msgstr[1] "%d Resultados da Procura"
 
 #~ msgid ""
 #~ "The item list now contains all items matching the specified search "
@@ -3120,9 +3537,6 @@ msgstr "<b>A Transferir Agora</b>"
 
 #~ msgid "Translation"
 #~ msgstr "Tradução"
-
-#~ msgid "_Name:"
-#~ msgstr "_Nome"
 
 #~ msgid ""
 #~ "minutes\n"

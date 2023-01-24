@@ -1,7 +1,7 @@
 /**
  * @file ttrss_source.c  Tiny Tiny RSS feed list source support
  *
- * Copyright (C) 2010-2014 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2010-2022 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,19 +141,13 @@ void
 ttrss_source_login (ttrssSourcePtr source, guint32 flags)
 {
 	gchar			*username, *password, *source_uri;
-	updateRequestPtr	request;
+	UpdateRequest		*request;
 	subscriptionPtr		subscription = source->root->subscription;
 
 	if (source->root->source->loginState != NODE_SOURCE_STATE_NONE) {
 		/* this should not happen, as of now, we assume the session doesn't expire. */
 		debug1 (DEBUG_UPDATE, "Logging in while login state is %d", source->root->source->loginState);
 	}
-
-	request = update_request_new ();
-
-	/* escape user and password for JSON call */
-	username = g_strescape (subscription->updateOptions->username, NULL);
-	password = g_strescape (subscription->updateOptions->password, NULL);
 
 	source->url = metadata_list_get (subscription->metadata, "ttrss-url");
 	if (!source->url) {
@@ -162,10 +156,19 @@ ttrss_source_login (ttrssSourcePtr source, guint32 flags)
 	}
 
 	source_uri = g_strdup_printf (TTRSS_URL, source->url);
-	update_request_set_source (request, source_uri);
+
+	request = update_request_new (
+		source_uri,
+		NULL,	// updateState
+		subscription->updateOptions
+	);
+
 	g_free (source_uri);
 
-	request->options = update_options_copy (subscription->updateOptions);
+	/* escape user and password for JSON call */
+	username = g_strescape (subscription->updateOptions->username, NULL);
+	password = g_strescape (subscription->updateOptions->password, NULL);
+
 	request->postdata = g_strdup_printf (TTRSS_JSON_LOGIN, username, password);
 
 	g_free (username);
@@ -173,7 +176,7 @@ ttrss_source_login (ttrssSourcePtr source, guint32 flags)
 
 	node_source_set_state (source->root, NODE_SOURCE_STATE_IN_PROGRESS);
 
-	update_execute_request (source, request, ttrss_source_login_cb, source, flags);
+	update_execute_request (source, request, ttrss_source_login_cb, source, flags | FEED_REQ_NO_FEED);
 }
 
 /* node source type implementation */
@@ -243,8 +246,9 @@ ttrss_source_add_subscription (nodePtr root, subscriptionPtr subscription)
 	nodePtr			parent;
 	gchar			*username, *password;
 	ttrssSourcePtr		source = (ttrssSourcePtr)root->data;
-	updateRequestPtr	request;
+	UpdateRequest		*request;
 	gint			categoryId = 0;
+	gchar			*source_uri;
 
 	/* Determine correct category from selected folder name */
 	parent = feedlist_get_selected ();
@@ -254,20 +258,26 @@ ttrss_source_add_subscription (nodePtr root, subscriptionPtr subscription)
 		categoryId = GPOINTER_TO_INT (g_hash_table_lookup (source->folderToCategory, parent->id));
 	}
 
+	source_uri = g_strdup_printf (TTRSS_URL, source->url);
+
+	request = update_request_new (
+		source_uri,
+		NULL,
+		root->subscription->updateOptions
+	);
+
+	g_free (source_uri);
+
 	/* escape user and password for JSON call */
 	username = g_strescape (root->subscription->updateOptions->username, NULL);
 	password = g_strescape (root->subscription->updateOptions->password, NULL);
 
-	request = update_request_new ();
-	request->options = update_options_copy (root->subscription->updateOptions);
 	request->postdata = g_strdup_printf (TTRSS_JSON_SUBSCRIBE, source->session_id, subscription->source, categoryId, username, password);
-	update_request_set_source (request, g_strdup_printf (TTRSS_URL, source->url));
-	update_execute_request (source, request, ttrss_source_subscribe_cb, source, 0 /* flags */);
 
 	g_free (username);
 	g_free (password);
 
-	// FIXME: leaking subscription?
+	update_execute_request (source, request, ttrss_source_subscribe_cb, source, 0 /* flags */);
 
 	return NULL;
 }
@@ -297,9 +307,10 @@ ttrss_source_remove_node_cb (const struct updateResult * const result, gpointer 
 static void
 ttrss_source_remove_node (nodePtr root, nodePtr node)
 {
-	ttrssSourcePtr		source = (ttrssSourcePtr)root->data;
-	updateRequestPtr	request;
-	const gchar		*id;
+	ttrssSourcePtr	source = (ttrssSourcePtr)root->data;
+	UpdateRequest	*request;
+	const gchar	*id;
+	gchar		*source_uri;
 
 	// FIXME: Check for login?
 
@@ -314,11 +325,18 @@ ttrss_source_remove_node (nodePtr root, nodePtr node)
 		return;
 	}
 
-	request = update_request_new ();
-	request->options = update_options_copy (root->subscription->updateOptions);
+	source_uri = g_strdup_printf (TTRSS_URL, source->url);
+
+	request = update_request_new (
+		source_uri,
+		NULL,
+		root->subscription->updateOptions
+	);
+
+	g_free (source_uri);
+
 	request->postdata = g_strdup_printf (TTRSS_JSON_UNSUBSCRIBE, source->session_id, id);
 
-	update_request_set_source (request, g_strdup_printf (TTRSS_URL, source->url));
 	update_execute_request (source, request, ttrss_source_remove_node_cb, node, 0 /* flags */);
 }
 
@@ -334,6 +352,7 @@ on_ttrss_source_selected (GtkDialog *dialog,
 
 		node = node_new (node_source_get_node_type ());
 		node_source_new (node, ttrss_source_get_type (), "");
+		node_set_title (node, node->source->type->name);
 
 		/* This is a bit ugly: we need to prevent the tt-rss base
 		   URL from being lost by unwanted permanent redirects on
@@ -386,15 +405,23 @@ ttrss_source_remote_update_cb (const struct updateResult * const result, gpointe
 static void
 ttrss_source_item_set_flag (nodePtr node, itemPtr item, gboolean newStatus)
 {
-	nodePtr			root = node_source_root_from_node (node);
-	ttrssSourcePtr		source = (ttrssSourcePtr)root->data;
-	updateRequestPtr	request;
+	nodePtr		root = node_source_root_from_node (node);
+	ttrssSourcePtr	source = (ttrssSourcePtr)root->data;
+	UpdateRequest	*request;
+	gchar		*source_uri;
 
-	request = update_request_new ();
-	request->options = update_options_copy (root->subscription->updateOptions);
+	source_uri = g_strdup_printf (TTRSS_URL, source->url);
+
+	request = update_request_new (
+		source_uri,
+		NULL,
+		root->subscription->updateOptions
+	);
+
+	g_free (source_uri);
+
 	request->postdata = g_strdup_printf (TTRSS_JSON_UPDATE_ITEM_FLAG, source->session_id, item_get_id(item), newStatus?1:0 );
 
-	update_request_set_source (request, g_strdup_printf (TTRSS_URL, source->url));
 	update_execute_request (source, request, ttrss_source_remote_update_cb, source, 0 /* flags */);
 
 	item_flag_state_changed (item, newStatus);
@@ -403,18 +430,36 @@ ttrss_source_item_set_flag (nodePtr node, itemPtr item, gboolean newStatus)
 static void
 ttrss_source_item_mark_read (nodePtr node, itemPtr item, gboolean newStatus)
 {
-	nodePtr			root = node_source_root_from_node (node);
-	ttrssSourcePtr		source = (ttrssSourcePtr)root->data;
-	updateRequestPtr	request;
+	nodePtr		root = node_source_root_from_node (node);
+	ttrssSourcePtr	source = (ttrssSourcePtr)root->data;
+	UpdateRequest	*request;
+	gchar		*source_uri;
 
-	request = update_request_new ();
-	request->options = update_options_copy (root->subscription->updateOptions);
+	source_uri = g_strdup_printf (TTRSS_URL, source->url);
+
+	request = update_request_new (
+		source_uri,
+		NULL,
+		root->subscription->updateOptions
+	);
+	g_free (source_uri);
+
 	request->postdata = g_strdup_printf (TTRSS_JSON_UPDATE_ITEM_UNREAD, source->session_id, item_get_id(item), newStatus?0:1 );
 
-	update_request_set_source (request, g_strdup_printf (TTRSS_URL, source->url));
 	update_execute_request (source, request, ttrss_source_remote_update_cb, source, 0 /* flags */);
 
 	item_read_state_changed (item, newStatus);
+}
+
+/**
+* Convert all subscriptions of a google source to local feeds
+*
+* @param node The node to migrate (not the nodeSource!)
+*/
+static void
+ttrss_source_convert_to_local (nodePtr node)
+{
+	node_source_set_state (node, NODE_SOURCE_STATE_MIGRATE);
 }
 
 /* node source type definition */
@@ -429,7 +474,8 @@ static struct nodeSourceType nst = {
 	                       NODE_SOURCE_CAPABILITY_CAN_LOGIN |
 	                       NODE_SOURCE_CAPABILITY_ITEM_STATE_SYNC |
 	                       NODE_SOURCE_CAPABILITY_WRITABLE_FEEDLIST |
-	                       NODE_SOURCE_CAPABILITY_ADD_FEED,
+	                       NODE_SOURCE_CAPABILITY_ADD_FEED |
+	                       NODE_SOURCE_CAPABILITY_CONVERT_TO_LOCAL,
 	.feedSubscriptionType = &ttrssSourceFeedSubscriptionType,
 	.sourceSubscriptionType = &ttrssSourceSubscriptionType,
 	.source_type_init    = ttrss_source_init,
@@ -446,7 +492,7 @@ static struct nodeSourceType nst = {
 	.add_folder          = NULL,	/* not supported by current tt-rss JSON API (v1.8) */
 	.add_subscription    = ttrss_source_add_subscription,
 	.remove_node         = ttrss_source_remove_node,
-	.convert_to_local    = NULL	/* FIXME: implement me to allow data migration from tt-rss! */
+	.convert_to_local    = ttrss_source_convert_to_local
 };
 
 nodeSourceTypePtr

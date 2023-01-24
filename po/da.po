@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: liferea 1.10-rc4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 12:24+0200\n"
+"POT-Creation-Date: 2022-10-26 01:24+0200\n"
 "PO-Revision-Date: 2013-06-15 20:36+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -38,59 +38,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: ../liferea.appdata.xml.in.h:1
-#, fuzzy
-msgid "RSS feed reader"
-msgstr "Nyhedslæser"
-
-#: ../liferea.appdata.xml.in.h:2
-msgid ""
-"Liferea is an abbreviation for Linux Feed Reader. It is a news aggregator "
-"for online news feeds. It supports a number of different feed formats "
-"including RSS/RDF, CDF and Atom. There are many other news readers "
-"available, but these others are not available for Linux or require many "
-"extra libraries to be installed. Liferea tries to fill this gap by creating "
-"a fast, easy to use, easy to install news aggregator for GTK/GNOME."
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:3
-msgid "Distinguishing features:"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:4
-#, fuzzy
-msgid "Read articles when offline"
-msgstr "Liferea er nu frakoblet"
-
-#: ../liferea.appdata.xml.in.h:5
-msgid "Synchronizes with TheOldReader"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:6
-msgid "Synchronizes with TinyTinyRSS"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:7
-msgid "Synchronizes with InoReader"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:8
-msgid "Synchronizes with Reedah"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:9
-msgid "Permanently save headlines in news bins"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:10
-msgid "Match items using search folders"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:11
-#, fuzzy
-msgid "Play Podcasts"
-msgstr "Podcast"
 
 #: ../net.sourceforge.liferea.desktop.in.h:1 ../src/liferea_application.c:349
 #: ../glade/mainwindow.ui.h:1
@@ -113,170 +60,238 @@ msgstr "Læs nyheds- og blogkilder"
 msgid "news;feed;aggregator;blog;podcast;syndication;rss;atom"
 msgstr ""
 
-#: ../xslt/feed.xml.in.h:1
+#: ../plugins/getfocus.py:95
+msgid "Opacity:"
+msgstr ""
+
+#: ../plugins/getfocus.py:96
+msgid "Opacity"
+msgstr ""
+
+#: ../plugins/getfocus.py:106
+msgid "Min"
+msgstr ""
+
+#: ../plugins/getfocus.py:111
+msgid "Max"
+msgstr ""
+
+#: ../plugins/getfocus.py:117
+msgid "Save"
+msgstr ""
+
+#: ../plugins/headerbar.py:67 ../glade/liferea_menu.ui.h:20
+#: ../glade/liferea_toolbar.ui.h:5
+msgid "Previous Item"
+msgstr "Forrige punkt"
+
+#: ../plugins/headerbar.py:73 ../glade/liferea_menu.ui.h:21
+#: ../glade/liferea_toolbar.ui.h:6
+msgid "Next Item"
+msgstr "Næste punkt"
+
+#: ../plugins/headerbar.py:81 ../glade/liferea_menu.ui.h:19
+#: ../glade/liferea_toolbar.ui.h:7
+msgid "_Next Unread Item"
+msgstr "_Næste ulæste punkt"
+
+#: ../plugins/headerbar.py:89 ../glade/liferea_menu.ui.h:14
+#: ../glade/liferea_toolbar.ui.h:3
+msgid "_Mark Items Read"
+msgstr "_Marker punkter som læst"
+
+#: ../plugins/headerbar.py:113 ../glade/liferea_menu.ui.h:40
+#: ../glade/liferea_toolbar.ui.h:10
+msgid "Search All Feeds..."
+msgstr "Søg i alle nyhedskilder ..."
+
+#: ../plugins/libnotify.py:42
+#, fuzzy
+msgid "Feed Updates"
+msgstr "Nyhedskildeopdatering"
+
+#: ../plugins/plugin-installer.py:55
+msgid "Plugins"
+msgstr "Udvidelsesmodul"
+
+#: ../plugins/plugin-installer.py:72
+#, fuzzy
+msgid "Plugin Installer"
+msgstr "Udvidelsesmodul"
+
+#: ../plugins/plugin-installer.py:86
+#, fuzzy
+msgid "Activate Plugins"
+msgstr "Udvidelsesmodul"
+
+#: ../plugins/plugin-installer.py:87
+#, fuzzy
+msgid "Download Plugins"
+msgstr "_Hent med brug af"
+
+#: ../plugins/plugin-installer.py:105
+#, python-format
+msgid "Bad fields for plugin entry %s"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128
+msgid "All"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128 ../glade/properties.ui.h:39
+msgid "Advanced"
+msgstr "Avanceret"
+
+#: ../plugins/plugin-installer.py:128
+msgid "Menu"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128
+#, fuzzy
+msgid "Notifications"
+msgstr "Påmindelsesopsætning"
+
+#: ../plugins/plugin-installer.py:136
+msgid "Filter by category"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:143
+msgid "_Install"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:147
+msgid "_Uninstall"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:248
+#, python-format
 msgid ""
-"This feed is discontinued. It's no longer available. Liferea won't update it "
-"anymore but you can still access the cached headlines."
+"Missing package manager '%s'. Cannot check nor install necessary "
+"dependencies!"
 msgstr ""
-"Denne nyhedskilde er afbrudt. Den er ikke længere tilgængelig. Liferea vil "
-"ikke længere opdatere den, men du kan stadig tilgå de gemte overskrifter."
 
-#: ../xslt/feed.xml.in.h:2
+#: ../plugins/plugin-installer.py:264
+#, python-format
+msgid "Missing package '%s'. Do you want to install it? (Will run '%s')"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:271
+#, python-format
 msgid ""
-"The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
-"value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/></b>"
-msgstr ""
-"Den sidste opdatering af dette abonnement mislykkedes!<br/><b>HTTP-fejlkode "
-"<xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
-"></b>"
-
-#: ../xslt/feed.xml.in.h:3
-msgid "There were errors while parsing this feed!"
-msgstr "Der opstod en fejl under fortolkning af denne nyhedskilde!"
-
-#: ../xslt/feed.xml.in.h:4
-msgid "Parser Error Details"
-msgstr "Fejldetaljer for fortolker"
-
-#: ../xslt/feed.xml.in.h:5
-msgid "Details"
-msgstr "Detaljer"
-
-#: ../xslt/feed.xml.in.h:6
-msgid "You may want to contact the author/webmaster of the feed about this!"
-msgstr ""
-"Du bør måske kontakte forfatteren/webmasteren for nyhedskilden om dette!"
-
-#: ../xslt/feed.xml.in.h:7
-msgid "There were errors while filtering this feed!"
-msgstr "Der opstod en fejl under filtrering af denne nyhedskilde!"
-
-#: ../xslt/feed.xml.in.h:8
-msgid "Filter Error Details"
-msgstr "Filtrer fejldetaljer"
-
-#: ../xslt/feed.xml.in.h:9
-msgid "Feed:"
-msgstr "Nyhedskilde:"
-
-#: ../xslt/feed.xml.in.h:10 ../xslt/source.xml.in.h:1
-msgid "Source:"
-msgstr "Kilde:"
-
-#: ../xslt/feed.xml.in.h:11
-msgid "Publisher"
-msgstr "Udgiver"
-
-#: ../xslt/feed.xml.in.h:12
-msgid "Copyright"
-msgstr "Ophavsret"
-
-# er det ikke 'underkilder'?
-# underbeskeder
-#: ../xslt/source.xml.in.h:2 ../xslt/folder.xml.in.h:2
-msgid "children with"
-msgstr "underkilder med"
-
-#: ../xslt/source.xml.in.h:3 ../xslt/folder.xml.in.h:3
-#: ../xslt/vfolder.xml.in.h:2
-msgid "unread headlines"
-msgstr "ulæste overskrifter"
-
-#: ../xslt/folder.xml.in.h:1
-msgid "Folder:"
-msgstr "Mappe:"
-
-#: ../xslt/item.xml.in.h:1 ../glade/properties.ui.h:21
-msgid "Source"
-msgstr "Kilde"
-
-#: ../xslt/item.xml.in.h:2
-msgid "Feed"
-msgstr "Nyhedskilde"
-
-#: ../xslt/item.xml.in.h:3
-msgid "Filed under"
-msgstr "Arkiveret under"
-
-#: ../xslt/item.xml.in.h:4
-msgid "Author"
-msgstr "Forfatter"
-
-#: ../xslt/item.xml.in.h:5
-msgid "Shared by"
-msgstr "Delt af"
-
-#: ../xslt/item.xml.in.h:6
-msgid "Via"
-msgstr "Via"
-
-#: ../xslt/item.xml.in.h:7
-msgid "Related"
-msgstr "Forbundne"
-
-# tror 'sendt til' eller 'poste(re)t i'
-#: ../xslt/item.xml.in.h:8
-msgid "Also posted in"
-msgstr "Også sendt til"
-
-#: ../xslt/item.xml.in.h:9
-msgid "Creator"
-msgstr "Forfatter"
-
-#: ../xslt/item.xml.in.h:10
-msgid "Coordinates"
+"Package installation failed (%s)! Check console output for further problem "
+"details!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:11
-msgid "Map"
+#: ../plugins/plugin-installer.py:274
+#, python-format
+msgid "Failed to check plugin dependencies (%s)!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:12
-msgid "View count"
+#: ../plugins/plugin-installer.py:283
+msgid "Command \"git\" not found, please install it!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:13
-msgid "Rating"
+#: ../plugins/plugin-installer.py:292
+#, python-format
+msgid "Copying %s to %s"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:14
-msgid "Comments"
-msgstr "Bemærkninger"
+#: ../plugins/plugin-installer.py:295
+#, python-format
+msgid "Failed to copy plugin directory (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:15
-msgid "Updating..."
-msgstr "Opdaterer ..."
+#: ../plugins/plugin-installer.py:304
+#, python-format
+msgid "Failed to copy plugin .py file (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:16
-msgid "Section"
-msgstr "Afsnit"
+#: ../plugins/plugin-installer.py:314
+#, python-format
+msgid "Failed to copy .plugin file (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:17
-msgid "Department"
-msgstr "Afdeling"
+#: ../plugins/plugin-installer.py:325
+#, fuzzy, python-format
+msgid "Creating schema directory %s"
+msgstr "Kan ikke oprette mellemlagermappe »%s«!"
 
-#: ../xslt/newsbin.xml.in.h:1
-msgid "News Bin:"
-msgstr "Nyhedsbakke:"
+#: ../plugins/plugin-installer.py:327
+#, python-format
+msgid "Installing schema %s"
+msgstr ""
 
-#: ../xslt/newsbin.xml.in.h:2
+#: ../plugins/plugin-installer.py:331
+msgid "Compiling schemas..."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:336
+#, python-format
+msgid "Failed to install schema files (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:346
+#, python-format
+msgid "Failed to enable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:352
+#, python-format
+msgid "Plugin '%s' is now installed. Ensure to restart Liferea!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:366
+#, python-format
+msgid "Failed to disable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:373 ../plugins/plugin-installer.py:393
+#, fuzzy, python-format
+msgid "Deleting '%s'"
+msgstr "Sletter post"
+
+#: ../plugins/plugin-installer.py:376
+#, python-format
+msgid "Failed to remove directory '%s' (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:386
+msgid "Failed to remove .py file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:396
+msgid "Failed to remove .plugin file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:405
+msgid "Sorry! Plugin removal failed!."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:407
 msgid ""
-"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
-"list context menu."
+"Plugin was removed. Please restart Liferea once for it to take full effect!."
 msgstr ""
-"Tilføj punkter til denne nyhedsbakke ved at vælge »Kopier til nyhedsbakke« "
-"fra kontekstmenuen til punktlisten."
 
-#: ../xslt/vfolder.xml.in.h:1
-msgid "Search Folder:"
-msgstr "Søgemappe:"
+#: ../plugins/trayicon.py:132
+#, fuzzy
+msgid "Show / Hide"
+msgstr "Vis detaljer"
+
+#: ../plugins/trayicon.py:133
+msgid "Minimize to tray on close"
+msgstr ""
+
+#: ../plugins/trayicon.py:134
+#, fuzzy
+msgid "Quit"
+msgstr "_Afslut"
 
 #: ../src/browser.c:81 ../src/browser.c:98
 #, c-format
 msgid "Browser command failed: %s"
 msgstr "Browserkommando mislykkedes: %s"
 
-#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1044
+#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1078
 #, c-format
 msgid "Starting: \"%s\""
 msgstr "Starter: »%s«"
@@ -286,12 +301,12 @@ msgstr "Starter: »%s«"
 msgid "Authorization Error"
 msgstr "Godkendelsesfejl"
 
-#: ../src/common.c:66
+#: ../src/common.c:68
 #, c-format
 msgid "Cannot create cache directory \"%s\"!"
 msgstr "Kan ikke oprette mellemlagermappe »%s«!"
 
-#: ../src/conf.c:183
+#: ../src/conf.c:147
 msgid ""
 "Your version of WebKitGTK+ doesn't support changing the proxy settings from "
 "Liferea. The system's default proxy settings will be used."
@@ -361,99 +376,62 @@ msgstr ""
 "installeret og virker korrekt! Du kan ændre det i fanebladet »Hent« i "
 "Værktøjer/indstillinger."
 
-#: ../src/export.c:188
+#: ../src/export.c:187
 #, fuzzy, c-format
 msgid "Error renaming %s to %s: %s\n"
 msgstr "Fejl under omdøbelse af %s til %s\n"
 
-#: ../src/export.c:417 ../src/export.c:419
+#: ../src/export.c:409 ../src/export.c:411
 #, c-format
 msgid "XML error while reading OPML file! Could not import \"%s\"!"
 msgstr "XML-fejl under læsning af OPML-fil! Kunne ikke importere »%s«!"
 
-#: ../src/export.c:425 ../src/export.c:427
+#: ../src/export.c:417 ../src/export.c:419
 #, c-format
 msgid ""
 "Empty document! OPML document \"%s\" should not be empty when importing."
 msgstr "Tomt dokument! OPML-dokument »%s« må ikke være tomt under import."
 
-#: ../src/export.c:448 ../src/export.c:450
+#: ../src/export.c:440 ../src/export.c:442
 #, c-format
 msgid "\"%s\" is not a valid OPML document! Liferea cannot import this file!"
 msgstr ""
 "»%s« er ikke et gyldigt OPML-dokument! Liferea kan ikke importere denne fil!"
 
 # kunne være 'Importerede'
-#: ../src/export.c:469
+#: ../src/export.c:461
 msgid "Imported feed list"
 msgstr "Importeret nyhedskildeliste"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import Feed List"
 msgstr "Importer nyhedskildeliste"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import"
 msgstr "Importer"
 
-#: ../src/export.c:481 ../src/export.c:498 ../src/fl_sources/opml_source.c:379
+#: ../src/export.c:473 ../src/export.c:490 ../src/fl_sources/opml_source.c:379
 msgid "OPML Files"
 msgstr "OPML-filer"
 
-#: ../src/export.c:489
+#: ../src/export.c:481
 msgid "Error while exporting feed list!"
 msgstr "Fejl under eksport af nyhedskildeliste!"
 
-#: ../src/export.c:491
+#: ../src/export.c:483
 msgid "Feed List exported!"
 msgstr "Nyhedskildeliste eksporteret!"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export Feed List"
 msgstr "Eksporter nyhedskildeliste"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export"
 msgstr "Eksporter"
 
-#: ../src/feed.c:324
-msgid ""
-"<p>Could not detect the type of this feed! Please check if the source really "
-"points to a resource provided in one of the supported syndication formats!</"
-"p>XML Parser Output:<br /><div class='xmlparseroutput'>"
-msgstr ""
-"<p>Kunne ikke detektere denne type nyhedskilde! Tjek venligst om kilden "
-"virkelig peger på en kilde tilbudt i en af de understøttede "
-"syndikationformater!</p>XML-fortolkeruddata:<br /><div "
-"class='xmlparseroutput'>"
-
-#: ../src/feed.c:351
-#, c-format
-msgid "\"%s\" updated..."
-msgstr "»%s« opdateret ..."
-
-#: ../src/feed.c:358
-#, c-format
-msgid "\"%s\" is not available"
-msgstr "»%s« er ikke tilgængelig"
-
-#: ../src/feed_parser.c:142
-msgid ""
-"The URL you want Liferea to subscribe to points to a webpage and the auto "
-"discovery found no feeds on this page. Maybe this webpage just does not "
-"support feed auto discovery."
-msgstr ""
-"URL'en du ønsker, at Liferea skal abonnere på peger på en internetside, og "
-"den automatiske registrering fandt ingen nyhedskilder på denne side. Måske "
-"understøtter denne internetside ikke automatisk registrering af nyhedskilder."
-
-#: ../src/feed_parser.c:194
-#, c-format
-msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
-msgstr ""
-"XML-fejl under læsning af nyhedskilde! Nyhedskilde »%s« kunne ikke indlæses!"
-
-#: ../src/feed_parser.c:199 ../src/feed_parser.c:248
+#: ../src/feed_parser.c:202
 msgid "Empty document!"
 msgstr "Tomt dokument!"
 
@@ -461,17 +439,113 @@ msgstr "Tomt dokument!"
 msgid "Invalid XML!"
 msgstr "Ugyldig XML!"
 
-#: ../src/feed_parser.c:271
-msgid "Source points to HTML document."
-msgstr "Kildepunkter til HTML-dokument."
+#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
+#: ../glade/simple_subscription.ui.h:1
+msgid "New Subscription"
+msgstr "Nyt abonnement"
 
-# nyhedskildetype (for langt!)
-#: ../src/feed_parser.c:274
-msgid "Could not determine the feed type."
-msgstr "Kunne ikke afgøre nyhedstypen."
+#: ../src/fl_sources/google_source.c:192 ../src/fl_sources/reedah_source.c:120
+#: ../src/fl_sources/theoldreader_source.c:122
+#, fuzzy
+msgid "Login failed!"
+msgstr "Kunne ikke logge ind på Google Reader!"
+
+#: ../src/fl_sources/google_source.c:404
+#, fuzzy
+msgid "Google Reader API"
+msgstr "Google Reader"
+
+#: ../src/fl_sources/google_source_feed.c:159
+#, fuzzy
+msgid "Could not parse JSON returned by Google Reader API!"
+msgstr "Kunne ikke fortolke JSON returneret af tt-rss API!"
+
+#: ../src/fl_sources/node_source.c:117
+msgid "Miniflux"
+msgstr ""
+
+#: ../src/fl_sources/node_source.c:332
+msgid "No feed list source types found!"
+msgstr "Ingen kildetyper fundet for nyhedskildeliste!"
+
+#: ../src/fl_sources/node_source.c:361
+msgid "Source Type"
+msgstr "Kildetype"
+
+#: ../src/fl_sources/node_source.c:412
+#, c-format
+msgid "Login for '%s' has not yet completed! Please wait until login is done."
+msgstr ""
+
+#. FIXME: something is not perfect, because if you immediately
+#. remove the subscription tree afterwards there is a double free
+#: ../src/fl_sources/node_source.c:578
+#, c-format
+msgid "The '%s' subscription was successfully converted to local feeds!"
+msgstr "Abonnementet »%s« blev med succes konverteret til lokale nyhedskilder!"
+
+#: ../src/fl_sources/opml_source.c:319
+msgid "Planet, BlogRoll, OPML"
+msgstr "Planet, BlogRoll, OPML"
+
+#: ../src/fl_sources/opml_source.c:379
+msgid "Choose OPML File"
+msgstr "Vælg OPML-fil"
+
+#: ../src/fl_sources/opml_source.c:379 ../src/ui/subscription_dialog.c:355
+msgid "_Open"
+msgstr ""
+
+#: ../src/fl_sources/opml_source.h:28
+msgid "New OPML Subscription"
+msgstr "Nyt OPML-abonnement"
+
+#: ../src/fl_sources/reedah_source.c:335
+msgid "Reedah"
+msgstr ""
+
+#: ../src/fl_sources/reedah_source_feed.c:154
+#, fuzzy
+msgid "Could not parse JSON returned by Reedah API!"
+msgstr "Kunne ikke fortolke JSON returneret af tt-rss API!"
+
+#: ../src/fl_sources/theoldreader_source.c:364
+#, fuzzy
+msgid "TheOldReader"
+msgstr "Nyhedslæser"
+
+#: ../src/fl_sources/ttrss_source.c:227 ../src/fl_sources/ttrss_source.c:293
+msgid "TinyTinyRSS HTTP API not reachable!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:234
+msgid ""
+"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
+"URL!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:300
+msgid "TinyTinyRSS unsubscribing feed failed!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:318
+#, c-format
+msgid ""
+"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
+"%s or later!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:472
+msgid "Tiny Tiny RSS"
+msgstr "Tiny Tiny RSS"
+
+#: ../src/fl_sources/ttrss_source_feed.c:150
+#, fuzzy
+msgid "Could not parse JSON returned by TinyTinyRSS API!"
+msgstr "Kunne ikke fortolke JSON returneret af tt-rss API!"
 
 #. if we don't find a feed with unread items do nothing
-#: ../src/itemlist.c:393
+#: ../src/itemlist.c:425
 msgid "There are no unread items"
 msgstr "Der er ingen ulæste punkter"
 
@@ -564,39 +638,39 @@ msgid "Print debugging messages for the given topic"
 msgstr "Vis fejlsøgningsbeskeder for det angivne emne"
 
 #. Some libsoup transport errors
-#: ../src/net.c:463
+#: ../src/net.c:470
 msgid "The update request was cancelled"
 msgstr "Opdateringsforespørgslen blev afbrudt"
 
-#: ../src/net.c:464
+#: ../src/net.c:471
 msgid "Unable to resolve destination host name"
 msgstr "Kunne ikke afgøre destinationens værtsnavn"
 
-#: ../src/net.c:465
+#: ../src/net.c:472
 msgid "Unable to resolve proxy host name"
 msgstr "Kunne ikke afgøre værtsnavn for proxy"
 
-#: ../src/net.c:466
+#: ../src/net.c:473
 msgid "Unable to connect to remote host"
 msgstr "Kunne ikke forbinde til ekstern vært"
 
-#: ../src/net.c:467
+#: ../src/net.c:474
 msgid "Unable to connect to proxy"
 msgstr "Kunne ikke forbinde til proxy"
 
-#: ../src/net.c:468
+#: ../src/net.c:475
 msgid ""
-"A network error occurred, or the other end closed the connection unexpectedly"
+"SSL/TLS negotiation failed. Possible outdated or unsupported encryption "
+"algorithm. Check your operating system settings."
 msgstr ""
-"Der opstod en netværksfejl, eller den anden ende lukkede uventet forbindelsen"
 
 #. http 3xx redirection
-#: ../src/net.c:471
+#: ../src/net.c:478
 msgid "The resource moved permanently to a new location"
 msgstr "Ressourcen flyttede permanent til en ny placering"
 
 #. http 4xx client error
-#: ../src/net.c:474
+#: ../src/net.c:481
 msgid ""
 "You are unauthorized to download this feed. Please update your username and "
 "password in the feed properties dialog box"
@@ -604,146 +678,224 @@ msgstr ""
 "Du har ikke tilladelse til at hente denne nyhedskilde. Opdater venligst dit "
 "brugernavn og adgangskode i dialogboksen for nyhedskildeegenskaber"
 
-#: ../src/net.c:476
+#: ../src/net.c:483
 msgid "Payment required"
 msgstr "Betaling krævet"
 
-#: ../src/net.c:477
+#: ../src/net.c:484
 msgid "You're not allowed to access this resource"
 msgstr "Du har ikke adgang til denne ressource"
 
-#: ../src/net.c:478
+#: ../src/net.c:485
 msgid "Resource Not Found"
 msgstr "Ressource blev ikke fundet"
 
-#: ../src/net.c:479
+#: ../src/net.c:486
 msgid "Method Not Allowed"
 msgstr "Metode ikke tilladt"
 
-#: ../src/net.c:480
+#: ../src/net.c:487
 msgid "Not Acceptable"
 msgstr "Ikke acceptabel"
 
-#: ../src/net.c:481
+#: ../src/net.c:488
 msgid "Proxy authentication required"
 msgstr "Proxygodkendelse krævet"
 
 # Forespørgsel fik tidsudløb
-#: ../src/net.c:482
+#: ../src/net.c:489
 msgid "Request timed out"
 msgstr "Forespørgselstiden udløb"
 
-#: ../src/net.c:483
-msgid "Gone. Resource doesn't exist. Please unsubscribe!"
-msgstr "Forsvundet. Ressource findes ikke. Fjern venligst abonnement!"
+#: ../src/net.c:490
+#, fuzzy
+msgid ""
+"The webserver indicates this feed is discontinued. It's no longer available. "
+"Liferea won't update it anymore but you can still access the cached "
+"headlines."
+msgstr ""
+"Denne nyhedskilde er afbrudt. Den er ikke længere tilgængelig. Liferea vil "
+"ikke længere opdatere den, men du kan stadig tilgå de gemte overskrifter."
 
-#: ../src/net.c:488
+#. http 5xx server errors
+#: ../src/net.c:493
+#, fuzzy
+msgid "Internal Server Error"
+msgstr "Serverfejl"
+
+#: ../src/net.c:494
+msgid "Not Implemented"
+msgstr ""
+
+#: ../src/net.c:495
+msgid "Bad Gateway"
+msgstr ""
+
+#: ../src/net.c:496
+#, fuzzy
+msgid "Service Unavailable"
+msgstr "»%s« er ikke tilgængelig"
+
+#: ../src/net.c:497
+msgid "Gateway Timeout"
+msgstr ""
+
+#: ../src/net.c:498
+msgid "HTTP Version Not Supported"
+msgstr ""
+
+#: ../src/net.c:503
 msgid "There was an internal error in the update process"
 msgstr "Der opstod en intern fejl under opdateringsprocessen"
 
-#: ../src/net.c:490
+#: ../src/net.c:505
 msgid "Feed not available: Server requested unsupported redirection!"
 msgstr ""
 "Nyhedskilde er ikke tilgængelig: Server anmodede om videresendelse, hvilket  "
 "ikke er understøttet!"
 
-#: ../src/net.c:492
+#: ../src/net.c:507
 msgid "Client Error"
 msgstr "Klientfejl"
 
-#: ../src/net.c:494
+#: ../src/net.c:509
 msgid "Server Error"
 msgstr "Serverfejl"
 
-#: ../src/net.c:496
+#: ../src/net.c:511
 msgid "An unknown networking error happened!"
 msgstr "Der opstod en ukendt netværksfejl!"
 
+#: ../src/newsbin.c:136
+#, fuzzy
+msgid "News Bin Properties"
+msgstr "Abonnementegenskaber"
+
+#: ../src/newsbin.c:140 ../glade/new_newsbin.ui.h:1
+msgid "Create News Bin"
+msgstr "Opret nyhedsbakke"
+
+#: ../src/node.c:664
+#, c-format
+msgid "Failed to create feed file: %s"
+msgstr ""
+
+#: ../src/node.c:683
+#, fuzzy
+msgid "Feed file exported from Liferea"
+msgstr "Nyhedskildeliste eksporteret!"
+
+#: ../src/node.c:698
+#, fuzzy, c-format
+msgid "Error while saving feed file"
+msgstr "Fejl under eksport af nyhedskildeliste!"
+
+#: ../src/parsers/atom10.c:240
+msgid "Website"
+msgstr "Internetside"
+
+# Aug 04 12:03
+#: ../src/parsers/ns_ag.c:70
+msgid "%b %d %H:%M"
+msgstr "%d. %b %H:%M"
+
 #. in-memory check function	feedlist.opml rule id         		  rule menu label       	positive menu option    negative menu option    has param
 #. ========================================================================================================================================================================================
-#: ../src/rule.c:198
+#: ../src/rule.c:274
 msgid "Item"
 msgstr "Punkt"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does contain"
 msgstr "indeholder"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does not contain"
 msgstr "indeholder ikke"
 
-#: ../src/rule.c:199
+#: ../src/rule.c:275
 msgid "Item title"
 msgstr "Punkttitel"
 
 # måske 'tekst for punktet', 'punktets tekst'
 # punkttekst lyder lidt som en slags skrifttype
-#: ../src/rule.c:200
+#: ../src/rule.c:276
 msgid "Item body"
 msgstr "Punktets tekst"
 
+# måske 'tekst for punktet', 'punktets tekst'
+# punkttekst lyder lidt som en slags skrifttype
+#: ../src/rule.c:277
+#, fuzzy
+msgid "Item author"
+msgstr "Punktets tekst"
+
 # evt. Læsestatus
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "Read status"
 msgstr "Status for læst"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is unread"
 msgstr "er ulæst"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is read"
 msgstr "er læst"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "Flag status"
 msgstr "Flagstatus"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is flagged"
 msgstr "er sat"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is unflagged"
 msgstr "er ikke sat"
 
-#: ../src/rule.c:203
-msgid "Podcast"
-msgstr "Podcast"
+#: ../src/rule.c:280
+#, fuzzy
+msgid "Enclosure"
+msgstr "Pakker"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "included"
 msgstr "inkluderet"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "not included"
 msgstr "ikke inkluderet"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:281
+msgid "Podcast"
+msgstr "Podcast"
+
+#: ../src/rule.c:282
 msgid "Category"
 msgstr "Kategori"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is set"
 msgstr "er angivet"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is not set"
 msgstr "er ikke angivet"
 
-#: ../src/rule.c:205
+#: ../src/rule.c:283
 msgid "Feed title"
 msgstr "Titel for nyhedskilde"
 
-#: ../src/rule.c:206
+#: ../src/rule.c:284
 #, fuzzy
 msgid "Feed source"
 msgstr "Nyhedskilde"
 
-#: ../src/rule.c:207
+#: ../src/rule.c:285
 msgid "Parent folder title"
 msgstr ""
 
@@ -760,15 +912,7 @@ msgstr ""
 "Abonnementet »%s« blev afbrudt. Liferea vil ikke længere opdatere "
 "abonnementet!"
 
-#: ../src/subscription.c:173
-msgid ""
-"There was a problem while reading this subscription. Please check the URL "
-"and console output."
-msgstr ""
-"Der opstod et problem under læsning af dette abonnement. Tjek venligst "
-"URL'en og konsoluddata."
-
-#: ../src/subscription.c:196
+#: ../src/subscription.c:188
 #, c-format
 msgid "The URL of \"%s\" has changed permanently and was updated"
 msgstr "URL'en for »%s« har ændret sig permanent og blev opdateret"
@@ -778,54 +922,33 @@ msgstr "URL'en for »%s« har ændret sig permanent og blev opdateret"
 msgid "\"%s\" is discontinued. Liferea won't updated it anymore!"
 msgstr "»%s« er afbrudt. Liferea vil ikke længere opdatere den!"
 
-#: ../src/subscription.c:207
+#: ../src/subscription.c:208
 #, c-format
 msgid "\"%s\" has not changed since last update"
 msgstr "»%s« har ikke ændret sig siden sidste opdatering"
 
-#: ../src/subscription.c:263
+#: ../src/subscription.c:221 ../src/subscription.c:296
+#, fuzzy, c-format
+msgid "Updating (%d / %d) ..."
+msgstr "Opdaterer ..."
+
+#: ../src/subscription.c:298
+#, fuzzy, c-format
+msgid "Updating '%s'..."
+msgstr "Opdaterer ..."
+
+#: ../src/ui/auth_dialog.c:114
 #, c-format
-msgid "Updating \"%s\""
-msgstr "Opdaterer »%s«"
+msgid "Enter the username and password for \"%s\" (%s):"
+msgstr "Indtast brugernavnet og adgangskoden for »%s« (%s):"
 
-#: ../src/update.c:297
-#, c-format
-msgid "Error opening temp file %s to use for filtering!"
-msgstr "Fejl ved åbning af midlertidig fil %s til brug for filtrering!"
+#: ../src/ui/auth_dialog.c:116
+msgid "Unknown source"
+msgstr "Ukendt kilde"
 
-#: ../src/update.c:320
-#, c-format
-msgid "%s exited with status %d"
-msgstr "%s afsluttede med status %d"
-
-#: ../src/update.c:326 ../src/update.c:327 ../src/update.c:442
-#, c-format
-msgid "Error: Could not open pipe \"%s\""
-msgstr "Fejl: Kunne ikke åbne datakanal »%s«"
-
-#. FIXME: maybe setting request->returncode would be better
-#: ../src/update.c:466
-#, c-format
-msgid "Error: Could not open file \"%s\""
-msgstr "Fejl: Kunne ikke åbne fil »%s«"
-
-#: ../src/update.c:472
-#, c-format
-msgid "Error: There is no file \"%s\""
-msgstr "Fejl: Der er ingen fil »%s«"
-
-#: ../src/vfolder.c:54
-msgid "New Search Folder"
-msgstr "Ny søgemappe"
-
-# evt. Udskriften blev
-#: ../src/xml.c:410
-msgid "[There were more errors. Output was truncated!]"
-msgstr "[Der var flere fejl. Udskrift blev afkortet!]"
-
-#: ../src/xml.c:563
-msgid "XML Parser: Could not parse document:\n"
-msgstr "XML-fortolker: Kunne ikke fortolke dokument:\n"
+#: ../src/ui/browser_tabs.c:262 ../src/ui/popup_menu.c:282
+msgid "Untitled"
+msgstr "Uden titel"
 
 #: ../src/ui/enclosure_list_view.c:168
 msgid "Attachments"
@@ -870,90 +993,30 @@ msgstr "Vælg fil"
 msgid "File Extension .%s"
 msgstr "Filendelse .%s"
 
-#: ../src/ui/icons.c:54
-#, c-format
-msgid "Couldn't find pixmap file: %s"
-msgstr "Kunne ikke finde pixmap-fil: %s"
-
-#: ../src/ui/liferea_shell.c:396
-#, c-format
-msgid " (%d new)"
-msgid_plural " (%d new)"
-msgstr[0] " (%d ny)"
-msgstr[1] " (%d nye)"
-
-#: ../src/ui/liferea_shell.c:401
-#, c-format
-msgid "%d unread%s"
-msgid_plural "%d unread%s"
-msgstr[0] "%d ulæst%s"
-msgstr[1] "%d ulæste%s"
-
-#: ../src/ui/liferea_shell.c:758
-msgid "Help Topics"
-msgstr "Hjælpeemner"
-
-#: ../src/ui/liferea_shell.c:764
-msgid "Quick Reference"
-msgstr "Hurtig hjælp"
-
-#: ../src/ui/liferea_shell.c:770
-msgid "FAQ"
-msgstr "OSS"
-
-#: ../src/ui/liferea_shell.c:1041
-#, fuzzy, c-format
-msgid "Email command failed: %s"
-msgstr "Browserkommando mislykkedes: %s"
-
-#: ../src/ui/search_dialog.c:107
-#, fuzzy
-msgid "Saved Search"
-msgstr "Avanceret søgning"
-
-#: ../src/ui/auth_dialog.c:114
-#, c-format
-msgid "Enter the username and password for \"%s\" (%s):"
-msgstr "Indtast brugernavnet og adgangskoden for »%s« (%s):"
-
-#: ../src/ui/auth_dialog.c:116
-msgid "Unknown source"
-msgstr "Ukendt kilde"
-
-#: ../src/ui/ui_common.c:168 ../src/ui/feed_list_view.c:911
-#: ../src/ui/feed_list_view.c:965
-#, fuzzy
-msgid "_Cancel"
-msgstr "Afbryd _alle"
-
-#: ../src/ui/ui_common.c:211
-msgid "All Files"
-msgstr "Alle filer"
-
-#: ../src/ui/feed_list_view.c:432
+#: ../src/ui/feed_list_view.c:428
 msgid "Liferea is in offline mode. No update possible."
 msgstr "Liferea er i frakoblet tilstand. Ingen opdatering mulig."
 
-#: ../src/ui/feed_list_view.c:478
+#: ../src/ui/feed_list_view.c:474
 #, fuzzy
 msgid "all feeds"
 msgstr "Søg i alle nyhedskilder"
 
-#: ../src/ui/feed_list_view.c:479
+#: ../src/ui/feed_list_view.c:475
 #, fuzzy, c-format
 msgid "Mark %s as read ?"
 msgstr "Marker alle som læst"
 
-#: ../src/ui/feed_list_view.c:483
+#: ../src/ui/feed_list_view.c:479
 #, fuzzy, c-format
 msgid "Are you sure you want to mark all items in %s as read ?"
 msgstr "Er du sikker på, at du ønsker at slette »%s«?"
 
-#: ../src/ui/feed_list_view.c:621
+#: ../src/ui/feed_list_view.c:617
 msgid "(Empty)"
 msgstr "(Tom)"
 
-#: ../src/ui/feed_list_view.c:832
+#: ../src/ui/feed_list_view.c:828
 #, c-format
 msgid ""
 "%s\n"
@@ -962,82 +1025,132 @@ msgstr ""
 "%s\n"
 "<i>Genbygger</i>"
 
-#: ../src/ui/feed_list_view.c:901
+#: ../src/ui/feed_list_view.c:897
 msgid "Deleting entry"
 msgstr "Sletter post"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\" and its contents?"
 msgstr "Er du sikker på, at du ønsker at slette »%s« og dens indhold?"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\"?"
 msgstr "Er du sikker på, at du ønsker at slette »%s«?"
 
-#: ../src/ui/feed_list_view.c:912 ../src/ui/popup_menu.c:335
+#: ../src/ui/feed_list_view.c:907 ../src/ui/feed_list_view.c:961
+#: ../src/ui/popup_menu.c:260
+#, fuzzy
+msgid "_Cancel"
+msgstr "Afbryd _alle"
+
+#: ../src/ui/feed_list_view.c:908 ../src/ui/popup_menu.c:411
 msgid "_Delete"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:914
+#: ../src/ui/feed_list_view.c:910
 msgid "Deletion Confirmation"
 msgstr "Sletningsbekræftelse"
 
-#: ../src/ui/feed_list_view.c:953
+#: ../src/ui/feed_list_view.c:949
 #, c-format
 msgid ""
 "Are you sure that you want to add a new subscription with URL \"%s\"? "
 "Another subscription with the same URL already exists (\"%s\")."
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:966
+#: ../src/ui/feed_list_view.c:962
 msgid "_Add"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:968
+#: ../src/ui/feed_list_view.c:964
 #, fuzzy
 msgid "Adding Duplicate Subscription Confirmation"
 msgstr "Sletningsbekræftelse"
 
-#: ../src/ui/item_list_view.c:115
+#: ../src/ui/icons.c:54
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Kunne ikke finde pixmap-fil: %s"
+
+#: ../src/ui/item_list_view.c:113
 msgid "This item has no link specified!"
 msgstr "Dette punkt har ingen adresse angivet!"
 
-#: ../src/ui/item_list_view.c:482
+#: ../src/ui/item_list_view.c:479
 msgid "*** No title ***"
 msgstr "*** Ingen titel ***"
 
-#: ../src/ui/item_list_view.c:486
+#: ../src/ui/item_list_view.c:483
 msgid " <span background='red' color='black'> important </span> "
 msgstr ""
 
-#: ../src/ui/item_list_view.c:865
+#: ../src/ui/item_list_view.c:842
 msgid "Headline"
 msgstr "Overskrift"
 
-#: ../src/ui/item_list_view.c:887
+#: ../src/ui/item_list_view.c:860
 msgid "Date"
 msgstr "Dato"
 
-#: ../src/ui/item_list_view.c:1056
+#: ../src/ui/item_list_view.c:1029
 msgid "You must select a feed to delete its items!"
 msgstr "Du skal vælge en nyhedskilde for at slette dens punkter!"
 
-#: ../src/ui/item_list_view.c:1072 ../src/ui/item_list_view.c:1150
-#: ../src/ui/item_list_view.c:1165
+#: ../src/ui/item_list_view.c:1045 ../src/ui/item_list_view.c:1123
+#: ../src/ui/item_list_view.c:1138
 msgid "No item has been selected"
 msgstr "Intet punkt er blevet valgt"
 
-#: ../src/ui/popup_menu.c:102
+#: ../src/ui/liferea_browser.c:482
+msgid "Content download failed! Try disabling reader mode."
+msgstr ""
+
+#: ../src/ui/liferea_browser.c:495
+msgid "Content extraction failed! Try disabling reader mode."
+msgstr ""
+
+#: ../src/ui/liferea_shell.c:409
+#, c-format
+msgid " (%d new)"
+msgid_plural " (%d new)"
+msgstr[0] " (%d ny)"
+msgstr[1] " (%d nye)"
+
+#: ../src/ui/liferea_shell.c:414
+#, c-format
+msgid "%d unread%s"
+msgid_plural "%d unread%s"
+msgstr[0] "%d ulæst%s"
+msgstr[1] "%d ulæste%s"
+
+#: ../src/ui/liferea_shell.c:785
+msgid "Help Topics"
+msgstr "Hjælpeemner"
+
+#: ../src/ui/liferea_shell.c:791
+msgid "Quick Reference"
+msgstr "Hurtig hjælp"
+
+#: ../src/ui/liferea_shell.c:797
+msgid "FAQ"
+msgstr "OSS"
+
+#: ../src/ui/liferea_shell.c:1075
+#, fuzzy, c-format
+msgid "Email command failed: %s"
+msgstr "Browserkommando mislykkedes: %s"
+
+#: ../src/ui/popup_menu.c:102 ../glade/liferea_menu.ui.h:25
 msgid "Open In _Tab"
 msgstr "Åbn i _faneblad"
 
-#: ../src/ui/popup_menu.c:106
+#: ../src/ui/popup_menu.c:106 ../glade/liferea_menu.ui.h:26
 msgid "_Open In Browser"
 msgstr "_Åbn i browser"
 
-#: ../src/ui/popup_menu.c:110
+#: ../src/ui/popup_menu.c:110 ../glade/liferea_menu.ui.h:27
 msgid "Open In _External Browser"
 msgstr "Åbn i _ekstern browser"
 
@@ -1058,11 +1171,11 @@ msgstr "_Bogmærk på %s"
 msgid "Copy Item _Location"
 msgstr "Kopier _punktplacering"
 
-#: ../src/ui/popup_menu.c:163
+#: ../src/ui/popup_menu.c:163 ../glade/liferea_menu.ui.h:22
 msgid "Toggle _Read Status"
 msgstr "Skift _læsningsstatus"
 
-#: ../src/ui/popup_menu.c:167
+#: ../src/ui/popup_menu.c:167 ../glade/liferea_menu.ui.h:23
 msgid "Toggle Item _Flag"
 msgstr "Skift punkt_flag"
 
@@ -1082,55 +1195,76 @@ msgstr "Gem som ..."
 msgid "Copy Link Location"
 msgstr "Kopier adresseplacering"
 
-#: ../src/ui/popup_menu.c:280
+#: ../src/ui/popup_menu.c:257
+msgid "Save items to file"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:262
+msgid "_Save"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:271
+msgid "RSS 2.0 files"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:277
+#, fuzzy
+msgid "All files"
+msgstr "Alle filer"
+
+#: ../src/ui/popup_menu.c:353 ../glade/liferea_menu.ui.h:13
 msgid "_Update"
 msgstr "_Opdater"
 
-#: ../src/ui/popup_menu.c:282
+#: ../src/ui/popup_menu.c:355
 msgid "_Update Folder"
 msgstr "_Opdater mappe"
 
-#: ../src/ui/popup_menu.c:292
+#: ../src/ui/popup_menu.c:365
 msgid "New _Subscription..."
 msgstr "Nyt _abonnement ..."
 
-#: ../src/ui/popup_menu.c:295
+#: ../src/ui/popup_menu.c:368 ../glade/liferea_menu.ui.h:5
 msgid "New _Folder..."
 msgstr "Ny _mappe ..."
 
-#: ../src/ui/popup_menu.c:298
+#: ../src/ui/popup_menu.c:371 ../glade/liferea_menu.ui.h:6
 msgid "New S_earch Folder..."
 msgstr "Ny _søgemappe ..."
 
-#: ../src/ui/popup_menu.c:299
+#: ../src/ui/popup_menu.c:372
 msgid "New S_ource..."
 msgstr "Ny _kilde ..."
 
-#: ../src/ui/popup_menu.c:300
+#: ../src/ui/popup_menu.c:373 ../glade/liferea_menu.ui.h:8
 msgid "New _News Bin..."
 msgstr "Ny _nyhedsbakke ..."
 
-#: ../src/ui/popup_menu.c:303
+#: ../src/ui/popup_menu.c:376
 msgid "_New"
 msgstr "_Ny"
 
-#: ../src/ui/popup_menu.c:312
+#: ../src/ui/popup_menu.c:385
 msgid "Sort Feeds"
 msgstr "Sorter nyhedskilder"
 
-#: ../src/ui/popup_menu.c:320
+#: ../src/ui/popup_menu.c:393
 msgid "_Mark All As Read"
 msgstr "_Marker alle som læst"
 
-#: ../src/ui/popup_menu.c:327
+#: ../src/ui/popup_menu.c:395
+msgid "_Export Items To File"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:403
 msgid "_Rebuild"
 msgstr "_Genbyg"
 
-#: ../src/ui/popup_menu.c:336
+#: ../src/ui/popup_menu.c:412 ../glade/liferea_menu.ui.h:17
 msgid "_Properties"
 msgstr "_Egenskaber"
 
-#: ../src/ui/popup_menu.c:343
+#: ../src/ui/popup_menu.c:419
 msgid "Convert To Local Subscriptions..."
 msgstr "Konverter til lokale abonnementer ..."
 
@@ -1186,31 +1320,33 @@ msgstr "Normal visning"
 msgid "Wide View"
 msgstr "Bred visning"
 
-#: ../src/ui/preferences_dialog.c:112
-msgid "Combined View"
-msgstr "Kombineret visning"
-
-#: ../src/ui/preferences_dialog.c:467
+#: ../src/ui/preferences_dialog.c:487
 msgid "Default Browser"
 msgstr "Standardbrowser"
 
 # måske 'Manuel' (som i manuel browser) afhænger måske af type
-#: ../src/ui/preferences_dialog.c:469
+#: ../src/ui/preferences_dialog.c:489
 msgid "Manual"
 msgstr "Manuel"
 
 # tast?
-#: ../src/ui/preferences_dialog.c:716
+#: ../src/ui/preferences_dialog.c:752
 msgid "Type"
 msgstr "Type"
 
-#: ../src/ui/preferences_dialog.c:719
+#: ../src/ui/preferences_dialog.c:755
 msgid "Program"
 msgstr "Program"
 
-#: ../src/ui/subscription_dialog.c:355 ../src/fl_sources/opml_source.c:379
-msgid "_Open"
-msgstr ""
+#: ../src/ui/rule_editor.c:257
+#, fuzzy
+msgid "Remove"
+msgstr "_Fjern"
+
+#: ../src/ui/search_dialog.c:106
+#, fuzzy
+msgid "Saved Search"
+msgstr "Avanceret søgning"
 
 #: ../src/ui/subscription_dialog.c:427
 #, c-format
@@ -1228,185 +1364,108 @@ msgstr[1] ""
 msgid "This feed specifies no default update interval."
 msgstr "Denne nyhedskilde angiver ingen standard for opdateringsinterval."
 
-#: ../src/ui/browser_tabs.c:262
-msgid "Untitled"
-msgstr "Uden titel"
+#: ../src/ui/ui_common.c:206
+msgid "All Files"
+msgstr "Alle filer"
 
-#: ../src/parsers/atom10.c:241 ../src/parsers/pie_feed.c:141
-msgid "Website"
-msgstr "Internetside"
-
-# Aug 04 12:03
-#: ../src/parsers/ns_ag.c:70
-msgid "%b %d %H:%M"
-msgstr "%d. %b %H:%M"
-
-#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
-#: ../glade/simple_subscription.ui.h:1
-msgid "New Subscription"
-msgstr "Nyt abonnement"
-
-#: ../src/fl_sources/google_source.c:111
-msgid "Google Reader"
-msgstr "Google Reader"
-
-#: ../src/fl_sources/opml_source.c:319
-msgid "Planet, BlogRoll, OPML"
-msgstr "Planet, BlogRoll, OPML"
-
-#: ../src/fl_sources/opml_source.c:379
-msgid "Choose OPML File"
-msgstr "Vælg OPML-fil"
-
-#: ../src/fl_sources/opml_source.h:28
-msgid "New OPML Subscription"
-msgstr "Nyt OPML-abonnement"
-
-#: ../src/fl_sources/node_source.c:334
-msgid "No feed list source types found!"
-msgstr "Ingen kildetyper fundet for nyhedskildeliste!"
-
-#: ../src/fl_sources/node_source.c:363
-msgid "Source Type"
-msgstr "Kildetype"
-
-#: ../src/fl_sources/node_source.c:414
+#: ../src/update.c:370
 #, c-format
-msgid "Login for '%s' has not yet completed! Please wait until login is done."
-msgstr ""
+msgid "Error opening temp file %s to use for filtering!"
+msgstr "Fejl ved åbning af midlertidig fil %s til brug for filtrering!"
 
-#. FIXME: something is not perfect, because if you immediately
-#. remove the subscription tree afterwards there is a double free
-#: ../src/fl_sources/node_source.c:580
+#: ../src/update.c:392
 #, c-format
-msgid "The '%s' subscription was successfully converted to local feeds!"
-msgstr "Abonnementet »%s« blev med succes konverteret til lokale nyhedskilder!"
+msgid "%s exited with status %d"
+msgstr "%s afsluttede med status %d"
 
-#: ../src/fl_sources/reedah_source.c:103
-#: ../src/fl_sources/theoldreader_source.c:104
-#, fuzzy
-msgid "Login failed!"
-msgstr "Kunne ikke logge ind på Google Reader!"
-
-#: ../src/fl_sources/reedah_source.c:312
-msgid "Reedah"
-msgstr ""
-
-#: ../src/fl_sources/reedah_source_feed.c:154
-#, fuzzy
-msgid "Could not parse JSON returned by Reedah API!"
-msgstr "Kunne ikke fortolke JSON returneret af tt-rss API!"
-
-#: ../src/fl_sources/ttrss_source.c:224 ../src/fl_sources/ttrss_source.c:283
-msgid "TinyTinyRSS HTTP API not reachable!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:231
-msgid ""
-"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
-"URL!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:290
-msgid "TinyTinyRSS unsubscribing feed failed!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:307
+#: ../src/update.c:398 ../src/update.c:399 ../src/update.c:621
 #, c-format
-msgid ""
-"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
-"%s or later!"
-msgstr ""
+msgid "Error: Could not open pipe \"%s\""
+msgstr "Fejl: Kunne ikke åbne datakanal »%s«"
 
-#: ../src/fl_sources/ttrss_source.c:427
-msgid "Tiny Tiny RSS"
-msgstr "Tiny Tiny RSS"
+#. FIXME: maybe setting request->returncode would be better
+#: ../src/update.c:652
+#, c-format
+msgid "Error: Could not open file \"%s\""
+msgstr "Fejl: Kunne ikke åbne fil »%s«"
 
-#: ../src/fl_sources/ttrss_source_feed.c:150
-#, fuzzy
-msgid "Could not parse JSON returned by TinyTinyRSS API!"
-msgstr "Kunne ikke fortolke JSON returneret af tt-rss API!"
+#: ../src/update.c:658
+#, c-format
+msgid "Error: There is no file \"%s\""
+msgstr "Fejl: Der er ingen fil »%s«"
 
-#: ../src/fl_sources/theoldreader_source.c:310
-#, fuzzy
-msgid "TheOldReader"
-msgstr "Nyhedslæser"
+#: ../src/vfolder.c:54
+msgid "New Search Folder"
+msgstr "Ny søgemappe"
 
-#: ../src/webkit/liferea_web_view.c:176
+#: ../src/webkit/liferea_web_view.c:163
 msgid "Open Link In _Tab"
 msgstr "Åbn adresse i _faneblad"
 
-#: ../src/webkit/liferea_web_view.c:177
+#: ../src/webkit/liferea_web_view.c:164
 #, fuzzy
 msgid "Open Link In Browser"
 msgstr "_Åbn adresse i browser"
 
-#: ../src/webkit/liferea_web_view.c:178
+#: ../src/webkit/liferea_web_view.c:165
 #, fuzzy
 msgid "Open Link In External Browser"
 msgstr "_Åbn adresse i ekstern browser"
 
-#: ../src/webkit/liferea_web_view.c:184
+#: ../src/webkit/liferea_web_view.c:171
 #, c-format
 msgid "_Bookmark Link at %s"
 msgstr "_Bogmærk adresse på %s"
 
-#: ../src/webkit/liferea_web_view.c:191
+#: ../src/webkit/liferea_web_view.c:178
 msgid "_Copy Link Location"
 msgstr "_Kopier adresseplacering"
 
-#: ../src/webkit/liferea_web_view.c:194
+#: ../src/webkit/liferea_web_view.c:181
 #, fuzzy
 msgid "_View Image"
 msgstr "_Gem billede som"
 
-#: ../src/webkit/liferea_web_view.c:195
+#: ../src/webkit/liferea_web_view.c:182
 msgid "_Copy Image Location"
 msgstr "_Kopier billedplacering"
 
-#: ../src/webkit/liferea_web_view.c:198
+#: ../src/webkit/liferea_web_view.c:185
 msgid "S_ave Link As"
 msgstr "_Gem adresse som"
 
-#: ../src/webkit/liferea_web_view.c:201
+#: ../src/webkit/liferea_web_view.c:188
 msgid "S_ave Image As"
 msgstr "_Gem billede som"
 
-#: ../src/webkit/liferea_web_view.c:208
+#: ../src/webkit/liferea_web_view.c:195
 msgid "_Subscribe..."
 msgstr "_Abonner ..."
 
-#: ../src/webkit/liferea_web_view.c:212
+#: ../src/webkit/liferea_web_view.c:199
 msgid "_Copy"
 msgstr ""
 
-#: ../src/webkit/liferea_web_view.c:218
+#: ../src/webkit/liferea_web_view.c:205
 msgid "_Increase Text Size"
 msgstr "_Øg tekststørrelse"
 
-#: ../src/webkit/liferea_web_view.c:219
+#: ../src/webkit/liferea_web_view.c:206
 msgid "_Decrease Text Size"
 msgstr "_Formindsk tekststørrelse"
 
-#: ../plugins/headerbar.py:63
-msgid "Previous Item"
-msgstr "Forrige punkt"
+#: ../src/webkit/liferea_web_view.c:213
+msgid "_Reader Mode"
+msgstr ""
 
-#: ../plugins/headerbar.py:69
-msgid "Next Item"
-msgstr "Næste punkt"
+# evt. Udskriften blev
+#: ../src/xml.c:426
+msgid "[There were more errors. Output was truncated!]"
+msgstr "[Der var flere fejl. Udskrift blev afkortet!]"
 
-#: ../plugins/headerbar.py:77
-msgid "_Next Unread Item"
-msgstr "_Næste ulæste punkt"
-
-#: ../plugins/headerbar.py:85
-msgid "_Mark Items Read"
-msgstr "_Marker punkter som læst"
-
-#: ../plugins/headerbar.py:104
-msgid "Search All Feeds..."
-msgstr "Søg i alle nyhedskilder ..."
+#: ../src/xml.c:594
+msgid "XML Parser: Could not parse document:\n"
+msgstr "XML-fortolker: Kunne ikke fortolke dokument:\n"
 
 #: ../glade/about.ui.h:1
 msgid "About"
@@ -1465,6 +1524,176 @@ msgstr "_Gennemse"
 msgid "_Do this automatically for enclosures like this from now on."
 msgstr "_Gør dette automatisk for pakker som dette fremadrettet."
 
+#: ../glade/google_source.ui.h:1
+#, fuzzy
+msgid "Add Google Reader API Account"
+msgstr "Tilføj Google Reader-konto"
+
+#: ../glade/google_source.ui.h:2
+msgid ""
+"Please enter the details of the new Google Reader API compatible "
+"subscription."
+msgstr ""
+
+#: ../glade/google_source.ui.h:3 ../glade/reedah_source.ui.h:3
+#: ../glade/theoldreader_source.ui.h:3 ../glade/ttrss_source.ui.h:4
+msgid "_Password"
+msgstr "_Adgangskode"
+
+#: ../glade/google_source.ui.h:4 ../glade/reedah_source.ui.h:4
+#: ../glade/theoldreader_source.ui.h:4
+msgid "_Username (Email)"
+msgstr "_Brugernavn (e-post)"
+
+#: ../glade/google_source.ui.h:5
+#, fuzzy
+msgid "_Server"
+msgstr "_Serveradresse"
+
+#: ../glade/google_source.ui.h:6
+#, fuzzy
+msgid "_Name"
+msgstr "_Navn på nyhedskilde:"
+
+#: ../glade/liferea_menu.ui.h:1
+msgid "_Subscriptions"
+msgstr "_Abonnementer"
+
+#: ../glade/liferea_menu.ui.h:2 ../glade/liferea_toolbar.ui.h:8
+msgid "Update _All"
+msgstr "Opdater _alle"
+
+#: ../glade/liferea_menu.ui.h:3
+msgid "Mark All As _Read"
+msgstr "Marker alle som _læst"
+
+#: ../glade/liferea_menu.ui.h:4 ../glade/liferea_toolbar.ui.h:1
+msgid "_New Subscription..."
+msgstr "_Nyt abonnement ..."
+
+#: ../glade/liferea_menu.ui.h:7
+msgid "New _Source..."
+msgstr "Ny _kilde ..."
+
+#: ../glade/liferea_menu.ui.h:9
+msgid "_Import Feed List..."
+msgstr "_Importer nyhedskildeliste ..."
+
+#: ../glade/liferea_menu.ui.h:10
+msgid "_Export Feed List..."
+msgstr "_Eksporter nyhedskildeliste ..."
+
+#: ../glade/liferea_menu.ui.h:11
+msgid "_Quit"
+msgstr "_Afslut"
+
+#: ../glade/liferea_menu.ui.h:12
+msgid "_Feed"
+msgstr "_Nyhedskilde"
+
+#: ../glade/liferea_menu.ui.h:15
+msgid "Remove _All Items"
+msgstr "Fjern _Alle punkter"
+
+#: ../glade/liferea_menu.ui.h:16
+msgid "_Remove"
+msgstr "_Fjern"
+
+#: ../glade/liferea_menu.ui.h:18
+msgid "_Item"
+msgstr "_Punkt"
+
+#: ../glade/liferea_menu.ui.h:24
+msgid "R_emove"
+msgstr "_Fjern"
+
+#: ../glade/liferea_menu.ui.h:28
+msgid "_View"
+msgstr "_Vis"
+
+#: ../glade/liferea_menu.ui.h:29
+msgid "_Fullscreen"
+msgstr "_Fuldskærm"
+
+#: ../glade/liferea_menu.ui.h:30
+msgid "Zoom _In"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:31
+msgid "Zoom _Out"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:32
+#, fuzzy
+msgid "_Normal size"
+msgstr "_Normal visning"
+
+#: ../glade/liferea_menu.ui.h:33
+msgid "_Normal View"
+msgstr "_Normal visning"
+
+#: ../glade/liferea_menu.ui.h:34
+msgid "_Wide View"
+msgstr "_Bred visning"
+
+#: ../glade/liferea_menu.ui.h:35
+msgid "_Reduced Feed List"
+msgstr "_Reduceret nyhedskildeliste"
+
+#: ../glade/liferea_menu.ui.h:36
+msgid "_Tools"
+msgstr "_Værktøjer"
+
+#: ../glade/liferea_menu.ui.h:37
+msgid "_Update Monitor"
+msgstr "_Opdater skærm"
+
+#: ../glade/liferea_menu.ui.h:38
+msgid "_Preferences"
+msgstr "_Indstillinger"
+
+#: ../glade/liferea_menu.ui.h:39
+msgid "S_earch"
+msgstr "S_øg"
+
+#: ../glade/liferea_menu.ui.h:41
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: ../glade/liferea_menu.ui.h:42
+msgid "_Contents"
+msgstr "_Indhold"
+
+#: ../glade/liferea_menu.ui.h:43
+msgid "_Quick Reference"
+msgstr "_Hurtig hjælp"
+
+#: ../glade/liferea_menu.ui.h:44
+msgid "_FAQ"
+msgstr "_OSS"
+
+#: ../glade/liferea_menu.ui.h:45
+msgid "_About"
+msgstr "_Om"
+
+#: ../glade/liferea_toolbar.ui.h:2
+msgid "Adds a subscription to the feed list."
+msgstr "Tilføjer et abonnement til nyhedskildelisten."
+
+#: ../glade/liferea_toolbar.ui.h:4
+msgid ""
+"Marks all items of the selected feed list node / in the item list as read."
+msgstr ""
+"Marker alle punkter på den valgte kildelisteknude / i punktlisten som læste."
+
+#: ../glade/liferea_toolbar.ui.h:9
+msgid "Updates all subscriptions."
+msgstr "Opdaterer alle abonnementer."
+
+#: ../glade/liferea_toolbar.ui.h:11
+msgid "Show the search dialog."
+msgstr "Vis søgedialogen."
+
 #: ../glade/mainwindow.ui.h:2
 msgid "page 1"
 msgstr ""
@@ -1473,11 +1702,7 @@ msgstr ""
 msgid "page 2"
 msgstr ""
 
-#: ../glade/mainwindow.ui.h:4
-msgid "page 3"
-msgstr ""
-
-#: ../glade/mainwindow.ui.h:5 ../glade/prefs.ui.h:23
+#: ../glade/mainwindow.ui.h:4 ../glade/prefs.ui.h:25
 msgid "Headlines"
 msgstr "Overskrifter"
 
@@ -1502,13 +1727,14 @@ msgstr "Ny mappe"
 msgid "_Folder name:"
 msgstr "_Mappenavn:"
 
-#: ../glade/new_newsbin.ui.h:1
-msgid "Create News Bin"
-msgstr "Opret nyhedsbakke"
-
 #: ../glade/new_newsbin.ui.h:2
 msgid "_News Bin Name:"
 msgstr "_Nyhedsbakkenavn:"
+
+#: ../glade/new_newsbin.ui.h:3
+#, fuzzy
+msgid "_Always show in Reduced Feed List"
+msgstr "_Reduceret nyhedskildeliste"
 
 #: ../glade/new_subscription.ui.h:2 ../glade/properties.ui.h:11
 msgid "Feed Source"
@@ -1679,70 +1905,70 @@ msgid "_Default View Mode:"
 msgstr "_Normal visningstilstand:"
 
 #: ../glade/prefs.ui.h:21
+msgid "_Defer removing read items from folders and search folders."
+msgstr ""
+
+#: ../glade/prefs.ui.h:22
+msgid "Ask for confirmation when marking all items as read."
+msgstr ""
+
+#: ../glade/prefs.ui.h:23
 msgid "Web Integration"
 msgstr "Internetintegrering"
 
-#: ../glade/prefs.ui.h:22
+#: ../glade/prefs.ui.h:24
 msgid "_Post Bookmarks to"
 msgstr "_Send bogmærker til"
 
-#: ../glade/prefs.ui.h:24
+#: ../glade/prefs.ui.h:26
 msgid "Internal Browser Settings"
 msgstr "Intern browseropsætning"
 
-#: ../glade/prefs.ui.h:25
+#: ../glade/prefs.ui.h:27
 msgid "Open links in Liferea's _window."
 msgstr "Åbn adresser i Lifereas _vindue."
 
-#: ../glade/prefs.ui.h:26
-msgid "_Disable Javascript."
-msgstr "_Deaktiver Javascript."
+#: ../glade/prefs.ui.h:28
+msgid "_Never run external Javascript."
+msgstr ""
 
-#: ../glade/prefs.ui.h:27
+#: ../glade/prefs.ui.h:29
 msgid "_Enable browser plugins."
 msgstr "_Aktiver browserudvidelsesmoduler."
 
-#: ../glade/prefs.ui.h:28
+#: ../glade/prefs.ui.h:30
 msgid "External Browser Settings"
 msgstr "Ekstern browseropsætning"
 
-#: ../glade/prefs.ui.h:29
+#: ../glade/prefs.ui.h:31
 msgid "_Browser:"
 msgstr "_Browser:"
 
 # måske 'Manuel' (som i manuel browser) afhænger måske af type
-#: ../glade/prefs.ui.h:30
+#: ../glade/prefs.ui.h:32
 msgid "_Manual:"
 msgstr "_Manuel:"
 
-#: ../glade/prefs.ui.h:32
+#: ../glade/prefs.ui.h:34
 #, no-c-format
 msgid "<small>(%s for URL)</small>"
 msgstr "<small>(%s for adresse)</small>"
 
-#: ../glade/prefs.ui.h:33
+#: ../glade/prefs.ui.h:35
 msgid "Browser"
 msgstr "Browser"
 
-#: ../glade/prefs.ui.h:34
+#: ../glade/prefs.ui.h:36
 msgid "Toolbar Settings"
 msgstr "Værktøjsbjælkeopsætning"
 
-#: ../glade/prefs.ui.h:35
+#: ../glade/prefs.ui.h:37
 msgid "_Hide toolbar."
 msgstr "_Skjul værktøjsbjælke."
 
-#: ../glade/prefs.ui.h:36
+#: ../glade/prefs.ui.h:38
 msgid "Toolbar _button labels:"
 msgstr "Etiketter for _værktøjsbjælkeknap:"
-
-#: ../glade/prefs.ui.h:37
-msgid "Other"
-msgstr ""
-
-#: ../glade/prefs.ui.h:38
-msgid "Ask for confirmation when marking all items as read"
-msgstr ""
 
 #: ../glade/prefs.ui.h:39
 msgid "Desktop"
@@ -1800,31 +2026,57 @@ msgid "Privacy Settings"
 msgstr "Opsætning af mappevisning"
 
 #: ../glade/prefs.ui.h:52
-msgid "Tell sites that I do _not want to be tracked"
+msgid "Tell sites that I do _not want to be tracked."
 msgstr ""
 
 #: ../glade/prefs.ui.h:53
-msgid "Privacy"
+msgid "_Intelligent Tracking Prevention. "
 msgstr ""
 
 #: ../glade/prefs.ui.h:54
+msgid ""
+"This enables the WebKit feature described <a href=\"https://webkit.org/"
+"tracking-prevention/\">here</a>."
+msgstr ""
+
+#: ../glade/prefs.ui.h:55
+msgid ""
+"Intelligent tracking prevention is only available with WebKitGtk+ 2.30 or "
+"higher."
+msgstr ""
+
+#: ../glade/prefs.ui.h:56
+msgid "Use _Reader mode."
+msgstr ""
+
+#: ../glade/prefs.ui.h:57
+msgid ""
+"This enables <a href=\"https://github.com/mozilla/readability\">stripping</"
+"a> all non-content elements (like scripts, fonts, tracking)"
+msgstr ""
+
+#: ../glade/prefs.ui.h:58
+msgid "Privacy"
+msgstr ""
+
+#: ../glade/prefs.ui.h:59
 msgid "Downloading Enclosures"
 msgstr "Henter pakker"
 
-#: ../glade/prefs.ui.h:55
+#: ../glade/prefs.ui.h:60
 msgid "_Download using"
 msgstr "_Hent med brug af"
 
-#: ../glade/prefs.ui.h:57
+#: ../glade/prefs.ui.h:62
 #, no-c-format
 msgid "custom-command %s"
 msgstr ""
 
-#: ../glade/prefs.ui.h:58
+#: ../glade/prefs.ui.h:63
 msgid "Opening Enclosures"
 msgstr "Åbner pakker"
 
-#: ../glade/prefs.ui.h:59
+#: ../glade/prefs.ui.h:64
 msgid "Enclosures"
 msgstr "Pakker"
 
@@ -1877,6 +2129,10 @@ msgstr ""
 "Liferea kan bruge eksterne filterudvidelsesmoduler for at tilgå nyhedskilder "
 "og mappe i ikkeunderstøttede formater. Se dokumentationen for yderligere "
 "information."
+
+#: ../glade/properties.ui.h:21 ../xslt/item.xml.in.h:1
+msgid "Source"
+msgstr "Kilde"
 
 #: ../glade/properties.ui.h:22
 msgid ""
@@ -1936,10 +2192,6 @@ msgstr "_Marker hentede punkter som læst."
 msgid "Extract full content from HTML5 and Google AMP"
 msgstr ""
 
-#: ../glade/properties.ui.h:39
-msgid "Advanced"
-msgstr "Avanceret"
-
 #: ../glade/reedah_source.ui.h:1
 #, fuzzy
 msgid "Add Reedah Account"
@@ -1949,15 +2201,6 @@ msgstr "Tilføj Google Reader-konto"
 #, fuzzy
 msgid "Please enter your Reedah account settings."
 msgstr "Indtast venligst din kontoopsætning for Google Reader."
-
-#: ../glade/reedah_source.ui.h:3 ../glade/theoldreader_source.ui.h:3
-#: ../glade/ttrss_source.ui.h:4
-msgid "_Password"
-msgstr "_Adgangskode"
-
-#: ../glade/reedah_source.ui.h:4 ../glade/theoldreader_source.ui.h:4
-msgid "_Username (Email)"
-msgstr "_Brugernavn (e-post)"
 
 #: ../glade/rename_node.ui.h:1
 msgid "Rename"
@@ -1975,9 +2218,18 @@ msgstr "Egenskaber for søgemappe"
 msgid "Search _Name:"
 msgstr "Søge_navn:"
 
-#: ../glade/search_folder.ui.h:3 ../glade/search.ui.h:3
-msgid "Find Items that meet the following criteria"
-msgstr "Find punkter som opfylder de følgende kriterier"
+#: ../glade/search_folder.ui.h:3
+#, fuzzy
+msgid "Search Rules"
+msgstr "Søg i alle nyhedskilder"
+
+#: ../glade/search_folder.ui.h:4
+msgid "Rules"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:5
+msgid "All rules for this search folder"
+msgstr ""
 
 # hvad er dette?
 # Hvis det er ligesom i postprogrammet alpine: her angiver man regler
@@ -1990,13 +2242,34 @@ msgstr "Find punkter som opfylder de følgende kriterier"
 # (eller være 'opfyldt').  Det er i modsætning til at de allesammen skal
 # være opfyldt for at en post bliver fundet.
 # Så jeg foreslår: _Mindst én regel opfyldt
-#: ../glade/search_folder.ui.h:4 ../glade/search.ui.h:4
+#: ../glade/search_folder.ui.h:6
+#, fuzzy
+msgid "Rule Matching"
+msgstr "_Mindst én regel opfyldt"
+
+# hvad er dette?
+# Hvis det er ligesom i postprogrammet alpine: her angiver man regler
+# for hvordan forskellige typer beskeder (el. nyheder i dette tilfælde)
+# kategoriseres, f.eks. om den kommer fra dansk@dansk-gruppen.dk.  Så
+# kan man gøre ting med disse regler, f.eks. få alle beskeder der
+# opfylder en given regel farvet blå.  Man kan også bruge dem som
+# søgefiltre - så her er det nok noget med en søgning, hvor man søger på
+# flere regler ad gangen, og enhver af disse regler skal så matche
+# (eller være 'opfyldt').  Det er i modsætning til at de allesammen skal
+# være opfyldt for at en post bliver fundet.
+# Så jeg foreslår: _Mindst én regel opfyldt
+#: ../glade/search_folder.ui.h:7 ../glade/search.ui.h:4
 msgid "A_ny Rule Matches"
 msgstr "_Mindst én regel opfyldt"
 
-#: ../glade/search_folder.ui.h:5 ../glade/search.ui.h:5
+#: ../glade/search_folder.ui.h:8 ../glade/search.ui.h:5
 msgid "_All Rules Must Match"
 msgstr "_Alle regler skal være opfyldt"
+
+#: ../glade/search_folder.ui.h:9
+#, fuzzy
+msgid "Hide read items"
+msgstr "_Skjul læste punkter."
 
 #: ../glade/search.ui.h:1
 msgid "Advanced Search"
@@ -2006,6 +2279,10 @@ msgstr "Avanceret søgning"
 #: ../glade/search.ui.h:2
 msgid "_Search Folder..."
 msgstr "_Søg i mappe ..."
+
+#: ../glade/search.ui.h:3
+msgid "Find Items that meet the following criteria"
+msgstr "Find punkter som opfylder de følgende kriterier"
 
 #: ../glade/simple_search.ui.h:1
 msgid "Search All Feeds"
@@ -2097,6 +2374,262 @@ msgstr "Afventende anmodninger"
 msgid "_Downloading Now"
 msgstr "Henter nu"
 
+#: ../xslt/feed.xml.in.h:1
+msgid "Feed:"
+msgstr "Nyhedskilde:"
+
+#: ../xslt/feed.xml.in.h:2 ../xslt/source.xml.in.h:1
+msgid "Source:"
+msgstr "Kilde:"
+
+#: ../xslt/feed.xml.in.h:3
+msgid "Publisher"
+msgstr "Udgiver"
+
+#: ../xslt/feed.xml.in.h:4
+msgid "Copyright"
+msgstr "Ophavsret"
+
+#: ../xslt/feed.xml.in.h:5
+#, fuzzy
+msgid "There was a problem when fetching this subscription!"
+msgstr ""
+"Der opstod et problem under læsning af dette abonnement. Tjek venligst "
+"URL'en og konsoluddata."
+
+#: ../xslt/feed.xml.in.h:6
+#, fuzzy
+msgid "1. Authentication"
+msgstr "Godkendelse"
+
+#: ../xslt/feed.xml.in.h:7
+#, fuzzy
+msgid "2. Download"
+msgstr "Hent"
+
+#: ../xslt/feed.xml.in.h:8
+msgid "3. Feed Discovery"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:9
+msgid "4. Parsing"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:10
+#, fuzzy
+msgid "Details:"
+msgstr "Detaljer"
+
+#: ../xslt/feed.xml.in.h:11
+msgid "Authentication failed. Please check the credentials and try again!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:12
+#, fuzzy
+msgid "There was an error when downloading the feed source:"
+msgstr "Der opstod en fejl under fortolkning af denne nyhedskilde!"
+
+#: ../xslt/feed.xml.in.h:13
+#, fuzzy
+msgid "There was an error when running the feed filter command:"
+msgstr "Der opstod en fejl under fortolkning af denne nyhedskilde!"
+
+#: ../xslt/feed.xml.in.h:14
+msgid ""
+"The source does not point directly to a feed or a webpage with a link to a "
+"feed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:15
+msgid "Sorry, the feed could not be parsed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:16
+msgid "You may want to contact the author/webmaster of the feed about this!"
+msgstr ""
+"Du bør måske kontakte forfatteren/webmasteren for nyhedskilden om dette!"
+
+#: ../xslt/folder.xml.in.h:1
+msgid "Folder:"
+msgstr "Mappe:"
+
+# er det ikke 'underkilder'?
+# underbeskeder
+#: ../xslt/folder.xml.in.h:2 ../xslt/source.xml.in.h:2
+msgid "children with"
+msgstr "underkilder med"
+
+#: ../xslt/folder.xml.in.h:3 ../xslt/source.xml.in.h:3
+#: ../xslt/vfolder.xml.in.h:2
+msgid "unread headlines"
+msgstr "ulæste overskrifter"
+
+#: ../xslt/item.xml.in.h:2
+msgid "Feed"
+msgstr "Nyhedskilde"
+
+#: ../xslt/item.xml.in.h:3
+msgid "Filed under"
+msgstr "Arkiveret under"
+
+#: ../xslt/item.xml.in.h:4
+msgid "Author"
+msgstr "Forfatter"
+
+#: ../xslt/item.xml.in.h:5
+msgid "Shared by"
+msgstr "Delt af"
+
+#: ../xslt/item.xml.in.h:6
+msgid "Via"
+msgstr "Via"
+
+#: ../xslt/item.xml.in.h:7
+msgid "Related"
+msgstr "Forbundne"
+
+# tror 'sendt til' eller 'poste(re)t i'
+#: ../xslt/item.xml.in.h:8
+msgid "Also posted in"
+msgstr "Også sendt til"
+
+#: ../xslt/item.xml.in.h:9
+msgid "Creator"
+msgstr "Forfatter"
+
+#: ../xslt/item.xml.in.h:10
+msgid "Coordinates"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:11
+msgid "Map"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:12
+msgid "View count"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:13
+msgid "Rating"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:14
+msgid "Comments"
+msgstr "Bemærkninger"
+
+#: ../xslt/item.xml.in.h:15
+msgid "Updating..."
+msgstr "Opdaterer ..."
+
+#: ../xslt/item.xml.in.h:16
+msgid "Section"
+msgstr "Afsnit"
+
+#: ../xslt/item.xml.in.h:17
+msgid "Department"
+msgstr "Afdeling"
+
+#: ../xslt/newsbin.xml.in.h:1
+msgid "News Bin:"
+msgstr "Nyhedsbakke:"
+
+#: ../xslt/newsbin.xml.in.h:2
+msgid ""
+"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
+"list context menu."
+msgstr ""
+"Tilføj punkter til denne nyhedsbakke ved at vælge »Kopier til nyhedsbakke« "
+"fra kontekstmenuen til punktlisten."
+
+#: ../xslt/vfolder.xml.in.h:1
+msgid "Search Folder:"
+msgstr "Søgemappe:"
+
+#, fuzzy
+#~ msgid "RSS feed reader"
+#~ msgstr "Nyhedslæser"
+
+#, fuzzy
+#~ msgid "Read articles when offline"
+#~ msgstr "Liferea er nu frakoblet"
+
+#, fuzzy
+#~ msgid "Play Podcasts"
+#~ msgstr "Podcast"
+
+#, c-format
+#~ msgid "\"%s\" updated..."
+#~ msgstr "»%s« opdateret ..."
+
+#~ msgid ""
+#~ "A network error occurred, or the other end closed the connection "
+#~ "unexpectedly"
+#~ msgstr ""
+#~ "Der opstod en netværksfejl, eller den anden ende lukkede uventet "
+#~ "forbindelsen"
+
+#~ msgid ""
+#~ "The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
+#~ "value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
+#~ "></b>"
+#~ msgstr ""
+#~ "Den sidste opdatering af dette abonnement mislykkedes!<br/><b>HTTP-"
+#~ "fejlkode <xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of "
+#~ "select=\"httpError\"/></b>"
+
+#~ msgid "Parser Error Details"
+#~ msgstr "Fejldetaljer for fortolker"
+
+#~ msgid "There were errors while filtering this feed!"
+#~ msgstr "Der opstod en fejl under filtrering af denne nyhedskilde!"
+
+#~ msgid "Filter Error Details"
+#~ msgstr "Filtrer fejldetaljer"
+
+#~ msgid ""
+#~ "<p>Could not detect the type of this feed! Please check if the source "
+#~ "really points to a resource provided in one of the supported syndication "
+#~ "formats!</p>XML Parser Output:<br /><div class='xmlparseroutput'>"
+#~ msgstr ""
+#~ "<p>Kunne ikke detektere denne type nyhedskilde! Tjek venligst om kilden "
+#~ "virkelig peger på en kilde tilbudt i en af de understøttede "
+#~ "syndikationformater!</p>XML-fortolkeruddata:<br /><div "
+#~ "class='xmlparseroutput'>"
+
+#~ msgid ""
+#~ "The URL you want Liferea to subscribe to points to a webpage and the auto "
+#~ "discovery found no feeds on this page. Maybe this webpage just does not "
+#~ "support feed auto discovery."
+#~ msgstr ""
+#~ "URL'en du ønsker, at Liferea skal abonnere på peger på en internetside, "
+#~ "og den automatiske registrering fandt ingen nyhedskilder på denne side. "
+#~ "Måske understøtter denne internetside ikke automatisk registrering af "
+#~ "nyhedskilder."
+
+#~ msgid "Source points to HTML document."
+#~ msgstr "Kildepunkter til HTML-dokument."
+
+# nyhedskildetype (for langt!)
+#~ msgid "Could not determine the feed type."
+#~ msgstr "Kunne ikke afgøre nyhedstypen."
+
+#~ msgid "Gone. Resource doesn't exist. Please unsubscribe!"
+#~ msgstr "Forsvundet. Ressource findes ikke. Fjern venligst abonnement!"
+
+#~ msgid "Updating \"%s\""
+#~ msgstr "Opdaterer »%s«"
+
+#~ msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
+#~ msgstr ""
+#~ "XML-fejl under læsning af nyhedskilde! Nyhedskilde »%s« kunne ikke "
+#~ "indlæses!"
+
+#~ msgid "Combined View"
+#~ msgstr "Kombineret visning"
+
+#~ msgid "_Disable Javascript."
+#~ msgstr "_Deaktiver Javascript."
+
 #~ msgid "GUI"
 #~ msgstr "Grafisk brugergrænseflade"
 
@@ -2107,50 +2640,17 @@ msgstr "Henter nu"
 #~ msgid "Updating favicon for \"%s\""
 #~ msgstr "Opdaterer favicon til »%s«"
 
-#~ msgid "_Subscriptions"
-#~ msgstr "_Abonnementer"
-
-#~ msgid "Update _All"
-#~ msgstr "Opdater _alle"
-
-#~ msgid "Updates all subscriptions."
-#~ msgstr "Opdaterer alle abonnementer."
-
-#~ msgid "Mark All As _Read"
-#~ msgstr "Marker alle som _læst"
-
 #~ msgid "Marks read every item of every subscription."
 #~ msgstr "Markerer alle poster på alle abonnementer som læst."
-
-#~ msgid "_Import Feed List..."
-#~ msgstr "_Importer nyhedskildeliste ..."
 
 #~ msgid "Imports an OPML feed list."
 #~ msgstr "Importerer en OPML-nyhedskildeliste."
 
-#~ msgid "_Export Feed List..."
-#~ msgstr "_Eksporter nyhedskildeliste ..."
-
 #~ msgid "Exports the feed list as OPML."
 #~ msgstr "Eksporterer nyhedskildelisten som OPML."
 
-#~ msgid "_Quit"
-#~ msgstr "_Afslut"
-
-#~ msgid "_Feed"
-#~ msgstr "_Nyhedskilde"
-
-#~ msgid "Remove _All Items"
-#~ msgstr "Fjern _Alle punkter"
-
 #~ msgid "Removes all items of the currently selected feed."
 #~ msgstr "Fjern alle punkter på den aktuelt valgte nyhedskilde."
-
-#~ msgid "_Item"
-#~ msgstr "_Punkt"
-
-#~ msgid "_View"
-#~ msgstr "_Vis"
 
 #~ msgid "Increases the text size of the item view."
 #~ msgstr "Øger tekststørrelsen af punktvisningen."
@@ -2158,62 +2658,26 @@ msgstr "Henter nu"
 #~ msgid "Decreases the text size of the item view."
 #~ msgstr "Formindsker tekststørrelsen på punktvisningen."
 
-#~ msgid "_Tools"
-#~ msgstr "_Værktøjer"
-
-#~ msgid "_Update Monitor"
-#~ msgstr "_Opdater skærm"
-
 #~ msgid "Show a list of all feeds currently in the update queue"
 #~ msgstr "Vis en liste over alle nyhedskilder, der nu er i opdateringskøen"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Indstillinger"
 
 #~ msgid "Edit Preferences."
 #~ msgstr "Rediger indstillinger."
 
-#~ msgid "S_earch"
-#~ msgstr "S_øg"
-
-#~ msgid "Show the search dialog."
-#~ msgstr "Vis søgedialogen."
-
-#~ msgid "_Help"
-#~ msgstr "_Hjælp"
-
-#~ msgid "_Contents"
-#~ msgstr "_Indhold"
-
 #~ msgid "View help for this application."
 #~ msgstr "Vis hjælp for dette program."
-
-#~ msgid "_Quick Reference"
-#~ msgstr "_Hurtig hjælp"
 
 #~ msgid "View a list of all Liferea shortcuts."
 #~ msgstr "Vis en liste over alle genveje i Liferea."
 
-#~ msgid "_FAQ"
-#~ msgstr "_OSS"
-
 #~ msgid "View the FAQ for this application."
 #~ msgstr "Vis OSS'en for dette program."
-
-#~ msgid "_About"
-#~ msgstr "_Om"
 
 #~ msgid "Shows an about dialog."
 #~ msgstr "Viser en om-dialog."
 
-#~ msgid "_Normal View"
-#~ msgstr "_Normal visning"
-
 #~ msgid "Set view mode to mail client mode."
 #~ msgstr "Sæt visningstilstand til postklienttilstand."
-
-#~ msgid "_Wide View"
-#~ msgstr "_Bred visning"
 
 #~ msgid "Set view mode to use three vertical panes."
 #~ msgstr "Sæt visningstilstand til at bruge tre lodrette paneler."
@@ -2224,17 +2688,8 @@ msgstr "Henter nu"
 #~ msgid "Set view mode to two pane mode."
 #~ msgstr "Sæt visningstilstand til topaneltilstand."
 
-#~ msgid "_Reduced Feed List"
-#~ msgstr "_Reduceret nyhedskildeliste"
-
 #~ msgid "Hide feeds with no unread items."
 #~ msgstr "Skjul nyhedskilder uden ulæste punkter."
-
-#~ msgid "_New Subscription..."
-#~ msgstr "_Nyt abonnement ..."
-
-#~ msgid "Adds a subscription to the feed list."
-#~ msgstr "Tilføjer et abonnement til nyhedskildelisten."
 
 #~ msgid "Adds a folder to the feed list."
 #~ msgstr "Tilføjer en mappe til kildelisten."
@@ -2242,20 +2697,11 @@ msgstr "Henter nu"
 #~ msgid "Adds a new search folder to the feed list."
 #~ msgstr "Tilføjer en ny søgemappe til nyhedskildelisten."
 
-#~ msgid "New _Source..."
-#~ msgstr "Ny _kilde ..."
-
 #~ msgid "Adds a new feed list source."
 #~ msgstr "Tilføjer en ny kilde for nyhedskildeliste."
 
 #~ msgid "Adds a new news bin."
 #~ msgstr "Tilføjer en ny nyhedsbakke."
-
-#~ msgid ""
-#~ "Marks all items of the selected feed list node / in the item list as read."
-#~ msgstr ""
-#~ "Marker alle punkter på den valgte kildelisteknude / i punktlisten som "
-#~ "læste."
 
 #~ msgid ""
 #~ "Updates the selected subscription or all subscriptions of the selected "
@@ -2267,9 +2713,6 @@ msgstr "Henter nu"
 #~ msgid "Opens the property dialog for the selected subscription."
 #~ msgstr "Åbner egenskabsdialogen for det valgte abonnement."
 
-#~ msgid "_Remove"
-#~ msgstr "_Fjern"
-
 #~ msgid "Removes the selected subscription."
 #~ msgstr "Fjerner det valgte abonnement."
 
@@ -2278,9 +2721,6 @@ msgstr "Henter nu"
 
 #~ msgid "Toggles the flag status of the selected item."
 #~ msgstr "Skifter flagstatus på det valgte punkt."
-
-#~ msgid "R_emove"
-#~ msgstr "_Fjern"
 
 #~ msgid "Removes the selected item."
 #~ msgstr "Fjerner det valgte punkt."
@@ -2293,9 +2733,6 @@ msgstr "Henter nu"
 
 #~ msgid "Launches the item's link in the configured external browser."
 #~ msgstr "Åbner punktets adresse i den konfigurerede eksterne browser."
-
-#~ msgid "_Fullscreen"
-#~ msgstr "_Fuldskærm"
 
 # fuldskærmsvisning
 #~ msgid "Browse at full screen"
@@ -2321,9 +2758,6 @@ msgstr "Henter nu"
 #~ "Bemærk: <i>Brugernavn og adgangskode vil blive gemt i din kildelistefil "
 #~ "til Liferea uden brug af kryptering.</i>"
 
-#~ msgid "Add Google Reader Account"
-#~ msgstr "Tilføj Google Reader-konto"
-
 #~ msgid "Please enter your Google Reader account settings."
 #~ msgstr "Indtast venligst din kontoopsætning for Google Reader."
 
@@ -2337,9 +2771,6 @@ msgstr "Henter nu"
 
 #~ msgid "View Headlines"
 #~ msgstr "Vis overskrifter"
-
-#~ msgid "Plugins"
-#~ msgstr "Udvidelsesmodul"
 
 #~ msgid "Feed Name"
 #~ msgstr "Navn på nyhedskilde"
@@ -2532,20 +2963,11 @@ msgstr "Henter nu"
 #~ msgstr[0] "<b>%s</b> har <b>%d</b> opdatering"
 #~ msgstr[1] "<b>%s</b> har <b>%d</b> opdateringer"
 
-#~ msgid "Feed Update"
-#~ msgstr "Nyhedskildeopdatering"
-
-#~ msgid "Show details"
-#~ msgstr "Vis detaljer"
-
 #~ msgid "_Enforce popup notification for this subscription."
 #~ msgstr "_Gennemtving pop op-påmindelse for dette abonnement."
 
 #~ msgid "_Never do popup notification for this subscription."
 #~ msgstr "_Udfør aldrig pop op-påmindelse for dette abonnement."
-
-#~ msgid "Notification Settings"
-#~ msgstr "Påmindelsesopsætning"
 
 #~ msgid "Show a _popup window with new headlines."
 #~ msgstr "Vis et _pop op-vindue med nye overskrifter."

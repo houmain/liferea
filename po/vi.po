@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: liferea git-master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 12:24+0200\n"
+"POT-Creation-Date: 2022-10-26 01:24+0200\n"
 "PO-Revision-Date: 2017-02-18 15:18+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
@@ -18,63 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Gtranslator 2.91.7\n"
-
-#: ../liferea.appdata.xml.in.h:1
-#, fuzzy
-msgid "RSS feed reader"
-msgstr "Bộ đọc Feed"
-
-#: ../liferea.appdata.xml.in.h:2
-msgid ""
-"Liferea is an abbreviation for Linux Feed Reader. It is a news aggregator "
-"for online news feeds. It supports a number of different feed formats "
-"including RSS/RDF, CDF and Atom. There are many other news readers "
-"available, but these others are not available for Linux or require many "
-"extra libraries to be installed. Liferea tries to fill this gap by creating "
-"a fast, easy to use, easy to install news aggregator for GTK/GNOME."
-msgstr ""
-"Liferea là từ viết tắt từ Linux Feed Reader. Nó là một bộ tập hợp tin tức "
-"cho các feed tin tức trực tuyến. Nó hỗ trợ một lượng lớn các định dạng feed "
-"khác nhau bao gồm RSS/RDF, CDF và Atom. Hiện sẵn có nhiều bộ đọc tin tức, "
-"nhưng những cái khác đó không sẵn có trên Linux hay yêu cầu cài đặt bổ sung "
-"nhiều thư viện. Liferea có để lấp đầy khoảng trống này bằng các tạo cho môi "
-"trường  GTK/GNOME một bộ tập hợp tin tức nhanh, dễ cài đặt và sử dụng."
-
-#: ../liferea.appdata.xml.in.h:3
-msgid "Distinguishing features:"
-msgstr "Các tính năng phân biệt:"
-
-#: ../liferea.appdata.xml.in.h:4
-msgid "Read articles when offline"
-msgstr "Đọc các bài viết khi ngoại tuyến"
-
-#: ../liferea.appdata.xml.in.h:5
-msgid "Synchronizes with TheOldReader"
-msgstr "Đồng bộ hóa với TheOldReader"
-
-#: ../liferea.appdata.xml.in.h:6
-msgid "Synchronizes with TinyTinyRSS"
-msgstr "Đồng bộ hóa với TinyTinyRSS"
-
-#: ../liferea.appdata.xml.in.h:7
-msgid "Synchronizes with InoReader"
-msgstr "Đồng bộ hóa với InoReader"
-
-#: ../liferea.appdata.xml.in.h:8
-msgid "Synchronizes with Reedah"
-msgstr "Đồng bộ hóa với Reedah"
-
-#: ../liferea.appdata.xml.in.h:9
-msgid "Permanently save headlines in news bins"
-msgstr "Lưu vĩnh viễn tin chính vào một bin tin tức"
-
-#: ../liferea.appdata.xml.in.h:10
-msgid "Match items using search folders"
-msgstr "Khớp các mục tin sử dụng các thư mục tìm kiếm"
-
-#: ../liferea.appdata.xml.in.h:11
-msgid "Play Podcasts"
-msgstr "Chơi Podcast"
 
 #: ../net.sourceforge.liferea.desktop.in.h:1 ../src/liferea_application.c:349
 #: ../glade/mainwindow.ui.h:1
@@ -98,169 +41,239 @@ msgstr "Đọc các tin mới và blog"
 msgid "news;feed;aggregator;blog;podcast;syndication;rss;atom"
 msgstr "news;feed;aggregator;blog;podcast;"
 
-#: ../xslt/feed.xml.in.h:1
-msgid ""
-"This feed is discontinued. It's no longer available. Liferea won't update it "
-"anymore but you can still access the cached headlines."
+#: ../plugins/getfocus.py:95
+msgid "Opacity:"
 msgstr ""
-"Feed này không còn được kết nối nữa. Nó không sẵn dùng. Liferea sau này "
-"không thể cập nhật thêm nữa nhưng bạn vẫn có thể truy cập các đề mục đã được "
-"nhớ tạm."
 
-#: ../xslt/feed.xml.in.h:2
-msgid ""
-"The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
-"value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/></b>"
+#: ../plugins/getfocus.py:96
+msgid "Opacity"
 msgstr ""
-"Lần cập nhật cuối địa chỉ đặt xem dài hạn này gặp lỗi!<br/><b>Mã lỗi HTTP "
-"<xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
-"></b>"
 
-#: ../xslt/feed.xml.in.h:3
-msgid "There were errors while parsing this feed!"
-msgstr "Có một số lỗi xảy ra khi phân tích feed này!"
-
-#: ../xslt/feed.xml.in.h:4
-msgid "Parser Error Details"
-msgstr "Chi tiết về lỗi bộ phân tích cú pháp"
-
-#: ../xslt/feed.xml.in.h:5
-msgid "Details"
-msgstr "Chi tiết"
-
-#: ../xslt/feed.xml.in.h:6
-msgid "You may want to contact the author/webmaster of the feed about this!"
+#: ../plugins/getfocus.py:106
+msgid "Min"
 msgstr ""
-"Bạn có lẽ cần liên hệ với người quản lý trang web hay tác giả của feed về "
-"vấn đề này!"
 
-#: ../xslt/feed.xml.in.h:7
-msgid "There were errors while filtering this feed!"
-msgstr "Có một số lỗi xảy ra khi lọc feed này!"
-
-#: ../xslt/feed.xml.in.h:8
-msgid "Filter Error Details"
-msgstr "Chi tiết về lỗi bộ lọc"
-
-#: ../xslt/feed.xml.in.h:9
-msgid "Feed:"
-msgstr "Feed:"
-
-#: ../xslt/feed.xml.in.h:10 ../xslt/source.xml.in.h:1
-msgid "Source:"
-msgstr "Nguồn:"
-
-#: ../xslt/feed.xml.in.h:11
-msgid "Publisher"
-msgstr "Nhà xuất bản"
-
-#: ../xslt/feed.xml.in.h:12
-msgid "Copyright"
-msgstr "Tác quyền"
-
-#: ../xslt/source.xml.in.h:2 ../xslt/folder.xml.in.h:2
-msgid "children with"
-msgstr "có con"
-
-#: ../xslt/source.xml.in.h:3 ../xslt/folder.xml.in.h:3
-#: ../xslt/vfolder.xml.in.h:2
-msgid "unread headlines"
-msgstr "những tiêu đề chưa đọc"
-
-#: ../xslt/folder.xml.in.h:1
-msgid "Folder:"
-msgstr "Thư mục:"
-
-#: ../xslt/item.xml.in.h:1 ../glade/properties.ui.h:21
-msgid "Source"
-msgstr "Nguồn"
-
-#: ../xslt/item.xml.in.h:2
-msgid "Feed"
-msgstr "Feed"
-
-#: ../xslt/item.xml.in.h:3
-msgid "Filed under"
-msgstr "Được lọc dưới"
-
-#: ../xslt/item.xml.in.h:4
-msgid "Author"
-msgstr "Tác giả"
-
-#: ../xslt/item.xml.in.h:5
-msgid "Shared by"
-msgstr "Chia sẻ bởi"
-
-#: ../xslt/item.xml.in.h:6
-msgid "Via"
-msgstr "Thông qua"
-
-#: ../xslt/item.xml.in.h:7
-msgid "Related"
-msgstr "Quan hệ"
-
-#: ../xslt/item.xml.in.h:8
-msgid "Also posted in"
-msgstr "Đồng thời post tại"
-
-#: ../xslt/item.xml.in.h:9
-msgid "Creator"
-msgstr "Người tạo"
-
-#: ../xslt/item.xml.in.h:10
-msgid "Coordinates"
-msgstr "Tọa độ"
-
-#: ../xslt/item.xml.in.h:11
-msgid "Map"
+#: ../plugins/getfocus.py:111
+#, fuzzy
+msgid "Max"
 msgstr "Bản đồ"
 
-#: ../xslt/item.xml.in.h:12
-msgid "View count"
+#: ../plugins/getfocus.py:117
+msgid "Save"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:13
-msgid "Rating"
+#: ../plugins/headerbar.py:67 ../glade/liferea_menu.ui.h:20
+#: ../glade/liferea_toolbar.ui.h:5
+msgid "Previous Item"
+msgstr "Mục kế trước"
+
+#: ../plugins/headerbar.py:73 ../glade/liferea_menu.ui.h:21
+#: ../glade/liferea_toolbar.ui.h:6
+msgid "Next Item"
+msgstr "Mục kế tiếp"
+
+#: ../plugins/headerbar.py:81 ../glade/liferea_menu.ui.h:19
+#: ../glade/liferea_toolbar.ui.h:7
+msgid "_Next Unread Item"
+msgstr "Mục chưa đọc _kế tiếp"
+
+#: ../plugins/headerbar.py:89 ../glade/liferea_menu.ui.h:14
+#: ../glade/liferea_toolbar.ui.h:3
+msgid "_Mark Items Read"
+msgstr "Đánh dấ_u các mục là đã đọc"
+
+#: ../plugins/headerbar.py:113 ../glade/liferea_menu.ui.h:40
+#: ../glade/liferea_toolbar.ui.h:10
+msgid "Search All Feeds..."
+msgstr "Tìm trong tất cả các Feed…"
+
+#: ../plugins/libnotify.py:42
+#, fuzzy
+msgid "Feed Updates"
+msgstr "Cập nhật feed"
+
+#: ../plugins/plugin-installer.py:55
+msgid "Plugins"
+msgstr "Phần bổ sung"
+
+#: ../plugins/plugin-installer.py:72
+#, fuzzy
+msgid "Plugin Installer"
+msgstr "Phần bổ sung"
+
+#: ../plugins/plugin-installer.py:86
+#, fuzzy
+msgid "Activate Plugins"
+msgstr "Phần bổ sung"
+
+#: ../plugins/plugin-installer.py:87
+#, fuzzy
+msgid "Download Plugins"
+msgstr "Tả_i về sử dụng"
+
+#: ../plugins/plugin-installer.py:105
+#, python-format
+msgid "Bad fields for plugin entry %s"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:14
-msgid "Comments"
-msgstr "Ghi chú"
+#: ../plugins/plugin-installer.py:128
+msgid "All"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:15
-msgid "Updating..."
-msgstr "Đang cập nhật…"
+#: ../plugins/plugin-installer.py:128 ../glade/properties.ui.h:39
+msgid "Advanced"
+msgstr "Cao cấp"
 
-#: ../xslt/item.xml.in.h:16
-msgid "Section"
-msgstr "Phần"
+#: ../plugins/plugin-installer.py:128
+msgid "Menu"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:17
-msgid "Department"
-msgstr "Phòng ban"
+#: ../plugins/plugin-installer.py:128
+#, fuzzy
+msgid "Notifications"
+msgstr "Cài đặt cách thông báo"
 
-#: ../xslt/newsbin.xml.in.h:1
-msgid "News Bin:"
-msgstr "Thùng rác tin tức:"
+#: ../plugins/plugin-installer.py:136
+msgid "Filter by category"
+msgstr ""
 
-#: ../xslt/newsbin.xml.in.h:2
+#: ../plugins/plugin-installer.py:143
+msgid "_Install"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:147
+msgid "_Uninstall"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:248
+#, python-format
 msgid ""
-"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
-"list context menu."
+"Missing package manager '%s'. Cannot check nor install necessary "
+"dependencies!"
 msgstr ""
-"Thêm các mục vào thùng rác tin tức này bằng cách chọn \"Sao chép vào Thùng "
-"rác Tin tức\" từ trình đơn ngữ cảnh danh sách mục tin."
 
-#: ../xslt/vfolder.xml.in.h:1
-msgid "Search Folder:"
-msgstr "Thư mục tìm kiếm:"
+#: ../plugins/plugin-installer.py:264
+#, python-format
+msgid "Missing package '%s'. Do you want to install it? (Will run '%s')"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:271
+#, python-format
+msgid ""
+"Package installation failed (%s)! Check console output for further problem "
+"details!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:274
+#, python-format
+msgid "Failed to check plugin dependencies (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:283
+msgid "Command \"git\" not found, please install it!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:292
+#, python-format
+msgid "Copying %s to %s"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:295
+#, python-format
+msgid "Failed to copy plugin directory (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:304
+#, python-format
+msgid "Failed to copy plugin .py file (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:314
+#, python-format
+msgid "Failed to copy .plugin file (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:325
+#, fuzzy, python-format
+msgid "Creating schema directory %s"
+msgstr "Không thể tạo thư mục nhớ đệm \"%s\"!"
+
+#: ../plugins/plugin-installer.py:327
+#, python-format
+msgid "Installing schema %s"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:331
+msgid "Compiling schemas..."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:336
+#, python-format
+msgid "Failed to install schema files (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:346
+#, python-format
+msgid "Failed to enable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:352
+#, python-format
+msgid "Plugin '%s' is now installed. Ensure to restart Liferea!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:366
+#, python-format
+msgid "Failed to disable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:373 ../plugins/plugin-installer.py:393
+#, fuzzy, python-format
+msgid "Deleting '%s'"
+msgstr "Đang xóa mục"
+
+#: ../plugins/plugin-installer.py:376
+#, python-format
+msgid "Failed to remove directory '%s' (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:386
+msgid "Failed to remove .py file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:396
+msgid "Failed to remove .plugin file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:405
+msgid "Sorry! Plugin removal failed!."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:407
+msgid ""
+"Plugin was removed. Please restart Liferea once for it to take full effect!."
+msgstr ""
+
+#: ../plugins/trayicon.py:132
+#, fuzzy
+msgid "Show / Hide"
+msgstr "Hiển thị chi tiết"
+
+#: ../plugins/trayicon.py:133
+msgid "Minimize to tray on close"
+msgstr ""
+
+#: ../plugins/trayicon.py:134
+#, fuzzy
+msgid "Quit"
+msgstr "T_hoát"
 
 #: ../src/browser.c:81 ../src/browser.c:98
 #, c-format
 msgid "Browser command failed: %s"
 msgstr "Lệnh duyệt gặp lỗi: %s"
 
-#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1044
+#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1078
 #, c-format
 msgid "Starting: \"%s\""
 msgstr "Đang khởi chạy: \"%s\""
@@ -270,12 +283,12 @@ msgstr "Đang khởi chạy: \"%s\""
 msgid "Authorization Error"
 msgstr "Lỗi xác thực"
 
-#: ../src/common.c:66
+#: ../src/common.c:68
 #, c-format
 msgid "Cannot create cache directory \"%s\"!"
 msgstr "Không thể tạo thư mục nhớ đệm \"%s\"!"
 
-#: ../src/conf.c:183
+#: ../src/conf.c:147
 msgid ""
 "Your version of WebKitGTK+ doesn't support changing the proxy settings from "
 "Liferea. The system's default proxy settings will be used."
@@ -337,17 +350,17 @@ msgstr ""
 "có chính xác hay không! Bạn có thể thay nó tại tab “Tải về” trong “Công cụ/"
 "Tùy chỉnh”."
 
-#: ../src/export.c:188
+#: ../src/export.c:187
 #, c-format
 msgid "Error renaming %s to %s: %s\n"
 msgstr "Gặp lỗi khi đổi tên %s thành %s: %s\n"
 
-#: ../src/export.c:417 ../src/export.c:419
+#: ../src/export.c:409 ../src/export.c:411
 #, c-format
 msgid "XML error while reading OPML file! Could not import \"%s\"!"
 msgstr "XML gặp lỗi khi đọc tập tin OPML! Không thể nhập vào \"%s\"!"
 
-#: ../src/export.c:425 ../src/export.c:427
+#: ../src/export.c:417 ../src/export.c:419
 #, c-format
 msgid ""
 "Empty document! OPML document \"%s\" should not be empty when importing."
@@ -355,82 +368,46 @@ msgstr ""
 "Tài liệu trống rỗng! Tài liệu OPML \"%s\" không nên là trống rỗng trong khi "
 "nó được dùng để nhập vào."
 
-#: ../src/export.c:448 ../src/export.c:450
+#: ../src/export.c:440 ../src/export.c:442
 #, c-format
 msgid "\"%s\" is not a valid OPML document! Liferea cannot import this file!"
 msgstr ""
 "\"%s\" không phải là tài liệu định dạng OPML hợp lệ! Liferea không thể nhập "
 "vào tập tin này!"
 
-#: ../src/export.c:469
+#: ../src/export.c:461
 msgid "Imported feed list"
 msgstr "Nhập vào danh sách feed"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import Feed List"
 msgstr "Nhập vào danh sách feed"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import"
 msgstr "Nhập"
 
-#: ../src/export.c:481 ../src/export.c:498 ../src/fl_sources/opml_source.c:379
+#: ../src/export.c:473 ../src/export.c:490 ../src/fl_sources/opml_source.c:379
 msgid "OPML Files"
 msgstr "Tập tin OPML"
 
-#: ../src/export.c:489
+#: ../src/export.c:481
 msgid "Error while exporting feed list!"
 msgstr "Gặp lỗi khi xuất ra danh sách feed!"
 
-#: ../src/export.c:491
+#: ../src/export.c:483
 msgid "Feed List exported!"
 msgstr "Danh sách feed đã được xuất ra!"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export Feed List"
 msgstr "Xuất ra danh sách feed"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export"
 msgstr "Xuất"
 
-#: ../src/feed.c:324
-msgid ""
-"<p>Could not detect the type of this feed! Please check if the source really "
-"points to a resource provided in one of the supported syndication formats!</"
-"p>XML Parser Output:<br /><div class='xmlparseroutput'>"
-msgstr ""
-"<p>Không thể dò tìm kiểu của feed này! Xin hãy kiểm tra xem nguồn của nó có "
-"thực sự chỉ vào một nguồn tài nguyên được cung cấp bởi một trong số định "
-"dạng được hỗ trợ!!</p>Bộ phân tích XML Kết xuất:<br /><div "
-"class=“xmlparseroutput”>"
-
-#: ../src/feed.c:351
-#, c-format
-msgid "\"%s\" updated..."
-msgstr "\"%s\" đã được cập nhật…"
-
-#: ../src/feed.c:358
-#, c-format
-msgid "\"%s\" is not available"
-msgstr "\"%s\"  không sẵn sàng"
-
-#: ../src/feed_parser.c:142
-msgid ""
-"The URL you want Liferea to subscribe to points to a webpage and the auto "
-"discovery found no feeds on this page. Maybe this webpage just does not "
-"support feed auto discovery."
-msgstr ""
-"Địa chỉ URL bạn muốn Liferea đặt xem dài hạn chỉ đến một trang web và hệ "
-"thống tự động không tìm thấy feed nào trên trang này. Có lẽ trang web này "
-"không hỗ trợ chương trình tự dò tìm feed."
-
-#: ../src/feed_parser.c:194
-#, c-format
-msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
-msgstr "Lỗi XML trong khi đọc feed! Feed \"%s\" không thể tải lên được!"
-
-#: ../src/feed_parser.c:199 ../src/feed_parser.c:248
+#: ../src/feed_parser.c:202
 msgid "Empty document!"
 msgstr "Tài liệu rỗng!"
 
@@ -438,16 +415,116 @@ msgstr "Tài liệu rỗng!"
 msgid "Invalid XML!"
 msgstr "XML không hợp lệ!"
 
-#: ../src/feed_parser.c:271
-msgid "Source points to HTML document."
-msgstr "Nguồn chỉ đến một tài liệu HTML."
+#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
+#: ../glade/simple_subscription.ui.h:1
+msgid "New Subscription"
+msgstr "Thêm một đặt xem dài hạn"
 
-#: ../src/feed_parser.c:274
-msgid "Could not determine the feed type."
-msgstr "Không thể xác định được kiểu của feed."
+#: ../src/fl_sources/google_source.c:192 ../src/fl_sources/reedah_source.c:120
+#: ../src/fl_sources/theoldreader_source.c:122
+msgid "Login failed!"
+msgstr "Đăng nhập gặp lỗi!"
+
+#: ../src/fl_sources/google_source.c:404
+#, fuzzy
+msgid "Google Reader API"
+msgstr "Google Reader"
+
+#: ../src/fl_sources/google_source_feed.c:159
+#, fuzzy
+msgid "Could not parse JSON returned by Google Reader API!"
+msgstr "Không thể phân tích cú pháp của JSON được trả về từ API Reedah!"
+
+#: ../src/fl_sources/node_source.c:117
+msgid "Miniflux"
+msgstr ""
+
+#: ../src/fl_sources/node_source.c:332
+msgid "No feed list source types found!"
+msgstr "Không tìm thấy kiểu nguồn danh sách feed!"
+
+#: ../src/fl_sources/node_source.c:361
+msgid "Source Type"
+msgstr "Kiểu nguồn"
+
+#: ../src/fl_sources/node_source.c:412
+#, c-format
+msgid "Login for '%s' has not yet completed! Please wait until login is done."
+msgstr ""
+"Việc đăng nhập cho “%s” vẫn chưa hoàn tất! Vui lòng chờ cho việc đăng nhập "
+"được thực hiện xong."
+
+#. FIXME: something is not perfect, because if you immediately
+#. remove the subscription tree afterwards there is a double free
+#: ../src/fl_sources/node_source.c:578
+#, c-format
+msgid "The '%s' subscription was successfully converted to local feeds!"
+msgstr ""
+"Địa chỉ đặt xem dài hạn “%s” đã chuyển đổi thành công sang kiểu nội bộ!"
+
+#: ../src/fl_sources/opml_source.c:319
+msgid "Planet, BlogRoll, OPML"
+msgstr "Planet, BlogRoll, OPML"
+
+#: ../src/fl_sources/opml_source.c:379
+msgid "Choose OPML File"
+msgstr "Chọn tập tin OPML"
+
+#: ../src/fl_sources/opml_source.c:379 ../src/ui/subscription_dialog.c:355
+msgid "_Open"
+msgstr "_Mở"
+
+#: ../src/fl_sources/opml_source.h:28
+msgid "New OPML Subscription"
+msgstr "Thêm một địa chỉ đặt xem dài hạn OPML"
+
+#: ../src/fl_sources/reedah_source.c:335
+msgid "Reedah"
+msgstr "Reedah"
+
+#: ../src/fl_sources/reedah_source_feed.c:154
+msgid "Could not parse JSON returned by Reedah API!"
+msgstr "Không thể phân tích cú pháp của JSON được trả về từ API Reedah!"
+
+#: ../src/fl_sources/theoldreader_source.c:364
+msgid "TheOldReader"
+msgstr "TheOldReader"
+
+#: ../src/fl_sources/ttrss_source.c:227 ../src/fl_sources/ttrss_source.c:293
+msgid "TinyTinyRSS HTTP API not reachable!"
+msgstr "Không tiếp cận được TinyTinyRSS HTTP API!"
+
+#: ../src/fl_sources/ttrss_source.c:234
+msgid ""
+"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
+"URL!"
+msgstr ""
+"Gặp lỗi khi TinyTinyRSS đặt xem dài hạn một feed! Kiểm tra xem bạn có thực "
+"sự phân tích cú pháp của một feed URL!"
+
+#: ../src/fl_sources/ttrss_source.c:300
+msgid "TinyTinyRSS unsubscribing feed failed!"
+msgstr "Gặp lỗi khi TinyTinyRSS thôi đặt xem dài hạn một feed!"
+
+#: ../src/fl_sources/ttrss_source.c:318
+#, c-format
+msgid ""
+"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
+"%s or later!"
+msgstr ""
+"Phiên bản TinyTinyRSS này không hỗ trợ xóa bỏ các feed. Hãy nâng cấp lên "
+"phiên bản %s hay mới hơn!"
+
+#: ../src/fl_sources/ttrss_source.c:472
+msgid "Tiny Tiny RSS"
+msgstr "Tiny Tiny RSS"
+
+#: ../src/fl_sources/ttrss_source_feed.c:150
+msgid "Could not parse JSON returned by TinyTinyRSS API!"
+msgstr "Không thể phân tích cú pháp của JSON được trả về từ API TinyTinyRSS!"
 
 #. if we don't find a feed with unread items do nothing
-#: ../src/itemlist.c:393
+#: ../src/itemlist.c:425
 msgid "There are no unread items"
 msgstr "Không có mục tin nào chưa đọc cả"
 
@@ -541,39 +618,39 @@ msgid "Print debugging messages for the given topic"
 msgstr "Hiển thị ra thông tin để gỡ lỗi cho chủ đề đã chỉ ra"
 
 #. Some libsoup transport errors
-#: ../src/net.c:463
+#: ../src/net.c:470
 msgid "The update request was cancelled"
 msgstr "Yêu cầu cập nhật đã bị hủy bỏ"
 
-#: ../src/net.c:464
+#: ../src/net.c:471
 msgid "Unable to resolve destination host name"
 msgstr "Không thể phân giải tên máy của máy phục vụ đích"
 
-#: ../src/net.c:465
+#: ../src/net.c:472
 msgid "Unable to resolve proxy host name"
 msgstr "Không thể phân giải tên máy chủ ủy thác"
 
-#: ../src/net.c:466
+#: ../src/net.c:473
 msgid "Unable to connect to remote host"
 msgstr "Không thể kết nối đến máy chủ"
 
-#: ../src/net.c:467
+#: ../src/net.c:474
 msgid "Unable to connect to proxy"
 msgstr "Không thể kết nối đến máy chủ ủy thác"
 
-#: ../src/net.c:468
+#: ../src/net.c:475
 msgid ""
-"A network error occurred, or the other end closed the connection unexpectedly"
+"SSL/TLS negotiation failed. Possible outdated or unsupported encryption "
+"algorithm. Check your operating system settings."
 msgstr ""
-"Mạng xảy ra lỗi, hoặc là một chương trình khác đã đóng kết nối đột xuất"
 
 #. http 3xx redirection
-#: ../src/net.c:471
+#: ../src/net.c:478
 msgid "The resource moved permanently to a new location"
 msgstr "Nguồn tài nguyên đã thực sự được thay đổi sang vị trí mới"
 
 #. http 4xx client error
-#: ../src/net.c:474
+#: ../src/net.c:481
 msgid ""
 "You are unauthorized to download this feed. Please update your username and "
 "password in the feed properties dialog box"
@@ -581,141 +658,217 @@ msgstr ""
 "Bạn không đủ thẩm quyền để tải về feed này. Hãy cập nhật tài khoản và mật "
 "khẩu trong hộp thoại thuộc tính của feed"
 
-#: ../src/net.c:476
+#: ../src/net.c:483
 msgid "Payment required"
 msgstr "Yêu cầu phải trả tiền"
 
-#: ../src/net.c:477
+#: ../src/net.c:484
 msgid "You're not allowed to access this resource"
 msgstr "Bạn không được phép truy cập vào tài nguyên này"
 
-#: ../src/net.c:478
+#: ../src/net.c:485
 msgid "Resource Not Found"
 msgstr "Không tìm thấy tài nguyên"
 
-#: ../src/net.c:479
+#: ../src/net.c:486
 msgid "Method Not Allowed"
 msgstr "Phương thức không được phép"
 
-#: ../src/net.c:480
+#: ../src/net.c:487
 msgid "Not Acceptable"
 msgstr "Không được chấp nhận"
 
-#: ../src/net.c:481
+#: ../src/net.c:488
 msgid "Proxy authentication required"
 msgstr "Máy chủ ủy thác proxy yêu cầu xác thực"
 
-#: ../src/net.c:482
+#: ../src/net.c:489
 msgid "Request timed out"
 msgstr "Kết nối bị lỗi quá thời gian"
 
-#: ../src/net.c:483
-msgid "Gone. Resource doesn't exist. Please unsubscribe!"
-msgstr "Hết hy vọng. Tài nguyên không tồn tại. Hãy bỏ địa chỉ đặt dài hạn!"
+#: ../src/net.c:490
+#, fuzzy
+msgid ""
+"The webserver indicates this feed is discontinued. It's no longer available. "
+"Liferea won't update it anymore but you can still access the cached "
+"headlines."
+msgstr ""
+"Feed này không còn được kết nối nữa. Nó không sẵn dùng. Liferea sau này "
+"không thể cập nhật thêm nữa nhưng bạn vẫn có thể truy cập các đề mục đã được "
+"nhớ tạm."
 
-#: ../src/net.c:488
+#. http 5xx server errors
+#: ../src/net.c:493
+#, fuzzy
+msgid "Internal Server Error"
+msgstr "Lỗi máy phục vụ"
+
+#: ../src/net.c:494
+msgid "Not Implemented"
+msgstr ""
+
+#: ../src/net.c:495
+msgid "Bad Gateway"
+msgstr ""
+
+#: ../src/net.c:496
+#, fuzzy
+msgid "Service Unavailable"
+msgstr "_Tên dịch vụ"
+
+#: ../src/net.c:497
+msgid "Gateway Timeout"
+msgstr ""
+
+#: ../src/net.c:498
+msgid "HTTP Version Not Supported"
+msgstr ""
+
+#: ../src/net.c:503
 msgid "There was an internal error in the update process"
 msgstr "Có một lỗi nội bộ trong quá trình cập nhật"
 
-#: ../src/net.c:490
+#: ../src/net.c:505
 msgid "Feed not available: Server requested unsupported redirection!"
 msgstr ""
 "Feed không sẵn sàng: Máy chủ được yêu cầu đã không hỗ trợ chuyển hướng!"
 
-#: ../src/net.c:492
+#: ../src/net.c:507
 msgid "Client Error"
 msgstr "Lỗi máy khách"
 
-#: ../src/net.c:494
+#: ../src/net.c:509
 msgid "Server Error"
 msgstr "Lỗi máy phục vụ"
 
-#: ../src/net.c:496
+#: ../src/net.c:511
 msgid "An unknown networking error happened!"
 msgstr "Một lỗi mạng không rõ đã xảy ra!"
 
+#: ../src/newsbin.c:136
+#, fuzzy
+msgid "News Bin Properties"
+msgstr "Các thuộc tính của địa chỉ đặt dài hạn"
+
+#: ../src/newsbin.c:140 ../glade/new_newsbin.ui.h:1
+msgid "Create News Bin"
+msgstr "Tạo thùng rác tin tức"
+
+#: ../src/node.c:664
+#, c-format
+msgid "Failed to create feed file: %s"
+msgstr ""
+
+#: ../src/node.c:683
+#, fuzzy
+msgid "Feed file exported from Liferea"
+msgstr "Danh sách feed đã được xuất ra!"
+
+#: ../src/node.c:698
+#, fuzzy, c-format
+msgid "Error while saving feed file"
+msgstr "Gặp lỗi khi xuất ra danh sách feed!"
+
+#: ../src/parsers/atom10.c:240
+msgid "Website"
+msgstr "Website"
+
+#: ../src/parsers/ns_ag.c:70
+msgid "%b %d %H:%M"
+msgstr "%b %d %H:%M"
+
 #. in-memory check function	feedlist.opml rule id         		  rule menu label       	positive menu option    negative menu option    has param
 #. ========================================================================================================================================================================================
-#: ../src/rule.c:198
+#: ../src/rule.c:274
 msgid "Item"
 msgstr "Mục"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does contain"
 msgstr "có chứa"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does not contain"
 msgstr "không chứa"
 
-#: ../src/rule.c:199
+#: ../src/rule.c:275
 msgid "Item title"
 msgstr "Tên mục"
 
-#: ../src/rule.c:200
+#: ../src/rule.c:276
 msgid "Item body"
 msgstr "Thân mục"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:277
+#, fuzzy
+msgid "Item author"
+msgstr "Thân mục"
+
+#: ../src/rule.c:278
 msgid "Read status"
 msgstr "Trạng thái đọc"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is unread"
 msgstr "chưa đọc"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is read"
 msgstr "đã đọc"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "Flag status"
 msgstr "Trạng thái cờ"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is flagged"
 msgstr "được gắn cờ"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is unflagged"
 msgstr "không được gắn cờ"
 
-#: ../src/rule.c:203
-msgid "Podcast"
-msgstr "Podcast"
+#: ../src/rule.c:280
+#, fuzzy
+msgid "Enclosure"
+msgstr "Những tài liệu đính kèm"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "included"
 msgstr "được bao gồm"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "not included"
 msgstr "không được bao gồm"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:281
+msgid "Podcast"
+msgstr "Podcast"
+
+#: ../src/rule.c:282
 msgid "Category"
 msgstr "Category"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is set"
 msgstr "được đặt"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is not set"
 msgstr "chưa được đặt"
 
-#: ../src/rule.c:205
+#: ../src/rule.c:283
 msgid "Feed title"
 msgstr "Tiêu đề Feed"
 
-#: ../src/rule.c:206
+#: ../src/rule.c:284
 #, fuzzy
 msgid "Feed source"
 msgstr "Nguồn Feed"
 
-#: ../src/rule.c:207
+#: ../src/rule.c:285
 msgid "Parent folder title"
 msgstr ""
 
@@ -732,15 +885,7 @@ msgstr ""
 "Địa chỉ đặt xem dài hạn \"%s\" không còn được tiếp tục nữa. Liferea không "
 "thể cập nhật thêm nữa!"
 
-#: ../src/subscription.c:173
-msgid ""
-"There was a problem while reading this subscription. Please check the URL "
-"and console output."
-msgstr ""
-"Ở đây có vấn đề xảy ra trong khi đọc địa chỉ đặt xem dài hạn này. Hãy kiểm "
-"tra URL và xem kết xuất của thiết bị cuối."
-
-#: ../src/subscription.c:196
+#: ../src/subscription.c:188
 #, c-format
 msgid "The URL of \"%s\" has changed permanently and was updated"
 msgstr "Địa chỉ URL của \"%s\" đã thực sự bị thay đổi và đã được cập nhật"
@@ -751,53 +896,33 @@ msgid "\"%s\" is discontinued. Liferea won't updated it anymore!"
 msgstr ""
 "\"%s\" không còn được tiếp tục nữa. Liferea không thể cập nhật thêm nữa!"
 
-#: ../src/subscription.c:207
+#: ../src/subscription.c:208
 #, c-format
 msgid "\"%s\" has not changed since last update"
 msgstr "\"%s\" không thay đổi kích thước kể từ lần cập nhật trước"
 
-#: ../src/subscription.c:263
+#: ../src/subscription.c:221 ../src/subscription.c:296
+#, fuzzy, c-format
+msgid "Updating (%d / %d) ..."
+msgstr "Đang cập nhật…"
+
+#: ../src/subscription.c:298
+#, fuzzy, c-format
+msgid "Updating '%s'..."
+msgstr "Đang cập nhật…"
+
+#: ../src/ui/auth_dialog.c:114
 #, c-format
-msgid "Updating \"%s\""
-msgstr "Đang cập nhật \"%s\""
+msgid "Enter the username and password for \"%s\" (%s):"
+msgstr "Nhập vào tên và mật khẩu cho \"%s\" (%s):"
 
-#: ../src/update.c:297
-#, c-format
-msgid "Error opening temp file %s to use for filtering!"
-msgstr "Gặp lỗi kho mở tập tin tạm %s để sử dụng cho việc lọc!"
+#: ../src/ui/auth_dialog.c:116
+msgid "Unknown source"
+msgstr "Nguồn không rõ"
 
-#: ../src/update.c:320
-#, c-format
-msgid "%s exited with status %d"
-msgstr "%s đã thoát với trạng thái %d"
-
-#: ../src/update.c:326 ../src/update.c:327 ../src/update.c:442
-#, c-format
-msgid "Error: Could not open pipe \"%s\""
-msgstr "Lỗi: Không thể mở đường ống (pipe) \"%s\""
-
-#. FIXME: maybe setting request->returncode would be better
-#: ../src/update.c:466
-#, c-format
-msgid "Error: Could not open file \"%s\""
-msgstr "Lỗi: Không thể mở tập tin \"%s\""
-
-#: ../src/update.c:472
-#, c-format
-msgid "Error: There is no file \"%s\""
-msgstr "Lỗi: Không có tập tin \"%s\""
-
-#: ../src/vfolder.c:54
-msgid "New Search Folder"
-msgstr "Thêm thư mục tìm kiếm"
-
-#: ../src/xml.c:410
-msgid "[There were more errors. Output was truncated!]"
-msgstr "[Ở đây có nhiều lỗi. Kết xuất đã bị cắt cụt!]"
-
-#: ../src/xml.c:563
-msgid "XML Parser: Could not parse document:\n"
-msgstr "XML Parser: Không thể phân tích tài liệu:\n"
+#: ../src/ui/browser_tabs.c:262 ../src/ui/popup_menu.c:282
+msgid "Untitled"
+msgstr "Không tên"
 
 #: ../src/ui/enclosure_list_view.c:168
 msgid "Attachments"
@@ -841,86 +966,30 @@ msgstr "Chọn một tệp tin"
 msgid "File Extension .%s"
 msgstr "Đuôi mở rộng Tệp tin  .%s"
 
-#: ../src/ui/icons.c:54
-#, c-format
-msgid "Couldn't find pixmap file: %s"
-msgstr "Không tìm thấy tập tin pixmap: %s"
-
-#: ../src/ui/liferea_shell.c:396
-#, c-format
-msgid " (%d new)"
-msgid_plural " (%d new)"
-msgstr[0] " (%d mới)"
-
-#: ../src/ui/liferea_shell.c:401
-#, c-format
-msgid "%d unread%s"
-msgid_plural "%d unread%s"
-msgstr[0] "%d chưa đọc%s"
-
-#: ../src/ui/liferea_shell.c:758
-msgid "Help Topics"
-msgstr "Trợ Giúp Theo Chủ Đề"
-
-#: ../src/ui/liferea_shell.c:764
-msgid "Quick Reference"
-msgstr "Tham khảo nhanh"
-
-#: ../src/ui/liferea_shell.c:770
-msgid "FAQ"
-msgstr "FAQ"
-
-#: ../src/ui/liferea_shell.c:1041
-#, fuzzy, c-format
-msgid "Email command failed: %s"
-msgstr "Lệnh duyệt gặp lỗi: %s"
-
-#: ../src/ui/search_dialog.c:107
-msgid "Saved Search"
-msgstr "Tìm kiếm đã lưu"
-
-#: ../src/ui/auth_dialog.c:114
-#, c-format
-msgid "Enter the username and password for \"%s\" (%s):"
-msgstr "Nhập vào tên và mật khẩu cho \"%s\" (%s):"
-
-#: ../src/ui/auth_dialog.c:116
-msgid "Unknown source"
-msgstr "Nguồn không rõ"
-
-#: ../src/ui/ui_common.c:168 ../src/ui/feed_list_view.c:911
-#: ../src/ui/feed_list_view.c:965
-msgid "_Cancel"
-msgstr "T_hôi"
-
-#: ../src/ui/ui_common.c:211
-msgid "All Files"
-msgstr "Mọi kiểu tập tin"
-
-#: ../src/ui/feed_list_view.c:432
+#: ../src/ui/feed_list_view.c:428
 msgid "Liferea is in offline mode. No update possible."
 msgstr "Liferea đang ở trạng thái ngoại tuyến. Cập nhật là điều không thể."
 
-#: ../src/ui/feed_list_view.c:478
+#: ../src/ui/feed_list_view.c:474
 #, fuzzy
 msgid "all feeds"
 msgstr "Tìm trong tất cả các Feed"
 
-#: ../src/ui/feed_list_view.c:479
+#: ../src/ui/feed_list_view.c:475
 #, fuzzy, c-format
 msgid "Mark %s as read ?"
 msgstr "Đánh dấu là tất cả đã đọc"
 
-#: ../src/ui/feed_list_view.c:483
+#: ../src/ui/feed_list_view.c:479
 #, fuzzy, c-format
 msgid "Are you sure you want to mark all items in %s as read ?"
 msgstr "Bạn có chắc muốn xóa bỏ\"%s\" không?"
 
-#: ../src/ui/feed_list_view.c:621
+#: ../src/ui/feed_list_view.c:617
 msgid "(Empty)"
 msgstr "(Rỗng)"
 
-#: ../src/ui/feed_list_view.c:832
+#: ../src/ui/feed_list_view.c:828
 #, c-format
 msgid ""
 "%s\n"
@@ -929,82 +998,130 @@ msgstr ""
 "%s\n"
 "<i>Đang xây dụng lại</i>"
 
-#: ../src/ui/feed_list_view.c:901
+#: ../src/ui/feed_list_view.c:897
 msgid "Deleting entry"
 msgstr "Đang xóa mục"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\" and its contents?"
 msgstr "Bạn có chắc là mình muốn xóa \"%s\" cùng với nội dung của nó?"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\"?"
 msgstr "Bạn có chắc muốn xóa bỏ\"%s\" không?"
 
-#: ../src/ui/feed_list_view.c:912 ../src/ui/popup_menu.c:335
+#: ../src/ui/feed_list_view.c:907 ../src/ui/feed_list_view.c:961
+#: ../src/ui/popup_menu.c:260
+msgid "_Cancel"
+msgstr "T_hôi"
+
+#: ../src/ui/feed_list_view.c:908 ../src/ui/popup_menu.c:411
 msgid "_Delete"
 msgstr "_Xóa"
 
-#: ../src/ui/feed_list_view.c:914
+#: ../src/ui/feed_list_view.c:910
 msgid "Deletion Confirmation"
 msgstr "Xác nhận việc xóa"
 
-#: ../src/ui/feed_list_view.c:953
+#: ../src/ui/feed_list_view.c:949
 #, c-format
 msgid ""
 "Are you sure that you want to add a new subscription with URL \"%s\"? "
 "Another subscription with the same URL already exists (\"%s\")."
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:966
+#: ../src/ui/feed_list_view.c:962
 msgid "_Add"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:968
+#: ../src/ui/feed_list_view.c:964
 #, fuzzy
 msgid "Adding Duplicate Subscription Confirmation"
 msgstr "Xác nhận việc xóa"
 
-#: ../src/ui/item_list_view.c:115
+#: ../src/ui/icons.c:54
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Không tìm thấy tập tin pixmap: %s"
+
+#: ../src/ui/item_list_view.c:113
 msgid "This item has no link specified!"
 msgstr "Mục này chưa chỉ ra đường link!"
 
-#: ../src/ui/item_list_view.c:482
+#: ../src/ui/item_list_view.c:479
 msgid "*** No title ***"
 msgstr "*** Vô đề ***"
 
-#: ../src/ui/item_list_view.c:486
+#: ../src/ui/item_list_view.c:483
 msgid " <span background='red' color='black'> important </span> "
 msgstr ""
 
-#: ../src/ui/item_list_view.c:865
+#: ../src/ui/item_list_view.c:842
 msgid "Headline"
 msgstr "Tin chính"
 
-#: ../src/ui/item_list_view.c:887
+#: ../src/ui/item_list_view.c:860
 msgid "Date"
 msgstr "Ngày tháng"
 
-#: ../src/ui/item_list_view.c:1056
+#: ../src/ui/item_list_view.c:1029
 msgid "You must select a feed to delete its items!"
 msgstr "Bạn phải chọn một feed để mà xóa bỏ các mục tin của nó!"
 
-#: ../src/ui/item_list_view.c:1072 ../src/ui/item_list_view.c:1150
-#: ../src/ui/item_list_view.c:1165
+#: ../src/ui/item_list_view.c:1045 ../src/ui/item_list_view.c:1123
+#: ../src/ui/item_list_view.c:1138
 msgid "No item has been selected"
 msgstr "Không có mục nào được chọn"
 
-#: ../src/ui/popup_menu.c:102
+#: ../src/ui/liferea_browser.c:482
+#, fuzzy
+msgid "Content download failed! Try disabling reader mode."
+msgstr "Chọn thư mục tải về"
+
+#: ../src/ui/liferea_browser.c:495
+msgid "Content extraction failed! Try disabling reader mode."
+msgstr ""
+
+#: ../src/ui/liferea_shell.c:409
+#, c-format
+msgid " (%d new)"
+msgid_plural " (%d new)"
+msgstr[0] " (%d mới)"
+
+#: ../src/ui/liferea_shell.c:414
+#, c-format
+msgid "%d unread%s"
+msgid_plural "%d unread%s"
+msgstr[0] "%d chưa đọc%s"
+
+#: ../src/ui/liferea_shell.c:785
+msgid "Help Topics"
+msgstr "Trợ Giúp Theo Chủ Đề"
+
+#: ../src/ui/liferea_shell.c:791
+msgid "Quick Reference"
+msgstr "Tham khảo nhanh"
+
+#: ../src/ui/liferea_shell.c:797
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../src/ui/liferea_shell.c:1075
+#, fuzzy, c-format
+msgid "Email command failed: %s"
+msgstr "Lệnh duyệt gặp lỗi: %s"
+
+#: ../src/ui/popup_menu.c:102 ../glade/liferea_menu.ui.h:25
 msgid "Open In _Tab"
 msgstr "Mở Trong _Tab"
 
-#: ../src/ui/popup_menu.c:106
+#: ../src/ui/popup_menu.c:106 ../glade/liferea_menu.ui.h:26
 msgid "_Open In Browser"
 msgstr "_Mở trong trình duyệt"
 
-#: ../src/ui/popup_menu.c:110
+#: ../src/ui/popup_menu.c:110 ../glade/liferea_menu.ui.h:27
 msgid "Open In _External Browser"
 msgstr "Mở liên kết trong bộ duyệt _Bên ngoài"
 
@@ -1025,11 +1142,11 @@ msgstr "Đánh dấ_u ở %s"
 msgid "Copy Item _Location"
 msgstr "Sao chép địa chỉ _Mục tin"
 
-#: ../src/ui/popup_menu.c:163
+#: ../src/ui/popup_menu.c:163 ../glade/liferea_menu.ui.h:22
 msgid "Toggle _Read Status"
 msgstr "Bật/Tắt trạng thái đọc"
 
-#: ../src/ui/popup_menu.c:167
+#: ../src/ui/popup_menu.c:167 ../glade/liferea_menu.ui.h:23
 msgid "Toggle Item _Flag"
 msgstr "Bật/Tắt Cờ của mục tin"
 
@@ -1049,55 +1166,76 @@ msgstr "Ghi lại bằng tên mới…"
 msgid "Copy Link Location"
 msgstr "Sao chép địa chỉ liên kết"
 
-#: ../src/ui/popup_menu.c:280
+#: ../src/ui/popup_menu.c:257
+msgid "Save items to file"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:262
+msgid "_Save"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:271
+msgid "RSS 2.0 files"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:277
+#, fuzzy
+msgid "All files"
+msgstr "Mọi kiểu tập tin"
+
+#: ../src/ui/popup_menu.c:353 ../glade/liferea_menu.ui.h:13
 msgid "_Update"
 msgstr "_Cập nhật"
 
-#: ../src/ui/popup_menu.c:282
+#: ../src/ui/popup_menu.c:355
 msgid "_Update Folder"
 msgstr "Cập nhật thư mục"
 
-#: ../src/ui/popup_menu.c:292
+#: ../src/ui/popup_menu.c:365
 msgid "New _Subscription..."
 msgstr "Thêm một địa chỉ đặt dài hạn…"
 
-#: ../src/ui/popup_menu.c:295
+#: ../src/ui/popup_menu.c:368 ../glade/liferea_menu.ui.h:5
 msgid "New _Folder..."
 msgstr "Thư _mục mới…"
 
-#: ../src/ui/popup_menu.c:298
+#: ../src/ui/popup_menu.c:371 ../glade/liferea_menu.ui.h:6
 msgid "New S_earch Folder..."
 msgstr "Thêm thư mục tìm _kiếm…"
 
-#: ../src/ui/popup_menu.c:299
+#: ../src/ui/popup_menu.c:372
 msgid "New S_ource..."
 msgstr "Nguồn mới…"
 
-#: ../src/ui/popup_menu.c:300
+#: ../src/ui/popup_menu.c:373 ../glade/liferea_menu.ui.h:8
 msgid "New _News Bin..."
 msgstr "Thùng rác tin tức mới…"
 
-#: ../src/ui/popup_menu.c:303
+#: ../src/ui/popup_menu.c:376
 msgid "_New"
 msgstr "_Mới"
 
-#: ../src/ui/popup_menu.c:312
+#: ../src/ui/popup_menu.c:385
 msgid "Sort Feeds"
 msgstr "Sắp xếp Feed"
 
-#: ../src/ui/popup_menu.c:320
+#: ../src/ui/popup_menu.c:393
 msgid "_Mark All As Read"
 msgstr "Đánh dấu là tất cả đã đọc"
 
-#: ../src/ui/popup_menu.c:327
+#: ../src/ui/popup_menu.c:395
+msgid "_Export Items To File"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:403
 msgid "_Rebuild"
 msgstr "_Xây dụng lại"
 
-#: ../src/ui/popup_menu.c:336
+#: ../src/ui/popup_menu.c:412 ../glade/liferea_menu.ui.h:17
 msgid "_Properties"
 msgstr "_Thuộc tính"
 
-#: ../src/ui/popup_menu.c:343
+#: ../src/ui/popup_menu.c:419
 msgid "Convert To Local Subscriptions..."
 msgstr "Chuyển thành địa chỉ đặt xem dài hạn Nội bộ…"
 
@@ -1153,29 +1291,30 @@ msgstr "Trình bày bình thường"
 msgid "Wide View"
 msgstr "Trình bày kiểu rộng"
 
-#: ../src/ui/preferences_dialog.c:112
-msgid "Combined View"
-msgstr "Trình bày kiểu tổ hợp"
-
-#: ../src/ui/preferences_dialog.c:467
+#: ../src/ui/preferences_dialog.c:487
 msgid "Default Browser"
 msgstr "Trình duyệt mặc định"
 
-#: ../src/ui/preferences_dialog.c:469
+#: ../src/ui/preferences_dialog.c:489
 msgid "Manual"
 msgstr "Manual"
 
-#: ../src/ui/preferences_dialog.c:716
+#: ../src/ui/preferences_dialog.c:752
 msgid "Type"
 msgstr "Kiểu"
 
-#: ../src/ui/preferences_dialog.c:719
+#: ../src/ui/preferences_dialog.c:755
 msgid "Program"
 msgstr "Chương trình"
 
-#: ../src/ui/subscription_dialog.c:355 ../src/fl_sources/opml_source.c:379
-msgid "_Open"
-msgstr "_Mở"
+#: ../src/ui/rule_editor.c:257
+#, fuzzy
+msgid "Remove"
+msgstr "_Xóa bỏ"
+
+#: ../src/ui/search_dialog.c:106
+msgid "Saved Search"
+msgstr "Tìm kiếm đã lưu"
 
 #: ../src/ui/subscription_dialog.c:427
 #, c-format
@@ -1188,185 +1327,105 @@ msgstr[0] "Nơi cung cấp feed này đã gợi ý nhịp cập nhật là mỗi
 msgid "This feed specifies no default update interval."
 msgstr "Feed này ghi rõ không có nhịp cập nhật mặc định"
 
-#: ../src/ui/browser_tabs.c:262
-msgid "Untitled"
-msgstr "Không tên"
+#: ../src/ui/ui_common.c:206
+msgid "All Files"
+msgstr "Mọi kiểu tập tin"
 
-#: ../src/parsers/atom10.c:241 ../src/parsers/pie_feed.c:141
-msgid "Website"
-msgstr "Website"
-
-#: ../src/parsers/ns_ag.c:70
-msgid "%b %d %H:%M"
-msgstr "%b %d %H:%M"
-
-#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
-#: ../glade/simple_subscription.ui.h:1
-msgid "New Subscription"
-msgstr "Thêm một đặt xem dài hạn"
-
-#: ../src/fl_sources/google_source.c:111
-msgid "Google Reader"
-msgstr "Google Reader"
-
-#: ../src/fl_sources/opml_source.c:319
-msgid "Planet, BlogRoll, OPML"
-msgstr "Planet, BlogRoll, OPML"
-
-#: ../src/fl_sources/opml_source.c:379
-msgid "Choose OPML File"
-msgstr "Chọn tập tin OPML"
-
-#: ../src/fl_sources/opml_source.h:28
-msgid "New OPML Subscription"
-msgstr "Thêm một địa chỉ đặt xem dài hạn OPML"
-
-#: ../src/fl_sources/node_source.c:334
-msgid "No feed list source types found!"
-msgstr "Không tìm thấy kiểu nguồn danh sách feed!"
-
-#: ../src/fl_sources/node_source.c:363
-msgid "Source Type"
-msgstr "Kiểu nguồn"
-
-#: ../src/fl_sources/node_source.c:414
+#: ../src/update.c:370
 #, c-format
-msgid "Login for '%s' has not yet completed! Please wait until login is done."
-msgstr ""
-"Việc đăng nhập cho “%s” vẫn chưa hoàn tất! Vui lòng chờ cho việc đăng nhập "
-"được thực hiện xong."
+msgid "Error opening temp file %s to use for filtering!"
+msgstr "Gặp lỗi kho mở tập tin tạm %s để sử dụng cho việc lọc!"
 
-#. FIXME: something is not perfect, because if you immediately
-#. remove the subscription tree afterwards there is a double free
-#: ../src/fl_sources/node_source.c:580
+#: ../src/update.c:392
 #, c-format
-msgid "The '%s' subscription was successfully converted to local feeds!"
-msgstr ""
-"Địa chỉ đặt xem dài hạn “%s” đã chuyển đổi thành công sang kiểu nội bộ!"
+msgid "%s exited with status %d"
+msgstr "%s đã thoát với trạng thái %d"
 
-#: ../src/fl_sources/reedah_source.c:103
-#: ../src/fl_sources/theoldreader_source.c:104
-msgid "Login failed!"
-msgstr "Đăng nhập gặp lỗi!"
-
-#: ../src/fl_sources/reedah_source.c:312
-msgid "Reedah"
-msgstr "Reedah"
-
-#: ../src/fl_sources/reedah_source_feed.c:154
-msgid "Could not parse JSON returned by Reedah API!"
-msgstr "Không thể phân tích cú pháp của JSON được trả về từ API Reedah!"
-
-#: ../src/fl_sources/ttrss_source.c:224 ../src/fl_sources/ttrss_source.c:283
-msgid "TinyTinyRSS HTTP API not reachable!"
-msgstr "Không tiếp cận được TinyTinyRSS HTTP API!"
-
-#: ../src/fl_sources/ttrss_source.c:231
-msgid ""
-"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
-"URL!"
-msgstr ""
-"Gặp lỗi khi TinyTinyRSS đặt xem dài hạn một feed! Kiểm tra xem bạn có thực "
-"sự phân tích cú pháp của một feed URL!"
-
-#: ../src/fl_sources/ttrss_source.c:290
-msgid "TinyTinyRSS unsubscribing feed failed!"
-msgstr "Gặp lỗi khi TinyTinyRSS thôi đặt xem dài hạn một feed!"
-
-#: ../src/fl_sources/ttrss_source.c:307
+#: ../src/update.c:398 ../src/update.c:399 ../src/update.c:621
 #, c-format
-msgid ""
-"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
-"%s or later!"
-msgstr ""
-"Phiên bản TinyTinyRSS này không hỗ trợ xóa bỏ các feed. Hãy nâng cấp lên "
-"phiên bản %s hay mới hơn!"
+msgid "Error: Could not open pipe \"%s\""
+msgstr "Lỗi: Không thể mở đường ống (pipe) \"%s\""
 
-#: ../src/fl_sources/ttrss_source.c:427
-msgid "Tiny Tiny RSS"
-msgstr "Tiny Tiny RSS"
+#. FIXME: maybe setting request->returncode would be better
+#: ../src/update.c:652
+#, c-format
+msgid "Error: Could not open file \"%s\""
+msgstr "Lỗi: Không thể mở tập tin \"%s\""
 
-#: ../src/fl_sources/ttrss_source_feed.c:150
-msgid "Could not parse JSON returned by TinyTinyRSS API!"
-msgstr "Không thể phân tích cú pháp của JSON được trả về từ API TinyTinyRSS!"
+#: ../src/update.c:658
+#, c-format
+msgid "Error: There is no file \"%s\""
+msgstr "Lỗi: Không có tập tin \"%s\""
 
-#: ../src/fl_sources/theoldreader_source.c:310
-msgid "TheOldReader"
-msgstr "TheOldReader"
+#: ../src/vfolder.c:54
+msgid "New Search Folder"
+msgstr "Thêm thư mục tìm kiếm"
 
-#: ../src/webkit/liferea_web_view.c:176
+#: ../src/webkit/liferea_web_view.c:163
 msgid "Open Link In _Tab"
 msgstr "Mở liên kết trong _Tab"
 
-#: ../src/webkit/liferea_web_view.c:177
+#: ../src/webkit/liferea_web_view.c:164
 msgid "Open Link In Browser"
 msgstr "Mở liên kết trong trình duyệt"
 
-#: ../src/webkit/liferea_web_view.c:178
+#: ../src/webkit/liferea_web_view.c:165
 msgid "Open Link In External Browser"
 msgstr "Mở liên kết trong trình duyệt ngoài"
 
-#: ../src/webkit/liferea_web_view.c:184
+#: ../src/webkit/liferea_web_view.c:171
 #, c-format
 msgid "_Bookmark Link at %s"
 msgstr "Đánh dấu liên kết ở %s"
 
-#: ../src/webkit/liferea_web_view.c:191
+#: ../src/webkit/liferea_web_view.c:178
 msgid "_Copy Link Location"
 msgstr "Sao chép địa chỉ liên kết"
 
-#: ../src/webkit/liferea_web_view.c:194
+#: ../src/webkit/liferea_web_view.c:181
 #, fuzzy
 msgid "_View Image"
 msgstr "Ghi lại ảnh với tên"
 
-#: ../src/webkit/liferea_web_view.c:195
+#: ../src/webkit/liferea_web_view.c:182
 msgid "_Copy Image Location"
 msgstr "Sao chép địa chỉ của ảnh"
 
-#: ../src/webkit/liferea_web_view.c:198
+#: ../src/webkit/liferea_web_view.c:185
 msgid "S_ave Link As"
 msgstr "Ghi lại Link với tên"
 
-#: ../src/webkit/liferea_web_view.c:201
+#: ../src/webkit/liferea_web_view.c:188
 msgid "S_ave Image As"
 msgstr "Ghi lại ảnh với tên"
 
-#: ../src/webkit/liferea_web_view.c:208
+#: ../src/webkit/liferea_web_view.c:195
 msgid "_Subscribe..."
 msgstr "Đặt _dài hạn…"
 
-#: ../src/webkit/liferea_web_view.c:212
+#: ../src/webkit/liferea_web_view.c:199
 msgid "_Copy"
 msgstr "_Sao chép"
 
-#: ../src/webkit/liferea_web_view.c:218
+#: ../src/webkit/liferea_web_view.c:205
 msgid "_Increase Text Size"
 msgstr "Tăn_g kích thước chữ"
 
-#: ../src/webkit/liferea_web_view.c:219
+#: ../src/webkit/liferea_web_view.c:206
 msgid "_Decrease Text Size"
 msgstr "Giả_m kích thước chữ"
 
-#: ../plugins/headerbar.py:63
-msgid "Previous Item"
-msgstr "Mục kế trước"
+#: ../src/webkit/liferea_web_view.c:213
+msgid "_Reader Mode"
+msgstr ""
 
-#: ../plugins/headerbar.py:69
-msgid "Next Item"
-msgstr "Mục kế tiếp"
+#: ../src/xml.c:426
+msgid "[There were more errors. Output was truncated!]"
+msgstr "[Ở đây có nhiều lỗi. Kết xuất đã bị cắt cụt!]"
 
-#: ../plugins/headerbar.py:77
-msgid "_Next Unread Item"
-msgstr "Mục chưa đọc _kế tiếp"
-
-#: ../plugins/headerbar.py:85
-msgid "_Mark Items Read"
-msgstr "Đánh dấ_u các mục là đã đọc"
-
-#: ../plugins/headerbar.py:104
-msgid "Search All Feeds..."
-msgstr "Tìm trong tất cả các Feed…"
+#: ../src/xml.c:594
+msgid "XML Parser: Could not parse document:\n"
+msgstr "XML Parser: Không thể phân tích tài liệu:\n"
 
 #: ../glade/about.ui.h:1
 msgid "About"
@@ -1425,6 +1484,177 @@ msgid "_Do this automatically for enclosures like this from now on."
 msgstr ""
 "Thực hiện tự động cho những tài liệu đính kèm giống với cái này kể từ giờ."
 
+#: ../glade/google_source.ui.h:1
+#, fuzzy
+msgid "Add Google Reader API Account"
+msgstr "Thêm tài khoản Google Reader"
+
+#: ../glade/google_source.ui.h:2
+msgid ""
+"Please enter the details of the new Google Reader API compatible "
+"subscription."
+msgstr ""
+
+#: ../glade/google_source.ui.h:3 ../glade/reedah_source.ui.h:3
+#: ../glade/theoldreader_source.ui.h:3 ../glade/ttrss_source.ui.h:4
+msgid "_Password"
+msgstr "_Mật khẩu"
+
+#: ../glade/google_source.ui.h:4 ../glade/reedah_source.ui.h:4
+#: ../glade/theoldreader_source.ui.h:4
+msgid "_Username (Email)"
+msgstr "_Tài khoản (Email)"
+
+#: ../glade/google_source.ui.h:5
+#, fuzzy
+msgid "_Server"
+msgstr "Địa chỉ URL của máy _phục vụ"
+
+#: ../glade/google_source.ui.h:6
+#, fuzzy
+msgid "_Name"
+msgstr "Tê_n Feed:"
+
+#: ../glade/liferea_menu.ui.h:1
+msgid "_Subscriptions"
+msgstr "Địa chỉ đặt xem dài hạn"
+
+#: ../glade/liferea_menu.ui.h:2 ../glade/liferea_toolbar.ui.h:8
+msgid "Update _All"
+msgstr "Cập nhật _tất cả"
+
+#: ../glade/liferea_menu.ui.h:3
+msgid "Mark All As _Read"
+msgstr "Đánh dấu là tất cả đã đọ_c"
+
+#: ../glade/liferea_menu.ui.h:4 ../glade/liferea_toolbar.ui.h:1
+msgid "_New Subscription..."
+msgstr "Thêm một địa chỉ đặt xem dài hạn…"
+
+#: ../glade/liferea_menu.ui.h:7
+msgid "New _Source..."
+msgstr "Thêm _Nguồn mới…"
+
+#: ../glade/liferea_menu.ui.h:9
+msgid "_Import Feed List..."
+msgstr "_Nhập vào danh sách feed…"
+
+#: ../glade/liferea_menu.ui.h:10
+msgid "_Export Feed List..."
+msgstr "_Xuất ra danh sách feed…"
+
+#: ../glade/liferea_menu.ui.h:11
+msgid "_Quit"
+msgstr "T_hoát"
+
+#: ../glade/liferea_menu.ui.h:12
+msgid "_Feed"
+msgstr "_Feed"
+
+#: ../glade/liferea_menu.ui.h:15
+msgid "Remove _All Items"
+msgstr "Gỡ bỏ _mọi mục tin"
+
+#: ../glade/liferea_menu.ui.h:16
+msgid "_Remove"
+msgstr "_Xóa bỏ"
+
+#: ../glade/liferea_menu.ui.h:18
+msgid "_Item"
+msgstr "_Mục"
+
+#: ../glade/liferea_menu.ui.h:24
+msgid "R_emove"
+msgstr "Gỡ _bỏ"
+
+#: ../glade/liferea_menu.ui.h:28
+msgid "_View"
+msgstr "_Trình bày"
+
+#: ../glade/liferea_menu.ui.h:29
+msgid "_Fullscreen"
+msgstr "Chế độ t_oàn màn hình"
+
+#: ../glade/liferea_menu.ui.h:30
+msgid "Zoom _In"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:31
+msgid "Zoom _Out"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:32
+#, fuzzy
+msgid "_Normal size"
+msgstr "Trình bày _bình thường"
+
+#: ../glade/liferea_menu.ui.h:33
+msgid "_Normal View"
+msgstr "Trình bày _bình thường"
+
+#: ../glade/liferea_menu.ui.h:34
+msgid "_Wide View"
+msgstr "Trình bày kiểu _rộng"
+
+#: ../glade/liferea_menu.ui.h:35
+msgid "_Reduced Feed List"
+msgstr "_Tiết giảm danh sách feed"
+
+#: ../glade/liferea_menu.ui.h:36
+msgid "_Tools"
+msgstr "_Công cụ"
+
+#: ../glade/liferea_menu.ui.h:37
+msgid "_Update Monitor"
+msgstr "_Cập nhật bộ theo dõi"
+
+#: ../glade/liferea_menu.ui.h:38
+msgid "_Preferences"
+msgstr "_Tùy chỉnh"
+
+#: ../glade/liferea_menu.ui.h:39
+msgid "S_earch"
+msgstr "Tìm _kiếm"
+
+#: ../glade/liferea_menu.ui.h:41
+msgid "_Help"
+msgstr "Trợ g_iúp"
+
+#: ../glade/liferea_menu.ui.h:42
+msgid "_Contents"
+msgstr "_Nội dung"
+
+#: ../glade/liferea_menu.ui.h:43
+msgid "_Quick Reference"
+msgstr "_Tham khảo nhanh"
+
+#: ../glade/liferea_menu.ui.h:44
+msgid "_FAQ"
+msgstr "_FAQ"
+
+#: ../glade/liferea_menu.ui.h:45
+msgid "_About"
+msgstr "_Giới thiệu"
+
+#: ../glade/liferea_toolbar.ui.h:2
+msgid "Adds a subscription to the feed list."
+msgstr "Thêm địa chỉ đặt xem dài hạn vào danh sách feed."
+
+#: ../glade/liferea_toolbar.ui.h:4
+msgid ""
+"Marks all items of the selected feed list node / in the item list as read."
+msgstr ""
+"Đánh dấu tất cả những mục tin của nút feed đã được chọn / trong danh sách "
+"mục tin như là đã được đọc."
+
+#: ../glade/liferea_toolbar.ui.h:9
+msgid "Updates all subscriptions."
+msgstr "Cập nhật tất cả các địa chỉ đặt xem dài hạn"
+
+#: ../glade/liferea_toolbar.ui.h:11
+msgid "Show the search dialog."
+msgstr "Hiển thị hộp thoại tìm kiếm."
+
 #: ../glade/mainwindow.ui.h:2
 msgid "page 1"
 msgstr ""
@@ -1433,11 +1663,7 @@ msgstr ""
 msgid "page 2"
 msgstr ""
 
-#: ../glade/mainwindow.ui.h:4
-msgid "page 3"
-msgstr ""
-
-#: ../glade/mainwindow.ui.h:5 ../glade/prefs.ui.h:23
+#: ../glade/mainwindow.ui.h:4 ../glade/prefs.ui.h:25
 msgid "Headlines"
 msgstr "Headlines"
 
@@ -1462,13 +1688,14 @@ msgstr "Tạo thư mục mới"
 msgid "_Folder name:"
 msgstr "Tên thư mục:"
 
-#: ../glade/new_newsbin.ui.h:1
-msgid "Create News Bin"
-msgstr "Tạo thùng rác tin tức"
-
 #: ../glade/new_newsbin.ui.h:2
 msgid "_News Bin Name:"
 msgstr "Tên thùng rác tin tức:"
+
+#: ../glade/new_newsbin.ui.h:3
+#, fuzzy
+msgid "_Always show in Reduced Feed List"
+msgstr "_Tiết giảm danh sách feed"
 
 #: ../glade/new_subscription.ui.h:2 ../glade/properties.ui.h:11
 msgid "Feed Source"
@@ -1636,69 +1863,69 @@ msgid "_Default View Mode:"
 msgstr "Chế độ xem Mặc địn_h:"
 
 #: ../glade/prefs.ui.h:21
+msgid "_Defer removing read items from folders and search folders."
+msgstr ""
+
+#: ../glade/prefs.ui.h:22
+msgid "Ask for confirmation when marking all items as read."
+msgstr ""
+
+#: ../glade/prefs.ui.h:23
 msgid "Web Integration"
 msgstr "Hợp nhất Web"
 
-#: ../glade/prefs.ui.h:22
+#: ../glade/prefs.ui.h:24
 msgid "_Post Bookmarks to"
 msgstr "Gửi dấu trang tới"
 
-#: ../glade/prefs.ui.h:24
+#: ../glade/prefs.ui.h:26
 msgid "Internal Browser Settings"
 msgstr "Cài đặt trình duyệt nội tại"
 
-#: ../glade/prefs.ui.h:25
+#: ../glade/prefs.ui.h:27
 msgid "Open links in Liferea's _window."
 msgstr "Mở các liên kết trong cửa sổ của Liferea."
 
-#: ../glade/prefs.ui.h:26
-msgid "_Disable Javascript."
-msgstr "_Tắt Javascript."
+#: ../glade/prefs.ui.h:28
+msgid "_Never run external Javascript."
+msgstr ""
 
-#: ../glade/prefs.ui.h:27
+#: ../glade/prefs.ui.h:29
 msgid "_Enable browser plugins."
 msgstr "_Bật các phần bổ sung trình duyệt."
 
-#: ../glade/prefs.ui.h:28
+#: ../glade/prefs.ui.h:30
 msgid "External Browser Settings"
 msgstr "Cài đặt trình duyệt bên ngoài"
 
-#: ../glade/prefs.ui.h:29
+#: ../glade/prefs.ui.h:31
 msgid "_Browser:"
 msgstr "_Trình duyệt:"
 
-#: ../glade/prefs.ui.h:30
+#: ../glade/prefs.ui.h:32
 msgid "_Manual:"
 msgstr "_Thủ công:"
 
-#: ../glade/prefs.ui.h:32
+#: ../glade/prefs.ui.h:34
 #, no-c-format
 msgid "<small>(%s for URL)</small>"
 msgstr "<small>(%s cho URL)</small>"
 
-#: ../glade/prefs.ui.h:33
+#: ../glade/prefs.ui.h:35
 msgid "Browser"
 msgstr "Trình duyệt"
 
-#: ../glade/prefs.ui.h:34
+#: ../glade/prefs.ui.h:36
 msgid "Toolbar Settings"
 msgstr "Cài đặt thanh công cụ"
 
-#: ../glade/prefs.ui.h:35
+#: ../glade/prefs.ui.h:37
 msgid "_Hide toolbar."
 msgstr "Ẩn thanh công cụ."
 
-#: ../glade/prefs.ui.h:36
+#: ../glade/prefs.ui.h:38
 msgid "Toolbar _button labels:"
 msgstr "Những nhãn cho nút bấm trên thanh công cụ:"
-
-#: ../glade/prefs.ui.h:37
-msgid "Other"
-msgstr ""
-
-#: ../glade/prefs.ui.h:38
-msgid "Ask for confirmation when marking all items as read"
-msgstr ""
 
 #: ../glade/prefs.ui.h:39
 msgid "Desktop"
@@ -1755,31 +1982,58 @@ msgid "Privacy Settings"
 msgstr "Cài đặt chính sách riêng tư"
 
 #: ../glade/prefs.ui.h:52
-msgid "Tell sites that I do _not want to be tracked"
+#, fuzzy
+msgid "Tell sites that I do _not want to be tracked."
 msgstr "Cho biết địa chỉ mà Tôi _không muốn bị theo dõi"
 
 #: ../glade/prefs.ui.h:53
+msgid "_Intelligent Tracking Prevention. "
+msgstr ""
+
+#: ../glade/prefs.ui.h:54
+msgid ""
+"This enables the WebKit feature described <a href=\"https://webkit.org/"
+"tracking-prevention/\">here</a>."
+msgstr ""
+
+#: ../glade/prefs.ui.h:55
+msgid ""
+"Intelligent tracking prevention is only available with WebKitGtk+ 2.30 or "
+"higher."
+msgstr ""
+
+#: ../glade/prefs.ui.h:56
+msgid "Use _Reader mode."
+msgstr ""
+
+#: ../glade/prefs.ui.h:57
+msgid ""
+"This enables <a href=\"https://github.com/mozilla/readability\">stripping</"
+"a> all non-content elements (like scripts, fonts, tracking)"
+msgstr ""
+
+#: ../glade/prefs.ui.h:58
 msgid "Privacy"
 msgstr "Riêng tư"
 
-#: ../glade/prefs.ui.h:54
+#: ../glade/prefs.ui.h:59
 msgid "Downloading Enclosures"
 msgstr "Đang mở các tài liệu đính kèm"
 
-#: ../glade/prefs.ui.h:55
+#: ../glade/prefs.ui.h:60
 msgid "_Download using"
 msgstr "Tả_i về sử dụng"
 
-#: ../glade/prefs.ui.h:57
+#: ../glade/prefs.ui.h:62
 #, no-c-format
 msgid "custom-command %s"
 msgstr ""
 
-#: ../glade/prefs.ui.h:58
+#: ../glade/prefs.ui.h:63
 msgid "Opening Enclosures"
 msgstr "Đang mở tài liệu đính kèm"
 
-#: ../glade/prefs.ui.h:59
+#: ../glade/prefs.ui.h:64
 msgid "Enclosures"
 msgstr "Những tài liệu đính kèm"
 
@@ -1825,6 +2079,10 @@ msgid ""
 msgstr ""
 "Liferea có thể sử dụng văn lệnh lọc từ bên ngoài cốt để mà truy cập các feed "
 "và thư mục mà nó có định dạng không được hỗ trợ."
+
+#: ../glade/properties.ui.h:21 ../xslt/item.xml.in.h:1
+msgid "Source"
+msgstr "Nguồn"
 
 #: ../glade/properties.ui.h:22
 msgid ""
@@ -1884,10 +2142,6 @@ msgstr "Đánh dấu các _mục tin đã được tải về là đã đọc."
 msgid "Extract full content from HTML5 and Google AMP"
 msgstr ""
 
-#: ../glade/properties.ui.h:39
-msgid "Advanced"
-msgstr "Cao cấp"
-
 #: ../glade/reedah_source.ui.h:1
 msgid "Add Reedah Account"
 msgstr "Thêm tài khoản Reedah"
@@ -1895,15 +2149,6 @@ msgstr "Thêm tài khoản Reedah"
 #: ../glade/reedah_source.ui.h:2
 msgid "Please enter your Reedah account settings."
 msgstr "Hãy nhập vào các cài đặt tài khoản Reedah của bạn."
-
-#: ../glade/reedah_source.ui.h:3 ../glade/theoldreader_source.ui.h:3
-#: ../glade/ttrss_source.ui.h:4
-msgid "_Password"
-msgstr "_Mật khẩu"
-
-#: ../glade/reedah_source.ui.h:4 ../glade/theoldreader_source.ui.h:4
-msgid "_Username (Email)"
-msgstr "_Tài khoản (Email)"
 
 #: ../glade/rename_node.ui.h:1
 msgid "Rename"
@@ -1921,17 +2166,36 @@ msgstr "Thuộc tính thư mục tìm kiếm"
 msgid "Search _Name:"
 msgstr "Tên tìm kiếm:"
 
-#: ../glade/search_folder.ui.h:3 ../glade/search.ui.h:3
-msgid "Find Items that meet the following criteria"
-msgstr "Tìm những mục tin mà nó phù hợp với tiêu chuẩn sau đây"
+#: ../glade/search_folder.ui.h:3
+#, fuzzy
+msgid "Search Rules"
+msgstr "Tìm trong tất cả các Feed"
 
-#: ../glade/search_folder.ui.h:4 ../glade/search.ui.h:4
+#: ../glade/search_folder.ui.h:4
+msgid "Rules"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:5
+msgid "All rules for this search folder"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:6
+#, fuzzy
+msgid "Rule Matching"
+msgstr "Bất kỳ quy tắc nào khớp"
+
+#: ../glade/search_folder.ui.h:7 ../glade/search.ui.h:4
 msgid "A_ny Rule Matches"
 msgstr "Bất kỳ quy tắc nào khớp"
 
-#: ../glade/search_folder.ui.h:5 ../glade/search.ui.h:5
+#: ../glade/search_folder.ui.h:8 ../glade/search.ui.h:5
 msgid "_All Rules Must Match"
 msgstr "Tất _cả các quy tắc phải khớp"
+
+#: ../glade/search_folder.ui.h:9
+#, fuzzy
+msgid "Hide read items"
+msgstr "Ẩn các mục tin đã đọc."
 
 #: ../glade/search.ui.h:1
 msgid "Advanced Search"
@@ -1940,6 +2204,10 @@ msgstr "Tìm kiếm cấp cao"
 #: ../glade/search.ui.h:2
 msgid "_Search Folder..."
 msgstr "Thư mục tìm _kiếm…"
+
+#: ../glade/search.ui.h:3
+msgid "Find Items that meet the following criteria"
+msgstr "Tìm những mục tin mà nó phù hợp với tiêu chuẩn sau đây"
 
 #: ../glade/simple_search.ui.h:1
 msgid "Search All Feeds"
@@ -2028,6 +2296,295 @@ msgstr "Các yêu cầu còn treo"
 msgid "_Downloading Now"
 msgstr "Tải về ngay"
 
+#: ../xslt/feed.xml.in.h:1
+msgid "Feed:"
+msgstr "Feed:"
+
+#: ../xslt/feed.xml.in.h:2 ../xslt/source.xml.in.h:1
+msgid "Source:"
+msgstr "Nguồn:"
+
+#: ../xslt/feed.xml.in.h:3
+msgid "Publisher"
+msgstr "Nhà xuất bản"
+
+#: ../xslt/feed.xml.in.h:4
+msgid "Copyright"
+msgstr "Tác quyền"
+
+#: ../xslt/feed.xml.in.h:5
+#, fuzzy
+msgid "There was a problem when fetching this subscription!"
+msgstr ""
+"Ở đây có vấn đề xảy ra trong khi đọc địa chỉ đặt xem dài hạn này. Hãy kiểm "
+"tra URL và xem kết xuất của thiết bị cuối."
+
+#: ../xslt/feed.xml.in.h:6
+#, fuzzy
+msgid "1. Authentication"
+msgstr "Xác thực"
+
+#: ../xslt/feed.xml.in.h:7
+#, fuzzy
+msgid "2. Download"
+msgstr "Tải về"
+
+#: ../xslt/feed.xml.in.h:8
+msgid "3. Feed Discovery"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:9
+msgid "4. Parsing"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:10
+#, fuzzy
+msgid "Details:"
+msgstr "Chi tiết"
+
+#: ../xslt/feed.xml.in.h:11
+msgid "Authentication failed. Please check the credentials and try again!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:12
+#, fuzzy
+msgid "There was an error when downloading the feed source:"
+msgstr "Có một số lỗi xảy ra khi phân tích feed này!"
+
+#: ../xslt/feed.xml.in.h:13
+#, fuzzy
+msgid "There was an error when running the feed filter command:"
+msgstr "Có một số lỗi xảy ra khi phân tích feed này!"
+
+#: ../xslt/feed.xml.in.h:14
+msgid ""
+"The source does not point directly to a feed or a webpage with a link to a "
+"feed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:15
+msgid "Sorry, the feed could not be parsed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:16
+msgid "You may want to contact the author/webmaster of the feed about this!"
+msgstr ""
+"Bạn có lẽ cần liên hệ với người quản lý trang web hay tác giả của feed về "
+"vấn đề này!"
+
+#: ../xslt/folder.xml.in.h:1
+msgid "Folder:"
+msgstr "Thư mục:"
+
+#: ../xslt/folder.xml.in.h:2 ../xslt/source.xml.in.h:2
+msgid "children with"
+msgstr "có con"
+
+#: ../xslt/folder.xml.in.h:3 ../xslt/source.xml.in.h:3
+#: ../xslt/vfolder.xml.in.h:2
+msgid "unread headlines"
+msgstr "những tiêu đề chưa đọc"
+
+#: ../xslt/item.xml.in.h:2
+msgid "Feed"
+msgstr "Feed"
+
+#: ../xslt/item.xml.in.h:3
+msgid "Filed under"
+msgstr "Được lọc dưới"
+
+#: ../xslt/item.xml.in.h:4
+msgid "Author"
+msgstr "Tác giả"
+
+#: ../xslt/item.xml.in.h:5
+msgid "Shared by"
+msgstr "Chia sẻ bởi"
+
+#: ../xslt/item.xml.in.h:6
+msgid "Via"
+msgstr "Thông qua"
+
+#: ../xslt/item.xml.in.h:7
+msgid "Related"
+msgstr "Quan hệ"
+
+#: ../xslt/item.xml.in.h:8
+msgid "Also posted in"
+msgstr "Đồng thời post tại"
+
+#: ../xslt/item.xml.in.h:9
+msgid "Creator"
+msgstr "Người tạo"
+
+#: ../xslt/item.xml.in.h:10
+msgid "Coordinates"
+msgstr "Tọa độ"
+
+#: ../xslt/item.xml.in.h:11
+msgid "Map"
+msgstr "Bản đồ"
+
+#: ../xslt/item.xml.in.h:12
+msgid "View count"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:13
+msgid "Rating"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:14
+msgid "Comments"
+msgstr "Ghi chú"
+
+#: ../xslt/item.xml.in.h:15
+msgid "Updating..."
+msgstr "Đang cập nhật…"
+
+#: ../xslt/item.xml.in.h:16
+msgid "Section"
+msgstr "Phần"
+
+#: ../xslt/item.xml.in.h:17
+msgid "Department"
+msgstr "Phòng ban"
+
+#: ../xslt/newsbin.xml.in.h:1
+msgid "News Bin:"
+msgstr "Thùng rác tin tức:"
+
+#: ../xslt/newsbin.xml.in.h:2
+msgid ""
+"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
+"list context menu."
+msgstr ""
+"Thêm các mục vào thùng rác tin tức này bằng cách chọn \"Sao chép vào Thùng "
+"rác Tin tức\" từ trình đơn ngữ cảnh danh sách mục tin."
+
+#: ../xslt/vfolder.xml.in.h:1
+msgid "Search Folder:"
+msgstr "Thư mục tìm kiếm:"
+
+#, fuzzy
+#~ msgid "RSS feed reader"
+#~ msgstr "Bộ đọc Feed"
+
+#~ msgid ""
+#~ "Liferea is an abbreviation for Linux Feed Reader. It is a news aggregator "
+#~ "for online news feeds. It supports a number of different feed formats "
+#~ "including RSS/RDF, CDF and Atom. There are many other news readers "
+#~ "available, but these others are not available for Linux or require many "
+#~ "extra libraries to be installed. Liferea tries to fill this gap by "
+#~ "creating a fast, easy to use, easy to install news aggregator for GTK/"
+#~ "GNOME."
+#~ msgstr ""
+#~ "Liferea là từ viết tắt từ Linux Feed Reader. Nó là một bộ tập hợp tin tức "
+#~ "cho các feed tin tức trực tuyến. Nó hỗ trợ một lượng lớn các định dạng "
+#~ "feed khác nhau bao gồm RSS/RDF, CDF và Atom. Hiện sẵn có nhiều bộ đọc tin "
+#~ "tức, nhưng những cái khác đó không sẵn có trên Linux hay yêu cầu cài đặt "
+#~ "bổ sung nhiều thư viện. Liferea có để lấp đầy khoảng trống này bằng các "
+#~ "tạo cho môi trường  GTK/GNOME một bộ tập hợp tin tức nhanh, dễ cài đặt và "
+#~ "sử dụng."
+
+#~ msgid "Distinguishing features:"
+#~ msgstr "Các tính năng phân biệt:"
+
+#~ msgid "Read articles when offline"
+#~ msgstr "Đọc các bài viết khi ngoại tuyến"
+
+#~ msgid "Synchronizes with TheOldReader"
+#~ msgstr "Đồng bộ hóa với TheOldReader"
+
+#~ msgid "Synchronizes with TinyTinyRSS"
+#~ msgstr "Đồng bộ hóa với TinyTinyRSS"
+
+#~ msgid "Synchronizes with InoReader"
+#~ msgstr "Đồng bộ hóa với InoReader"
+
+#~ msgid "Synchronizes with Reedah"
+#~ msgstr "Đồng bộ hóa với Reedah"
+
+#~ msgid "Permanently save headlines in news bins"
+#~ msgstr "Lưu vĩnh viễn tin chính vào một bin tin tức"
+
+#~ msgid "Match items using search folders"
+#~ msgstr "Khớp các mục tin sử dụng các thư mục tìm kiếm"
+
+#~ msgid "Play Podcasts"
+#~ msgstr "Chơi Podcast"
+
+#, c-format
+#~ msgid "\"%s\" is not available"
+#~ msgstr "\"%s\"  không sẵn sàng"
+
+#, c-format
+#~ msgid "\"%s\" updated..."
+#~ msgstr "\"%s\" đã được cập nhật…"
+
+#~ msgid ""
+#~ "A network error occurred, or the other end closed the connection "
+#~ "unexpectedly"
+#~ msgstr ""
+#~ "Mạng xảy ra lỗi, hoặc là một chương trình khác đã đóng kết nối đột xuất"
+
+#~ msgid ""
+#~ "The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
+#~ "value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
+#~ "></b>"
+#~ msgstr ""
+#~ "Lần cập nhật cuối địa chỉ đặt xem dài hạn này gặp lỗi!<br/><b>Mã lỗi HTTP "
+#~ "<xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of "
+#~ "select=\"httpError\"/></b>"
+
+#~ msgid "Parser Error Details"
+#~ msgstr "Chi tiết về lỗi bộ phân tích cú pháp"
+
+#~ msgid "There were errors while filtering this feed!"
+#~ msgstr "Có một số lỗi xảy ra khi lọc feed này!"
+
+#~ msgid "Filter Error Details"
+#~ msgstr "Chi tiết về lỗi bộ lọc"
+
+#~ msgid ""
+#~ "<p>Could not detect the type of this feed! Please check if the source "
+#~ "really points to a resource provided in one of the supported syndication "
+#~ "formats!</p>XML Parser Output:<br /><div class='xmlparseroutput'>"
+#~ msgstr ""
+#~ "<p>Không thể dò tìm kiểu của feed này! Xin hãy kiểm tra xem nguồn của nó "
+#~ "có thực sự chỉ vào một nguồn tài nguyên được cung cấp bởi một trong số "
+#~ "định dạng được hỗ trợ!!</p>Bộ phân tích XML Kết xuất:<br /><div "
+#~ "class=“xmlparseroutput”>"
+
+#~ msgid ""
+#~ "The URL you want Liferea to subscribe to points to a webpage and the auto "
+#~ "discovery found no feeds on this page. Maybe this webpage just does not "
+#~ "support feed auto discovery."
+#~ msgstr ""
+#~ "Địa chỉ URL bạn muốn Liferea đặt xem dài hạn chỉ đến một trang web và hệ "
+#~ "thống tự động không tìm thấy feed nào trên trang này. Có lẽ trang web này "
+#~ "không hỗ trợ chương trình tự dò tìm feed."
+
+#~ msgid "Source points to HTML document."
+#~ msgstr "Nguồn chỉ đến một tài liệu HTML."
+
+#~ msgid "Could not determine the feed type."
+#~ msgstr "Không thể xác định được kiểu của feed."
+
+#~ msgid "Gone. Resource doesn't exist. Please unsubscribe!"
+#~ msgstr "Hết hy vọng. Tài nguyên không tồn tại. Hãy bỏ địa chỉ đặt dài hạn!"
+
+#~ msgid "Updating \"%s\""
+#~ msgstr "Đang cập nhật \"%s\""
+
+#~ msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
+#~ msgstr "Lỗi XML trong khi đọc feed! Feed \"%s\" không thể tải lên được!"
+
+#~ msgid "Combined View"
+#~ msgstr "Trình bày kiểu tổ hợp"
+
+#~ msgid "_Disable Javascript."
+#~ msgstr "_Tắt Javascript."
+
 #~ msgid "GUI"
 #~ msgstr "GUI"
 
@@ -2037,50 +2594,17 @@ msgstr "Tải về ngay"
 #~ msgid "Updating favicon for \"%s\""
 #~ msgstr "Đang cập nhật favicon cho \"%s\""
 
-#~ msgid "_Subscriptions"
-#~ msgstr "Địa chỉ đặt xem dài hạn"
-
-#~ msgid "Update _All"
-#~ msgstr "Cập nhật _tất cả"
-
-#~ msgid "Updates all subscriptions."
-#~ msgstr "Cập nhật tất cả các địa chỉ đặt xem dài hạn"
-
-#~ msgid "Mark All As _Read"
-#~ msgstr "Đánh dấu là tất cả đã đọ_c"
-
 #~ msgid "Marks read every item of every subscription."
 #~ msgstr "Đánh dấu đọc cho mỗi mục tin của mỗi địa chỉ đặt xem dài hạn."
-
-#~ msgid "_Import Feed List..."
-#~ msgstr "_Nhập vào danh sách feed…"
 
 #~ msgid "Imports an OPML feed list."
 #~ msgstr "Nhập vào danh sách feed kiểu OPML."
 
-#~ msgid "_Export Feed List..."
-#~ msgstr "_Xuất ra danh sách feed…"
-
 #~ msgid "Exports the feed list as OPML."
 #~ msgstr "Xuất ra danh sách feed kiểu OPML."
 
-#~ msgid "_Quit"
-#~ msgstr "T_hoát"
-
-#~ msgid "_Feed"
-#~ msgstr "_Feed"
-
-#~ msgid "Remove _All Items"
-#~ msgstr "Gỡ bỏ _mọi mục tin"
-
 #~ msgid "Removes all items of the currently selected feed."
 #~ msgstr "Gỡ bỏ tất cả các mục của feed hiện hành đã được chọn."
-
-#~ msgid "_Item"
-#~ msgstr "_Mục"
-
-#~ msgid "_View"
-#~ msgstr "_Trình bày"
 
 #~ msgid "Increases the text size of the item view."
 #~ msgstr "Tăng kích thước hiển thị các mục."
@@ -2088,63 +2612,27 @@ msgstr "Tải về ngay"
 #~ msgid "Decreases the text size of the item view."
 #~ msgstr "Giảm kích thước hiển thị các mục"
 
-#~ msgid "_Tools"
-#~ msgstr "_Công cụ"
-
-#~ msgid "_Update Monitor"
-#~ msgstr "_Cập nhật bộ theo dõi"
-
 #~ msgid "Show a list of all feeds currently in the update queue"
 #~ msgstr ""
 #~ "Hiển thị danh sách toàn bộ feed hiện tại đang trong hàng đợi cập nhật"
 
-#~ msgid "_Preferences"
-#~ msgstr "_Tùy chỉnh"
-
 #~ msgid "Edit Preferences."
 #~ msgstr "Sửa sở thích riêng."
-
-#~ msgid "S_earch"
-#~ msgstr "Tìm _kiếm"
-
-#~ msgid "Show the search dialog."
-#~ msgstr "Hiển thị hộp thoại tìm kiếm."
-
-#~ msgid "_Help"
-#~ msgstr "Trợ g_iúp"
-
-#~ msgid "_Contents"
-#~ msgstr "_Nội dung"
 
 #~ msgid "View help for this application."
 #~ msgstr "Hiển thị trợ giúp cho ứng dụng này."
 
-#~ msgid "_Quick Reference"
-#~ msgstr "_Tham khảo nhanh"
-
 #~ msgid "View a list of all Liferea shortcuts."
 #~ msgstr "Hiển thị danh sách của các phím tắt dành cho Liferea."
-
-#~ msgid "_FAQ"
-#~ msgstr "_FAQ"
 
 #~ msgid "View the FAQ for this application."
 #~ msgstr "Hiển thị câu hỏi thường gặp (FAQ) của ứng dụng này."
 
-#~ msgid "_About"
-#~ msgstr "_Giới thiệu"
-
 #~ msgid "Shows an about dialog."
 #~ msgstr "Hiển thị hộp thoại giới thiệu chương trình."
 
-#~ msgid "_Normal View"
-#~ msgstr "Trình bày _bình thường"
-
 #~ msgid "Set view mode to mail client mode."
 #~ msgstr "Đặt chế độ trình bày cho chế độ máy khách thư"
-
-#~ msgid "_Wide View"
-#~ msgstr "Trình bày kiểu _rộng"
 
 #~ msgid "Set view mode to use three vertical panes."
 #~ msgstr "Đặt chế độ hiển thị để sử dụng cho chế độ 3 bảng đứng"
@@ -2155,17 +2643,8 @@ msgstr "Tải về ngay"
 #~ msgid "Set view mode to two pane mode."
 #~ msgstr "Đặt chế độ trình bày cho chế độ hai cửa sổ"
 
-#~ msgid "_Reduced Feed List"
-#~ msgstr "_Tiết giảm danh sách feed"
-
 #~ msgid "Hide feeds with no unread items."
 #~ msgstr "Ẩn đi những feed mà không có mục tin nào chưa đọc cả."
-
-#~ msgid "_New Subscription..."
-#~ msgstr "Thêm một địa chỉ đặt xem dài hạn…"
-
-#~ msgid "Adds a subscription to the feed list."
-#~ msgstr "Thêm địa chỉ đặt xem dài hạn vào danh sách feed."
 
 #~ msgid "Adds a folder to the feed list."
 #~ msgstr "Thêm một thư mục vào danh sách feed."
@@ -2173,20 +2652,11 @@ msgstr "Tải về ngay"
 #~ msgid "Adds a new search folder to the feed list."
 #~ msgstr "Thêm một thư mục tìm kiếm mới vào danh sách feed."
 
-#~ msgid "New _Source..."
-#~ msgstr "Thêm _Nguồn mới…"
-
 #~ msgid "Adds a new feed list source."
 #~ msgstr "Thêm vào một nguồn danh sách feed mới."
 
 #~ msgid "Adds a new news bin."
 #~ msgstr "Thêm một thùng rác tin tức mới."
-
-#~ msgid ""
-#~ "Marks all items of the selected feed list node / in the item list as read."
-#~ msgstr ""
-#~ "Đánh dấu tất cả những mục tin của nút feed đã được chọn / trong danh sách "
-#~ "mục tin như là đã được đọc."
 
 #~ msgid ""
 #~ "Updates the selected subscription or all subscriptions of the selected "
@@ -2198,9 +2668,6 @@ msgstr "Tải về ngay"
 #~ msgid "Opens the property dialog for the selected subscription."
 #~ msgstr "Mở hộp thoại thuộc tính cho địa chỉ đặt dài hạn đã được chọn."
 
-#~ msgid "_Remove"
-#~ msgstr "_Xóa bỏ"
-
 #~ msgid "Removes the selected subscription."
 #~ msgstr "Gỡ bỏ những địa chỉ đặt dài hạn đã chọn."
 
@@ -2209,9 +2676,6 @@ msgstr "Tải về ngay"
 
 #~ msgid "Toggles the flag status of the selected item."
 #~ msgstr "Bật/tắt trạng thái cờ của mục tin đã chọn."
-
-#~ msgid "R_emove"
-#~ msgstr "Gỡ _bỏ"
 
 #~ msgid "Removes the selected item."
 #~ msgstr "Gỡ bỏ mục đã được chọn."
@@ -2224,9 +2688,6 @@ msgstr "Tải về ngay"
 
 #~ msgid "Launches the item's link in the configured external browser."
 #~ msgstr "Mở liên kết trong trình duyệt bên ngoài đã được cấu hình sẵn."
-
-#~ msgid "_Fullscreen"
-#~ msgstr "Chế độ t_oàn màn hình"
 
 #~ msgid "Browse at full screen"
 #~ msgstr "Duyệt toàn màn hình"
@@ -2250,9 +2711,6 @@ msgstr "Tải về ngay"
 #~ "Chú ý: <i>Tài khoản và mật khẩu sẽ được lưu lại trong tập tin lưu danh "
 #~ "sách Liferea của bạn mà không được mã hóa gì cả.</i>"
 
-#~ msgid "Add Google Reader Account"
-#~ msgstr "Thêm tài khoản Google Reader"
-
 #~ msgid "Please enter your Google Reader account settings."
 #~ msgstr "Hãy nhập vào các cài đặt tài khoản Google Reader của bạn."
 
@@ -2264,9 +2722,6 @@ msgstr "Tải về ngay"
 
 #~ msgid "View Headlines"
 #~ msgstr "Hiển thị tiêu đề"
-
-#~ msgid "Plugins"
-#~ msgstr "Phần bổ sung"
 
 #~ msgid "Feed Name"
 #~ msgstr "Tên Feed"
@@ -2454,20 +2909,11 @@ msgstr "Tải về ngay"
 #~ msgid_plural "<b>%s</b> has <b>%d</b> updates"
 #~ msgstr[0] "<b>%s</b> có <b>%d</b> cập nhật"
 
-#~ msgid "Feed Update"
-#~ msgstr "Cập nhật feed"
-
-#~ msgid "Show details"
-#~ msgstr "Hiển thị chi tiết"
-
 #~ msgid "_Enforce popup notification for this subscription."
 #~ msgstr "Bắt buộc nổi lên thông báo cho địa chỉ đặt xem dài hạn này."
 
 #~ msgid "_Never do popup notification for this subscription."
 #~ msgstr "Không bao giờ nổi lên thông báo cho địa chỉ đặt xem dài hạn này."
-
-#~ msgid "Notification Settings"
-#~ msgstr "Cài đặt cách thông báo"
 
 #~ msgid "Show a _popup window with new headlines."
 #~ msgstr "Hiển thị trình đơn chuột phải với các tiêu đề mới."
@@ -2545,9 +2991,6 @@ msgstr "Tải về ngay"
 #~ msgid "Copy Item _URL to Clipboard"
 #~ msgstr "Sao chép địa chỉ URL vào Clipboard"
 
-#~ msgid "Choose download directory"
-#~ msgstr "Chọn thư mục tải về"
-
 #~ msgid "Liferea Sync %s@%s"
 #~ msgstr "Liferea Sync %s@%s"
 
@@ -2572,6 +3015,3 @@ msgstr "Tải về ngay"
 
 #~ msgid "_Save downloads in"
 #~ msgstr "Ghi các phần tải về tại"
-
-#~ msgid "_Service Name"
-#~ msgstr "_Tên dịch vụ"

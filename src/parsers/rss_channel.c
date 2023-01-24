@@ -1,7 +1,7 @@
 /**
  * @file rss_channel.c  some tolerant and generic RSS/RDF channel parsing
  *
- * Copyright (C) 2003-2020 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2022 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2005-2006 Nathan Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -87,34 +87,34 @@ static void parseChannel(feedParserCtxtPtr ctxt, xmlNodePtr cur) {
 
 		/* Check for metadata tags */
 		if(NULL != (tmp2 = g_hash_table_lookup(RssToMetadataMapping, cur->name))) {
-			if(NULL != (tmp3 = (gchar *)xmlNodeListGetString(ctxt->doc, cur->xmlChildrenNode, TRUE))) {
+			if(NULL != (tmp3 = (gchar *)xmlNodeListGetString(cur->doc, cur->xmlChildrenNode, TRUE))) {
 				ctxt->subscription->metadata = metadata_list_append(ctxt->subscription->metadata, tmp2, tmp3);
 				g_free(tmp3);
 			}
 		}
 		/* check for specific tags */
 		else if(!xmlStrcmp(cur->name, BAD_CAST"pubDate")) {
- 			if(NULL != (tmp = (gchar *)xmlNodeListGetString(ctxt->doc, cur->xmlChildrenNode, 1))) {
+ 			if(NULL != (tmp = (gchar *)xmlNodeListGetString(cur->doc, cur->xmlChildrenNode, 1))) {
 				ctxt->subscription->metadata = metadata_list_append(ctxt->subscription->metadata, "pubDate", tmp);
 				ctxt->feed->time = date_parse_RFC822 (tmp);
 				g_free(tmp);
 			}
 		}
 		else if(!xmlStrcmp(cur->name, BAD_CAST"ttl")) {
- 			if(NULL != (tmp = (gchar *)xmlNodeListGetString(ctxt->doc, cur->xmlChildrenNode, TRUE))) {
+ 			if(NULL != (tmp = (gchar *)xmlNodeListGetString(cur->doc, cur->xmlChildrenNode, TRUE))) {
 				ctxt->subscription->updateState->timeToLive = atoi (tmp);
 				g_free(tmp);
 			}
 		}
 		else if(!xmlStrcmp(cur->name, BAD_CAST"title")) {
- 			if(NULL != (tmp = unhtmlize((gchar *)xmlNodeListGetString(ctxt->doc, cur->xmlChildrenNode, TRUE)))) {
+ 			if(NULL != (tmp = unhtmlize((gchar *)xmlNodeListGetString(cur->doc, cur->xmlChildrenNode, TRUE)))) {
 				if(ctxt->title)
 					g_free(ctxt->title);
 				ctxt->title = tmp;
 			}
 		}
 		else if(!xmlStrcmp(cur->name, BAD_CAST"link")) {
- 			if(NULL != (tmp = unhtmlize((gchar *)xmlNodeListGetString(ctxt->doc, cur->xmlChildrenNode, TRUE)))) {
+ 			if(NULL != (tmp = unhtmlize((gchar *)xmlNodeListGetString(cur->doc, cur->xmlChildrenNode, TRUE)))) {
 				subscription_set_homepage (ctxt->subscription, tmp);
 				g_free(tmp);
 			}
@@ -358,8 +358,8 @@ rss_init_feed_handler (void)
 		ns_rss_ns_uri_table = g_hash_table_new (g_str_hash, g_str_equal);
 
 		/* register name space handlers */
-  		rss_add_ns_handler (ns_dc_get_handler ());
-  		rss_add_ns_handler (ns_slash_get_handler ());
+    rss_add_ns_handler (ns_dc_get_handler ());
+    rss_add_ns_handler (ns_slash_get_handler ());
 		rss_add_ns_handler (ns_content_get_handler ());
 		rss_add_ns_handler (ns_syn_get_handler ());
 		rss_add_ns_handler (ns_admin_get_handler ());

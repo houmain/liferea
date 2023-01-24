@@ -1,7 +1,7 @@
 /**
  * @file feed_list_view.c  the feed list in a GtkTreeView
  *
- * Copyright (C) 2004-2019 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2004-2022 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  * Copyright (C) 2005 Raphael Slinckx <raphael@slinckx.net>
  *
@@ -128,12 +128,6 @@ feed_list_view_selection_changed_cb (GtkTreeSelection *selection, gpointer data)
 				debug0 (DEBUG_GUI, "A selected null node has no parent. This should not happen.");
 				return;
 			}
-			liferea_shell_update_feed_menu (TRUE, FALSE, FALSE);
-		} else {
-			gboolean allowModify = (NODE_SOURCE_TYPE (node->source->root)->capabilities & NODE_SOURCE_CAPABILITY_WRITABLE_FEEDLIST);
-			liferea_shell_update_update_menu ((NODE_TYPE (node)->capabilities & NODE_CAPABILITY_UPDATE) ||
-			                                  (NODE_TYPE (node)->capabilities & NODE_CAPABILITY_UPDATE_CHILDS));
-			liferea_shell_update_feed_menu (allowModify, TRUE, allowModify);
 		}
 
 		/* 1.) update feed list and item list states */
@@ -197,6 +191,9 @@ feed_list_view_filter_visible_function (GtkTreeModel *model, GtkTreeIter *iter, 
 	gtk_tree_model_get (model, iter, FS_PTR, &node, FS_UNREAD, &count, -1);
 	if (!node)
 		return FALSE;
+
+	if (IS_NEWSBIN(node) && node->data && ((feedPtr)node->data)->alwaysShowInReduced)
+		return TRUE;
 
 	if (IS_FOLDER (node) || IS_NODE_SOURCE (node))
 		return FALSE;
@@ -368,8 +365,6 @@ feed_list_view_create (GtkTreeView *treeview)
 		feed_list_view_reduce_mode_changed ();	/* before menu setup for reduced mode check box to be correct */
 
 	ui_dnd_setup_feedlist (flv->feedstore);
-	liferea_shell_update_feed_menu (TRUE, FALSE, FALSE);
-	liferea_shell_update_allitems_actions (FALSE, FALSE);
 
 	debug_exit ("feed_list_view_create");
 
@@ -382,13 +377,14 @@ feed_list_view_select (nodePtr node)
 	GtkTreeModel *model = gtk_tree_view_get_model (flv->treeview);
 
 	if (model && node && node != feedlist_get_root ()) {
-		GtkTreePath *path;
+		GtkTreePath *path = NULL;
 
 		/* in filtered mode we need to convert the iterator */
 		if (flv->feedlist_reduced_unread) {
 			GtkTreeIter iter;
-			gtk_tree_model_filter_convert_child_iter_to_iter (GTK_TREE_MODEL_FILTER (flv->filter), &iter, feed_list_view_to_iter (node->id));
-			path = gtk_tree_model_get_path (model, &iter);
+			gboolean valid = gtk_tree_model_filter_convert_child_iter_to_iter (GTK_TREE_MODEL_FILTER (flv->filter), &iter, feed_list_view_to_iter (node->id));
+			if (valid)
+				path = gtk_tree_model_get_path (model, &iter);
 		} else {
 			path = gtk_tree_model_get_path (model, feed_list_view_to_iter (node->id));
 		}
@@ -825,8 +821,8 @@ feed_list_view_update_node (const gchar *nodeId)
 			break;
 	}
 
-	/* Extra message for search folder rebuilds */
 	if (IS_VFOLDER (node) && node->data) {
+		/* Extra message for search folder rebuilds */
 		if (((vfolderPtr)node->data)->reloading) {
 			gchar *tmp = label;
 			label = g_strdup_printf (_("%s\n<i>Rebuilding</i>"), label);

@@ -25,10 +25,12 @@
 #include "common.h"
 #include "debug.h"
 #include "metadata.h"
+#include "enclosure.h"
 
 #define ITEM_MATCH_RULE_ID		"exact"
 #define ITEM_TITLE_MATCH_RULE_ID	"exact_title"
 #define ITEM_DESC_MATCH_RULE_ID		"exact_desc"
+#define ITEM_AUTHOR_MATCH_RULE_ID	"exact_author"
 #define FEED_TITLE_MATCH_RULE_ID	"feed_title"
 #define FEED_SOURCE_MATCH_RULE_ID	"feed_source"
 #define PARENT_FOLDER_MATCH_RULE_ID	"parent_folder"
@@ -63,7 +65,7 @@ rule_new (const gchar *ruleId,
 			rulePtr rule = (rulePtr) g_new0 (struct rule, 1);
 			rule->ruleInfo = ruleInfo;
 			rule->additive = additive;
-			rule->value = common_strreplace (g_strdup (value), "'", "");
+			rule_set_value (rule, value);
 			return rule;
 		}
 
@@ -73,10 +75,41 @@ rule_new (const gchar *ruleId,
 }
 
 void
+rule_set_value (rulePtr rule, const gchar *value)
+{
+	if (rule->value)
+		g_free (rule->value);
+	if (rule->valueCaseFolded)
+		g_free (rule->valueCaseFolded);
+
+	rule->value = common_strreplace (g_strdup (value), "'", "");
+	rule->valueCaseFolded = g_utf8_casefold (rule->value, -1);
+}
+
+void
 rule_free (rulePtr rule)
 {
 	g_free (rule->value);
+	g_free (rule->valueCaseFolded);
 	g_free (rule);
+}
+
+/* case insensitive strcmp helper function
+
+   To avoid half of the g_utf8_casefold we expect the 2nd value to be already
+   case folded!
+ */
+static const gchar *
+rule_strcasecmp (const gchar *a, const gchar *bCaseFold)
+{
+	gchar		*aCaseFold;
+	const gchar	*result;
+
+	aCaseFold = g_utf8_casefold (a, -1);
+	result = g_strstr_len (aCaseFold, -1, bCaseFold);
+	g_free (aCaseFold);
+
+	return result;
 }
 
 /* rule conditions */
@@ -84,13 +117,13 @@ rule_free (rulePtr rule)
 static gboolean
 rule_check_item_title (rulePtr rule, itemPtr item)
 {
-	return (item->title && g_strstr_len (item->title, -1, rule->value));
+	return (item->title && rule_strcasecmp (item->title, rule->valueCaseFolded));
 }
 
 static gboolean
 rule_check_item_description (rulePtr rule, itemPtr item)
 {
-	return (item->description && g_strstr_len (item->description, -1, rule->value));
+	return (item->description && rule_strcasecmp (item->description, rule->valueCaseFolded));
 }
 
 static gboolean
@@ -118,6 +151,25 @@ rule_check_item_has_enc (rulePtr rule, itemPtr item)
 }
 
 static gboolean
+rule_check_item_has_podcast (rulePtr rule, itemPtr item)
+{
+	GSList *iter = metadata_list_get_values (item->metadata, "enclosure");
+	gboolean found = FALSE;
+
+	while (iter && !found) {
+		enclosurePtr encl = enclosure_from_string ((gchar *)iter->data);
+		if (encl != NULL) {
+			if (encl->mime && g_str_has_prefix (encl->mime, "audio/")) {
+				found = TRUE;
+			}
+			enclosure_free (encl);
+		}
+		iter = g_slist_next (iter);
+	}
+	return found;
+}
+
+static gboolean
 rule_check_item_category (rulePtr rule, itemPtr item)
 {
 	GSList	*iter = metadata_list_get_values (item->metadata, "category");
@@ -133,6 +185,30 @@ rule_check_item_category (rulePtr rule, itemPtr item)
 }
 
 static gboolean
+rule_check_item_author (rulePtr rule, itemPtr item)
+{
+	GSList	*iter;
+
+	iter = metadata_list_get_values (item->metadata, "author");
+	while (iter) {
+		if (rule_strcasecmp ((gchar *)iter->data, rule->valueCaseFolded)) {
+			return TRUE;
+		}
+		iter = g_slist_next (iter);
+	}
+
+	iter = metadata_list_get_values (item->metadata, "creator");
+	while (iter) {
+		if (rule_strcasecmp ((gchar *)iter->data, rule->valueCaseFolded)) {
+			return TRUE;
+		}
+		iter = g_slist_next (iter);
+	}
+	return FALSE;
+}
+
+
+static gboolean
 rule_check_feed_title (rulePtr rule, itemPtr item)
 {
 	nodePtr feedNode = node_from_id (item->parentNodeId);
@@ -140,7 +216,7 @@ rule_check_feed_title (rulePtr rule, itemPtr item)
 	if (!feedNode)
 		return FALSE;
 
-	return (feedNode->title && g_strstr_len (feedNode->title, -1, rule->value));
+	return (feedNode->title && rule_strcasecmp (feedNode->title, rule->valueCaseFolded));
 }
 
 static gboolean
@@ -150,7 +226,7 @@ rule_check_feed_source (rulePtr rule, itemPtr item)
 	if (!feedNode)
 		return FALSE;
 
-	return (feedNode->subscription && g_strstr_len (feedNode->subscription->source, -1, rule->value));
+	return (feedNode->subscription && rule_strcasecmp (feedNode->subscription->source, rule->valueCaseFolded));
 }
 
 static gboolean
@@ -162,7 +238,7 @@ rule_check_parent_folder (rulePtr rule, itemPtr item)
 
 	node = node->parent;
 
-	return (node && g_strstr_len (node->title, -1, rule->value));
+	return (node && rule_strcasecmp (node->title, rule->valueCaseFolded));
 }
 
 /* rule initialization */
@@ -198,9 +274,11 @@ rule_init (void)
 	rule_info_add (rule_check_item_all,		ITEM_MATCH_RULE_ID,		_("Item"),			_("does contain"),	_("does not contain"),	TRUE);
 	rule_info_add (rule_check_item_title,		ITEM_TITLE_MATCH_RULE_ID,	_("Item title"),		_("does contain"),	_("does not contain"),	TRUE);
 	rule_info_add (rule_check_item_description,	ITEM_DESC_MATCH_RULE_ID,	_("Item body"),			_("does contain"),	_("does not contain"),	TRUE);
+	rule_info_add (rule_check_item_author,		ITEM_AUTHOR_MATCH_RULE_ID,	_("Item author"),		_("does contain"),	_("does not contain"),	TRUE);
 	rule_info_add (rule_check_item_is_unread,	"unread",			_("Read status"),		_("is unread"),		_("is read"),		FALSE);
 	rule_info_add (rule_check_item_is_flagged,	"flagged",			_("Flag status"),		_("is flagged"),	_("is unflagged"),	FALSE);
-	rule_info_add (rule_check_item_has_enc,		"enclosure",			_("Podcast"),			_("included"),		_("not included"),	FALSE);
+	rule_info_add (rule_check_item_has_enc,		"enclosure",			_("Enclosure"),			_("included"),		_("not included"),	FALSE);
+	rule_info_add (rule_check_item_has_podcast,	"podcast",			_("Podcast"),			_("included"),		_("not included"),	FALSE);
 	rule_info_add (rule_check_item_category,	"category",			_("Category"),			_("is set"),		_("is not set"),	TRUE);
 	rule_info_add (rule_check_feed_title,		FEED_TITLE_MATCH_RULE_ID,	_("Feed title"),		_("does contain"),	_("does not contain"),	TRUE);
 	rule_info_add (rule_check_feed_source,		FEED_SOURCE_MATCH_RULE_ID,	_("Feed source"),		_("does contain"),	_("does not contain"),	TRUE);

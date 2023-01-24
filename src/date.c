@@ -1,9 +1,9 @@
 /**
  * @file date.c date formatting routines
- * 
- * Copyright (C) 2008-2011  Lars Windolf <lars.windolf@gmx.de>
+ *
+ * Copyright (C) 2008-2022  Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006  Nathan J. Conrad <t98502@users.sourceforge.net>
- * 
+ *
  * The date formatting was reused from the Evolution code base
  *
  *    Author: Chris Lahey <clahey@ximian.com
@@ -40,6 +40,8 @@
 #include "debug.h"
 
 /* date formatting methods */
+
+static GTimeZone *utc = NULL;
 
 /**
  * Originally from Evolution e-util.c
@@ -113,7 +115,7 @@ date_format_nice (gint64 date)
 	GDateTime *then, *now, *yesterday;
 	gchar *temp, *buf;
 	gboolean done = FALSE;
-	
+
 	then = g_date_time_new_from_unix_local (date);
 	now = g_date_time_new_now_local ();
 
@@ -182,7 +184,7 @@ date_format (gint64 date, const gchar *date_format)
 {
 	gchar		*result;
 	GDateTime 	*date_tm;
-	
+
 	if (date == 0) {
 		return g_strdup ("");
 	}
@@ -204,13 +206,12 @@ gint64
 date_parse_ISO8601 (const gchar *date)
 {
 	GDateTime 	*datetime = NULL;
-	gboolean 	result;
 	guint64 	year, month, day;
 	gint64 		t = 0;
 	gchar		*pos, *next, *ascii_date = NULL;
-	
+
 	g_assert (date != NULL);
-	
+
 	/* we expect at least something like "2003-08-07T15:28:19" and
 	   don't require the second fractions and the timezone info
 
@@ -218,7 +219,7 @@ date_parse_ISO8601 (const gchar *date)
 	 */
 
 	/* full specified variant */
-	datetime = g_date_time_new_from_iso8601 (date, NULL);
+	datetime = g_date_time_new_from_iso8601 (date, utc);
 	if (datetime) {
 		t = g_date_time_to_unix (datetime);
 		g_date_time_unref (datetime);
@@ -255,10 +256,10 @@ date_parse_ISO8601 (const gchar *date)
 		t = g_date_time_to_unix (datetime);
 		g_date_time_unref (datetime);
 	}
-	
+
 parsing_failed:
 	if (!t)
-		debug0 (DEBUG_PARSING, "Invalid ISO8601 date format! Ignoring <dc:date> information!");
+		debug0 (DEBUG_PARSING, "Invalid ISO8601 date format!");
 	g_free (ascii_date);
 	return t;
 }
@@ -334,7 +335,7 @@ static struct {
 /** date_parse_rfc822_tz:
  * @token: String representing the timezone.
  *
- * Returns: (transfer full): a GTimeZone to be freed by g_time_zone_unref
+ * Returns: (transfer full): a GTimeZone to be freed by g_time_zone_unref or NULL on error
  */
 static GTimeZone *
 date_parse_rfc822_tz (char *token)
@@ -343,7 +344,11 @@ date_parse_rfc822_tz (char *token)
 	int num_timezones = sizeof (tz_offsets) / sizeof ((tz_offsets)[0]);
 
 	if (*inptr == '+' || *inptr == '-') {
-		return g_time_zone_new (inptr);
+		#ifdef HAVE_G_TIME_ZONE_NEW_IDENTIFIER
+			return g_time_zone_new_identifier (inptr);
+		#else
+			return g_time_zone_new (inptr);
+		#endif
 	} else {
 		int t;
 
@@ -352,10 +357,14 @@ date_parse_rfc822_tz (char *token)
 
 		for (t = 0; t < num_timezones; t++)
 			if (!strncmp (inptr, tz_offsets[t].name, strlen (tz_offsets[t].name)))
-				return g_time_zone_new (tz_offsets[t].offset);
+				#ifdef HAVE_G_TIME_ZONE_NEW_IDENTIFIER
+					return g_time_zone_new_identifier (tz_offsets[t].offset);
+				#else
+					return g_time_zone_new (tz_offsets[t].offset);
+				#endif
 	}
-	
-	return g_time_zone_new_utc ();
+
+	return NULL;
 }
 
 static const gchar * rfc822_months[] = { "Jan", "Feb", "Mar", "Apr", "May",
@@ -381,12 +390,12 @@ date_parse_RFC822 (const gchar *date)
 	gint64		t = 0;
 	gchar		*pos, *next, *ascii_date = NULL;
 
-	/* we expect at least something like "03 Dec 12 01:38:34" 
+	/* we expect at least something like "03 Dec 12 01:38:34"
 	   and don't require a day of week or the timezone
 
 	   the most specific format we expect:  "Fri, 03 Dec 12 01:38:34 CET"
 	 */
-	
+
 	/* skip day of week */
 	pos = g_utf8_strchr(date, -1, ',');
 	if (pos)
@@ -461,7 +470,43 @@ date_parse_RFC822 (const gchar *date)
 
 parsing_failed:
 	if (!t)
-		debug0 (DEBUG_PARSING, "Invalid RFC822 date !");
+		debug0 (DEBUG_PARSING, "Invalid RFC822 date!");
 	g_free (ascii_date);
 	return t;
+}
+
+
+static const gchar * rfc822_weekdays[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+gchar *
+date_format_rfc822_en_gmt (gint64 datetime)
+{
+	struct tm dt;
+	gmtime_r (&datetime, &dt);
+
+	if (dt.tm_wday < 0 || dt.tm_wday > 6) {
+		return NULL;	/* Invalid date from gmtime_r. Should *never* happen. */
+	}
+
+	if (dt.tm_mon < 0 || dt.tm_mon > 11) {
+		return NULL;	/* Invalid date from gmtime_r. Should *never* happen. */
+	}
+
+	return g_strdup_printf ("%s, %02d %s %d %02d:%02d:%02d GMT",
+		rfc822_weekdays[dt.tm_wday],
+		dt.tm_mday, rfc822_months[dt.tm_mon], dt.tm_year + 1900,
+		dt.tm_hour, dt.tm_min, dt.tm_sec);
+}
+
+void
+date_init (void)
+{
+	utc = g_time_zone_new_utc ();
+}
+
+void
+date_deinit (void)
+{
+	g_time_zone_unref (utc);
+	utc = NULL;
 }

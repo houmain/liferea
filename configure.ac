@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([liferea],[1.13.3],[liferea-devel@lists.sourceforge.net])
+AC_INIT([liferea],[1.14.0],[liferea-devel@lists.sourceforge.net])
 AC_CANONICAL_HOST
 AC_CONFIG_SRCDIR([src/feedlist.c])
 
@@ -44,14 +44,19 @@ pkg_modules="	gtk+-3.0 >= 3.22.0
 		gobject-introspection-1.0
 		gsettings-desktop-schemas
 		libpeas-1.0 >= 1.0.0
-		libpeas-gtk-1.0 >= 1.0.0"
+		libpeas-gtk-1.0 >= 1.0.0
+		fribidi >= 0.19.7"
 
 ################################################################################
 
+
 PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 
+AC_CHECK_LIB(glib-2.0, g_memdup2, [PACKAGE_CFLAGS="$PACKAGE_CFLAGS -DHAVE_G_MEMDUP2"])
+AC_CHECK_LIB(glib-2.0, g_time_zone_new_identifier, [PACKAGE_CFLAGS="$PACKAGE_CFLAGS -DHAVE_G_TIME_ZONE_NEW_IDENTIFIER"])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
+
 
 PKG_CHECK_MODULES([WEB_EXTENSION], [
                   webkit2gtk-web-extension-4.0
@@ -92,7 +97,7 @@ doc/Makefile
 doc/html/Makefile
 xslt/Makefile
 man/Makefile
-man/pl/Makefile
+man/it/Makefile
 pixmaps/Makefile
 pixmaps/16x16/Makefile
 pixmaps/22x22/Makefile

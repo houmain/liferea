@@ -1,7 +1,7 @@
 /*
  * @file liferea_application.h  LifereaApplication type
  *
- * Copyright (C) 2016 Leiaz <leiaz@free.fr>
+ * Copyright (C) 2016 Leiaz <leiaz@mailbox.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,5 +48,7 @@ gint liferea_application_new (int argc, char *argv[]);
 void liferea_application_shutdown (void);
 
 G_END_DECLS
+
+void liferea_application_rebuild_css (void);
 
 #endif

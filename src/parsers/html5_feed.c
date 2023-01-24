@@ -1,7 +1,7 @@
 /**
  * @file html5_feed.c  Parsing semantic annotated HTML5 webpages like feeds
  *
- * Copyright (C) 2020 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2020-2022 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,10 +47,10 @@ html5_feed_parse_article (xmlNodePtr itemNode, gpointer userdata)
 	ctxt->item = item_new ();
 
 	// Get article time
-	if (cur = xpath_find (itemNode, ".//time/@datetime")) {
+	if ((cur = xpath_find (itemNode, ".//time/@datetime"))) {
 		tmp = xhtml_extract (cur, 0, NULL);
 		if (tmp) {
-			ctxt->item->time = date_parse_RFC822 (tmp);
+			item_set_time (ctxt->item, date_parse_RFC822 (tmp));
 			g_free(tmp);
 		}
 	}
@@ -60,12 +60,12 @@ html5_feed_parse_article (xmlNodePtr itemNode, gpointer userdata)
 		ctxt->item->time = ctxt->feed->time;
 
 	// get link
-	if (cur = xpath_find (itemNode, ".//a/@href")) {
+	if ((cur = xpath_find (itemNode, ".//a/@href"))) {
 		tmp = (gchar *)xmlNodeListGetString (cur->doc, cur->xmlChildrenNode, 1);
 		if (tmp) {
-			gchar *link = common_build_url (tmp, ctxt->subscription->source);
-			item_set_source (ctxt->item, link);
-			g_free (link);
+			xmlChar *link = common_build_url (tmp, ctxt->subscription->source);
+			item_set_source (ctxt->item, (gchar *)link);
+			xmlFree (link);
 
 			// we use the link as id, as on websites link point to unique
 			// content in 99% of the cases
@@ -73,12 +73,16 @@ html5_feed_parse_article (xmlNodePtr itemNode, gpointer userdata)
 		}
 	}
 
-	// extract title
-	if (cur = xpath_find (itemNode, ".//h1"))
+	// extract title from most relevant header tag
+	if ((cur = xpath_find (itemNode, ".//h1")))
 		html5_feed_parse_article_title (cur, ctxt);
-	else if (cur = xpath_find (itemNode, ".//h2"))
+	else if ((cur = xpath_find (itemNode, ".//h2")))
 		html5_feed_parse_article_title (cur, ctxt);
-	else if (cur = xpath_find (itemNode, ".//h3"))
+	else if ((cur = xpath_find (itemNode, ".//h3")))
+		html5_feed_parse_article_title (cur, ctxt);
+	else if ((cur = xpath_find (itemNode, ".//h4")))
+		html5_feed_parse_article_title (cur, ctxt);
+	else if ((cur = xpath_find (itemNode, ".//h5")))
 		html5_feed_parse_article_title (cur, ctxt);
 
 	// Extract the actual article
@@ -104,10 +108,8 @@ static void
 html5_feed_parse (feedParserCtxtPtr ctxt, xmlNodePtr root)
 {
 	gchar		*tmp;
-	short 		rdf = 0;
-	int 		error = 0;
 	xmlNodePtr	cur;
-	xmlChar		*baseURL = xmlNodeGetBase (ctxt->doc, root);
+	xmlChar		*baseURL = xmlNodeGetBase (root->doc, root);
 
 	ctxt->feed->time = time(NULL);
 
@@ -116,13 +118,13 @@ html5_feed_parse (feedParserCtxtPtr ctxt, xmlNodePtr root)
 
 	/* Set the default base to the feed's HTML URL if not set yet */
 	if (baseURL == NULL)
-		xmlNodeSetBase (xmlDocGetRootElement (ctxt->doc), (xmlChar *)ctxt->subscription->source);
+		xmlNodeSetBase (root, (xmlChar *)ctxt->subscription->source);
 
-	if (cur = xpath_find (root, "/html/head/title")) {
+	if ((cur = xpath_find (root, "/html/head/title"))) {
 		ctxt->title = unxmlize (xhtml_extract (cur, 0, NULL));
 	}
 
-	if (cur = xpath_find (root, "/html/head/meta[@name = 'description']")) {
+	if ((cur = xpath_find (root, "/html/head/meta[@name = 'description']"))) {
 		tmp = xhtml_extract (cur, 0, NULL);
 		if (tmp) {
 			metadata_list_set (&ctxt->subscription->metadata, "description", tmp);
@@ -130,7 +132,7 @@ html5_feed_parse (feedParserCtxtPtr ctxt, xmlNodePtr root)
 		}
 	}
 
-	if(!xpath_foreach_match (root, "/html/body//article", html5_feed_parse_article, ctxt)) {
+	if (!xpath_foreach_match (root, "/html/body//article", html5_feed_parse_article, ctxt)) {
 		g_string_append(ctxt->feed->parseErrors, "<p>Could not find HTML5 tags!</p>");
 		return;
 	}
@@ -141,9 +143,9 @@ html5_feed_check_article (xmlNodePtr cur, gpointer userdata)
 {
 	gint *articleCount = (gint *)userdata;
 
-	if (xpath_find (cur, ".//h1") ||
-	    xpath_find (cur, ".//h2") ||
-	    xpath_find (cur, ".//h3"))
+	/* We consider <h1>...<h5> tags inside an article as indication
+	   for extract worthy content */
+	if (xpath_find (cur, ".//h1 | .//h2 | .//h3 | .//h4 | .//h5"))
 		(*articleCount)++;
 }
 
@@ -179,6 +181,7 @@ html5_init_feed_handler (void)
 	fhp->typeStr = "html5";
 	fhp->feedParser	= html5_feed_parse;
 	fhp->checkFormat = html5_feed_check;
+	fhp->html = TRUE;
 
 	return fhp;
 }

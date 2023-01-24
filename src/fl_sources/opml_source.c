@@ -53,12 +53,12 @@ opml_source_merge_feed (xmlNodePtr match, gpointer user_data)
 	gchar		*expr;
 	nodePtr		node = NULL;
 
-	url = xmlGetProp (match, "xmlUrl");
-	title = xmlGetProp (match, "title");
+	url = xmlGetProp (match, BAD_CAST"xmlUrl");
+	title = xmlGetProp (match, BAD_CAST"title");
 	if (!title)
-		title = xmlGetProp (match, "description");
+		title = xmlGetProp (match, BAD_CAST"description");
 	if (!title)
-		title = xmlGetProp (match, "text");
+		title = xmlGetProp (match, BAD_CAST"text");
 	if (!title && !url)
 		return;
 
@@ -72,11 +72,11 @@ opml_source_merge_feed (xmlNodePtr match, gpointer user_data)
 		if (url) {
 			node = node_new (feed_get_node_type ());
 			node_set_data (node, feed_new ());
-			node_set_subscription (node, subscription_new (url, NULL, NULL));
+			node_set_subscription (node, subscription_new ((gchar *)url, NULL, NULL));
 		} else {
 			node = node_new (folder_get_node_type ());
 		}
-		node_set_title (node, title);
+		node_set_title (node, (gchar *)title);
 		node_set_parent (node, mergeCtxt->parent, -1);
 		feedlist_node_imported (node);
 
@@ -141,7 +141,7 @@ opml_source_check_for_removal (nodePtr node, gpointer user_data)
 /* OPML subscription type implementation */
 
 static gboolean
-opml_subscription_prepare_update_request (subscriptionPtr subscription, struct updateRequest *request)
+opml_subscription_prepare_update_request (subscriptionPtr subscription, UpdateRequest *request)
 {
 	/* Nothing to do here for simple OPML subscriptions */
 	return TRUE;
@@ -190,7 +190,7 @@ opml_subscription_process_update_result (subscriptionPtr subscription, const str
 				if (title) {
 					xmlChar *titleStr = xmlNodeListGetString(title->doc, title->xmlChildrenNode, 1);
 					if (titleStr) {
-						node_set_title (node, titleStr);
+						node_set_title (node, (gchar *)titleStr);
 						xmlFree (titleStr);
 					}
 				}

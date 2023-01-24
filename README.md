@@ -1,12 +1,15 @@
-[![Build Status](https://travis-ci.org/lwindolf/liferea.svg?branch=master)](https://travis-ci.org/lwindolf/liferea) ![Coverity Scan Build Status](https://scan.coverity.com/projects/4287/badge.svg)
+[![Build Status](https://github.com/lwindolf/liferea/actions/workflows/cb.yml/badge.svg)](https://github.com/lwindolf/liferea/actions/workflows/cb.yml)
 
+[![Packages](https://repology.org/badge/latest-versions/liferea.svg)](https://repology.org/metapackage/liferea/versions)
+[![Packages](https://repology.org/badge/tiny-repos/liferea.svg)](https://repology.org/metapackage/liferea/versions)
+[![Dependency](https://img.shields.io/librariesio/github/lwindolf/liferea)](https://libraries.io/github/lwindolf/liferea)
 
 Introduction
 ------------
 
 Liferea is a desktop feed reader/news aggregator that brings together all of the content from your favorite subscriptions into a simple interface that makes it easy to organize and browse feeds. Its GUI is similar to a desktop mail/news client, with an embedded web browser.
 
-![screenshot](https://lzone.de/liferea/screenshots/screenshot3.png)
+![screenshot](https://lzone.de/liferea/screenshots/screenshot2.png)
 
 
 
@@ -28,7 +31,7 @@ help you asap.
 ###### _Mandatory Dependencies_
 
    libxml2-dev libxslt1-dev libsqlite3-dev libwebkit2gtk-4.0-dev libjson-glib-dev libgirepository1.0-dev
-   libpeas-dev gsettings-desktop-schemas-dev python3 libtool intltool
+   libpeas-dev libfribidi-dev gsettings-desktop-schemas-dev python3 libtool intltool
 
    
 ###### _Compiling from Tarball_
@@ -36,7 +39,7 @@ help you asap.
 Download a tarball from https://github.com/lwindolf/liferea/releases
 and extract and compile with
 
-    tar jxvf liferea-1.12.0.tar.bz2 
+    tar jxvf liferea-1.13.3.tar.bz2 
     ./configure
     make
     sudo make install
@@ -76,19 +79,14 @@ are the best way to contribute to Liferea.
 
 Before starting to translate you need a translation editor. We suggest
 to use poedit or gtranslator. Please edit the translation using such a 
-translation editor and send us the resulting file. Once you have finished
-your work please send us the resulting file.
-
-Please do not send translation patches. Those are a lot of work to merge
-and the bandwidth saving is not that huge!
-
+translation editor and create a Github pull request for the new `.po` file.
 
 ###### _New Translations_
 
 To create a new translation you must load the translation template, which you
-can find in the release tarball as "po/liferea.pot", into the translation 
+can find in the release tarball as `po/liferea.pot`, into your translation 
 editor. After editing it save it under a new name (usually your locales name
-with the extension ".po").
+with the extension `.po`).
 
 
 ###### _Updating Translations_
@@ -115,7 +113,7 @@ If you want to provide/update a localized feed list please follow these rules:
 
 ###### _Creating Plugins_
 
-Liferea 1.10+ support GObject Introspection based plugins using libpeas. The
+Liferea supports GObject Introspection based plugins using libpeas. The
 Liferea distribution comes with a set of Python plugin e.g. the media player,
 libsecret support, a tray icon plugin and maybe others.
 
@@ -194,18 +192,18 @@ to identify leaks and send in the output.
 How to Get Support
 ------------------
 
-## When using distribution packages
+### When using distribution packages
 
 Do not post bug reports in the Liferea bug tracker, use the bug reporting
 system of your distribution instead. We (upstream) cannot fix distribution
 packages!
 
-## Before raising an issue
+### Before raising an issue
 
 Install the latest stable release and check if the problem is solved already.
 Please do not ask for help for older releases!
 
-## Issue Tracker
+### Issue Tracker
 
 Once you verified the latest stable release still has the problem
 please raise an issue in the GitHub bug tracker

@@ -1,7 +1,7 @@
 /**
  * @file feed.c  feed node and subscription type
  *
- * Copyright (C) 2003-2020 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2021 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -57,24 +57,23 @@ feed_new (void)
 static void
 feed_import (nodePtr node, nodePtr parent, xmlNodePtr xml, gboolean trusted)
 {
-	gchar		*cacheLimitStr, *title;
-	gchar		*tmp;
+	xmlChar		*cacheLimitStr, *title,	*tmp;
 	feedPtr		feed = NULL;
 
 	xmlChar	*typeStr = xmlGetProp (xml, BAD_CAST"type");
 
 	feed = feed_new ();
-	feed->fhp = feed_type_str_to_fhp (typeStr);
+	feed->fhp = feed_type_str_to_fhp ((gchar *)typeStr);
 
 	node_set_data (node, feed);
 	node_set_subscription (node, subscription_import (xml, trusted));
 
 	/* Set the feed cache limit */
 	cacheLimitStr = xmlGetProp (xml, BAD_CAST "cacheLimit");
-	if (cacheLimitStr && !xmlStrcmp (cacheLimitStr, "unlimited"))
+	if (cacheLimitStr && !xmlStrcmp (cacheLimitStr, BAD_CAST"unlimited"))
 		feed->cacheLimit = CACHE_UNLIMITED;
 	else
-		feed->cacheLimit = common_parse_long (cacheLimitStr, CACHE_DEFAULT);
+		feed->cacheLimit = common_parse_long ((gchar *)cacheLimitStr, CACHE_DEFAULT);
 	xmlFree (cacheLimitStr);
 
 	/* enclosure auto download flag */
@@ -106,7 +105,7 @@ feed_import (nodePtr node, nodePtr parent, xmlNodePtr xml, gboolean trusted)
 		title = xmlGetProp (xml, BAD_CAST"text");
 	}
 
-	node_set_title (node, title);
+	node_set_title (node, (gchar *)title);
 	xmlFree (title);
 
 	if (node->subscription)
@@ -162,22 +161,27 @@ feed_add_xml_attributes (nodePtr node, xmlNodePtr feedNode)
 	feedPtr	feed = (feedPtr)node->data;
 	gchar	*tmp;
 
-	xmlNewTextChild (feedNode, NULL, "feedId", node_get_id (node));
-	xmlNewTextChild (feedNode, NULL, "feedTitle", node_get_title (node));
+	xmlNewTextChild (feedNode, NULL, BAD_CAST"feedId", BAD_CAST node_get_id (node));
+	xmlNewTextChild (feedNode, NULL, BAD_CAST"feedTitle", BAD_CAST node_get_title (node));
 
-	if (node->subscription)
+	if (node->subscription) {
 		subscription_to_xml (node->subscription, feedNode);
 
+		tmp = g_strdup_printf("%d", node->subscription->error);
+		xmlNewTextChild(feedNode, NULL, BAD_CAST"error", BAD_CAST tmp);
+		g_free(tmp);
+	}
+
 	tmp = g_strdup_printf("%d", node->available?1:0);
-	xmlNewTextChild(feedNode, NULL, "feedStatus", tmp);
+	xmlNewTextChild(feedNode, NULL, BAD_CAST"feedStatus", BAD_CAST tmp);
 	g_free(tmp);
 
 	tmp = g_strdup_printf("file://%s", node_get_favicon_file (node));
-	xmlNewTextChild(feedNode, NULL, "favicon", tmp);
+	xmlNewTextChild(feedNode, NULL, BAD_CAST"favicon", BAD_CAST tmp);
 	g_free(tmp);
 
 	if(feed->parseErrors && (strlen(feed->parseErrors->str) > 0))
-		xmlNewTextChild(feedNode, NULL, "parseError", feed->parseErrors->str);
+		xmlNewTextChild(feedNode, NULL, BAD_CAST"parseError", BAD_CAST feed->parseErrors->str);
 }
 
 xmlDocPtr
@@ -186,8 +190,8 @@ feed_to_xml (nodePtr node, xmlNodePtr feedNode)
 	xmlDocPtr	doc = NULL;
 
 	if (!feedNode) {
-		doc = xmlNewDoc ("1.0");
-		feedNode = xmlNewDocNode (doc, NULL, "feed", NULL);
+		doc = xmlNewDoc (BAD_CAST"1.0");
+		feedNode = xmlNewDocNode (doc, NULL, BAD_CAST"feed", NULL);
 		xmlDocSetRootElement (doc, feedNode);
 	}
 	feed_add_xml_attributes (node, feedNode);
@@ -236,32 +240,35 @@ feed_enrich_item_cb (const struct updateResult * const result, gpointer userdata
 		article = xhtml_strip_dhtml (article);
 	if (article) {
 		// Enable AMP images by replacing <amg-img> by <img>
-		gchar *tmp = g_strjoinv("<img", g_strsplit(article, "<amp-img", 0));
+		gchar **tmp_split = g_strsplit(article, "<amp-img", 0);
+		gchar *tmp = g_strjoinv("<img", tmp_split);
+		g_strfreev (tmp_split);
 		g_free (article);
 		article = tmp;
 
 		metadata_list_set (&(item->metadata), "richContent", article);
 		db_item_update (item);
 		itemlist_update_item (item);
-		item_unload (item);
 		g_free (article);
 	} else {
 		// If there is no HTML5 article try to fetch AMP source if there is one
 		gchar *ampurl = html_get_amp_url (result->data);
 		if (ampurl) {
-			updateRequestPtr request;
+			UpdateRequest *request;
 
 			debug3 (DEBUG_PARSING, "Fetching AMP HTML %ld %s : %s", item->id, item->title, ampurl);
-			request = update_request_new ();
-			update_request_set_source (request, ampurl);
-			// Explicitely do not pass proxy/auth options to Google (AMP)!
-			request->options = g_new0 (struct updateOptions, 1);
-			// FIXME: how do we prevent an endless loop here?
-			update_execute_request (NULL, request, feed_enrich_item_cb, item, 0);
+			request = update_request_new (
+				ampurl,
+				NULL, 	// No update state needed? How do we prevent an endless redirection loop?
+				NULL 	// Explicitely do not the feed's proxy/auth options to 3rd parties like Google (AMP)!
+			);
+
+			update_execute_request (NULL, request, feed_enrich_item_cb, item, FEED_REQ_NO_FEED);
 
 			g_free (ampurl);
 		}
 	}
+	item_unload (item);
 }
 
 /**
@@ -270,7 +277,7 @@ feed_enrich_item_cb (const struct updateResult * const result, gpointer userdata
 void
 feed_enrich_item (subscriptionPtr subscription, itemPtr item)
 {
-	updateRequestPtr request;
+	UpdateRequest *request;
 
 	if (!item->source) {
 		debug1 (DEBUG_PARSING, "Cannot HTML5-enrich item %s because it has no source!\n", item->title);
@@ -285,15 +292,14 @@ feed_enrich_item (subscriptionPtr subscription, itemPtr item)
 
 	// Fetch item->link document and try to parse it as XHTML
 	debug3 (DEBUG_PARSING, "Fetching HTML5 %ld %s : %s", item->id, item->title, item->source);
-	request = update_request_new ();
-	update_request_set_source (request, item->source);
+	request = update_request_new (
+		item->source,
+		NULL,	// updateState
+		subscription->updateOptions	// Pass options of parent feed (e.g. password, proxy...)
+	);
 
-	// Pass options of parent feed (e.g. password, proxy...)
-	request->options = update_options_copy (subscription->updateOptions);
-
-	update_execute_request (subscription, request, feed_enrich_item_cb, GUINT_TO_POINTER (item->id), 0);
+	update_execute_request (subscription, request, feed_enrich_item_cb, GUINT_TO_POINTER (item->id), FEED_REQ_NO_FEED);
 }
-
 
 /* implementation of subscription type interface */
 
@@ -302,69 +308,49 @@ feed_process_update_result (subscriptionPtr subscription, const struct updateRes
 {
 	feedParserCtxtPtr	ctxt;
 	nodePtr			node = subscription->node;
-	feedPtr			feed = (feedPtr)node->data;
 
 	debug_enter ("feed_process_update_result");
 
-	if (result->data) {
-		/* parse the new downloaded feed into feed and itemSet */
-		ctxt = feed_create_parser_ctxt ();
-		ctxt->feed = feed;
-		ctxt->data = result->data;
-		ctxt->dataLength = result->size;
-		ctxt->subscription = subscription;
+	ctxt = feed_parser_ctxt_new (subscription, result->data, result->size);
 
-		/* try to parse the feed */
-		feed_parse (ctxt);
-
-		if (ctxt->failed) {
-			/* No feed found, display an error */
-			node->available = FALSE;
-
-			g_string_prepend (feed->parseErrors, _("<p>Could not detect the type of this feed! Please check if the source really points to a resource provided in one of the supported syndication formats!</p>"
-			                                       "XML Parser Output:<br /><div class='xmlparseroutput'>"));
-			g_string_append (feed->parseErrors, "</div>");
-		} else if (!ctxt->failed && !ctxt->feed->fhp) {
-			/* There's a feed but no Handler. This means autodiscovery
-			 * found a feed, but we still need to download it.
-			 * An update should be in progress that will process it */
-		} else {
-			/* Feed found, process it */
-			itemSetPtr	itemSet;
-
-			node->available = TRUE;
-
-			/* merge the resulting items into the node's item set */
-			itemSet = node_get_itemset (node);
-			node->newCount = itemset_merge_items (itemSet, ctxt->items, ctxt->feed->valid, ctxt->feed->markAsRead);
-			if (node->newCount)
-				itemlist_merge_itemset (itemSet);
-			itemset_free (itemSet);
-
-			/* restore user defined properties if necessary */
-			if ((flags & FEED_REQ_RESET_TITLE) && ctxt->title)
-				node_set_title (node, ctxt->title);
-
-			if (flags > 0)
-				db_subscription_update (subscription);
-
-			liferea_shell_set_status_bar (_("\"%s\" updated..."), node_get_title (node));
-		}
-
-		feed_free_parser_ctxt (ctxt);
-	} else {
+	/* try to parse the feed */
+	if (!feed_parse (ctxt)) {
+		/* No feed found, display an error */
 		node->available = FALSE;
 
-		liferea_shell_set_status_bar (_("\"%s\" is not available"), node_get_title (node));
+	} else if (!ctxt->feed->fhp) {
+		/* There's a feed but no handler. This means autodiscovery
+		 * found a feed, but we still need to download it.
+		 * An update should be in progress that will process it */
+	} else {
+		/* Feed found, process it */
+		itemSetPtr	itemSet;
+
+		node->available = TRUE;
+
+		/* merge the resulting items into the node's item set */
+		itemSet = node_get_itemset (node);
+		node->newCount = itemset_merge_items (itemSet, ctxt->items, ctxt->feed->valid, ctxt->feed->markAsRead);
+		if (node->newCount)
+			itemlist_merge_itemset (itemSet);
+		itemset_free (itemSet);
+
+		/* restore user defined properties if necessary */
+		if ((flags & FEED_REQ_RESET_TITLE) && ctxt->title)
+			node_set_title (node, ctxt->title);
 	}
 
-	feed_list_view_update_node (node->id);
+	feed_parser_ctxt_free (ctxt);
+
+	// FIXME: this should not be here, but in subscription.c
+	if (FETCH_ERROR_NONE != subscription->error)
+		node->available = FALSE;
 
 	debug_exit ("feed_process_update_result");
 }
 
 static gboolean
-feed_prepare_update_request (subscriptionPtr subscription, struct updateRequest *request)
+feed_prepare_update_request (subscriptionPtr subscription, UpdateRequest *request)
 {
 	/* Nothing to do. Feeds require no subscription extra handling. */
 
@@ -471,7 +457,8 @@ feed_get_node_type (void)
 		NODE_CAPABILITY_SHOW_UNREAD_COUNT |
 		NODE_CAPABILITY_UPDATE |
 		NODE_CAPABILITY_UPDATE_FAVICON |
-		NODE_CAPABILITY_EXPORT,
+		NODE_CAPABILITY_EXPORT |
+		NODE_CAPABILITY_EXPORT_ITEMS,
 		"feed",		/* not used, feed format ids are used instead */
 		NULL,
 		feed_import,

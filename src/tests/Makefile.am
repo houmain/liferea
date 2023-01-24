@@ -2,12 +2,12 @@
 
 noinst_PROGRAMS = $(TEST_PROGS)
 
-TEST_PROGS = html_auto favicon parse_date parse_xml
+TEST_PROGS = parse_html favicon parse_date parse_xml social
 
 test: $(TEST_PROGS)
 	echo $(TEST_PROGS) |\
 	sed "s/^/.\//;s/ / \&\& .\//g" |\
-	xargs -I{} sh -c "{}" |\
+	xargs -I{} sh -c "{}"
 	./test_a11y.sh
 
 memcheck: $(TEST_PROGS)
@@ -49,7 +49,6 @@ favicon_LDADD = \
 	../feedlist.o \
 	../folder.o \
 	../html.o \
-	../htmlview.o \
 	../item.o \
 	../item_history.o \
 	../item_loader.o \
@@ -65,14 +64,12 @@ favicon_LDADD = \
 	../newsbin.o \
 	../node.o \
 	../node_type.o \
-	../node_view.h \
 	../plugins_engine.o \
 	../render.o \
 	../rule.o \
 	../social.o \
 	../subscription.o \
 	../subscription_icon.o \
-	../subscription_type.h \
 	../update.o \
 	../vfolder.o \
 	../vfolder_loader.o \
@@ -83,17 +80,21 @@ favicon_LDADD = \
 	$(INTROSPECTION_LIBS) \
 	-lm
 
-favicon_SOURCES = favicon.c
+clean-local: clean-local-check
+.PHONY: clean-local-check
+clean-local-check:
+	-rm *.Po
+
 favicon_CFLAGS = $(AM_CPPFLAGS)
 
-html_auto_SOURCES = html.c
-html_auto_CFLAGS = $(AM_CPPFLAGS)
-html_auto_LDADD = $(favicon_LDADD)
+parse_html_CFLAGS = $(AM_CPPFLAGS)
+parse_html_LDADD = $(favicon_LDADD)
 
-parse_date_SOURCES = parse_date.c
 parse_date_CFLAGS = $(AM_CPPFLAGS)
 parse_date_LDADD = $(favicon_LDADD)
 
-parse_xml_SOURCES = parse_xml.c
 parse_xml_CFLAGS = $(AM_CPPFLAGS)
 parse_xml_LDADD = $(favicon_LDADD)
+
+social_CFLAGS = $(AM_CPPFLAGS)
+social_LDADD = $(favicon_LDADD)

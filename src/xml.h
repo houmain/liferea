@@ -1,7 +1,7 @@
 /**
  * @file xml.h  XML helper methods for Liferea
  *
- * Copyright (C) 2003-2017  Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2020  Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006  Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -32,6 +32,11 @@
  * Initialize XML parsing.
  */
 void xml_init (void);
+
+/**
+ * Deinit XML parsing
+ */
+void xml_deinit (void);
 
 /**
  * Retrieves the text content of an HTML chunk. All entities
@@ -79,7 +84,19 @@ xmlDocPtr xhtml_parse (const gchar *html, gint len);
 gchar * xhtml_extract_from_string (const gchar *html, const gchar *nodeBase);
 
 /**
- * Extract XHTML from the children of the passed node.
+* Extract XHTML document from the children of the passed node.
+*
+* @param cur         parent of the nodes that will be returned
+* @param xhtmlMode   If 0, reads escaped HTML.
+*                    If 1, reads XHTML nodes as children, and wrap in div tag
+*                    If 2, Find a div tag, and return it as a string
+* @param defaultBase
+* @returns XHTML document containing children of passed node
+*/
+xmlDocPtr xhtml_extract_doc (xmlNodePtr cur, gint xhtmlMode, const gchar *defaultBase);
+
+/**
+ * Extract XHTML string from the children of the passed node.
  *
  * @param cur         parent of the nodes that will be returned
  * @param xhtmlMode   If 0, reads escaped HTML.
@@ -100,14 +117,13 @@ gchar * xhtml_extract (xmlNodePtr cur, gint xhtmlMode, const gchar *defaultBase)
 gchar * xhtml_strip_dhtml (const gchar *html);
 
 /**
- * Strips HTML tags we cannot or do not want to render, which
- * would mess up HTML rendering.
+ * Removes self closing tags (on one line) from HTML so that it renders correctly in the browser.
  *
  * @param html	some HTML content
  *
  * @return newly allocated stripped HTML string
  */
-gchar * xhtml_strip_unsupported_tags (const gchar *html);
+gchar * xhtml_expand_self_closing_tag (const gchar *html);
 
 /**
  * Checks the given string for XHTML well formedness.
@@ -169,10 +185,7 @@ typedef struct errorCtxt {
 } *errorCtxtPtr;
 
 /**
- * Common function to create a XML DOM object from a given XML buffer.
- *
- * The function returns a XML document pointer or NULL
- * if the document could not be read.
+ * Common function to create a XML DOM object from a given string
  *
  * @param data		XML document buffer
  * @param length	length of buffer
@@ -180,7 +193,7 @@ typedef struct errorCtxt {
  *
  * @return XML document
  */
-xmlDocPtr xml_parse (gchar *data, size_t length, errorCtxtPtr errors);
+xmlDocPtr xml_parse (const gchar *data, size_t length, errorCtxtPtr errors);
 
 /**
  * Common function to create a XML DOM object from a given

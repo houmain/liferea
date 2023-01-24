@@ -28,6 +28,21 @@ html_doc_de =	about_de.html \
 		onlineservices_de.html \
 		faq_de.html
 
+html_doc_it =	about_it.html \
+		concepts_it.html \
+		folders_it.html \
+		headlines_it.html \
+		preferences_it.html \
+		reference_it.html \
+		searching_it.html \
+		subscriptions_it.html \
+		topics_it.html \
+		updating_it.html \
+		enclosures_it.html \
+		newsbin_it.html \
+		onlineservices_it.html \
+		faq_it.html
+
 html_doc_pictures_en =	help_feed_default.png \
 			help_feed_error.png \
 			help_folder.png \
@@ -39,13 +54,13 @@ html_doc_pictures_en =	help_feed_default.png \
 			help_feed_prop_source_1.6.0.png \
 			help_item_flag.png \
 			help_item_unread.png \
-			help_prefs_browser_1.6.0.png \
-			help_prefs_enclosures_1.6.0.png \
-			help_prefs_feeds_1.6.0.png \
-			help_prefs_folders_1.6.0.png \
-			help_prefs_gui_1.6.0.png \
-			help_prefs_headlines_1.6.0.png \
-			help_prefs_proxy_1.6.0.png \
+			help_prefs_browser_1.14.0.png \
+			help_prefs_enclosures_1.14.0.png \
+			help_prefs_feeds_1.14.0.png \
+			help_prefs_folders_1.14.0.png \
+			help_prefs_desktop_1.14.0.png \
+			help_prefs_headlines_1.14.0.png \
+			help_prefs_proxy_1.14.0.png \
 			help_search_1.6.0.png \
 			help_subscribe_1.6.0.png \
 			help_subscribe_adv_1.6.0.png \
@@ -53,14 +68,15 @@ html_doc_pictures_en =	help_feed_default.png \
 
 EXTRA_DIST =	$(html_doc_en) \
 		$(html_doc_de) \
+		$(html_doc_it) \
 		$(html_doc_pictures_en) \
 		reference.css
 
 
 htmldoc_DATA =	$(html_doc_en) \
 		$(html_doc_de) \
+		$(html_doc_it) \
 		$(html_doc_pictures_en) \
 		reference.css
 
 htmldocdir = $(datadir)/liferea/doc/html
-

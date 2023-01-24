@@ -73,10 +73,9 @@ dd {
 	padding-left: 30px;
 }
 
-section, svg, div.content * img {
+section, div.content svg, div.content * img {
 	max-width: 100%;
-	box-sizing: border-box;
-	object-fit: scale-down;
+	height: auto !important;
 }
 
 figure, iframe {
@@ -125,23 +124,26 @@ table.itemhead, table.feedhead {
 	background-color: #GTK-COLOR-MID;
 }
 
-table.itemhead * td {
-	padding: 2px;
-	padding-top: 4px;
-}
-
 table.itemhead * a.itemhead {
 	text-decoration:none;
 	color:#GTK-COLOR-TEXT;
 	font-weight:bold;
 }
 
-td.headleft {
-	text-align:right;
+table.itemhead * td {
+	padding-top: 4px;
 }
 
-td.headright {
+td.head_favicon {
+	width: 20px;
+	padding-left: 10px;
+	vertical-align: middle;
+}
+
+td.head_title {
 	padding:2px 5px;
+	width: 100%;
+	vertical-align: middle;
 }
 
 table.headmeta {
@@ -162,37 +164,6 @@ table.headmeta td {
 	display:none;
 }
 
-.itemmenu {
-	margin:0;
-	padding:0;
-}
-
-.itemmenu a {
-	text-decoration:none;
-	color:#GTK-COLOR-TEXT;
-}
-
-.itemmenu a:hover {
-
-}
-
-.itemmenu * span {
-	font-size:1em;
-	font-family:sans-serif;
-	padding:0;
-	margin:0;
-	position:relative;
-	top:-3px;
-}
-
-.itemmenu * img {
-	padding:0;
-	margin:0;
-	height:16px;
-	position:relative;
-	top:1px;
-}
-
 .author, .categories, .source {
         padding:0;
 	margin-left:0;
@@ -205,7 +176,7 @@ table.headmeta td {
 	padding-right:5px;
 }
 
-div.content {
+div.content, div.item_comments {
 	padding:0px 6px 0px 12px;
 }
 
@@ -237,48 +208,33 @@ a.favicon img {
 	padding:0;
 }
 
-/* style for the HTTP error box at the beginning
+/* style for the feed fetch error box at the beginning
    of the feed description and for item comment feeds */
-#errors, #commentFeedError {
-	width:100%;
+#errors {
 	border:0;
 	border-bottom:1px solid black;
-	margin:0;
+	margin:12px 24px;
+	padding:12px;
 	background:#ffa;
 	color:black;
+	border:1px solid #GTK-COLOR-DARK;
 }
 
-#commentFeedError {
-	border:1px solid black;
+#errors ul {
+	list-style-type: none;
+	padding-inline-start: 15px;
 }
 
-#parseError, #filterError, #updateError {
-	padding:2px;
-	padding-left:5px;
-	padding-right:5px;
+#errors * li {
+	padding:1px;
 }
 
-div.xmlparseroutput {
-	margin:10px 0px 10px 15px;
+pre.errorOutput {
+	margin:10px 15px;
 	padding:5px;
 	border:2px solid #GTK-COLOR-DARK;
 	background:#GTK-COLOR-LIGHT;
-}
-
-span.details, span.detaillink {
-	visibility:hidden;
-	display:none;
-}
-
-span.details {
-	padding:5px;
-	margin:15px;
-}
-
-span.showmore {
-	text-decoration:underline;
-	color:blue;
-	cursor:pointer;
+	overflow:auto;
 }
 
 del {
@@ -290,12 +246,6 @@ ins {
 }
 
 /* namespace specific styles */
-div.blogchanneltitle {
-	padding-left:10px;
-	padding-right:10px;
-	background-color:#GTK-COLOR-DARK;
-	color:#GTK-COLOR-TEXT;
-}
 
 .slash {
 	background:#60A080;
@@ -320,4 +270,37 @@ div.photoheader {
 	padding-right:10px;
 	background-color:#GTK-COLOR-DARK;
 	color:#GTK-COLOR-TEXT;
+}
+
+.video-embed {
+	position: relative;
+	max-width: 700px;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.video-embed .thumb {
+	max-width: 700px;
+	width: 100%;
+}
+
+.video-embed .play-btn {
+	position: absolute;
+	max-width: 700px;
+	width: 100px;
+	height: 100px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.video-embed .play-btn svg {
+	transition: all .3s ease;
+	fill: #fff;
+}
+
+.video-embed .play-btn:hover svg,
+.video-embed .play-btn:focus svg {
+	cursor: pointer;
+	fill: #ddd;
 }

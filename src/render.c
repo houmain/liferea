@@ -1,7 +1,7 @@
 /**
  * @file render.c  generic GTK theme and XSLT rendering handling
  *
- * Copyright (C) 2006-2018 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2006-2022 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include <locale.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
 
 #include "conf.h"
 #include "common.h"
@@ -39,7 +40,6 @@
 #include "itemset.h"
 #include "render.h"
 #include "xml.h"
-#include "ui/liferea_htmlview.h"
 
 /* Liferea provides special screens and the item and the feed displays
    using self-generated HTML. To separate code and layout and to easily
@@ -118,7 +118,7 @@ render_load_stylesheet (const gchar *xsltName)
 	/* or load and translate it... */
 
 	/* 1. load localization stylesheet */
-	i18n_filter = xsltParseStylesheetFile (PACKAGE_DATA_DIR G_DIR_SEPARATOR_S PACKAGE G_DIR_SEPARATOR_S "xslt" G_DIR_SEPARATOR_S "i18n-filter.xslt");
+	i18n_filter = xsltParseStylesheetFile ((const xmlChar *)PACKAGE_DATA_DIR G_DIR_SEPARATOR_S PACKAGE G_DIR_SEPARATOR_S "xslt" G_DIR_SEPARATOR_S "i18n-filter.xslt");
 	if (!i18n_filter) {
 		g_warning ("fatal: could not load localization stylesheet!");
 		return NULL;
@@ -154,6 +154,7 @@ render_load_stylesheet (const gchar *xsltName)
 
 /** cached CSS definitions */
 static GString	*css = NULL;
+static GString	*userCss = NULL;
 
 /** widget background theme colors as 8bit HTML RGB code */
 typedef struct themeColor {
@@ -162,7 +163,6 @@ typedef struct themeColor {
 } *themeColorPtr;
 
 static GSList *themeColors = NULL;
-static gboolean darkTheme = FALSE;
 
 /* Determining of theme colors, to be inserted in CSS */
 static themeColorPtr
@@ -181,6 +181,13 @@ render_calculate_theme_color (const gchar *name, GdkColor themeColor)
 	debug2 (DEBUG_HTML, "theme color \"%s\" is %s", tc->name, tc->value);
 
 	return tc;
+}
+
+static void
+render_theme_color_free (themeColorPtr tc)
+{
+	g_free (tc->value);
+	g_free (tc);
 }
 
 static gint
@@ -211,12 +218,24 @@ render_init_theme_colors (GtkWidget *widget)
 	GtkStyleContext	*sctxt;
 	GdkColor	color;
 	GdkRGBA		rgba;
-	gint		textAvg, bgAvg;
+
+	/* Clear cached previous stylesheet */
+	if (css) {
+		g_string_free (css, FALSE);
+		css = NULL;
+	}
+	if (userCss) {
+		g_string_free (userCss, FALSE);
+		userCss = NULL;
+	}
+	if (themeColors) {
+		g_slist_free_full (themeColors, (GDestroyNotify)render_theme_color_free);
+		themeColors = NULL;
+	}
 
 	style = gtk_widget_get_style (widget);
 	sctxt = gtk_widget_get_style_context (widget);
 
-	g_assert (NULL == themeColors);
 	themeColors = g_slist_append (themeColors, render_calculate_theme_color ("GTK-COLOR-FG",    style->fg[GTK_STATE_NORMAL]));
 	themeColors = g_slist_append (themeColors, render_calculate_theme_color ("GTK-COLOR-BG",    style->bg[GTK_STATE_NORMAL]));
 	themeColors = g_slist_append (themeColors, render_calculate_theme_color ("GTK-COLOR-LIGHT", style->light[GTK_STATE_NORMAL]));
@@ -243,24 +262,9 @@ render_init_theme_colors (GtkWidget *widget)
 	rgba_to_color (&color, &rgba);
 	themeColors = g_slist_append (themeColors, render_calculate_theme_color ("GTK-COLOR-VISITED-LINK", color));
 
-	/* As there doesn't seem to be a safe way to determine wether we have a
-	   dark GTK theme, let's guess it from the foreground vs. background
-	   color average */
-
-	textAvg = style->text[GTK_STATE_NORMAL].red / 256 +
-	        style->text[GTK_STATE_NORMAL].green / 256 +
-	        style->text[GTK_STATE_NORMAL].blue / 256;
-
-	bgAvg = style->bg[GTK_STATE_NORMAL].red / 256 +
-	        style->bg[GTK_STATE_NORMAL].green / 256 +
-	        style->bg[GTK_STATE_NORMAL].blue / 256;
-
-	if (textAvg > bgAvg) {
+	if (conf_get_dark_theme()) {
 		debug0 (DEBUG_HTML, "Dark GTK theme detected.");
-		darkTheme = TRUE;
-	}
 
-	if (darkTheme) {
 		themeColors = g_slist_append (themeColors, render_calculate_theme_color ("FEEDLIST_UNREAD_BG", style->text[GTK_STATE_NORMAL]));
 		/* Try nice foreground with 'fg' color (note: distance 50 is enough because it should be non-intrusive) */
 		if (render_get_rgb_distance (&style->text[GTK_STATE_NORMAL], &style->fg[GTK_STATE_NORMAL]) > 50)
@@ -268,6 +272,8 @@ render_init_theme_colors (GtkWidget *widget)
 		else
 			themeColors = g_slist_append (themeColors, render_calculate_theme_color ("FEEDLIST_UNREAD_FG", style->bg[GTK_STATE_NORMAL]));
 	} else {
+		debug0 (DEBUG_HTML, "Light GTK theme detected.");
+
 		themeColors = g_slist_append (themeColors, render_calculate_theme_color ("FEEDLIST_UNREAD_FG", style->bg[GTK_STATE_NORMAL]));
 		/* Try nice foreground with 'dark' color (note: distance 50 is enough because it should be non-intrusive) */
 		if (render_get_rgb_distance (&style->dark[GTK_STATE_NORMAL], &style->bg[GTK_STATE_NORMAL]) > 50)
@@ -296,8 +302,7 @@ render_get_theme_color (const gchar *name)
 {
 	GSList	*iter;
 
-	if (!themeColors)
-		return NULL;
+	g_return_val_if_fail (themeColors != NULL, NULL);
 
 	iter = themeColors;
 	while (iter) {
@@ -310,25 +315,14 @@ render_get_theme_color (const gchar *name)
 	return NULL;
 }
 
-gboolean
-render_is_dark_theme (void)
-{
-	if (!themeColors)
-		return FALSE;
-
-	return darkTheme;
-}
-
-const gchar *
-render_get_css (gboolean externalCss)
+gchar *
+render_get_default_css (void)
 {
 	if (!css) {
 		gchar	*defaultStyleSheetFile;
-		gchar	*userStyleSheetFile;
 		gchar	*tmp;
 
-		if (!themeColors)
-			return NULL;
+		g_return_val_if_fail (themeColors != NULL, NULL);
 
 		css = g_string_new(NULL);
 
@@ -343,38 +337,34 @@ render_get_css (gboolean externalCss)
 		}
 
 		g_free(defaultStyleSheetFile);
+	}
+
+	return css->str;
+}
+
+gchar *
+render_get_user_css (void)
+{
+	if (!userCss) {
+		gchar	*userStyleSheetFile;
+		gchar	*tmp;
+
+		g_return_val_if_fail (themeColors != NULL, NULL);
+
+		userCss = g_string_new(NULL);
 
 		userStyleSheetFile = common_create_config_filename ("liferea.css");
 
 		if (g_file_get_contents(userStyleSheetFile, &tmp, NULL, NULL)) {
 			tmp = render_set_theme_colors(tmp);
-			g_string_append(css, tmp);
+			g_string_append(userCss, tmp);
 			g_free(tmp);
 		}
 
 		g_free(userStyleSheetFile);
-
-		if (externalCss) {
-			/* dump CSS to cache file and create a <style> tag to use it */
-			gchar *filename = common_create_cache_filename (NULL, "style", "css");
-			if (!g_file_set_contents(filename, css->str, -1, NULL))
-				g_warning("Cannot write temporary CSS file \"%s\"!", filename);
-
-			g_string_free(css, TRUE);
-
-			css = g_string_new("<style type=\"text/css\"> @import url(file://");
-			g_string_append(css, filename);
-			g_string_append(css, "); </style> ");
-
-			g_free(filename);
-		} else {
-			/* keep the CSS in memory to serve it as a part of each HTML output */
-			g_string_prepend(css, "<style type=\"text/css\">\n<![CDATA[\n");
-			g_string_append(css, "\n]]>\n</style>\n");
-		}
 	}
 
-	return css->str;
+	return userCss->str;
 }
 
 gchar *
@@ -392,7 +382,6 @@ render_xml (xmlDocPtr doc, const gchar *xsltName, renderParamPtr paramSet)
 	if (!paramSet)
 		paramSet = render_parameter_new ();
 	render_parameter_add (paramSet, "pixmapsDir='file://" PACKAGE_DATA_DIR G_DIR_SEPARATOR_S PACKAGE G_DIR_SEPARATOR_S "pixmaps" G_DIR_SEPARATOR_S "'");
-	render_parameter_add (paramSet, "jsDir='file://" PACKAGE_DATA_DIR G_DIR_SEPARATOR_S PACKAGE G_DIR_SEPARATOR_S "js" G_DIR_SEPARATOR_S "'");
 
 	resDoc = xsltApplyStylesheet (xslt, doc, (const gchar **)paramSet->params);
 	if (!resDoc) {
@@ -400,7 +389,18 @@ render_xml (xmlDocPtr doc, const gchar *xsltName, renderParamPtr paramSet)
 		return NULL;
 	}
 
-	/* for debugging use: xsltSaveResultToFile(stdout, resDoc, xslt); */
+	/*
+	   for XLST input debugging use:
+
+		xmlChar *buffer;
+		gint buffersize;
+		xmlDocDumpFormatMemory(doc, &buffer, &buffersize, 1);
+		printf("%s", (char *) buffer);
+
+           for XSLT output debugging use:
+
+           	xsltSaveResultToFile(stdout, resDoc, xslt);
+         */
 
 	/* save results into return string */
 	buf = xmlAllocOutputBuffer (NULL);
@@ -409,10 +409,10 @@ render_xml (xmlDocPtr doc, const gchar *xsltName, renderParamPtr paramSet)
 
 #ifdef LIBXML2_NEW_BUFFER
 	if (xmlOutputBufferGetSize (buf) > 0)
-		output = xmlCharStrdup (xmlOutputBufferGetContent (buf));
+		output = (gchar *)xmlCharStrdup ((const char *)xmlOutputBufferGetContent (buf));
 #else
 	if (xmlBufferLength (buf->buffer) > 0)
-		output = xmlCharStrdup (xmlBufferContent(buf->buffer));
+		output = (gchar *)xmlCharStrdup ((const char *)xmlBufferContent(buf->buffer));
 #endif
 
 	xmlOutputBufferClose (buf);

@@ -1,7 +1,7 @@
 /**
  * @file xml.c XML helper methods for Liferea
- * 
- * Copyright (C) 2003-2016  Lars Windolf <lars.windolf@gmx.de>
+ *
+ * Copyright (C) 2003-2020  Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006  Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -40,16 +40,17 @@ static void xml_buffer_parse_error(void *ctxt, const gchar * msg, ...);
 xmlDocPtr
 xhtml_parse (const gchar *html, gint len)
 {
-	xmlDocPtr out = NULL;
-	
+	xmlDocPtr	out = NULL;
+
 	g_assert (html != NULL);
 	g_assert (len >= 0);
-	
+
 	/* Note: NONET is not implemented so it will return an error
 	   because it doesn't know how to handle NONET. But, it might
 	   learn in the future. */
 	out = htmlReadMemory (html, len, NULL, "utf-8", HTML_PARSE_RECOVER | HTML_PARSE_NONET |
 	                      ((debug_level & DEBUG_HTML)?0:(HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING)));
+
 	return out;
 }
 
@@ -64,12 +65,12 @@ xhtml_find_body (xmlDocPtr doc)
 	if (!xpathCtxt)
 		goto error;
 
-	xpathObj = xmlXPathEvalExpression ("/html/body", xpathCtxt);
+	xpathObj = xmlXPathEvalExpression (BAD_CAST "/html/body", xpathCtxt);
 	if (!xpathObj)
 		goto error;
 	if (!xpathObj->nodesetval->nodeMax)
 		goto error;
-	
+
 	node = xpathObj->nodesetval->nodeTab[0];
  error:
 	if (xpathObj)
@@ -79,43 +80,41 @@ xhtml_find_body (xmlDocPtr doc)
 	return node;
 }
 
-gchar *
-xhtml_extract (xmlNodePtr xml, gint xhtmlMode, const gchar *defaultBase)
+xmlDocPtr
+xhtml_extract_doc (xmlNodePtr xml, gint xhtmlMode, const gchar *defaultBase)
 {
-	xmlBufferPtr	buf;
 	xmlChar         *xml_base = NULL;
-	gchar		*result = NULL;
 	xmlNs		*ns;
-	
+
 	/* Create the new document and add the div tag*/
 	xmlDocPtr newDoc = xmlNewDoc (BAD_CAST "1.0" );
 	xmlNodePtr divNode = xmlNewNode (NULL, BAD_CAST "div");
 	xmlDocSetRootElement (newDoc, divNode);
 	xmlNewNs (divNode, BAD_CAST "http://www.w3.org/1999/xhtml", NULL);
 
-	/* Set the xml:base  of the div tag */
+	/* Set the xml:base of the div tag */
 	xml_base = xmlNodeGetBase (xml->doc, xml);
 	if (xml_base) {
 		xmlNodeSetBase (divNode, xml_base );
 		xmlFree (xml_base);
 	}
 	else if (defaultBase)
-		xmlNodeSetBase (divNode, defaultBase);
-	
+		xmlNodeSetBase (divNode, BAD_CAST defaultBase);
+
 	if (xhtmlMode == 0) { /* Read escaped HTML and convert to XHTML, placing in a div tag */
 		xmlDocPtr oldDoc;
 		xmlNodePtr copiedNodes = NULL;
-		xmlChar *escapedhtml;
-		
+		gchar *escapedhtml;
+
 		/* Parse the HTML into oldDoc*/
-		escapedhtml = xmlNodeListGetString (xml->doc, xml->xmlChildrenNode, 1);
+		escapedhtml = (gchar *)xmlNodeListGetString (xml->doc, xml->xmlChildrenNode, 1);
 		if (escapedhtml) {
 			escapedhtml = g_strstrip (escapedhtml);	/* stripping whitespaces to make empty string detection easier */
 			if (*escapedhtml) {			/* never process empty content, xmlDocCopy() doesn't like it... */
 				xmlNodePtr body;
 				oldDoc = xhtml_parse (escapedhtml, strlen (escapedhtml));
 				body = xhtml_find_body (oldDoc);
-	
+
 				/* Copy namespace from original documents root node. This is
 				   to determine additional namespaces for item content. For
 				   example to handle RSS 2.0 feeds as provided by LiveJournal:
@@ -127,7 +126,7 @@ xhtml_extract (xmlNodePtr xml, gint xhtmlMode, const gchar *defaultBase)
 	        			 ...
   	        			 <description>... &lt;span class=&apos;ljuser&apos; lj:user=&apos;someone&apos; style=&apos;white-space: nowrap;&apos;&gt;&lt;a href=&apos;http://community.livejournal.com/someone/profile&apos;&gt;&lt;img src=&apos;http://stat.livejournal.com/img/community.gif&apos; alt=&apos;[info]&apos; width=&apos;16&apos; height=&apos;16&apos; style=&apos;vertical-align: bottom; border: 0; padding-right: 2px;&apos; /&gt;&lt;/a&gt;&lt;a href=&apos;http://community.livejournal.com/someone/&apos;&gt;&lt;b&gt;someone&lt;/b&gt;&lt;/a&gt;&lt;/span&gt; ...</description>
 					 ...
-				      </item> 
+				      </item>
 				      ...
 				   </channel>
 
@@ -139,7 +138,7 @@ xhtml_extract (xmlNodePtr xml, gint xhtmlMode, const gchar *defaultBase)
 					xmlNewNs (divNode, ns->href, ns->prefix);
 					ns = ns->next;
 				}
-				
+
 				if (body) {
 					/* Copy in the html tags */
 					copiedNodes = xmlDocCopyNodeList (newDoc, body->xmlChildrenNode);
@@ -148,27 +147,42 @@ xhtml_extract (xmlNodePtr xml, gint xhtmlMode, const gchar *defaultBase)
 					xmlAddChildList (divNode, copiedNodes);
 				}
 				xmlFreeDoc (oldDoc);
-				xmlFree (escapedhtml);
 			}
+			g_free (escapedhtml);
 		}
 	} else if (xhtmlMode == 1 || xhtmlMode == 2) { /* Read multiple XHTML tags and embed in div tag */
 		xmlNodePtr copiedNodes = xmlDocCopyNodeList (newDoc, xml->xmlChildrenNode);
 		xmlAddChildList (divNode, copiedNodes);
 	}
-	
+
+	return newDoc;
+}
+
+gchar *
+xhtml_extract (xmlNodePtr xml, gint xhtmlMode, const gchar *defaultBase)
+{
+	xmlBufferPtr	buf;
+	xmlDocPtr	newDoc;
+	gchar		*result = NULL;
+
+	newDoc = xhtml_extract_doc (xml, xhtmlMode, defaultBase);
+	if (!newDoc)
+		return NULL;
+
 	buf = xmlBufferCreate ();
 	xmlNodeDump (buf, newDoc, xmlDocGetRootElement (newDoc), 0, 0 );
-	
+
 	if (xmlBufferLength(buf) > 0)
-		result = xmlCharStrdup (xmlBufferContent (buf));
+		result = (gchar *)xmlCharStrdup ((gchar *)xmlBufferContent (buf));
 
 	xmlBufferFree (buf);
 	xmlFreeDoc (newDoc);
+
 	return result;
 }
 
 /*
- * Read HTML string and convert to XHTML, placing in a div tag 
+ * Read HTML string and convert to XHTML, placing in a div tag
  */
 gchar *
 xhtml_extract_from_string (const gchar *html, const gchar *defaultBase)
@@ -176,19 +190,19 @@ xhtml_extract_from_string (const gchar *html, const gchar *defaultBase)
 	xmlDocPtr doc = NULL;
 	xmlNodePtr body = NULL;
 	gchar *result;
-	
+
 	/* never process empty content, xmlDocCopy() doesn't like it... */
 	if (html != NULL && !common_str_is_empty (html)) {
 		doc = xhtml_parse (html, strlen (html));
 		body = xhtml_find_body (doc);
-		if (body == NULL) 
+		if (body == NULL)
 			body = xmlDocGetRootElement (doc);
 	}
-	
+
 	if (body != NULL)
 		result = xhtml_extract (body, 1, defaultBase);
 	else
-		result = xmlCharStrdup ("<div></div>");
+		result = g_strdup ("<div></div>");
 
 	xmlFreeDoc (doc);
 	return result;
@@ -204,53 +218,58 @@ xhtml_is_well_formed (const gchar *data)
 
 	if (!data)
 		return FALSE;
-	
+
 	errors = g_new0 (struct errorCtxt, 1);
 	errors->msg = g_string_new (NULL);
 
 	xml = g_strdup_printf ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<test>%s</test>", data);
-	
+
 	doc = xml_parse (xml, strlen (xml), errors);
 	if (doc)
 		xmlFreeDoc (doc);
-		
+
 	g_free (xml);
 	g_string_free (errors->msg, TRUE);
 	result = (0 == errors->errorCount);
 	g_free (errors);
-	
+
 	return result;
 }
 
+typedef struct regex {
+    GRegex *expr;
+    const gchar *replace;
+} *regexPtr;
+
 static GSList *dhtml_strippers = NULL;
-static GSList *unsupported_tag_strippers = NULL;
 
 static void
-xhtml_stripper_add (GSList **strippers, const gchar *pattern)
+xhtml_regex_add (GSList **regex, const gchar *pattern, const gchar *replace)
 {
 	GError *err = NULL;
-	GRegex *expr;
-	
-	expr = g_regex_new (pattern, G_REGEX_CASELESS | G_REGEX_UNGREEDY | G_REGEX_DOTALL | G_REGEX_OPTIMIZE, 0, &err);
+        regexPtr expr = g_new0 (struct regex, 1);
+
+	expr->expr = g_regex_new (pattern, G_REGEX_CASELESS | G_REGEX_UNGREEDY | G_REGEX_DOTALL | G_REGEX_OPTIMIZE, 0, &err);
+        expr->replace = replace;
 	if (err) {
 		g_warning ("xhtml_strip_setup: %s\n", err->message);
 		g_error_free (err);
 		return;
 	}
-	*strippers = g_slist_append (*strippers, expr);
+	*regex = g_slist_append (*regex, expr);
 }
 
 static gchar *
-xhtml_strip (const gchar *html, GSList *strippers)
+xhtml_regex (const gchar *html, GSList *strippers)
 {
 	gchar *result = g_strdup (html);
 	GSList *iter = strippers;
-	
+
 	while (iter) {
 		GError *err = NULL;
-		GRegex *expr = (GRegex *)iter->data;
+		regexPtr expr = (regexPtr) iter->data;
 		gchar *tmp = result;
-		result = g_regex_replace (expr, tmp, -1, 0, "", 0, &err);
+		result = g_regex_replace_literal (expr->expr, tmp, -1, 0, expr->replace, 0, &err);
 		if (err) {
 			g_warning ("xhtml_strip: %s\n", err->message);
 			g_error_free (err);
@@ -267,25 +286,22 @@ gchar *
 xhtml_strip_dhtml (const gchar *html)
 {
 	if (!dhtml_strippers) {
-		xhtml_stripper_add (&dhtml_strippers, "\\s+onload='[^']+'");
-		xhtml_stripper_add (&dhtml_strippers, "\\s+onload=\"[^\"]+\"");
-		xhtml_stripper_add (&dhtml_strippers, "<\\s*script\\s*>.*</\\s*script\\s*>");
-		xhtml_stripper_add (&dhtml_strippers, "<\\s*meta\\s*>.*</\\s*meta\\s*>");
-		xhtml_stripper_add (&dhtml_strippers, "<\\s*iframe[^>]*\\s*>.*</\\s*iframe\\s*>");
-	}
-	
-	return xhtml_strip (html, dhtml_strippers);
-}
+		// Drop attribute
+		xhtml_regex_add (&dhtml_strippers, "\\s+onload='[^']+'", "");
+		xhtml_regex_add (&dhtml_strippers, "\\s+onload=\"[^\"]+\"", "");
 
-gchar *
-xhtml_strip_unsupported_tags (const gchar *html)
-{
-	if (!unsupported_tag_strippers) {
-		xhtml_stripper_add(&unsupported_tag_strippers, "<\\s*/?wbr[^>]*/?\\s*>");
-		xhtml_stripper_add(&unsupported_tag_strippers, "<\\s*/?body[^>]*/?\\s*>");
+		// Drop tags including content
+		xhtml_regex_add (&dhtml_strippers, "<\\s*meta[^>]*>.*</\\s*meta\\s*>", "");
+		xhtml_regex_add (&dhtml_strippers, "<\\s*script[^>]*>.*</\\s*script\\s*>", "");
+		xhtml_regex_add (&dhtml_strippers, "<\\s*iframe[^>]*>.*</\\s*iframe\\s*>", "");
+		xhtml_regex_add (&dhtml_strippers, "<\\s*(meta|script|iframe)[^>]*/>", "");
+
+		// Drops tags but not their content
+		xhtml_regex_add (&dhtml_strippers, "<\\s*/?wbr[^>]*/?\\s*>", "");
+		xhtml_regex_add (&dhtml_strippers, "<\\s*/?body[^>]*/?\\s*>", "");
 	}
-	
-	return xhtml_strip(html, unsupported_tag_strippers);
+
+	return xhtml_regex (html, dhtml_strippers);
 }
 
 typedef struct {
@@ -299,7 +315,7 @@ unhtmlizeHandleCharacters (void *user_data, const xmlChar *string, int length)
 	result_buffer	*buffer = (result_buffer *)user_data;
 	gint 		old_length;
 
-	old_length = buffer->length;	
+	old_length = buffer->length;
 	buffer->length += length;
 	buffer->data = g_renew (gchar, buffer->data, buffer->length + 1);
         strncpy (buffer->data + old_length, (gchar *)string, length);
@@ -312,7 +328,7 @@ _unhtmlize (gchar *string, result_buffer *buffer)
 {
 	htmlParserCtxtPtr	ctxt;
 	htmlSAXHandlerPtr	sax_p;
-	
+
 	sax_p = g_new0 (htmlSAXHandler, 1);
  	sax_p->characters = unhtmlizeHandleCharacters;
 	ctxt = htmlCreatePushParserCtxt (sax_p, buffer, string, strlen (string), "", XML_CHAR_ENCODING_UTF8);
@@ -326,7 +342,7 @@ _unxmlize (gchar *string, result_buffer *buffer)
 {
 	xmlParserCtxtPtr	ctxt;
 	xmlSAXHandler		*sax_p;
-	
+
 	sax_p = g_new0 (xmlSAXHandler, 1);
  	sax_p->characters = unhtmlizeHandleCharacters;
 	ctxt = xmlCreatePushParserCtxt (sax_p, buffer, string, strlen (string), "");
@@ -335,19 +351,19 @@ _unxmlize (gchar *string, result_buffer *buffer)
  	g_free(sax_p);
 }
 
-/* Converts a UTF-8 strings containing any XML stuff to 
+/* Converts a UTF-8 strings containing any XML stuff to
    a string without any entities or tags containing all
-   text nodes of the given HTML string. The original 
+   text nodes of the given HTML string. The original
    string will be freed. */
 static gchar *
 unmarkupize (gchar *string, void(*parse)(gchar *string, result_buffer *buffer))
 {
 	gchar			*result;
 	result_buffer		*buffer;
-	
+
 	if (!string)
 		return NULL;
-		
+
 	/* only do something if there are any entities or tags */
 	if(NULL == (strpbrk (string, "&<>")))
 		return string;
@@ -356,7 +372,7 @@ unmarkupize (gchar *string, void(*parse)(gchar *string, result_buffer *buffer))
 	parse (string, buffer);
 	result = buffer->data;
 	g_free (buffer);
- 
+
  	if (result == NULL || !g_utf8_strlen (result, -1)) {
  		/* Something went wrong in the parsing.
  		 * Use original string instead */
@@ -374,13 +390,13 @@ gchar * unxmlize (gchar * string) { return unmarkupize (string, _unxmlize); }
 #define MAX_PARSE_ERROR_LINES	10
 
 /**
- * Error buffering function to be registered by 
+ * Error buffering function to be registered by
  * xmlSetGenericErrorFunc(). This function is called on
  * each libxml2 error output and collects all output as
- * HTML in the buffer ctxt points to. 
+ * HTML in the buffer ctxt points to.
  *
  * @param	ctxt	error context
- * @param	msg	printf like format string 
+ * @param	msg	printf like format string
  */
 static void
 xml_buffer_parse_error (void *ctxt, const gchar * msg, ...)
@@ -389,25 +405,25 @@ xml_buffer_parse_error (void *ctxt, const gchar * msg, ...)
 	errorCtxtPtr	errors = (errorCtxtPtr)ctxt;
 	gchar		*newmsg;
 	gchar		*tmp;
-	
+
 	if (MAX_PARSE_ERROR_LINES > errors->errorCount++) {
 		va_start (params, msg);
 		newmsg = g_strdup_vprintf (msg, params);
 		va_end (params);
-	
+
 		/* Do never encode any invalid characters from error messages */
 		if (g_utf8_validate (newmsg, -1, NULL)) {
 			tmp = g_markup_escape_text (newmsg, -1);
 			g_free (newmsg);
 			newmsg = tmp;
-	
-			g_string_append_printf(errors->msg, "<pre>%s</pre>\n", newmsg);
+
+			g_string_append_printf(errors->msg, "%s\n", newmsg);
 		}
 		g_free(newmsg);
 	}
-	
+
 	if (MAX_PARSE_ERROR_LINES == errors->errorCount)
-		g_string_append_printf (errors->msg, "<br />%s", _("[There were more errors. Output was truncated!]"));
+		g_string_append (errors->msg, _("[There were more errors. Output was truncated!]"));
 }
 
 static xmlDocPtr entities = NULL;
@@ -417,26 +433,26 @@ xml_process_entities (void *ctxt, const xmlChar *name)
 {
 	xmlEntityPtr	entity, found;
 	xmlChar		*tmp;
-	
+
 	entity = xmlGetPredefinedEntity (name);
 	if (!entity) {
 		if(!entities) {
 			/* loading HTML entities from external DTD file */
 			entities = xmlNewDoc (BAD_CAST "1.0");
-			xmlCreateIntSubset (entities, BAD_CAST "HTML entities", NULL, PACKAGE_DATA_DIR "/" PACKAGE "/dtd/html.ent");
+			xmlCreateIntSubset (entities, BAD_CAST "HTML entities", NULL, BAD_CAST PACKAGE_DATA_DIR "/" PACKAGE "/dtd/html.ent");
 			entities->extSubset = xmlParseDTD (entities->intSubset->ExternalID, entities->intSubset->SystemID);
 		}
-		
+
 		if (NULL != (found = xmlGetDocEntity (entities, name))) {
 			/* returning as faked predefined entity... */
 			tmp = xmlStrdup (found->content);
-			tmp = unhtmlize (tmp);	/* arghh ... slow... */
+			tmp = BAD_CAST unhtmlize ((gchar *)tmp);	/* arghh ... slow... */
 			entity = g_new0 (xmlEntity, 1);
 			entity->type = XML_ENTITY_DECL;
 			entity->name = name;
 			entity->orig = NULL;
 			entity->content = tmp;
-			entity->length = g_utf8_strlen (tmp, -1);
+			entity->length = g_utf8_strlen ((gchar *)tmp, -1);
 			entity->etype = XML_INTERNAL_PREDEFINED_ENTITY;
 		}
 	}
@@ -446,23 +462,23 @@ xml_process_entities (void *ctxt, const xmlChar *name)
 	return entity;
 }
 
-xmlNodePtr 
+xmlNodePtr
 xpath_find (xmlNodePtr node, const gchar *expr)
 {
 	xmlNodePtr	result = NULL;
-	
+
 	if (node && node->doc) {
 		xmlXPathContextPtr xpathCtxt = NULL;
 		xmlXPathObjectPtr xpathObj = NULL;
-		
+
 		if (NULL != (xpathCtxt = xmlXPathNewContext (node->doc))) {
 			xpathCtxt->node = node;
-			xpathObj = xmlXPathEval (expr, xpathCtxt);
+			xpathObj = xmlXPathEval (BAD_CAST expr, xpathCtxt);
 		}
-		
+
 		if (xpathObj && !xmlXPathNodeSetIsEmpty (xpathObj->nodesetval))
 			result = xpathObj->nodesetval->nodeTab[0];
-		
+
 		if (xpathObj)
 			xmlXPathFreeObject(xpathObj);
 		if (xpathCtxt)
@@ -474,22 +490,22 @@ xpath_find (xmlNodePtr node, const gchar *expr)
 gboolean
 xpath_foreach_match (xmlNodePtr node, const gchar *expr, xpathMatchFunc func, gpointer user_data)
 {
-	
+
 	if (node && node->doc) {
 		xmlXPathContextPtr xpathCtxt = NULL;
 		xmlXPathObjectPtr xpathObj = NULL;
-		
+
 		if (NULL != (xpathCtxt = xmlXPathNewContext (node->doc))) {
 			xpathCtxt->node = node;
-			xpathObj = xmlXPathEval (expr, xpathCtxt);
+			xpathObj = xmlXPathEval (BAD_CAST expr, xpathCtxt);
 		}
-			
+
 		if (xpathObj && xpathObj->nodesetval && xpathObj->nodesetval->nodeMax) {
 			int	i;
 			for (i = 0; i < xpathObj->nodesetval->nodeNr; i++)
 				(*func) (xpathObj->nodesetval->nodeTab[i], user_data);
 		}
-		
+
 		if (xpathObj)
 			xmlXPathFreeObject (xpathObj);
 		if (xpathCtxt)
@@ -502,13 +518,13 @@ xpath_foreach_match (xmlNodePtr node, const gchar *expr, xpathMatchFunc func, gp
 gchar *
 xml_get_attribute (xmlNodePtr node, const gchar *name)
 {
-	return xmlGetProp (node, BAD_CAST name);
+	return (gchar *)xmlGetProp (node, BAD_CAST name);
 }
 
 gchar *
 xml_get_ns_attribute (xmlNodePtr node, const gchar *name, const gchar *namespace)
 {
-	return xmlGetNsProp (node, BAD_CAST name, BAD_CAST namespace);
+	return (gchar *)xmlGetNsProp (node, BAD_CAST name, BAD_CAST namespace);
 }
 
 static void
@@ -516,7 +532,6 @@ liferea_xml_errorSAXFunc (void * ctx, const char * msg,...)
 {
 	va_list valist;
 	gchar *parser_error = NULL;
-
 	va_start(valist,msg);
 	parser_error = g_strdup_vprintf (msg, valist);
 	va_end(valist);
@@ -524,31 +539,30 @@ liferea_xml_errorSAXFunc (void * ctx, const char * msg,...)
 	g_free (parser_error);
 }
 
-
 xmlDocPtr
-xml_parse (gchar *data, size_t length, errorCtxtPtr errCtx)
+xml_parse (const gchar *data, size_t length, errorCtxtPtr errCtx)
 {
 	xmlParserCtxtPtr	ctxt;
 	xmlDocPtr		doc;
-	
+
 	g_assert (NULL != data);
 
 	ctxt = xmlNewParserCtxt ();
 	ctxt->sax->getEntity = xml_process_entities;
 	ctxt->sax->error = liferea_xml_errorSAXFunc;
-	
+
 	if (errCtx)
 		xmlSetGenericErrorFunc (errCtx, (xmlGenericErrorFunc)xml_buffer_parse_error);
-	
+
 	doc = xmlSAXParseMemory (ctxt->sax, data, length, 0);
-	
+
 	/* This seems to reset the errorfunc to its default, so that the
 	   GtkHTML2 module is not unhappy because it also tries to call the
 	   errorfunc on occasion. */
 	xmlSetGenericErrorFunc (NULL, NULL);
-	
+
 	xmlFreeParserCtxt (ctxt);
-	
+
 	return doc;
 }
 
@@ -556,12 +570,14 @@ xmlDocPtr
 xml_parse_feed (feedParserCtxtPtr fpc)
 {
 	errorCtxtPtr	errors;
-		
+	xmlDocPtr	doc = NULL;
+
 	g_assert (NULL != fpc->data);
 	g_assert (NULL != fpc->feed);
-	
+	g_assert (NULL != fpc->feed->parseErrors);
+
 	fpc->feed->valid = FALSE;
-	
+
 	/* we don't like no data */
 	if (0 == fpc->dataLength) {
 		debug1 (DEBUG_PARSING, "xml_parse_feed(): empty input while parsing \"%s\"!", fpc->subscription->node->title);
@@ -571,9 +587,9 @@ xml_parse_feed (feedParserCtxtPtr fpc)
 
 	errors = g_new0 (struct errorCtxt, 1);
 	errors->msg = fpc->feed->parseErrors;
-	
-	fpc->doc = xml_parse (fpc->data, (size_t)fpc->dataLength, errors);
-	if (!fpc->doc) {
+
+	doc = xml_parse (fpc->data, (size_t)fpc->dataLength, errors);
+	if (!doc) {
 		debug1 (DEBUG_PARSING, "xml_parse_feed(): could not parse feed \"%s\"!", fpc->subscription->node->title);
 		g_string_prepend (fpc->feed->parseErrors, _("XML Parser: Could not parse document:\n"));
 		g_string_append (fpc->feed->parseErrors, "\n");
@@ -581,8 +597,8 @@ xml_parse_feed (feedParserCtxtPtr fpc)
 
 	fpc->feed->valid = !(errors->errorCount > 0);
 	g_free (errors);
-	
-	return fpc->doc;
+
+	return doc;
 }
 
 void
@@ -593,4 +609,17 @@ xml_init (void)
 	xmlMemSetup (g_free, g_malloc, g_realloc, g_strdup);
 	/* has to be called for multithreaded programs */
 	xmlInitParser ();
+}
+
+void
+xml_deinit (void)
+{
+	GSList *iter = dhtml_strippers;
+
+	while (iter) {
+		g_regex_unref ((((regexPtr)iter->data))->expr);
+		iter = g_slist_next (iter);
+	}
+	g_slist_free_full (dhtml_strippers, g_free);
+	dhtml_strippers = NULL;
 }

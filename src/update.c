@@ -1,7 +1,7 @@
 /**
  * @file update.c  generic update request and state processing
  *
- * Copyright (C) 2003-2014 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2021 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  * Copyright (C) 2009 Adrian Bunk <bunk@users.sourceforge.net>
  *
@@ -27,8 +27,6 @@
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
-
-#include <libpeas/peas-extension-set.h>
 
 #include <unistd.h>
 #include <stdio.h>
@@ -147,6 +145,29 @@ update_state_free (updateStatePtr updateState)
 	g_free (updateState);
 }
 
+/* update options */
+
+updateOptionsPtr
+update_options_copy (updateOptionsPtr options)
+{
+	updateOptionsPtr newOptions;
+	newOptions = g_new0 (struct updateOptions, 1);
+	newOptions->username = g_strdup (options->username);
+	newOptions->password = g_strdup (options->password);
+	newOptions->dontUseProxy = options->dontUseProxy;
+	return newOptions;
+}
+void
+update_options_free (updateOptionsPtr options)
+{
+	if (!options)
+		return;
+
+	g_free (options->username);
+	g_free (options->password);
+	g_free (options);
+}
+
 /* update request object */
 
 G_DEFINE_TYPE (UpdateRequest, update_request, G_TYPE_OBJECT);
@@ -162,6 +183,8 @@ update_request_finalize (GObject *obj)
 	g_free (request->postdata);
 	g_free (request->source);
 	g_free (request->filtercmd);
+
+	G_OBJECT_CLASS (update_request_parent_class)->finalize (obj);
 }
 
 static void
@@ -177,20 +200,35 @@ update_request_init (UpdateRequest *request)
 }
 
 UpdateRequest *
-update_request_new (void)
+update_request_new (const gchar *source, updateStatePtr state, updateOptionsPtr options)
 {
-	return UPDATE_REQUEST (g_object_new (UPDATE_REQUEST_TYPE, NULL));
+	UpdateRequest *request = UPDATE_REQUEST (g_object_new (UPDATE_REQUEST_TYPE, NULL));
+
+	request->source = g_strdup (source);
+
+	if (state)
+		request->updateState = update_state_copy (state);
+	else
+		request->updateState = update_state_new ();
+
+
+	if (options)
+		request->options = update_options_copy (options);
+	else
+		request->options = g_new0 (struct updateOptions, 1);
+
+	return request;
 }
 
 void
-update_request_set_source (updateRequestPtr request, const gchar* source)
+update_request_set_source(UpdateRequest *request, const gchar* source)
 {
 	g_free (request->source);
 	request->source = g_strdup (source);
 }
 
 void
-update_request_set_auth_value (updateRequestPtr request, const gchar* authValue)
+update_request_set_auth_value (UpdateRequest *request, const gchar* authValue)
 {
 	g_free (request->authValue);
 	request->authValue = g_strdup (authValue);
@@ -224,35 +262,11 @@ update_result_free (updateResultPtr result)
 	g_free (result);
 }
 
-updateOptionsPtr
-update_options_copy (updateOptionsPtr options)
-{
-	updateOptionsPtr newOptions;
-
-	newOptions = g_new0 (struct updateOptions, 1);
-	newOptions->username = g_strdup (options->username);
-	newOptions->password = g_strdup (options->password);
-	newOptions->dontUseProxy = options->dontUseProxy;
-
-	return newOptions;
-}
-
-void
-update_options_free (updateOptionsPtr options)
-{
-	if (!options)
-		return;
-
-	g_free (options->username);
-	g_free (options->password);
-	g_free (options);
-}
-
 /* update job handling */
 
 static updateJobPtr
 update_job_new (gpointer owner,
-                updateRequestPtr request,
+                UpdateRequest *request,
 		update_result_cb callback,
 		gpointer user_data,
 		updateFlags flags)
@@ -261,12 +275,15 @@ update_job_new (gpointer owner,
 
 	job = g_new0 (struct updateJob, 1);
 	job->owner = owner;
-	job->request = UPDATE_REQUEST (g_object_ref (request));
+	job->request = UPDATE_REQUEST (request);
 	job->result = update_result_new ();
 	job->callback = callback;
 	job->user_data = user_data;
 	job->flags = flags;
 	job->state = REQUEST_STATE_INITIALIZED;
+
+	job->cmd.fd = -1;
+	job->cmd.pid = 0;
 
 	return job;
 }
@@ -275,6 +292,31 @@ gint
 update_job_get_state (updateJobPtr job)
 {
 	return job->state;
+}
+
+static void
+update_job_show_count_foreach_func (gpointer data, gpointer user_data)
+{
+	updateJobPtr	job = (updateJobPtr)data;
+	guint		*count = (guint *)user_data;
+
+	// Count all subscription jobs (ignore HTML5 and favicon requests)
+	if (!(job->flags & FEED_REQ_NO_FEED))
+		(*count)++;
+}
+
+static guint maxcount = 0;
+
+void
+update_jobs_get_count (guint *count, guint *max)
+{
+	*count = 0;
+	g_slist_foreach (jobs, update_job_show_count_foreach_func, count);
+
+	if (*count > maxcount)
+		maxcount = *count;
+
+	*max = maxcount;
 }
 
 static void
@@ -287,12 +329,29 @@ update_job_free (updateJobPtr job)
 
 	g_object_unref (job->request);
 	update_result_free (job->result);
+
+	if (job->cmd.fd >= 0) {
+		debug1 (DEBUG_UPDATE, "Found an open cmd.fd %d when freeing!", job->cmd.fd);
+		close (job->cmd.fd);
+	}
+	if (job->cmd.timeout_id > 0) {
+		g_source_remove (job->cmd.timeout_id);
+	}
+	if (job->cmd.io_watch_id > 0) {
+		g_source_remove (job->cmd.io_watch_id);
+	}
+	if (job->cmd.child_watch_id > 0) {
+		g_source_remove (job->cmd.child_watch_id);
+	}
+	if (job->cmd.stdout_ch) {
+		g_io_channel_unref (job->cmd.stdout_ch);
+	}
 	g_free (job);
 }
 
 /* filter idea (and some of the code) was taken from Snownews */
 static gchar *
-update_exec_filter_cmd (gchar *cmd, gchar *data, gchar **errorOutput, size_t *size)
+update_exec_filter_cmd (updateJobPtr job)
 {
 	int		fd, status;
 	gchar		*command;
@@ -300,47 +359,48 @@ update_exec_filter_cmd (gchar *cmd, gchar *data, gchar **errorOutput, size_t *si
 	char		*tmpfilename;
 	char		*out = NULL;
 	FILE		*file, *p;
+	size_t		size = 0;
 
-	*errorOutput = NULL;
 	tmpfilename = g_build_filename (tmpdir, "liferea-XXXXXX", NULL);
 
-	fd = g_mkstemp(tmpfilename);
+	fd = g_mkstemp (tmpfilename);
 
-	if(fd == -1) {
-		debug1(DEBUG_UPDATE, "Error opening temp file %s to use for filtering!", tmpfilename);
-		*errorOutput = g_strdup_printf(_("Error opening temp file %s to use for filtering!"), tmpfilename);
-		g_free(tmpfilename);
+	if (fd == -1) {
+		debug1 (DEBUG_UPDATE, "Error opening temp file %s to use for filtering!", tmpfilename);
+		job->result->filterErrors = g_strdup_printf (_("Error opening temp file %s to use for filtering!"), tmpfilename);
+		g_free (tmpfilename);
 		return NULL;
 	}
 
-	file = fdopen(fd, "w");
-	fwrite(data, strlen(data), 1, file);
-	fclose(file);
+	file = fdopen (fd, "w");
+	fwrite (job->result->data, strlen (job->result->data), 1, file);
+	fclose (file);
 
-	*size = 0;
-	command = g_strdup_printf("%s < %s", cmd, tmpfilename);
-	p = popen(command, "r");
-	g_free(command);
-	if(NULL != p) {
-		while(!feof(p) && !ferror(p)) {
+	command = g_strdup_printf("%s < %s", job->request->filtercmd, tmpfilename);
+	p = popen (command, "r");
+	if (NULL != p) {
+		while (!feof (p) && !ferror (p)) {
 			size_t len;
-			out = g_realloc(out, *size+1025);
-			len = fread(&out[*size], 1, 1024, p);
-			if(len > 0)
-				*size += len;
+			out = g_realloc (out, size + 1025);
+			len = fread (&out[size], 1, 1024, p);
+			if (len > 0)
+				size += len;
 		}
-		status = pclose(p);
-		if(!(WIFEXITED(status) && WEXITSTATUS(status) == 0)) {
-			*errorOutput = g_strdup_printf(_("%s exited with status %d"),
-			                              cmd, WEXITSTATUS(status));
-			*size = 0;
+		status = pclose (p);
+		if (!(WIFEXITED (status) && WEXITSTATUS (status) == 0)) {
+			debug2 (DEBUG_UPDATE, "%s exited with status %d!", command, WEXITSTATUS(status));
+			job->result->filterErrors = g_strdup_printf (_("%s exited with status %d"), command, WEXITSTATUS(status));
+			size = 0;
 		}
-		out[*size] = '\0';
+		if (out)
+			out[size] = '\0';
 	} else {
-		g_warning(_("Error: Could not open pipe \"%s\""), command);
-		*errorOutput = g_strdup_printf(_("Error: Could not open pipe \"%s\""), command);
+		g_warning (_("Error: Could not open pipe \"%s\""), command);
+		job->result->filterErrors = g_strdup_printf (_("Error: Could not open pipe \"%s\""), command);
 	}
+
 	/* Clean up. */
+	g_free (command);
 	unlink (tmpfilename);
 	g_free (tmpfilename);
 	return out;
@@ -364,7 +424,7 @@ update_apply_xslt (updateJobPtr job)
 		}
 
 		/* load localization stylesheet */
-		xslt = xsltParseStylesheetFile (job->request->filtercmd);
+		xslt = xsltParseStylesheetFile ((xmlChar *)job->request->filtercmd);
 		if (!xslt) {
 			g_warning ("fatal: could not load filter stylesheet \"%s\"!", job->request->filtercmd);
 			break;
@@ -384,10 +444,10 @@ update_apply_xslt (updateJobPtr job)
 
 #ifdef LIBXML2_NEW_BUFFER
 		if (xmlOutputBufferGetSize (buf) > 0)
-			output = xmlCharStrdup (xmlOutputBufferGetContent (buf));
+			output = (gchar *)xmlCharStrdup ((char *)xmlOutputBufferGetContent (buf));
 #else
 		if (xmlBufferLength (buf->buffer) > 0)
-			output = xmlCharStrdup (xmlBufferContent (buf->buffer));
+			output = (gchar *)xmlCharStrdup ((char *)xmlBufferContent (buf->buffer));
 #endif
 
 		xmlOutputBufferClose (buf);
@@ -407,57 +467,169 @@ static void
 update_apply_filter (updateJobPtr job)
 {
 	gchar	*filterResult;
-	size_t	len = 0;
 
 	g_assert (NULL == job->result->filterErrors);
 
 	/* we allow two types of filters: XSLT stylesheets and arbitrary commands */
 	if ((strlen (job->request->filtercmd) > 4) &&
-	    (0 == strcmp (".xsl", job->request->filtercmd + strlen (job->request->filtercmd) - 4))) {
+	    (0 == strcmp (".xsl", job->request->filtercmd + strlen (job->request->filtercmd) - 4)))
 		filterResult = update_apply_xslt (job);
-		len = strlen (filterResult);
-	} else {
-		filterResult = update_exec_filter_cmd (job->request->filtercmd, job->result->data, &(job->result->filterErrors), &len);
-	}
+	else
+		filterResult = update_exec_filter_cmd (job);
 
 	if (filterResult) {
 		g_free (job->result->data);
 		job->result->data = filterResult;
-		job->result->size = len;
+		job->result->size = strlen(filterResult);
 	}
+}
+
+static void
+update_exec_cmd_cb_child_watch (GPid pid, gint status, gpointer user_data)
+{
+	updateJobPtr	job = (updateJobPtr) user_data;
+	debug1 (DEBUG_UPDATE, "Child process %d terminated", job->cmd.pid);
+
+	job->cmd.pid = 0;
+	if (WIFEXITED (status) && WEXITSTATUS (status) == 0) {
+		job->result->httpstatus = 200;
+	} else if (job->result->httpstatus == 0) {
+		/* If there is no more specific error code. */
+		job->result->httpstatus = 500;  /* Internal server error. */
+	}
+
+	job->cmd.child_watch_id = 0;	/* Caller will remove source. */
+	if (job->cmd.timeout_id > 0) {
+		g_source_remove (job->cmd.timeout_id);
+		job->cmd.timeout_id = 0;
+	}
+	if (job->cmd.io_watch_id > 0) {
+		g_source_remove (job->cmd.io_watch_id);
+		job->cmd.io_watch_id = 0;
+	}
+	update_process_finished_job (job);
+}
+
+
+static gboolean
+update_exec_cmd_cb_out_watch (GIOChannel *source, GIOCondition condition, gpointer user_data)
+{
+	updateJobPtr	job = (updateJobPtr) user_data;
+	GError		*err = NULL;
+	gboolean	ret = TRUE;	/* Do not remove event source yet. */
+	GIOStatus	st;
+	gsize		nread;
+
+	if (condition == G_IO_HUP) {
+		debug1 (DEBUG_UPDATE, "Pipe closed, child process %d is terminating", job->cmd.pid);
+		ret = FALSE;
+
+	} else if (condition == G_IO_IN) {
+		while (TRUE) {
+			job->result->data = g_realloc (job->result->data, job->result->size + 1025);
+
+			nread = 0;
+			st = g_io_channel_read_chars (source,
+				job->result->data + job->result->size,
+				1024, &nread, &err);
+			job->result->size += nread;
+			job->result->data[job->result->size] = 0;
+
+			if (err) {
+				debug2 (DEBUG_UPDATE, "Error %d when reading from child %d", err->code, job->cmd.pid);
+				g_error_free (err);
+				err = NULL;
+				ret = FALSE;	/* remove event */
+			}
+
+			if (nread == 0) {
+				/* Finished reading */
+				break;
+			} else if (st == G_IO_STATUS_AGAIN) {
+				/* just try again */
+			} else if (st == G_IO_STATUS_EOF) {
+				/* Pipe closed */
+				ret = FALSE;
+				break;
+			} else if (st == G_IO_STATUS_ERROR) {
+				debug1 (DEBUG_UPDATE, "Got a G_IO_STATUS_ERROR from child %d", job->cmd.pid);
+				ret = FALSE;
+				break;
+			}
+		}
+
+	} else {
+		debug2 (DEBUG_UPDATE, "Unexpected condition %d for child process %d", condition, job->cmd.pid);
+		ret = FALSE;
+	}
+
+	if (ret == FALSE) {
+		close (job->cmd.fd);
+		job->cmd.fd = -1;
+		job->cmd.io_watch_id = 0;	/* Caller will remove source. */
+	}
+
+	return ret;
+}
+
+
+static gboolean
+update_exec_cmd_cb_timeout (gpointer user_data)
+{
+	updateJobPtr	job = (updateJobPtr) user_data;
+	debug1 (DEBUG_UPDATE, "Child process %d timed out, killing.", job->cmd.pid);
+
+	/* Kill child. Result will still be processed by update_exec_cmd_cb_child_watch */
+	kill((pid_t) job->cmd.pid, SIGKILL);
+	job->cmd.timeout_id = 0;
+	job->result->httpstatus = 504;	/* Gateway timeout */
+	return FALSE;	/* Remove timeout source */
+}
+
+static int
+get_exec_timeout_ms(void)
+{
+	const gchar	*val;
+	int	i;
+	if ((val = g_getenv("LIFEREA_FEED_CMD_TIMEOUT")) != NULL) {
+		if ((i = atoi(val)) > 0) {
+			return 1000*i;
+		}
+	}
+	return 60000; /* Default timeout */
 }
 
 static void
 update_exec_cmd (updateJobPtr job)
 {
-	FILE	*f;
-	int	status;
-	size_t	len;
+	gboolean	ret;
+	gchar		*cmd = (job->request->source) + 1;
 
-	/* if the first char is a | we have a pipe else a file */
-	debug1 (DEBUG_UPDATE, "executing command \"%s\"...", (job->request->source) + 1);
-	f = popen ((job->request->source) + 1, "r");
-	if (f) {
-		while (!feof (f) && !ferror (f)) {
-			job->result->data = g_realloc (job->result->data, job->result->size + 1025);
-			len = fread (&job->result->data[job->result->size], 1, 1024, f);
-			if (len > 0)
-				job->result->size += len;
-		}
-		status = pclose (f);
-		if (WIFEXITED (status) && WEXITSTATUS (status) == 0)
-			job->result->httpstatus = 200;
-		else
-			job->result->httpstatus = 404;	/* FIXME: maybe setting request->returncode would be better */
+	/* Previous versions ran through popen() and a lot of users may be depending
+	 * on this behavior, so we run through a shell and keep compatibility. */
+	gchar		*cmd_args[] = { "/bin/sh", "-c", cmd, NULL };
 
-		if (job->result->data)
-			job->result->data[job->result->size] = '\0';
-	} else {
-		liferea_shell_set_status_bar (_("Error: Could not open pipe \"%s\""), (job->request->source) + 1);
-		job->result->httpstatus = 404;	/* FIXME: maybe setting request->returncode would be better */
+	job->result->httpstatus = 0;
+	debug1 (DEBUG_UPDATE, "executing command \"%s\"...", cmd);
+	ret = g_spawn_async_with_pipes (NULL, cmd_args, NULL,
+		G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_STDERR_TO_DEV_NULL,
+		NULL, NULL, &job->cmd.pid, NULL,
+		&job->cmd.fd, NULL, NULL);
+
+	if (!ret) {
+		debug0 (DEBUG_UPDATE, "g_spawn_async_with_pipes failed");
+		liferea_shell_set_status_bar (_("Error: Could not open pipe \"%s\""), cmd);
+		job->result->httpstatus = 404; /* Not found */
+		return;
 	}
 
-	update_process_finished_job (job);
+	debug1 (DEBUG_UPDATE, "New child process launched with pid %d", job->cmd.pid);
+
+	job->cmd.child_watch_id = g_child_watch_add (job->cmd.pid, (GChildWatchFunc) update_exec_cmd_cb_child_watch, job);
+	job->cmd.stdout_ch = g_io_channel_unix_new (job->cmd.fd);
+	job->cmd.io_watch_id = g_io_add_watch (job->cmd.stdout_ch, G_IO_IN | G_IO_HUP, (GIOFunc) update_exec_cmd_cb_out_watch, job);
+
+	job->cmd.timeout_id = g_timeout_add (get_exec_timeout_ms(), (GSourceFunc) update_exec_cmd_cb_timeout, job);
 }
 
 static void
@@ -555,7 +727,7 @@ update_dequeue_job (gpointer user_data)
 
 updateJobPtr
 update_execute_request (gpointer owner,
-                        updateRequestPtr request,
+                        UpdateRequest *request,
 			update_result_cb callback,
 			gpointer user_data,
 			updateFlags flags)

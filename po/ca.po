@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: liferea 1.10-rc1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 12:24+0200\n"
+"POT-Creation-Date: 2022-10-26 01:24+0200\n"
 "PO-Revision-Date: 2013-05-21 12:31+0200\n"
 "Last-Translator: Gil Forcada <gforcada@gnome.org>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -17,63 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-
-#: ../liferea.appdata.xml.in.h:1
-#, fuzzy
-msgid "RSS feed reader"
-msgstr "Lector de canals de notícies"
-
-#: ../liferea.appdata.xml.in.h:2
-msgid ""
-"Liferea is an abbreviation for Linux Feed Reader. It is a news aggregator "
-"for online news feeds. It supports a number of different feed formats "
-"including RSS/RDF, CDF and Atom. There are many other news readers "
-"available, but these others are not available for Linux or require many "
-"extra libraries to be installed. Liferea tries to fill this gap by creating "
-"a fast, easy to use, easy to install news aggregator for GTK/GNOME."
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:3
-msgid "Distinguishing features:"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:4
-#, fuzzy
-msgid "Read articles when offline"
-msgstr "El Liferea és fora de línia"
-
-#: ../liferea.appdata.xml.in.h:5
-#, fuzzy
-msgid "Synchronizes with TheOldReader"
-msgstr "Sincronització amb els equips propers"
-
-#: ../liferea.appdata.xml.in.h:6
-#, fuzzy
-msgid "Synchronizes with TinyTinyRSS"
-msgstr "Sincronització amb els equips propers"
-
-#: ../liferea.appdata.xml.in.h:7
-#, fuzzy
-msgid "Synchronizes with InoReader"
-msgstr "Sincronització amb els equips propers"
-
-#: ../liferea.appdata.xml.in.h:8
-#, fuzzy
-msgid "Synchronizes with Reedah"
-msgstr "Sincronització amb els equips propers"
-
-#: ../liferea.appdata.xml.in.h:9
-msgid "Permanently save headlines in news bins"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:10
-msgid "Match items using search folders"
-msgstr ""
-
-#: ../liferea.appdata.xml.in.h:11
-#, fuzzy
-msgid "Play Podcasts"
-msgstr "Podcast"
 
 #: ../net.sourceforge.liferea.desktop.in.h:1 ../src/liferea_application.c:349
 #: ../glade/mainwindow.ui.h:1
@@ -96,169 +39,238 @@ msgstr "Llegiu canals de notícies i blocs"
 msgid "news;feed;aggregator;blog;podcast;syndication;rss;atom"
 msgstr ""
 
-#: ../xslt/feed.xml.in.h:1
+#: ../plugins/getfocus.py:95
+msgid "Opacity:"
+msgstr ""
+
+#: ../plugins/getfocus.py:96
+msgid "Opacity"
+msgstr ""
+
+#: ../plugins/getfocus.py:106
+msgid "Min"
+msgstr ""
+
+#: ../plugins/getfocus.py:111
+msgid "Max"
+msgstr ""
+
+#: ../plugins/getfocus.py:117
+msgid "Save"
+msgstr ""
+
+#: ../plugins/headerbar.py:67 ../glade/liferea_menu.ui.h:20
+#: ../glade/liferea_toolbar.ui.h:5
+msgid "Previous Item"
+msgstr "Element anterior"
+
+#: ../plugins/headerbar.py:73 ../glade/liferea_menu.ui.h:21
+#: ../glade/liferea_toolbar.ui.h:6
+msgid "Next Item"
+msgstr "Element següent"
+
+#: ../plugins/headerbar.py:81 ../glade/liferea_menu.ui.h:19
+#: ../glade/liferea_toolbar.ui.h:7
+msgid "_Next Unread Item"
+msgstr "Element sense llegir _següent"
+
+#: ../plugins/headerbar.py:89 ../glade/liferea_menu.ui.h:14
+#: ../glade/liferea_toolbar.ui.h:3
+msgid "_Mark Items Read"
+msgstr "_Marca'ls tots com a llegits"
+
+#: ../plugins/headerbar.py:113 ../glade/liferea_menu.ui.h:40
+#: ../glade/liferea_toolbar.ui.h:10
+msgid "Search All Feeds..."
+msgstr "Cerca a tots els canals..."
+
+#: ../plugins/libnotify.py:42
+#, fuzzy
+msgid "Feed Updates"
+msgstr "Actualització de canal"
+
+#: ../plugins/plugin-installer.py:55
+msgid "Plugins"
+msgstr "Connectors"
+
+#: ../plugins/plugin-installer.py:72
+#, fuzzy
+msgid "Plugin Installer"
+msgstr "Connectors"
+
+#: ../plugins/plugin-installer.py:86
+#, fuzzy
+msgid "Activate Plugins"
+msgstr "Connectors"
+
+#: ../plugins/plugin-installer.py:87
+#, fuzzy
+msgid "Download Plugins"
+msgstr "_Baixa-les utilitzant"
+
+#: ../plugins/plugin-installer.py:105
+#, python-format
+msgid "Bad fields for plugin entry %s"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128
+msgid "All"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128 ../glade/properties.ui.h:39
+msgid "Advanced"
+msgstr "Avançat"
+
+#: ../plugins/plugin-installer.py:128
+msgid "Menu"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:128
+#, fuzzy
+msgid "Notifications"
+msgstr "Paràmetres de notificació"
+
+#: ../plugins/plugin-installer.py:136
+msgid "Filter by category"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:143
+msgid "_Install"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:147
+msgid "_Uninstall"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:248
+#, python-format
 msgid ""
-"This feed is discontinued. It's no longer available. Liferea won't update it "
-"anymore but you can still access the cached headlines."
+"Missing package manager '%s'. Cannot check nor install necessary "
+"dependencies!"
 msgstr ""
-"Aquest canal ja no es manté i no està disponible. El Liferea ja no "
-"l'actualitzarà més, però encara podeu accedir als titulars que hi ha a la "
-"memòria cau."
 
-#: ../xslt/feed.xml.in.h:2
+#: ../plugins/plugin-installer.py:264
+#, python-format
+msgid "Missing package '%s'. Do you want to install it? (Will run '%s')"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:271
+#, python-format
 msgid ""
-"The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
-"value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/></b>"
-msgstr ""
-"Ha fallat l'última actualització d'aquesta subscripció<br/><b>Codi d'error "
-"HTTP <xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of select="
-"\"httpError\"/></b>"
-
-#: ../xslt/feed.xml.in.h:3
-msgid "There were errors while parsing this feed!"
-msgstr "S'han produït errors en analitzar aquest canal"
-
-#: ../xslt/feed.xml.in.h:4
-msgid "Parser Error Details"
-msgstr "Detalls de l'error de l'analitzador"
-
-#: ../xslt/feed.xml.in.h:5
-msgid "Details"
-msgstr "Detalls"
-
-#: ../xslt/feed.xml.in.h:6
-msgid "You may want to contact the author/webmaster of the feed about this!"
-msgstr ""
-"Us podeu posar en contacte amb l'autor/administrador del canal per explicar-"
-"li això."
-
-#: ../xslt/feed.xml.in.h:7
-msgid "There were errors while filtering this feed!"
-msgstr "S'han produït errors en filtrar aquest canal"
-
-#: ../xslt/feed.xml.in.h:8
-msgid "Filter Error Details"
-msgstr "Detalls de l'error del filtre"
-
-#: ../xslt/feed.xml.in.h:9
-msgid "Feed:"
-msgstr "Canal:"
-
-#: ../xslt/feed.xml.in.h:10 ../xslt/source.xml.in.h:1
-msgid "Source:"
-msgstr "Font:"
-
-#: ../xslt/feed.xml.in.h:11
-msgid "Publisher"
-msgstr "Editor"
-
-#: ../xslt/feed.xml.in.h:12
-msgid "Copyright"
-msgstr "Copyright"
-
-#: ../xslt/source.xml.in.h:2 ../xslt/folder.xml.in.h:2
-msgid "children with"
-msgstr "fill amb"
-
-#: ../xslt/source.xml.in.h:3 ../xslt/folder.xml.in.h:3
-#: ../xslt/vfolder.xml.in.h:2
-msgid "unread headlines"
-msgstr "titulars sense llegir"
-
-#: ../xslt/folder.xml.in.h:1
-msgid "Folder:"
-msgstr "Carpeta:"
-
-#: ../xslt/item.xml.in.h:1 ../glade/properties.ui.h:21
-msgid "Source"
-msgstr "Font"
-
-#: ../xslt/item.xml.in.h:2
-msgid "Feed"
-msgstr "Canal"
-
-#: ../xslt/item.xml.in.h:3
-msgid "Filed under"
-msgstr "Arxivat a"
-
-#: ../xslt/item.xml.in.h:4
-msgid "Author"
-msgstr "Autor"
-
-#: ../xslt/item.xml.in.h:5
-msgid "Shared by"
-msgstr "Compartit per"
-
-#: ../xslt/item.xml.in.h:6
-msgid "Via"
-msgstr "A través de"
-
-#: ../xslt/item.xml.in.h:7
-msgid "Related"
-msgstr "Relacionats"
-
-#: ../xslt/item.xml.in.h:8
-msgid "Also posted in"
-msgstr "Publicat també a"
-
-#: ../xslt/item.xml.in.h:9
-msgid "Creator"
-msgstr "Creador"
-
-#: ../xslt/item.xml.in.h:10
-msgid "Coordinates"
+"Package installation failed (%s)! Check console output for further problem "
+"details!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:11
-msgid "Map"
+#: ../plugins/plugin-installer.py:274
+#, python-format
+msgid "Failed to check plugin dependencies (%s)!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:12
-msgid "View count"
+#: ../plugins/plugin-installer.py:283
+msgid "Command \"git\" not found, please install it!"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:13
-msgid "Rating"
+#: ../plugins/plugin-installer.py:292
+#, python-format
+msgid "Copying %s to %s"
 msgstr ""
 
-#: ../xslt/item.xml.in.h:14
-msgid "Comments"
-msgstr "Comentaris"
+#: ../plugins/plugin-installer.py:295
+#, python-format
+msgid "Failed to copy plugin directory (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:15
-msgid "Updating..."
-msgstr "S'està actualitzant..."
+#: ../plugins/plugin-installer.py:304
+#, python-format
+msgid "Failed to copy plugin .py file (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:16
-msgid "Section"
-msgstr "Secció"
+#: ../plugins/plugin-installer.py:314
+#, python-format
+msgid "Failed to copy .plugin file (%s)!"
+msgstr ""
 
-#: ../xslt/item.xml.in.h:17
-msgid "Department"
-msgstr "Departament"
+#: ../plugins/plugin-installer.py:325
+#, fuzzy, python-format
+msgid "Creating schema directory %s"
+msgstr "No s'ha pogut crear el directori de memòria cau «%s»"
 
-#: ../xslt/newsbin.xml.in.h:1
-msgid "News Bin:"
-msgstr "Contenidor de notícies:"
+#: ../plugins/plugin-installer.py:327
+#, python-format
+msgid "Installing schema %s"
+msgstr ""
 
-#: ../xslt/newsbin.xml.in.h:2
+#: ../plugins/plugin-installer.py:331
+msgid "Compiling schemas..."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:336
+#, python-format
+msgid "Failed to install schema files (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:346
+#, python-format
+msgid "Failed to enable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:352
+#, python-format
+msgid "Plugin '%s' is now installed. Ensure to restart Liferea!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:366
+#, python-format
+msgid "Failed to disable plugin (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:373 ../plugins/plugin-installer.py:393
+#, fuzzy, python-format
+msgid "Deleting '%s'"
+msgstr "Supressió de l'entrada"
+
+#: ../plugins/plugin-installer.py:376
+#, python-format
+msgid "Failed to remove directory '%s' (%s)!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:386
+msgid "Failed to remove .py file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:396
+msgid "Failed to remove .plugin file!"
+msgstr ""
+
+#: ../plugins/plugin-installer.py:405
+msgid "Sorry! Plugin removal failed!."
+msgstr ""
+
+#: ../plugins/plugin-installer.py:407
 msgid ""
-"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
-"list context menu."
+"Plugin was removed. Please restart Liferea once for it to take full effect!."
 msgstr ""
-"Podeu afegir elements a aquest contenidor de notícies si seleccioneu «Copia "
-"al contenidor de notícies» del menú contextual de la llista d'elements."
 
-#: ../xslt/vfolder.xml.in.h:1
-msgid "Search Folder:"
-msgstr "Carpeta de cerca:"
+#: ../plugins/trayicon.py:132
+#, fuzzy
+msgid "Show / Hide"
+msgstr "Mostra els detalls"
+
+#: ../plugins/trayicon.py:133
+msgid "Minimize to tray on close"
+msgstr ""
+
+#: ../plugins/trayicon.py:134
+#, fuzzy
+msgid "Quit"
+msgstr "_Surt"
 
 #: ../src/browser.c:81 ../src/browser.c:98
 #, c-format
 msgid "Browser command failed: %s"
 msgstr "Ha fallat l'ordre del navegador: %s"
 
-#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1044
+#: ../src/browser.c:101 ../src/ui/liferea_shell.c:1078
 #, c-format
 msgid "Starting: \"%s\""
 msgstr "S'està iniciant: «%s»"
@@ -268,12 +280,12 @@ msgstr "S'està iniciant: «%s»"
 msgid "Authorization Error"
 msgstr "Error d'autenticació"
 
-#: ../src/common.c:66
+#: ../src/common.c:68
 #, c-format
 msgid "Cannot create cache directory \"%s\"!"
 msgstr "No s'ha pogut crear el directori de memòria cau «%s»"
 
-#: ../src/conf.c:183
+#: ../src/conf.c:147
 msgid ""
 "Your version of WebKitGTK+ doesn't support changing the proxy settings from "
 "Liferea. The system's default proxy settings will be used."
@@ -336,19 +348,19 @@ msgstr ""
 "podeu canviar des de la pestanya «Baixada» del diàleg que trobareu a Eines/"
 "Preferències."
 
-#: ../src/export.c:188
+#: ../src/export.c:187
 #, fuzzy, c-format
 msgid "Error renaming %s to %s: %s\n"
 msgstr "S'ha produït un error en canviar el nom de %s a %s\n"
 
-#: ../src/export.c:417 ../src/export.c:419
+#: ../src/export.c:409 ../src/export.c:411
 #, c-format
 msgid "XML error while reading OPML file! Could not import \"%s\"!"
 msgstr ""
 "S'ha detectat un error en la sintaxi XML en llegir el fitxer OPML. No s'ha "
 "pogut importar «%s»"
 
-#: ../src/export.c:425 ../src/export.c:427
+#: ../src/export.c:417 ../src/export.c:419
 #, c-format
 msgid ""
 "Empty document! OPML document \"%s\" should not be empty when importing."
@@ -356,81 +368,44 @@ msgstr ""
 "El document és buit. El document OPML «%s» no hauria d'ésser buit en "
 "importar-lo."
 
-#: ../src/export.c:448 ../src/export.c:450
+#: ../src/export.c:440 ../src/export.c:442
 #, c-format
 msgid "\"%s\" is not a valid OPML document! Liferea cannot import this file!"
 msgstr "«%s» no és un document OPML vàlid. El Liferea no el pot importar."
 
-#: ../src/export.c:469
+#: ../src/export.c:461
 msgid "Imported feed list"
 msgstr "Llista de canals importats"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import Feed List"
 msgstr "Importa la llista de canals"
 
-#: ../src/export.c:481
+#: ../src/export.c:473
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/export.c:481 ../src/export.c:498 ../src/fl_sources/opml_source.c:379
+#: ../src/export.c:473 ../src/export.c:490 ../src/fl_sources/opml_source.c:379
 msgid "OPML Files"
 msgstr "Fitxers OPML"
 
-#: ../src/export.c:489
+#: ../src/export.c:481
 msgid "Error while exporting feed list!"
 msgstr "S'ha produït un error en exportar la llista de canals"
 
-#: ../src/export.c:491
+#: ../src/export.c:483
 msgid "Feed List exported!"
 msgstr "S'ha exportat la llista de canals"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export Feed List"
 msgstr "Exporta la llista de canals"
 
-#: ../src/export.c:498
+#: ../src/export.c:490
 msgid "Export"
 msgstr "Exporta"
 
-#: ../src/feed.c:324
-msgid ""
-"<p>Could not detect the type of this feed! Please check if the source really "
-"points to a resource provided in one of the supported syndication formats!</"
-"p>XML Parser Output:<br /><div class='xmlparseroutput'>"
-msgstr ""
-"<p>No s'ha pogut detectar el tipus d'aquest canal. Verifiqueu que la font "
-"apunti realment a un recurs proporcionat per un dels formats de sindicació "
-"coneguts.</p>Sortida de l'analitzador XML:<br /><div class='xmlparseroutput'>"
-
-#: ../src/feed.c:351
-#, c-format
-msgid "\"%s\" updated..."
-msgstr "s'ha actualitzat «%s»..."
-
-#: ../src/feed.c:358
-#, c-format
-msgid "\"%s\" is not available"
-msgstr "no està disponible «%s»"
-
-#: ../src/feed_parser.c:142
-msgid ""
-"The URL you want Liferea to subscribe to points to a webpage and the auto "
-"discovery found no feeds on this page. Maybe this webpage just does not "
-"support feed auto discovery."
-msgstr ""
-"L'URL de subscripció que heu proporcionat al Liferea apunta a una pàgina web "
-"i el descobridor automàtic no hi ha trobat cap canal. Potser aquesta pàgina "
-"web no permet el descobriment automàtic del canal."
-
-#: ../src/feed_parser.c:194
-#, c-format
-msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
-msgstr ""
-"S'ha detectat un error en la sintaxi XML en llegir el canal. No s'ha pogut "
-"carregar el canal «%s»."
-
-#: ../src/feed_parser.c:199 ../src/feed_parser.c:248
+#: ../src/feed_parser.c:202
 msgid "Empty document!"
 msgstr "El document és buit"
 
@@ -438,16 +413,113 @@ msgstr "El document és buit"
 msgid "Invalid XML!"
 msgstr "L'XML no és vàlid"
 
-#: ../src/feed_parser.c:271
-msgid "Source points to HTML document."
-msgstr "La font apunta a un document HTML."
+#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
+#: ../glade/simple_subscription.ui.h:1
+msgid "New Subscription"
+msgstr "Subscripció nova"
 
-#: ../src/feed_parser.c:274
-msgid "Could not determine the feed type."
-msgstr "No s'ha pogut determinar el tipus de canal."
+#: ../src/fl_sources/google_source.c:192 ../src/fl_sources/reedah_source.c:120
+#: ../src/fl_sources/theoldreader_source.c:122
+#, fuzzy
+msgid "Login failed!"
+msgstr "Ha fallat l'entrada al Google Reader"
+
+#: ../src/fl_sources/google_source.c:404
+#, fuzzy
+msgid "Google Reader API"
+msgstr "Google Reader"
+
+#: ../src/fl_sources/google_source_feed.c:159
+#, fuzzy
+msgid "Could not parse JSON returned by Google Reader API!"
+msgstr "No s'ha pogut analitzar el JSON que ha retornat l'API del tt-rss."
+
+#: ../src/fl_sources/node_source.c:117
+msgid "Miniflux"
+msgstr ""
+
+#: ../src/fl_sources/node_source.c:332
+msgid "No feed list source types found!"
+msgstr "No s'ha trobat cap tipus de font de llista de canals"
+
+#: ../src/fl_sources/node_source.c:361
+msgid "Source Type"
+msgstr "Tipus de font"
+
+#: ../src/fl_sources/node_source.c:412
+#, c-format
+msgid "Login for '%s' has not yet completed! Please wait until login is done."
+msgstr ""
+
+#. FIXME: something is not perfect, because if you immediately
+#. remove the subscription tree afterwards there is a double free
+#: ../src/fl_sources/node_source.c:578
+#, c-format
+msgid "The '%s' subscription was successfully converted to local feeds!"
+msgstr ""
+
+#: ../src/fl_sources/opml_source.c:319
+msgid "Planet, BlogRoll, OPML"
+msgstr "Planeta, llista de blocs, OPML"
+
+#: ../src/fl_sources/opml_source.c:379
+msgid "Choose OPML File"
+msgstr "Escolliu el fitxer OPML"
+
+#: ../src/fl_sources/opml_source.c:379 ../src/ui/subscription_dialog.c:355
+msgid "_Open"
+msgstr ""
+
+#: ../src/fl_sources/opml_source.h:28
+msgid "New OPML Subscription"
+msgstr "Subscripció a un OPML nou"
+
+#: ../src/fl_sources/reedah_source.c:335
+msgid "Reedah"
+msgstr ""
+
+#: ../src/fl_sources/reedah_source_feed.c:154
+#, fuzzy
+msgid "Could not parse JSON returned by Reedah API!"
+msgstr "No s'ha pogut analitzar el JSON que ha retornat l'API del tt-rss."
+
+#: ../src/fl_sources/theoldreader_source.c:364
+#, fuzzy
+msgid "TheOldReader"
+msgstr "Lector de canals de notícies"
+
+#: ../src/fl_sources/ttrss_source.c:227 ../src/fl_sources/ttrss_source.c:293
+msgid "TinyTinyRSS HTTP API not reachable!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:234
+msgid ""
+"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
+"URL!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:300
+msgid "TinyTinyRSS unsubscribing feed failed!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:318
+#, c-format
+msgid ""
+"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
+"%s or later!"
+msgstr ""
+
+#: ../src/fl_sources/ttrss_source.c:472
+msgid "Tiny Tiny RSS"
+msgstr "Tiny Tiny RSS"
+
+#: ../src/fl_sources/ttrss_source_feed.c:150
+#, fuzzy
+msgid "Could not parse JSON returned by TinyTinyRSS API!"
+msgstr "No s'ha pogut analitzar el JSON que ha retornat l'API del tt-rss."
 
 #. if we don't find a feed with unread items do nothing
-#: ../src/itemlist.c:393
+#: ../src/itemlist.c:425
 msgid "There are no unread items"
 msgstr "No hi ha elements sense llegir "
 
@@ -545,40 +617,39 @@ msgid "Print debugging messages for the given topic"
 msgstr "Mostra missatges de depuració del tema seleccionat"
 
 #. Some libsoup transport errors
-#: ../src/net.c:463
+#: ../src/net.c:470
 msgid "The update request was cancelled"
 msgstr "S'ha cancel·lat la petició d'actualització"
 
-#: ../src/net.c:464
+#: ../src/net.c:471
 msgid "Unable to resolve destination host name"
 msgstr "No s'ha pogut resoldre el nom de l'ordinador remot"
 
-#: ../src/net.c:465
+#: ../src/net.c:472
 msgid "Unable to resolve proxy host name"
 msgstr "No s'ha pogut resoldre el nom del servidor intermediari"
 
-#: ../src/net.c:466
+#: ../src/net.c:473
 msgid "Unable to connect to remote host"
 msgstr "No s'ha pogut connectar a l'ordinador remot"
 
-#: ../src/net.c:467
+#: ../src/net.c:474
 msgid "Unable to connect to proxy"
 msgstr "No s'ha pogut connectar al servidor intermediari"
 
-#: ../src/net.c:468
+#: ../src/net.c:475
 msgid ""
-"A network error occurred, or the other end closed the connection unexpectedly"
+"SSL/TLS negotiation failed. Possible outdated or unsupported encryption "
+"algorithm. Check your operating system settings."
 msgstr ""
-"S'ha produït un error de xarxa o l'altre extrem ha tancat la connexió "
-"inesperadament"
 
 #. http 3xx redirection
-#: ../src/net.c:471
+#: ../src/net.c:478
 msgid "The resource moved permanently to a new location"
 msgstr "El recurs s'ha migrat de forma permanent a una ubicació nova"
 
 #. http 4xx client error
-#: ../src/net.c:474
+#: ../src/net.c:481
 msgid ""
 "You are unauthorized to download this feed. Please update your username and "
 "password in the feed properties dialog box"
@@ -586,142 +657,218 @@ msgstr ""
 "No esteu autoritzat a baixar-vos aquest canal. Actualitzeu el vostre nom "
 "d'usuari i la contrasenya en el quadre de diàleg de les propietats del canal"
 
-#: ../src/net.c:476
+#: ../src/net.c:483
 msgid "Payment required"
 msgstr "Es requereix pagament"
 
-#: ../src/net.c:477
+#: ../src/net.c:484
 msgid "You're not allowed to access this resource"
 msgstr "No podeu accedir en aquest recurs"
 
-#: ../src/net.c:478
+#: ../src/net.c:485
 msgid "Resource Not Found"
 msgstr "No s'ha trobat el recurs"
 
-#: ../src/net.c:479
+#: ../src/net.c:486
 msgid "Method Not Allowed"
 msgstr "No es permet utilitzar aquest mètode"
 
-#: ../src/net.c:480
+#: ../src/net.c:487
 msgid "Not Acceptable"
 msgstr "No acceptable"
 
-#: ../src/net.c:481
+#: ../src/net.c:488
 msgid "Proxy authentication required"
 msgstr "Es requereix autenticació a través de servidor intermediari"
 
-#: ../src/net.c:482
+#: ../src/net.c:489
 msgid "Request timed out"
 msgstr "S'ha esgotat el temps de la sol·licitud"
 
-#: ../src/net.c:483
-msgid "Gone. Resource doesn't exist. Please unsubscribe!"
-msgstr "El recurs ja no existeix, cancel·leu la subscripció."
+#: ../src/net.c:490
+#, fuzzy
+msgid ""
+"The webserver indicates this feed is discontinued. It's no longer available. "
+"Liferea won't update it anymore but you can still access the cached "
+"headlines."
+msgstr ""
+"Aquest canal ja no es manté i no està disponible. El Liferea ja no "
+"l'actualitzarà més, però encara podeu accedir als titulars que hi ha a la "
+"memòria cau."
 
-#: ../src/net.c:488
+#. http 5xx server errors
+#: ../src/net.c:493
+#, fuzzy
+msgid "Internal Server Error"
+msgstr "Error del servidor"
+
+#: ../src/net.c:494
+msgid "Not Implemented"
+msgstr ""
+
+#: ../src/net.c:495
+msgid "Bad Gateway"
+msgstr ""
+
+#: ../src/net.c:496
+#, fuzzy
+msgid "Service Unavailable"
+msgstr "Nom del _servei"
+
+#: ../src/net.c:497
+msgid "Gateway Timeout"
+msgstr ""
+
+#: ../src/net.c:498
+msgid "HTTP Version Not Supported"
+msgstr ""
+
+#: ../src/net.c:503
 msgid "There was an internal error in the update process"
 msgstr "S'ha produït un error intern en el procés d'actualització"
 
-#: ../src/net.c:490
+#: ../src/net.c:505
 msgid "Feed not available: Server requested unsupported redirection!"
 msgstr ""
 "El canal no és disponible: el servidor ha sol·licitat una redirecció no "
 "implementada"
 
-#: ../src/net.c:492
+#: ../src/net.c:507
 msgid "Client Error"
 msgstr "Error del client"
 
-#: ../src/net.c:494
+#: ../src/net.c:509
 msgid "Server Error"
 msgstr "Error del servidor"
 
-#: ../src/net.c:496
+#: ../src/net.c:511
 msgid "An unknown networking error happened!"
 msgstr "S'ha produït un error de xarxa desconegut"
 
+#: ../src/newsbin.c:136
+#, fuzzy
+msgid "News Bin Properties"
+msgstr "Propietats de la subscripció"
+
+#: ../src/newsbin.c:140 ../glade/new_newsbin.ui.h:1
+msgid "Create News Bin"
+msgstr "Crea un contenidor de notícies"
+
+#: ../src/node.c:664
+#, c-format
+msgid "Failed to create feed file: %s"
+msgstr ""
+
+#: ../src/node.c:683
+#, fuzzy
+msgid "Feed file exported from Liferea"
+msgstr "S'ha exportat la llista de canals"
+
+#: ../src/node.c:698
+#, fuzzy, c-format
+msgid "Error while saving feed file"
+msgstr "S'ha produït un error en exportar la llista de canals"
+
+#: ../src/parsers/atom10.c:240
+msgid "Website"
+msgstr "Lloc web"
+
+#: ../src/parsers/ns_ag.c:70
+msgid "%b %d %H:%M"
+msgstr "%d %b %H:%M"
+
 #. in-memory check function	feedlist.opml rule id         		  rule menu label       	positive menu option    negative menu option    has param
 #. ========================================================================================================================================================================================
-#: ../src/rule.c:198
+#: ../src/rule.c:274
 msgid "Item"
 msgstr "Element"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does contain"
 msgstr "conté"
 
-#: ../src/rule.c:198 ../src/rule.c:199 ../src/rule.c:200 ../src/rule.c:205
-#: ../src/rule.c:206 ../src/rule.c:207
+#: ../src/rule.c:274 ../src/rule.c:275 ../src/rule.c:276 ../src/rule.c:277
+#: ../src/rule.c:283 ../src/rule.c:284 ../src/rule.c:285
 msgid "does not contain"
 msgstr "no conté"
 
-#: ../src/rule.c:199
+#: ../src/rule.c:275
 msgid "Item title"
 msgstr "Títol de l'element"
 
-#: ../src/rule.c:200
+#: ../src/rule.c:276
 msgid "Item body"
 msgstr "Cos de l'element"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:277
+#, fuzzy
+msgid "Item author"
+msgstr "Cos de l'element"
+
+#: ../src/rule.c:278
 msgid "Read status"
 msgstr "Estat de lectura"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is unread"
 msgstr "no està llegit"
 
-#: ../src/rule.c:201
+#: ../src/rule.c:278
 msgid "is read"
 msgstr "està llegit"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "Flag status"
 msgstr "Estat de senyalament"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is flagged"
 msgstr "està senyalat"
 
-#: ../src/rule.c:202
+#: ../src/rule.c:279
 msgid "is unflagged"
 msgstr "no està senyalat"
 
-#: ../src/rule.c:203
-msgid "Podcast"
-msgstr "Podcast"
+#: ../src/rule.c:280
+#, fuzzy
+msgid "Enclosure"
+msgstr "Adjuncions"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "included"
 msgstr "inclòs"
 
-#: ../src/rule.c:203
+#: ../src/rule.c:280 ../src/rule.c:281
 msgid "not included"
 msgstr "exclòs"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:281
+msgid "Podcast"
+msgstr "Podcast"
+
+#: ../src/rule.c:282
 msgid "Category"
 msgstr "Categoria"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is set"
 msgstr "té"
 
-#: ../src/rule.c:204
+#: ../src/rule.c:282
 msgid "is not set"
 msgstr "no té"
 
-#: ../src/rule.c:205
+#: ../src/rule.c:283
 msgid "Feed title"
 msgstr "Títol del canal"
 
-#: ../src/rule.c:206
+#: ../src/rule.c:284
 #, fuzzy
 msgid "Feed source"
 msgstr "Font del canal"
 
-#: ../src/rule.c:207
+#: ../src/rule.c:285
 msgid "Parent folder title"
 msgstr ""
 
@@ -737,15 +884,7 @@ msgid ""
 msgstr ""
 "Ja no es manté la subscripció «%s». El Liferea ja no l'actualitzarà més."
 
-#: ../src/subscription.c:173
-msgid ""
-"There was a problem while reading this subscription. Please check the URL "
-"and console output."
-msgstr ""
-"S'ha produït un error en llegir aquesta subscripció. Verifiqueu-ne l'URL i "
-"la sortida del terminal."
-
-#: ../src/subscription.c:196
+#: ../src/subscription.c:188
 #, c-format
 msgid "The URL of \"%s\" has changed permanently and was updated"
 msgstr "L'URL de «%s» ha canviat permanentment i s'ha actualitzat"
@@ -755,55 +894,33 @@ msgstr "L'URL de «%s» ha canviat permanentment i s'ha actualitzat"
 msgid "\"%s\" is discontinued. Liferea won't updated it anymore!"
 msgstr "«%s» ja no es manté. El Liferea ja no l'actualitzarà més"
 
-#: ../src/subscription.c:207
+#: ../src/subscription.c:208
 #, c-format
 msgid "\"%s\" has not changed since last update"
 msgstr "«%s» no ha canviat des de l'última actualització"
 
-#: ../src/subscription.c:263
+#: ../src/subscription.c:221 ../src/subscription.c:296
+#, fuzzy, c-format
+msgid "Updating (%d / %d) ..."
+msgstr "S'està actualitzant..."
+
+#: ../src/subscription.c:298
+#, fuzzy, c-format
+msgid "Updating '%s'..."
+msgstr "S'està actualitzant..."
+
+#: ../src/ui/auth_dialog.c:114
 #, c-format
-msgid "Updating \"%s\""
-msgstr "S'està actualitzant «%s»"
+msgid "Enter the username and password for \"%s\" (%s):"
+msgstr "Introduïu el nom d'usuari i la contrasenya per a «%s» (%s):"
 
-#: ../src/update.c:297
-#, c-format
-msgid "Error opening temp file %s to use for filtering!"
-msgstr ""
-"S'ha produït un error en obrir el fitxer temporal %s per utilitzar-lo per al "
-"filtratge"
+#: ../src/ui/auth_dialog.c:116
+msgid "Unknown source"
+msgstr "Font desconeguda"
 
-#: ../src/update.c:320
-#, c-format
-msgid "%s exited with status %d"
-msgstr "%s ha sortit amb l'estat %d"
-
-#: ../src/update.c:326 ../src/update.c:327 ../src/update.c:442
-#, c-format
-msgid "Error: Could not open pipe \"%s\""
-msgstr "Error: no s'ha pogut obrir el conducte «%s»"
-
-#. FIXME: maybe setting request->returncode would be better
-#: ../src/update.c:466
-#, c-format
-msgid "Error: Could not open file \"%s\""
-msgstr "Error: no s'ha pogut obrir el fitxer «%s»"
-
-#: ../src/update.c:472
-#, c-format
-msgid "Error: There is no file \"%s\""
-msgstr "Error: no hi ha cap fitxer «%s»"
-
-#: ../src/vfolder.c:54
-msgid "New Search Folder"
-msgstr "Carpeta de cerca nova"
-
-#: ../src/xml.c:410
-msgid "[There were more errors. Output was truncated!]"
-msgstr "[Hi ha hagut altres errors. S'ha truncat la sortida]"
-
-#: ../src/xml.c:563
-msgid "XML Parser: Could not parse document:\n"
-msgstr "Analitzador XML: no s'ha pogut analitzar el document:\n"
+#: ../src/ui/browser_tabs.c:262 ../src/ui/popup_menu.c:282
+msgid "Untitled"
+msgstr "Sense títol"
 
 #: ../src/ui/enclosure_list_view.c:168
 msgid "Attachments"
@@ -848,91 +965,31 @@ msgstr "Escolliu un fitxer"
 msgid "File Extension .%s"
 msgstr "Extensió de fitxer .%s"
 
-#: ../src/ui/icons.c:54
-#, c-format
-msgid "Couldn't find pixmap file: %s"
-msgstr "No s'ha pogut trobar el fitxer de mapa de píxels: %s"
-
-#: ../src/ui/liferea_shell.c:396
-#, c-format
-msgid " (%d new)"
-msgid_plural " (%d new)"
-msgstr[0] " (%d nova)"
-msgstr[1] " (%d noves)"
-
-#: ../src/ui/liferea_shell.c:401
-#, c-format
-msgid "%d unread%s"
-msgid_plural "%d unread%s"
-msgstr[0] "%d sense llegir%s"
-msgstr[1] "%d sense llegir%s"
-
-#: ../src/ui/liferea_shell.c:758
-msgid "Help Topics"
-msgstr "Temes d'ajuda (en anglès)"
-
-#: ../src/ui/liferea_shell.c:764
-msgid "Quick Reference"
-msgstr "Referència ràpida (en anglès)"
-
-#: ../src/ui/liferea_shell.c:770
-msgid "FAQ"
-msgstr "PMF (en anglès)"
-
-#: ../src/ui/liferea_shell.c:1041
-#, fuzzy, c-format
-msgid "Email command failed: %s"
-msgstr "Ha fallat l'ordre del navegador: %s"
-
-#: ../src/ui/search_dialog.c:107
-#, fuzzy
-msgid "Saved Search"
-msgstr "Cerca avançada"
-
-#: ../src/ui/auth_dialog.c:114
-#, c-format
-msgid "Enter the username and password for \"%s\" (%s):"
-msgstr "Introduïu el nom d'usuari i la contrasenya per a «%s» (%s):"
-
-#: ../src/ui/auth_dialog.c:116
-msgid "Unknown source"
-msgstr "Font desconeguda"
-
-#: ../src/ui/ui_common.c:168 ../src/ui/feed_list_view.c:911
-#: ../src/ui/feed_list_view.c:965
-#, fuzzy
-msgid "_Cancel"
-msgstr "Cancel·la-ho _tot"
-
-#: ../src/ui/ui_common.c:211
-msgid "All Files"
-msgstr "Tots els fitxers"
-
-#: ../src/ui/feed_list_view.c:432
+#: ../src/ui/feed_list_view.c:428
 msgid "Liferea is in offline mode. No update possible."
 msgstr ""
 "El Liferea és en mode de fora de línia. No és poden fer actualitzacions."
 
-#: ../src/ui/feed_list_view.c:478
+#: ../src/ui/feed_list_view.c:474
 #, fuzzy
 msgid "all feeds"
 msgstr "Cerca a tots els canals"
 
-#: ../src/ui/feed_list_view.c:479
+#: ../src/ui/feed_list_view.c:475
 #, fuzzy, c-format
 msgid "Mark %s as read ?"
 msgstr "Marca'ls tots com a llegits"
 
-#: ../src/ui/feed_list_view.c:483
+#: ../src/ui/feed_list_view.c:479
 #, fuzzy, c-format
 msgid "Are you sure you want to mark all items in %s as read ?"
 msgstr "Segur que voleu suprimir «%s»?"
 
-#: ../src/ui/feed_list_view.c:621
+#: ../src/ui/feed_list_view.c:617
 msgid "(Empty)"
 msgstr "(buit)"
 
-#: ../src/ui/feed_list_view.c:832
+#: ../src/ui/feed_list_view.c:828
 #, c-format
 msgid ""
 "%s\n"
@@ -941,82 +998,133 @@ msgstr ""
 "%s\n"
 "<i>S'està reconstruint</i>"
 
-#: ../src/ui/feed_list_view.c:901
+#: ../src/ui/feed_list_view.c:897
 msgid "Deleting entry"
 msgstr "Supressió de l'entrada"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\" and its contents?"
 msgstr "Segur que voleu suprimir «%s» i el seus continguts?"
 
-#: ../src/ui/feed_list_view.c:902
+#: ../src/ui/feed_list_view.c:898
 #, c-format
 msgid "Are you sure that you want to delete \"%s\"?"
 msgstr "Segur que voleu suprimir «%s»?"
 
-#: ../src/ui/feed_list_view.c:912 ../src/ui/popup_menu.c:335
+#: ../src/ui/feed_list_view.c:907 ../src/ui/feed_list_view.c:961
+#: ../src/ui/popup_menu.c:260
+#, fuzzy
+msgid "_Cancel"
+msgstr "Cancel·la-ho _tot"
+
+#: ../src/ui/feed_list_view.c:908 ../src/ui/popup_menu.c:411
 msgid "_Delete"
 msgstr "_Suprimeix"
 
-#: ../src/ui/feed_list_view.c:914
+#: ../src/ui/feed_list_view.c:910
 msgid "Deletion Confirmation"
 msgstr "Confirmació de la supressió"
 
-#: ../src/ui/feed_list_view.c:953
+#: ../src/ui/feed_list_view.c:949
 #, c-format
 msgid ""
 "Are you sure that you want to add a new subscription with URL \"%s\"? "
 "Another subscription with the same URL already exists (\"%s\")."
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:966
+#: ../src/ui/feed_list_view.c:962
 msgid "_Add"
 msgstr ""
 
-#: ../src/ui/feed_list_view.c:968
+#: ../src/ui/feed_list_view.c:964
 #, fuzzy
 msgid "Adding Duplicate Subscription Confirmation"
 msgstr "Confirmació de la supressió"
 
-#: ../src/ui/item_list_view.c:115
+#: ../src/ui/icons.c:54
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "No s'ha pogut trobar el fitxer de mapa de píxels: %s"
+
+#: ../src/ui/item_list_view.c:113
 msgid "This item has no link specified!"
 msgstr "Aquest element no te cap enllaç especificat"
 
-#: ../src/ui/item_list_view.c:482
+#: ../src/ui/item_list_view.c:479
 msgid "*** No title ***"
 msgstr "*** Sense títol ***"
 
-#: ../src/ui/item_list_view.c:486
+#: ../src/ui/item_list_view.c:483
 msgid " <span background='red' color='black'> important </span> "
 msgstr ""
 
-#: ../src/ui/item_list_view.c:865
+#: ../src/ui/item_list_view.c:842
 msgid "Headline"
 msgstr "Titular"
 
-#: ../src/ui/item_list_view.c:887
+#: ../src/ui/item_list_view.c:860
 msgid "Date"
 msgstr "Data"
 
-#: ../src/ui/item_list_view.c:1056
+#: ../src/ui/item_list_view.c:1029
 msgid "You must select a feed to delete its items!"
 msgstr "Heu de seleccionar un canal per poder-ne suprimir els seus elements"
 
-#: ../src/ui/item_list_view.c:1072 ../src/ui/item_list_view.c:1150
-#: ../src/ui/item_list_view.c:1165
+#: ../src/ui/item_list_view.c:1045 ../src/ui/item_list_view.c:1123
+#: ../src/ui/item_list_view.c:1138
 msgid "No item has been selected"
 msgstr "No s'ha seleccionat cap element"
 
-#: ../src/ui/popup_menu.c:102
+#: ../src/ui/liferea_browser.c:482
+#, fuzzy
+msgid "Content download failed! Try disabling reader mode."
+msgstr "Escolliu el directori de baixada"
+
+#: ../src/ui/liferea_browser.c:495
+msgid "Content extraction failed! Try disabling reader mode."
+msgstr ""
+
+#: ../src/ui/liferea_shell.c:409
+#, c-format
+msgid " (%d new)"
+msgid_plural " (%d new)"
+msgstr[0] " (%d nova)"
+msgstr[1] " (%d noves)"
+
+#: ../src/ui/liferea_shell.c:414
+#, c-format
+msgid "%d unread%s"
+msgid_plural "%d unread%s"
+msgstr[0] "%d sense llegir%s"
+msgstr[1] "%d sense llegir%s"
+
+#: ../src/ui/liferea_shell.c:785
+msgid "Help Topics"
+msgstr "Temes d'ajuda (en anglès)"
+
+#: ../src/ui/liferea_shell.c:791
+msgid "Quick Reference"
+msgstr "Referència ràpida (en anglès)"
+
+#: ../src/ui/liferea_shell.c:797
+msgid "FAQ"
+msgstr "PMF (en anglès)"
+
+#: ../src/ui/liferea_shell.c:1075
+#, fuzzy, c-format
+msgid "Email command failed: %s"
+msgstr "Ha fallat l'ordre del navegador: %s"
+
+#: ../src/ui/popup_menu.c:102 ../glade/liferea_menu.ui.h:25
 msgid "Open In _Tab"
 msgstr "Obre en una _pestanya"
 
-#: ../src/ui/popup_menu.c:106
+#: ../src/ui/popup_menu.c:106 ../glade/liferea_menu.ui.h:26
 msgid "_Open In Browser"
 msgstr "_Obre'l en el navegador"
 
-#: ../src/ui/popup_menu.c:110
+#: ../src/ui/popup_menu.c:110 ../glade/liferea_menu.ui.h:27
 msgid "Open In _External Browser"
 msgstr "Obre'l en un navegador _extern"
 
@@ -1037,11 +1145,11 @@ msgstr "_Adreça d'interès a %s"
 msgid "Copy Item _Location"
 msgstr "_Copia la ubicació de l'element"
 
-#: ../src/ui/popup_menu.c:163
+#: ../src/ui/popup_menu.c:163 ../glade/liferea_menu.ui.h:22
 msgid "Toggle _Read Status"
 msgstr "Commuta l'estat de _lectura"
 
-#: ../src/ui/popup_menu.c:167
+#: ../src/ui/popup_menu.c:167 ../glade/liferea_menu.ui.h:23
 msgid "Toggle Item _Flag"
 msgstr "Commuta el _senyalador de l'element"
 
@@ -1061,55 +1169,76 @@ msgstr "Anomena i desa..."
 msgid "Copy Link Location"
 msgstr "Copia la ubicació de l'enllaç"
 
-#: ../src/ui/popup_menu.c:280
+#: ../src/ui/popup_menu.c:257
+msgid "Save items to file"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:262
+msgid "_Save"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:271
+msgid "RSS 2.0 files"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:277
+#, fuzzy
+msgid "All files"
+msgstr "Tots els fitxers"
+
+#: ../src/ui/popup_menu.c:353 ../glade/liferea_menu.ui.h:13
 msgid "_Update"
 msgstr "_Actualitza"
 
-#: ../src/ui/popup_menu.c:282
+#: ../src/ui/popup_menu.c:355
 msgid "_Update Folder"
 msgstr "_Actualitza la carpeta"
 
-#: ../src/ui/popup_menu.c:292
+#: ../src/ui/popup_menu.c:365
 msgid "New _Subscription..."
 msgstr "Subscripció _nova..."
 
-#: ../src/ui/popup_menu.c:295
+#: ../src/ui/popup_menu.c:368 ../glade/liferea_menu.ui.h:5
 msgid "New _Folder..."
 msgstr "_Carpeta nova..."
 
-#: ../src/ui/popup_menu.c:298
+#: ../src/ui/popup_menu.c:371 ../glade/liferea_menu.ui.h:6
 msgid "New S_earch Folder..."
 msgstr "Carpeta de c_erca nova..."
 
-#: ../src/ui/popup_menu.c:299
+#: ../src/ui/popup_menu.c:372
 msgid "New S_ource..."
 msgstr "_Font nova..."
 
-#: ../src/ui/popup_menu.c:300
+#: ../src/ui/popup_menu.c:373 ../glade/liferea_menu.ui.h:8
 msgid "New _News Bin..."
 msgstr "C_ontenidor de notícies nou..."
 
-#: ../src/ui/popup_menu.c:303
+#: ../src/ui/popup_menu.c:376
 msgid "_New"
 msgstr "_Nou"
 
-#: ../src/ui/popup_menu.c:312
+#: ../src/ui/popup_menu.c:385
 msgid "Sort Feeds"
 msgstr "Ordena els canals"
 
-#: ../src/ui/popup_menu.c:320
+#: ../src/ui/popup_menu.c:393
 msgid "_Mark All As Read"
 msgstr "_Marca'ls tots com a llegits"
 
-#: ../src/ui/popup_menu.c:327
+#: ../src/ui/popup_menu.c:395
+msgid "_Export Items To File"
+msgstr ""
+
+#: ../src/ui/popup_menu.c:403
 msgid "_Rebuild"
 msgstr "_Reconstrueix"
 
-#: ../src/ui/popup_menu.c:336
+#: ../src/ui/popup_menu.c:412 ../glade/liferea_menu.ui.h:17
 msgid "_Properties"
 msgstr "_Propietats"
 
-#: ../src/ui/popup_menu.c:343
+#: ../src/ui/popup_menu.c:419
 #, fuzzy
 msgid "Convert To Local Subscriptions..."
 msgstr "Subscripció _nova..."
@@ -1166,29 +1295,31 @@ msgstr "Visualització normal"
 msgid "Wide View"
 msgstr "Visualització àmplia"
 
-#: ../src/ui/preferences_dialog.c:112
-msgid "Combined View"
-msgstr "Visualització combinada"
-
-#: ../src/ui/preferences_dialog.c:467
+#: ../src/ui/preferences_dialog.c:487
 msgid "Default Browser"
 msgstr "Navegador predeterminat"
 
-#: ../src/ui/preferences_dialog.c:469
+#: ../src/ui/preferences_dialog.c:489
 msgid "Manual"
 msgstr "Manual"
 
-#: ../src/ui/preferences_dialog.c:716
+#: ../src/ui/preferences_dialog.c:752
 msgid "Type"
 msgstr "Tipus"
 
-#: ../src/ui/preferences_dialog.c:719
+#: ../src/ui/preferences_dialog.c:755
 msgid "Program"
 msgstr "Programa"
 
-#: ../src/ui/subscription_dialog.c:355 ../src/fl_sources/opml_source.c:379
-msgid "_Open"
-msgstr ""
+#: ../src/ui/rule_editor.c:257
+#, fuzzy
+msgid "Remove"
+msgstr "_Suprimeix"
+
+#: ../src/ui/search_dialog.c:106
+#, fuzzy
+msgid "Saved Search"
+msgstr "Cerca avançada"
 
 #: ../src/ui/subscription_dialog.c:427
 #, c-format
@@ -1206,184 +1337,109 @@ msgstr[1] ""
 msgid "This feed specifies no default update interval."
 msgstr "Aquest canal no especifica cap interval d'actualització recomanat."
 
-#: ../src/ui/browser_tabs.c:262
-msgid "Untitled"
-msgstr "Sense títol"
+#: ../src/ui/ui_common.c:206
+msgid "All Files"
+msgstr "Tots els fitxers"
 
-#: ../src/parsers/atom10.c:241 ../src/parsers/pie_feed.c:141
-msgid "Website"
-msgstr "Lloc web"
-
-#: ../src/parsers/ns_ag.c:70
-msgid "%b %d %H:%M"
-msgstr "%d %b %H:%M"
-
-#: ../src/fl_sources/default_source.c:139 ../glade/new_subscription.ui.h:1
-#: ../glade/simple_subscription.ui.h:1
-msgid "New Subscription"
-msgstr "Subscripció nova"
-
-#: ../src/fl_sources/google_source.c:111
-msgid "Google Reader"
-msgstr "Google Reader"
-
-#: ../src/fl_sources/opml_source.c:319
-msgid "Planet, BlogRoll, OPML"
-msgstr "Planeta, llista de blocs, OPML"
-
-#: ../src/fl_sources/opml_source.c:379
-msgid "Choose OPML File"
-msgstr "Escolliu el fitxer OPML"
-
-#: ../src/fl_sources/opml_source.h:28
-msgid "New OPML Subscription"
-msgstr "Subscripció a un OPML nou"
-
-#: ../src/fl_sources/node_source.c:334
-msgid "No feed list source types found!"
-msgstr "No s'ha trobat cap tipus de font de llista de canals"
-
-#: ../src/fl_sources/node_source.c:363
-msgid "Source Type"
-msgstr "Tipus de font"
-
-#: ../src/fl_sources/node_source.c:414
+#: ../src/update.c:370
 #, c-format
-msgid "Login for '%s' has not yet completed! Please wait until login is done."
+msgid "Error opening temp file %s to use for filtering!"
 msgstr ""
+"S'ha produït un error en obrir el fitxer temporal %s per utilitzar-lo per al "
+"filtratge"
 
-#. FIXME: something is not perfect, because if you immediately
-#. remove the subscription tree afterwards there is a double free
-#: ../src/fl_sources/node_source.c:580
+#: ../src/update.c:392
 #, c-format
-msgid "The '%s' subscription was successfully converted to local feeds!"
-msgstr ""
+msgid "%s exited with status %d"
+msgstr "%s ha sortit amb l'estat %d"
 
-#: ../src/fl_sources/reedah_source.c:103
-#: ../src/fl_sources/theoldreader_source.c:104
-#, fuzzy
-msgid "Login failed!"
-msgstr "Ha fallat l'entrada al Google Reader"
-
-#: ../src/fl_sources/reedah_source.c:312
-msgid "Reedah"
-msgstr ""
-
-#: ../src/fl_sources/reedah_source_feed.c:154
-#, fuzzy
-msgid "Could not parse JSON returned by Reedah API!"
-msgstr "No s'ha pogut analitzar el JSON que ha retornat l'API del tt-rss."
-
-#: ../src/fl_sources/ttrss_source.c:224 ../src/fl_sources/ttrss_source.c:283
-msgid "TinyTinyRSS HTTP API not reachable!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:231
-msgid ""
-"TinyTinyRSS subscribing to feed failed! Check if you really passed a feed "
-"URL!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:290
-msgid "TinyTinyRSS unsubscribing feed failed!"
-msgstr ""
-
-#: ../src/fl_sources/ttrss_source.c:307
+#: ../src/update.c:398 ../src/update.c:399 ../src/update.c:621
 #, c-format
-msgid ""
-"This TinyTinyRSS version does not support removing feeds. Upgrade to version "
-"%s or later!"
-msgstr ""
+msgid "Error: Could not open pipe \"%s\""
+msgstr "Error: no s'ha pogut obrir el conducte «%s»"
 
-#: ../src/fl_sources/ttrss_source.c:427
-msgid "Tiny Tiny RSS"
-msgstr "Tiny Tiny RSS"
+#. FIXME: maybe setting request->returncode would be better
+#: ../src/update.c:652
+#, c-format
+msgid "Error: Could not open file \"%s\""
+msgstr "Error: no s'ha pogut obrir el fitxer «%s»"
 
-#: ../src/fl_sources/ttrss_source_feed.c:150
-#, fuzzy
-msgid "Could not parse JSON returned by TinyTinyRSS API!"
-msgstr "No s'ha pogut analitzar el JSON que ha retornat l'API del tt-rss."
+#: ../src/update.c:658
+#, c-format
+msgid "Error: There is no file \"%s\""
+msgstr "Error: no hi ha cap fitxer «%s»"
 
-#: ../src/fl_sources/theoldreader_source.c:310
-#, fuzzy
-msgid "TheOldReader"
-msgstr "Lector de canals de notícies"
+#: ../src/vfolder.c:54
+msgid "New Search Folder"
+msgstr "Carpeta de cerca nova"
 
-#: ../src/webkit/liferea_web_view.c:176
+#: ../src/webkit/liferea_web_view.c:163
 msgid "Open Link In _Tab"
 msgstr "Obre l'enllaç en una _pestanya"
 
-#: ../src/webkit/liferea_web_view.c:177
+#: ../src/webkit/liferea_web_view.c:164
 #, fuzzy
 msgid "Open Link In Browser"
 msgstr "_Obre l'enllaç en el navegador"
 
-#: ../src/webkit/liferea_web_view.c:178
+#: ../src/webkit/liferea_web_view.c:165
 #, fuzzy
 msgid "Open Link In External Browser"
 msgstr "Obre l'enllaç en el navegador _extern"
 
-#: ../src/webkit/liferea_web_view.c:184
+#: ../src/webkit/liferea_web_view.c:171
 #, c-format
 msgid "_Bookmark Link at %s"
 msgstr "_Publica l'enllaç a %s"
 
-#: ../src/webkit/liferea_web_view.c:191
+#: ../src/webkit/liferea_web_view.c:178
 msgid "_Copy Link Location"
 msgstr "_Copia la ubicació de l'enllaç"
 
-#: ../src/webkit/liferea_web_view.c:194
+#: ../src/webkit/liferea_web_view.c:181
 #, fuzzy
 msgid "_View Image"
 msgstr "Anomena i desa la _imatge"
 
-#: ../src/webkit/liferea_web_view.c:195
+#: ../src/webkit/liferea_web_view.c:182
 msgid "_Copy Image Location"
 msgstr "_Copia la ubicació de la imatge"
 
-#: ../src/webkit/liferea_web_view.c:198
+#: ../src/webkit/liferea_web_view.c:185
 msgid "S_ave Link As"
 msgstr "Anomena i desa l'enllaç"
 
-#: ../src/webkit/liferea_web_view.c:201
+#: ../src/webkit/liferea_web_view.c:188
 msgid "S_ave Image As"
 msgstr "Anomena i desa la _imatge"
 
-#: ../src/webkit/liferea_web_view.c:208
+#: ../src/webkit/liferea_web_view.c:195
 msgid "_Subscribe..."
 msgstr "_Subscriu..."
 
-#: ../src/webkit/liferea_web_view.c:212
+#: ../src/webkit/liferea_web_view.c:199
 msgid "_Copy"
 msgstr ""
 
-#: ../src/webkit/liferea_web_view.c:218
+#: ../src/webkit/liferea_web_view.c:205
 msgid "_Increase Text Size"
 msgstr "_Augmenta la mida del text"
 
-#: ../src/webkit/liferea_web_view.c:219
+#: ../src/webkit/liferea_web_view.c:206
 msgid "_Decrease Text Size"
 msgstr "_Redueix la mida del text"
 
-#: ../plugins/headerbar.py:63
-msgid "Previous Item"
-msgstr "Element anterior"
+#: ../src/webkit/liferea_web_view.c:213
+msgid "_Reader Mode"
+msgstr ""
 
-#: ../plugins/headerbar.py:69
-msgid "Next Item"
-msgstr "Element següent"
+#: ../src/xml.c:426
+msgid "[There were more errors. Output was truncated!]"
+msgstr "[Hi ha hagut altres errors. S'ha truncat la sortida]"
 
-#: ../plugins/headerbar.py:77
-msgid "_Next Unread Item"
-msgstr "Element sense llegir _següent"
-
-#: ../plugins/headerbar.py:85
-msgid "_Mark Items Read"
-msgstr "_Marca'ls tots com a llegits"
-
-#: ../plugins/headerbar.py:104
-msgid "Search All Feeds..."
-msgstr "Cerca a tots els canals..."
+#: ../src/xml.c:594
+msgid "XML Parser: Could not parse document:\n"
+msgstr "Analitzador XML: no s'ha pogut analitzar el document:\n"
 
 #: ../glade/about.ui.h:1
 msgid "About"
@@ -1441,6 +1497,177 @@ msgstr "_Navega"
 msgid "_Do this automatically for enclosures like this from now on."
 msgstr "_Fes el mateix per als tipus de fitxer semblants a partir d'ara."
 
+#: ../glade/google_source.ui.h:1
+#, fuzzy
+msgid "Add Google Reader API Account"
+msgstr "Afegeix un compte de Google Reader"
+
+#: ../glade/google_source.ui.h:2
+msgid ""
+"Please enter the details of the new Google Reader API compatible "
+"subscription."
+msgstr ""
+
+#: ../glade/google_source.ui.h:3 ../glade/reedah_source.ui.h:3
+#: ../glade/theoldreader_source.ui.h:3 ../glade/ttrss_source.ui.h:4
+msgid "_Password"
+msgstr "_Contrasenya"
+
+#: ../glade/google_source.ui.h:4 ../glade/reedah_source.ui.h:4
+#: ../glade/theoldreader_source.ui.h:4
+msgid "_Username (Email)"
+msgstr "Nom d'_usuari (correu electrònic)"
+
+#: ../glade/google_source.ui.h:5
+#, fuzzy
+msgid "_Server"
+msgstr "URL del _servidor"
+
+#: ../glade/google_source.ui.h:6
+#, fuzzy
+msgid "_Name"
+msgstr "_Nom del canal:"
+
+#: ../glade/liferea_menu.ui.h:1
+msgid "_Subscriptions"
+msgstr "_Subscripcions"
+
+#: ../glade/liferea_menu.ui.h:2 ../glade/liferea_toolbar.ui.h:8
+msgid "Update _All"
+msgstr "_Actualitza'ls tots"
+
+#: ../glade/liferea_menu.ui.h:3
+msgid "Mark All As _Read"
+msgstr "Marca'ls tots com a _llegits"
+
+#: ../glade/liferea_menu.ui.h:4 ../glade/liferea_toolbar.ui.h:1
+msgid "_New Subscription..."
+msgstr "Subscripció _nova..."
+
+#: ../glade/liferea_menu.ui.h:7
+msgid "New _Source..."
+msgstr "_Font nova..."
+
+#: ../glade/liferea_menu.ui.h:9
+msgid "_Import Feed List..."
+msgstr "_Importa una llista de canals..."
+
+#: ../glade/liferea_menu.ui.h:10
+msgid "_Export Feed List..."
+msgstr "_Exporta la llista de canals..."
+
+#: ../glade/liferea_menu.ui.h:11
+msgid "_Quit"
+msgstr "_Surt"
+
+#: ../glade/liferea_menu.ui.h:12
+msgid "_Feed"
+msgstr "_Canal"
+
+#: ../glade/liferea_menu.ui.h:15
+msgid "Remove _All Items"
+msgstr "Suprimeix tots els _elements"
+
+#: ../glade/liferea_menu.ui.h:16
+msgid "_Remove"
+msgstr "_Suprimeix"
+
+#: ../glade/liferea_menu.ui.h:18
+msgid "_Item"
+msgstr "_Element"
+
+#: ../glade/liferea_menu.ui.h:24
+msgid "R_emove"
+msgstr "_Suprimeix"
+
+#: ../glade/liferea_menu.ui.h:28
+msgid "_View"
+msgstr "_Visualitza"
+
+#: ../glade/liferea_menu.ui.h:29
+msgid "_Fullscreen"
+msgstr "_Pantalla completa"
+
+#: ../glade/liferea_menu.ui.h:30
+msgid "Zoom _In"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:31
+msgid "Zoom _Out"
+msgstr ""
+
+#: ../glade/liferea_menu.ui.h:32
+#, fuzzy
+msgid "_Normal size"
+msgstr "Visualització _normal"
+
+#: ../glade/liferea_menu.ui.h:33
+msgid "_Normal View"
+msgstr "Visualització _normal"
+
+#: ../glade/liferea_menu.ui.h:34
+msgid "_Wide View"
+msgstr "Visualització àmpli_a"
+
+#: ../glade/liferea_menu.ui.h:35
+msgid "_Reduced Feed List"
+msgstr "Llista de canals _reduïda"
+
+#: ../glade/liferea_menu.ui.h:36
+msgid "_Tools"
+msgstr "E_ines"
+
+#: ../glade/liferea_menu.ui.h:37
+msgid "_Update Monitor"
+msgstr "_Monitor d'actualització"
+
+#: ../glade/liferea_menu.ui.h:38
+msgid "_Preferences"
+msgstr "_Preferències"
+
+#: ../glade/liferea_menu.ui.h:39
+msgid "S_earch"
+msgstr "_Cerca"
+
+#: ../glade/liferea_menu.ui.h:41
+msgid "_Help"
+msgstr "A_juda"
+
+#: ../glade/liferea_menu.ui.h:42
+msgid "_Contents"
+msgstr "_Continguts"
+
+#: ../glade/liferea_menu.ui.h:43
+msgid "_Quick Reference"
+msgstr "_Referència ràpida"
+
+#: ../glade/liferea_menu.ui.h:44
+msgid "_FAQ"
+msgstr "_PMF"
+
+#: ../glade/liferea_menu.ui.h:45
+msgid "_About"
+msgstr "_Quant a"
+
+#: ../glade/liferea_toolbar.ui.h:2
+msgid "Adds a subscription to the feed list."
+msgstr "Afegeix una subscripció a la llista de canals."
+
+#: ../glade/liferea_toolbar.ui.h:4
+msgid ""
+"Marks all items of the selected feed list node / in the item list as read."
+msgstr ""
+"Marca com a llegits tots els elements de la llista de canal o de la llista "
+"d'elements seleccionada."
+
+#: ../glade/liferea_toolbar.ui.h:9
+msgid "Updates all subscriptions."
+msgstr "Actualitza totes les subscripcions."
+
+#: ../glade/liferea_toolbar.ui.h:11
+msgid "Show the search dialog."
+msgstr "Mostra el diàleg de cerca."
+
 #: ../glade/mainwindow.ui.h:2
 msgid "page 1"
 msgstr ""
@@ -1449,11 +1676,7 @@ msgstr ""
 msgid "page 2"
 msgstr ""
 
-#: ../glade/mainwindow.ui.h:4
-msgid "page 3"
-msgstr ""
-
-#: ../glade/mainwindow.ui.h:5 ../glade/prefs.ui.h:23
+#: ../glade/mainwindow.ui.h:4 ../glade/prefs.ui.h:25
 msgid "Headlines"
 msgstr "Titulars"
 
@@ -1478,13 +1701,14 @@ msgstr "Carpeta nova"
 msgid "_Folder name:"
 msgstr "Nom de la _carpeta:"
 
-#: ../glade/new_newsbin.ui.h:1
-msgid "Create News Bin"
-msgstr "Crea un contenidor de notícies"
-
 #: ../glade/new_newsbin.ui.h:2
 msgid "_News Bin Name:"
 msgstr "_Nom del contenidor de notícies:"
+
+#: ../glade/new_newsbin.ui.h:3
+#, fuzzy
+msgid "_Always show in Reduced Feed List"
+msgstr "Llista de canals _reduïda"
 
 #: ../glade/new_subscription.ui.h:2 ../glade/properties.ui.h:11
 msgid "Feed Source"
@@ -1651,69 +1875,69 @@ msgid "_Default View Mode:"
 msgstr "Mode de visualització per _defecte:"
 
 #: ../glade/prefs.ui.h:21
+msgid "_Defer removing read items from folders and search folders."
+msgstr ""
+
+#: ../glade/prefs.ui.h:22
+msgid "Ask for confirmation when marking all items as read."
+msgstr ""
+
+#: ../glade/prefs.ui.h:23
 msgid "Web Integration"
 msgstr "Integració web"
 
-#: ../glade/prefs.ui.h:22
+#: ../glade/prefs.ui.h:24
 msgid "_Post Bookmarks to"
 msgstr "_Publica les adreces d'interès a"
 
-#: ../glade/prefs.ui.h:24
+#: ../glade/prefs.ui.h:26
 msgid "Internal Browser Settings"
 msgstr "Paràmetres del navegador intern"
 
-#: ../glade/prefs.ui.h:25
+#: ../glade/prefs.ui.h:27
 msgid "Open links in Liferea's _window."
 msgstr "Obre els enllaços a la _finestra del Liferea."
 
-#: ../glade/prefs.ui.h:26
-msgid "_Disable Javascript."
-msgstr "_Inhabilita el Javascript."
+#: ../glade/prefs.ui.h:28
+msgid "_Never run external Javascript."
+msgstr ""
 
-#: ../glade/prefs.ui.h:27
+#: ../glade/prefs.ui.h:29
 msgid "_Enable browser plugins."
 msgstr "_Habilita els connectors del navegador."
 
-#: ../glade/prefs.ui.h:28
+#: ../glade/prefs.ui.h:30
 msgid "External Browser Settings"
 msgstr "Paràmetres del navegador extern"
 
-#: ../glade/prefs.ui.h:29
+#: ../glade/prefs.ui.h:31
 msgid "_Browser:"
 msgstr "_Navegador:"
 
-#: ../glade/prefs.ui.h:30
+#: ../glade/prefs.ui.h:32
 msgid "_Manual:"
 msgstr "_Manual:"
 
-#: ../glade/prefs.ui.h:32
+#: ../glade/prefs.ui.h:34
 #, no-c-format
 msgid "<small>(%s for URL)</small>"
 msgstr "<small>(%s per l'URL)</small>"
 
-#: ../glade/prefs.ui.h:33
+#: ../glade/prefs.ui.h:35
 msgid "Browser"
 msgstr "Navegador"
 
-#: ../glade/prefs.ui.h:34
+#: ../glade/prefs.ui.h:36
 msgid "Toolbar Settings"
 msgstr "Paràmetres de la barra d'eines"
 
-#: ../glade/prefs.ui.h:35
+#: ../glade/prefs.ui.h:37
 msgid "_Hide toolbar."
 msgstr "_Oculta la barra d'eines."
 
-#: ../glade/prefs.ui.h:36
+#: ../glade/prefs.ui.h:38
 msgid "Toolbar _button labels:"
 msgstr "Etiquetes dels _botons de la barra d'eines:"
-
-#: ../glade/prefs.ui.h:37
-msgid "Other"
-msgstr ""
-
-#: ../glade/prefs.ui.h:38
-msgid "Ask for confirmation when marking all items as read"
-msgstr ""
 
 #: ../glade/prefs.ui.h:39
 msgid "Desktop"
@@ -1771,31 +1995,57 @@ msgid "Privacy Settings"
 msgstr "Paràmetres de visualització de les carpetes"
 
 #: ../glade/prefs.ui.h:52
-msgid "Tell sites that I do _not want to be tracked"
+msgid "Tell sites that I do _not want to be tracked."
 msgstr ""
 
 #: ../glade/prefs.ui.h:53
-msgid "Privacy"
+msgid "_Intelligent Tracking Prevention. "
 msgstr ""
 
 #: ../glade/prefs.ui.h:54
+msgid ""
+"This enables the WebKit feature described <a href=\"https://webkit.org/"
+"tracking-prevention/\">here</a>."
+msgstr ""
+
+#: ../glade/prefs.ui.h:55
+msgid ""
+"Intelligent tracking prevention is only available with WebKitGtk+ 2.30 or "
+"higher."
+msgstr ""
+
+#: ../glade/prefs.ui.h:56
+msgid "Use _Reader mode."
+msgstr ""
+
+#: ../glade/prefs.ui.h:57
+msgid ""
+"This enables <a href=\"https://github.com/mozilla/readability\">stripping</"
+"a> all non-content elements (like scripts, fonts, tracking)"
+msgstr ""
+
+#: ../glade/prefs.ui.h:58
+msgid "Privacy"
+msgstr ""
+
+#: ../glade/prefs.ui.h:59
 msgid "Downloading Enclosures"
 msgstr "S'estan baixant les adjuncions"
 
-#: ../glade/prefs.ui.h:55
+#: ../glade/prefs.ui.h:60
 msgid "_Download using"
 msgstr "_Baixa-les utilitzant"
 
-#: ../glade/prefs.ui.h:57
+#: ../glade/prefs.ui.h:62
 #, no-c-format
 msgid "custom-command %s"
 msgstr ""
 
-#: ../glade/prefs.ui.h:58
+#: ../glade/prefs.ui.h:63
 msgid "Opening Enclosures"
 msgstr "Obre les adjuncions"
 
-#: ../glade/prefs.ui.h:59
+#: ../glade/prefs.ui.h:64
 msgid "Enclosures"
 msgstr "Adjuncions"
 
@@ -1845,6 +2095,10 @@ msgstr ""
 "El Liferea pot utilitzar connectors de filtres externs per poder accedir a "
 "canals i carpetes que utilitzin formats no implementats pel propi Liferea. "
 "Vegeu la documentació per a més informació."
+
+#: ../glade/properties.ui.h:21 ../xslt/item.xml.in.h:1
+msgid "Source"
+msgstr "Font"
 
 #: ../glade/properties.ui.h:22
 msgid ""
@@ -1905,10 +2159,6 @@ msgstr "_Marca els elements baixats com a llegits."
 msgid "Extract full content from HTML5 and Google AMP"
 msgstr ""
 
-#: ../glade/properties.ui.h:39
-msgid "Advanced"
-msgstr "Avançat"
-
 #: ../glade/reedah_source.ui.h:1
 #, fuzzy
 msgid "Add Reedah Account"
@@ -1918,15 +2168,6 @@ msgstr "Afegeix un compte de Google Reader"
 #, fuzzy
 msgid "Please enter your Reedah account settings."
 msgstr "Introduïu les vostres dades del compte de Google Reader."
-
-#: ../glade/reedah_source.ui.h:3 ../glade/theoldreader_source.ui.h:3
-#: ../glade/ttrss_source.ui.h:4
-msgid "_Password"
-msgstr "_Contrasenya"
-
-#: ../glade/reedah_source.ui.h:4 ../glade/theoldreader_source.ui.h:4
-msgid "_Username (Email)"
-msgstr "Nom d'_usuari (correu electrònic)"
 
 #: ../glade/rename_node.ui.h:1
 msgid "Rename"
@@ -1944,17 +2185,36 @@ msgstr "Propietats de la carpeta de cerca"
 msgid "Search _Name:"
 msgstr "_Nom de la cerca:"
 
-#: ../glade/search_folder.ui.h:3 ../glade/search.ui.h:3
-msgid "Find Items that meet the following criteria"
-msgstr "Cerca elements que coincideixen amb els criteris següents"
+#: ../glade/search_folder.ui.h:3
+#, fuzzy
+msgid "Search Rules"
+msgstr "%d resultat de cerca"
 
-#: ../glade/search_folder.ui.h:4 ../glade/search.ui.h:4
+#: ../glade/search_folder.ui.h:4
+msgid "Rules"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:5
+msgid "All rules for this search folder"
+msgstr ""
+
+#: ../glade/search_folder.ui.h:6
+#, fuzzy
+msgid "Rule Matching"
+msgstr "Coincidència de _qualsevol regla"
+
+#: ../glade/search_folder.ui.h:7 ../glade/search.ui.h:4
 msgid "A_ny Rule Matches"
 msgstr "Coincidència de _qualsevol regla"
 
-#: ../glade/search_folder.ui.h:5 ../glade/search.ui.h:5
+#: ../glade/search_folder.ui.h:8 ../glade/search.ui.h:5
 msgid "_All Rules Must Match"
 msgstr "Han de coincidir _totes les regles"
+
+#: ../glade/search_folder.ui.h:9
+#, fuzzy
+msgid "Hide read items"
+msgstr "_Oculta els elements llegits."
 
 #: ../glade/search.ui.h:1
 msgid "Advanced Search"
@@ -1963,6 +2223,10 @@ msgstr "Cerca avançada"
 #: ../glade/search.ui.h:2
 msgid "_Search Folder..."
 msgstr "Carpeta de _cerca..."
+
+#: ../glade/search.ui.h:3
+msgid "Find Items that meet the following criteria"
+msgstr "Cerca elements que coincideixen amb els criteris següents"
 
 #: ../glade/simple_search.ui.h:1
 msgid "Search All Feeds"
@@ -2054,6 +2318,278 @@ msgstr "Sol·licituds pendents"
 msgid "_Downloading Now"
 msgstr "S'està baixant"
 
+#: ../xslt/feed.xml.in.h:1
+msgid "Feed:"
+msgstr "Canal:"
+
+#: ../xslt/feed.xml.in.h:2 ../xslt/source.xml.in.h:1
+msgid "Source:"
+msgstr "Font:"
+
+#: ../xslt/feed.xml.in.h:3
+msgid "Publisher"
+msgstr "Editor"
+
+#: ../xslt/feed.xml.in.h:4
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../xslt/feed.xml.in.h:5
+#, fuzzy
+msgid "There was a problem when fetching this subscription!"
+msgstr ""
+"S'ha produït un error en llegir aquesta subscripció. Verifiqueu-ne l'URL i "
+"la sortida del terminal."
+
+#: ../xslt/feed.xml.in.h:6
+#, fuzzy
+msgid "1. Authentication"
+msgstr "Autenticació"
+
+#: ../xslt/feed.xml.in.h:7
+#, fuzzy
+msgid "2. Download"
+msgstr "Baixades"
+
+#: ../xslt/feed.xml.in.h:8
+msgid "3. Feed Discovery"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:9
+msgid "4. Parsing"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:10
+#, fuzzy
+msgid "Details:"
+msgstr "Detalls"
+
+#: ../xslt/feed.xml.in.h:11
+msgid "Authentication failed. Please check the credentials and try again!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:12
+#, fuzzy
+msgid "There was an error when downloading the feed source:"
+msgstr "S'han produït errors en analitzar aquest canal"
+
+#: ../xslt/feed.xml.in.h:13
+#, fuzzy
+msgid "There was an error when running the feed filter command:"
+msgstr "S'han produït errors en analitzar aquest canal"
+
+#: ../xslt/feed.xml.in.h:14
+msgid ""
+"The source does not point directly to a feed or a webpage with a link to a "
+"feed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:15
+msgid "Sorry, the feed could not be parsed!"
+msgstr ""
+
+#: ../xslt/feed.xml.in.h:16
+msgid "You may want to contact the author/webmaster of the feed about this!"
+msgstr ""
+"Us podeu posar en contacte amb l'autor/administrador del canal per explicar-"
+"li això."
+
+#: ../xslt/folder.xml.in.h:1
+msgid "Folder:"
+msgstr "Carpeta:"
+
+#: ../xslt/folder.xml.in.h:2 ../xslt/source.xml.in.h:2
+msgid "children with"
+msgstr "fill amb"
+
+#: ../xslt/folder.xml.in.h:3 ../xslt/source.xml.in.h:3
+#: ../xslt/vfolder.xml.in.h:2
+msgid "unread headlines"
+msgstr "titulars sense llegir"
+
+#: ../xslt/item.xml.in.h:2
+msgid "Feed"
+msgstr "Canal"
+
+#: ../xslt/item.xml.in.h:3
+msgid "Filed under"
+msgstr "Arxivat a"
+
+#: ../xslt/item.xml.in.h:4
+msgid "Author"
+msgstr "Autor"
+
+#: ../xslt/item.xml.in.h:5
+msgid "Shared by"
+msgstr "Compartit per"
+
+#: ../xslt/item.xml.in.h:6
+msgid "Via"
+msgstr "A través de"
+
+#: ../xslt/item.xml.in.h:7
+msgid "Related"
+msgstr "Relacionats"
+
+#: ../xslt/item.xml.in.h:8
+msgid "Also posted in"
+msgstr "Publicat també a"
+
+#: ../xslt/item.xml.in.h:9
+msgid "Creator"
+msgstr "Creador"
+
+#: ../xslt/item.xml.in.h:10
+msgid "Coordinates"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:11
+msgid "Map"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:12
+msgid "View count"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:13
+msgid "Rating"
+msgstr ""
+
+#: ../xslt/item.xml.in.h:14
+msgid "Comments"
+msgstr "Comentaris"
+
+#: ../xslt/item.xml.in.h:15
+msgid "Updating..."
+msgstr "S'està actualitzant..."
+
+#: ../xslt/item.xml.in.h:16
+msgid "Section"
+msgstr "Secció"
+
+#: ../xslt/item.xml.in.h:17
+msgid "Department"
+msgstr "Departament"
+
+#: ../xslt/newsbin.xml.in.h:1
+msgid "News Bin:"
+msgstr "Contenidor de notícies:"
+
+#: ../xslt/newsbin.xml.in.h:2
+msgid ""
+"Add items to this news bin by selecting \"Copy to News Bin\" from the item "
+"list context menu."
+msgstr ""
+"Podeu afegir elements a aquest contenidor de notícies si seleccioneu «Copia "
+"al contenidor de notícies» del menú contextual de la llista d'elements."
+
+#: ../xslt/vfolder.xml.in.h:1
+msgid "Search Folder:"
+msgstr "Carpeta de cerca:"
+
+#, fuzzy
+#~ msgid "RSS feed reader"
+#~ msgstr "Lector de canals de notícies"
+
+#, fuzzy
+#~ msgid "Read articles when offline"
+#~ msgstr "El Liferea és fora de línia"
+
+#, fuzzy
+#~ msgid "Synchronizes with TheOldReader"
+#~ msgstr "Sincronització amb els equips propers"
+
+#, fuzzy
+#~ msgid "Synchronizes with TinyTinyRSS"
+#~ msgstr "Sincronització amb els equips propers"
+
+#, fuzzy
+#~ msgid "Synchronizes with InoReader"
+#~ msgstr "Sincronització amb els equips propers"
+
+#, fuzzy
+#~ msgid "Synchronizes with Reedah"
+#~ msgstr "Sincronització amb els equips propers"
+
+#, fuzzy
+#~ msgid "Play Podcasts"
+#~ msgstr "Podcast"
+
+#, c-format
+#~ msgid "\"%s\" is not available"
+#~ msgstr "no està disponible «%s»"
+
+#, c-format
+#~ msgid "\"%s\" updated..."
+#~ msgstr "s'ha actualitzat «%s»..."
+
+#~ msgid ""
+#~ "A network error occurred, or the other end closed the connection "
+#~ "unexpectedly"
+#~ msgstr ""
+#~ "S'ha produït un error de xarxa o l'altre extrem ha tancat la connexió "
+#~ "inesperadament"
+
+#~ msgid ""
+#~ "The last update of this subscription failed!<br/><b>HTTP error code <xsl:"
+#~ "value-of select=\"httpErrorCode\"/>: <xsl:value-of select=\"httpError\"/"
+#~ "></b>"
+#~ msgstr ""
+#~ "Ha fallat l'última actualització d'aquesta subscripció<br/><b>Codi "
+#~ "d'error HTTP <xsl:value-of select=\"httpErrorCode\"/>: <xsl:value-of "
+#~ "select=\"httpError\"/></b>"
+
+#~ msgid "Parser Error Details"
+#~ msgstr "Detalls de l'error de l'analitzador"
+
+#~ msgid "There were errors while filtering this feed!"
+#~ msgstr "S'han produït errors en filtrar aquest canal"
+
+#~ msgid "Filter Error Details"
+#~ msgstr "Detalls de l'error del filtre"
+
+#~ msgid ""
+#~ "<p>Could not detect the type of this feed! Please check if the source "
+#~ "really points to a resource provided in one of the supported syndication "
+#~ "formats!</p>XML Parser Output:<br /><div class='xmlparseroutput'>"
+#~ msgstr ""
+#~ "<p>No s'ha pogut detectar el tipus d'aquest canal. Verifiqueu que la font "
+#~ "apunti realment a un recurs proporcionat per un dels formats de "
+#~ "sindicació coneguts.</p>Sortida de l'analitzador XML:<br /><div "
+#~ "class='xmlparseroutput'>"
+
+#~ msgid ""
+#~ "The URL you want Liferea to subscribe to points to a webpage and the auto "
+#~ "discovery found no feeds on this page. Maybe this webpage just does not "
+#~ "support feed auto discovery."
+#~ msgstr ""
+#~ "L'URL de subscripció que heu proporcionat al Liferea apunta a una pàgina "
+#~ "web i el descobridor automàtic no hi ha trobat cap canal. Potser aquesta "
+#~ "pàgina web no permet el descobriment automàtic del canal."
+
+#~ msgid "Source points to HTML document."
+#~ msgstr "La font apunta a un document HTML."
+
+#~ msgid "Could not determine the feed type."
+#~ msgstr "No s'ha pogut determinar el tipus de canal."
+
+#~ msgid "Gone. Resource doesn't exist. Please unsubscribe!"
+#~ msgstr "El recurs ja no existeix, cancel·leu la subscripció."
+
+#~ msgid "Updating \"%s\""
+#~ msgstr "S'està actualitzant «%s»"
+
+#~ msgid "XML error while reading feed! Feed \"%s\" could not be loaded!"
+#~ msgstr ""
+#~ "S'ha detectat un error en la sintaxi XML en llegir el canal. No s'ha "
+#~ "pogut carregar el canal «%s»."
+
+#~ msgid "Combined View"
+#~ msgstr "Visualització combinada"
+
+#~ msgid "_Disable Javascript."
+#~ msgstr "_Inhabilita el Javascript."
+
 #~ msgid "GUI"
 #~ msgstr "Interfície gràfica"
 
@@ -2064,50 +2600,17 @@ msgstr "S'està baixant"
 #~ msgid "Updating favicon for \"%s\""
 #~ msgstr "S'està actualitzant la icona del canal «%s»"
 
-#~ msgid "_Subscriptions"
-#~ msgstr "_Subscripcions"
-
-#~ msgid "Update _All"
-#~ msgstr "_Actualitza'ls tots"
-
-#~ msgid "Updates all subscriptions."
-#~ msgstr "Actualitza totes les subscripcions."
-
-#~ msgid "Mark All As _Read"
-#~ msgstr "Marca'ls tots com a _llegits"
-
 #~ msgid "Marks read every item of every subscription."
 #~ msgstr "Marca cada element de cada subscripció com a llegit."
-
-#~ msgid "_Import Feed List..."
-#~ msgstr "_Importa una llista de canals..."
 
 #~ msgid "Imports an OPML feed list."
 #~ msgstr "Importa una llista de canals OPML."
 
-#~ msgid "_Export Feed List..."
-#~ msgstr "_Exporta la llista de canals..."
-
 #~ msgid "Exports the feed list as OPML."
 #~ msgstr "Exporta la llista de canals com a OPML."
 
-#~ msgid "_Quit"
-#~ msgstr "_Surt"
-
-#~ msgid "_Feed"
-#~ msgstr "_Canal"
-
-#~ msgid "Remove _All Items"
-#~ msgstr "Suprimeix tots els _elements"
-
 #~ msgid "Removes all items of the currently selected feed."
 #~ msgstr "Suprimeix tots els elements del canal seleccionat."
-
-#~ msgid "_Item"
-#~ msgstr "_Element"
-
-#~ msgid "_View"
-#~ msgstr "_Visualitza"
 
 #~ msgid "Increases the text size of the item view."
 #~ msgstr "Augmenta la mida del text de l'element visualitzat."
@@ -2115,64 +2618,28 @@ msgstr "S'està baixant"
 #~ msgid "Decreases the text size of the item view."
 #~ msgstr "Redueix la mida del text de l'element visualitzat."
 
-#~ msgid "_Tools"
-#~ msgstr "E_ines"
-
-#~ msgid "_Update Monitor"
-#~ msgstr "_Monitor d'actualització"
-
 #~ msgid "Show a list of all feeds currently in the update queue"
 #~ msgstr ""
 #~ "Mostra una llista de tots els canals que hi ha a la cua d'actualització"
 
-#~ msgid "_Preferences"
-#~ msgstr "_Preferències"
-
 #~ msgid "Edit Preferences."
 #~ msgstr "Edita les preferències."
-
-#~ msgid "S_earch"
-#~ msgstr "_Cerca"
-
-#~ msgid "Show the search dialog."
-#~ msgstr "Mostra el diàleg de cerca."
-
-#~ msgid "_Help"
-#~ msgstr "A_juda"
-
-#~ msgid "_Contents"
-#~ msgstr "_Continguts"
 
 #~ msgid "View help for this application."
 #~ msgstr "Visualitza l'ajuda d'aquesta aplicació."
 
-#~ msgid "_Quick Reference"
-#~ msgstr "_Referència ràpida"
-
 #~ msgid "View a list of all Liferea shortcuts."
 #~ msgstr "Visualitza una llista de totes les dreceres del Liferea."
-
-#~ msgid "_FAQ"
-#~ msgstr "_PMF"
 
 #~ msgid "View the FAQ for this application."
 #~ msgstr "Visualitza les PMF d'aquesta aplicació."
 
-#~ msgid "_About"
-#~ msgstr "_Quant a"
-
 #~ msgid "Shows an about dialog."
 #~ msgstr "Mostra el diàleg de quant a."
-
-#~ msgid "_Normal View"
-#~ msgstr "Visualització _normal"
 
 #~ msgid "Set view mode to mail client mode."
 #~ msgstr ""
 #~ "Estableix el mode de visualització semblant al mode del client de correu."
-
-#~ msgid "_Wide View"
-#~ msgstr "Visualització àmpli_a"
 
 #~ msgid "Set view mode to use three vertical panes."
 #~ msgstr "Estableix el mode de visualització a tres quadres verticals."
@@ -2183,17 +2650,8 @@ msgstr "S'està baixant"
 #~ msgid "Set view mode to two pane mode."
 #~ msgstr "Estableix el mode de visualització a dos quadres."
 
-#~ msgid "_Reduced Feed List"
-#~ msgstr "Llista de canals _reduïda"
-
 #~ msgid "Hide feeds with no unread items."
 #~ msgstr "Oculta els canals sense cap element no llegit."
-
-#~ msgid "_New Subscription..."
-#~ msgstr "Subscripció _nova..."
-
-#~ msgid "Adds a subscription to the feed list."
-#~ msgstr "Afegeix una subscripció a la llista de canals."
 
 #~ msgid "Adds a folder to the feed list."
 #~ msgstr "Afegeix una carpeta a la llista de canals."
@@ -2201,20 +2659,11 @@ msgstr "S'està baixant"
 #~ msgid "Adds a new search folder to the feed list."
 #~ msgstr "Afegeix una carpeta de cerca nova a la llista de canals."
 
-#~ msgid "New _Source..."
-#~ msgstr "_Font nova..."
-
 #~ msgid "Adds a new feed list source."
 #~ msgstr "Afegeix una font de llista de canals nova."
 
 #~ msgid "Adds a new news bin."
 #~ msgstr "Afegeix un contenidor de notícies nou."
-
-#~ msgid ""
-#~ "Marks all items of the selected feed list node / in the item list as read."
-#~ msgstr ""
-#~ "Marca com a llegits tots els elements de la llista de canal o de la "
-#~ "llista d'elements seleccionada."
 
 #~ msgid ""
 #~ "Updates the selected subscription or all subscriptions of the selected "
@@ -2226,9 +2675,6 @@ msgstr "S'està baixant"
 #~ msgid "Opens the property dialog for the selected subscription."
 #~ msgstr "Obre el diàleg de propietats de la subscripció seleccionada."
 
-#~ msgid "_Remove"
-#~ msgstr "_Suprimeix"
-
 #~ msgid "Removes the selected subscription."
 #~ msgstr "Suprimeix la subscripció seleccionada."
 
@@ -2237,9 +2683,6 @@ msgstr "S'està baixant"
 
 #~ msgid "Toggles the flag status of the selected item."
 #~ msgstr "Commuta l'estat del senyalador de l'element seleccionat."
-
-#~ msgid "R_emove"
-#~ msgstr "_Suprimeix"
 
 #~ msgid "Removes the selected item."
 #~ msgstr "Suprimeix l'element seleccionat."
@@ -2253,9 +2696,6 @@ msgstr "S'està baixant"
 
 #~ msgid "Launches the item's link in the configured external browser."
 #~ msgstr "Obre l'enllaç de l'element en el navegador extern preconfigurat."
-
-#~ msgid "_Fullscreen"
-#~ msgstr "_Pantalla completa"
 
 #~ msgid "Browse at full screen"
 #~ msgstr "Navega a pantalla completa"
@@ -2280,9 +2720,6 @@ msgstr "S'està baixant"
 #~ "Nota: <i>es desarà, sense xifrar, el nom d'usuari i la contrasenya al "
 #~ "fitxer de la llista de canals del Liferea.</i>"
 
-#~ msgid "Add Google Reader Account"
-#~ msgstr "Afegeix un compte de Google Reader"
-
 #~ msgid "Please enter your Google Reader account settings."
 #~ msgstr "Introduïu les vostres dades del compte de Google Reader."
 
@@ -2296,9 +2733,6 @@ msgstr "S'està baixant"
 
 #~ msgid "View Headlines"
 #~ msgstr "Visualitza els titulars"
-
-#~ msgid "Plugins"
-#~ msgstr "Connectors"
 
 #~ msgid "Feed Name"
 #~ msgstr "Nom del canal"
@@ -2491,12 +2925,6 @@ msgstr "S'està baixant"
 #~ msgstr[0] "<b>%s</b> té <b>%d</b> actualització"
 #~ msgstr[1] "<b>%s</b> té <b>%d</b> actualitzacions"
 
-#~ msgid "Feed Update"
-#~ msgstr "Actualització de canal"
-
-#~ msgid "Show details"
-#~ msgstr "Mostra els detalls"
-
 #~ msgid "_Enforce popup notification for this subscription."
 #~ msgstr "_Força les notificacions emergents per aquesta subscripció."
 
@@ -2509,9 +2937,6 @@ msgstr "S'està baixant"
 #~ msgstr ""
 #~ "Copyright (c) 2003-2012\n"
 #~ "L'equip del Liferea\n"
-
-#~ msgid "Notification Settings"
-#~ msgstr "Paràmetres de notificació"
 
 #~ msgid "Show a _popup window with new headlines."
 #~ msgstr "Mostra una finestra _emergent amb els titulars nous."
@@ -2582,9 +3007,6 @@ msgstr "S'està baixant"
 #~ msgid "Download finished."
 #~ msgstr "Ha finalitzat la baixada."
 
-#~ msgid "Choose download directory"
-#~ msgstr "Escolliu el directori de baixada"
-
 #~ msgid "Downloading Enclosure"
 #~ msgstr "S'estan baixant l'adjunció"
 
@@ -2607,9 +3029,6 @@ msgstr "S'està baixant"
 #~ msgid "_Save downloads in"
 #~ msgstr "_Desa les baixades a"
 
-#~ msgid "_Service Name"
-#~ msgstr "Nom del _servei"
-
 #~ msgid "    "
 #~ msgstr "    "
 
@@ -2618,11 +3037,6 @@ msgstr "S'està baixant"
 
 #~ msgid "      "
 #~ msgstr "      "
-
-#~ msgid "%d Search Result"
-#~ msgid_plural "%d Search Results"
-#~ msgstr[0] "%d resultat de cerca"
-#~ msgstr[1] "%d resultats de cerca"
 
 #~ msgid "%d Search Result for \"%s\""
 #~ msgid_plural "%d Search Results for \"%s\""

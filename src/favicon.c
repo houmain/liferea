@@ -2,7 +2,7 @@
  * @file favicon.c  Saving, loading and discovering favicons
  *
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
- * Copyright (C) 2015-2020 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2015-2022 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,20 +63,18 @@ favicon_load_from_cache (const gchar *id, guint size)
 	return result;
 }
 
-void favicon_remove_from_cache(const gchar *id) {
+void
+favicon_remove_from_cache (const gchar *id)
+{
 	gchar		*filename;
-
-	debug_enter("favicon_remove");
 
 	/* try to load a saved favicon */
 	filename = common_create_cache_filename ("favicons", id, "png");
-	if(g_file_test(filename, G_FILE_TEST_EXISTS)) {
-		if(0 != unlink(filename))
+	if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
+		if (0 != unlink (filename))
 			g_warning ("Removal of %s failed", filename);
 	}
-	g_free(filename);
-
-	debug_exit("favicon_remove");
+	g_free (filename);
 }
 
 /* prevent saving overly huge favicons loaded from net */
@@ -84,6 +82,8 @@ static void
 favicon_pixbuf_size_prepared_cb (GdkPixbufLoader *loader, gint width, gint height, gpointer user_data)
 {
 	gint max_size = 256;
+
+	debug2 (DEBUG_UPDATE, "   - favicon size is %d:%d", width, height);
 	if (width > max_size || height > max_size) {
 		width = width < max_size ? width : max_size;
 		height = height < max_size ? height : max_size;
@@ -134,12 +134,14 @@ favicon_save_from_data (const struct updateResult * const result, const gchar *i
 	return success;
 }
 
-static gint count_slashes(const gchar *str) {
+static gint
+count_slashes (const gchar *str)
+{
 	const gchar	*tmp = str;
 	gint		slashes = 0;
 
 	slashes = 0;
-	while(*tmp) { if(*tmp == '/') slashes++;tmp++; }
+	while (*tmp) { if (*tmp == '/') slashes++;tmp++; }
 
 	return slashes;
 }
@@ -164,7 +166,7 @@ favicon_get_urls (subscriptionPtr subscription, const gchar *html_url)
 	gchar		*tmp, *tmp2;
 	const gchar	*source_url = subscription->source;
 
-	/* case 1: the feed parser passed as an icon URL in the subscription metadata */
+	/* case 1: the feed parser passed us an icon URL in the subscription metadata */
 	if (metadata_list_get (subscription->metadata, "icon")) {
 		tmp = g_strstrip (g_strdup (metadata_list_get (subscription->metadata, "icon")));
 		urls = g_slist_append (urls, tmp);

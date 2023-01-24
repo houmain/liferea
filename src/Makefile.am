@@ -34,13 +34,13 @@ liferea_SOURCES = \
 	feedlist.c feedlist.h \
 	folder.c folder.h \
 	html.c html.h \
-	htmlview.c htmlview.h \
 	item.c item.h \
 	item_history.c item_history.h \
 	item_loader.c item_loader.h \
 	item_state.c item_state.h \
 	itemset.c itemset.h \
 	itemlist.c itemlist.h \
+	js.c js.h \
 	json.c json.h \
 	liferea_application.c liferea_application.h \
 	metadata.c metadata.h \
@@ -74,6 +74,15 @@ liferea_LDADD =	parsers/libliparsers.a \
 		$(INTROSPECTION_LIBS) \
 		-lm
 
+js.h: $(top_srcdir)/js/gresource.xml $(top_srcdir)/js/htmlview.js $(top_srcdir)/js/Readability-readerable.js $(top_srcdir)/js/Readability.js $(main_dep)
+	glib-compile-resources --generate --target=$@ --c-name js --sourcedir=$(top_srcdir)/js $<
+
+js.c: $(top_srcdir)/js/gresource.xml $(top_srcdir)/js/htmlview.js $(top_srcdir)/js/Readability-readerable.js $(top_srcdir)/js/Readability.js $(main_dep)
+	glib-compile-resources --generate --target=$@ --c-name js --sourcedir=$(top_srcdir)/js $<
+
+js.o: js.c js.h
+main.o: js.h
+
 EXTRA_DIST = $(srcdir)/liferea-add-feed.in
 DISTCLEANFILES = $(srcdir)/liferea-add-feed
 AM_INSTALLCHECK_STD_OPTIONS_EXEMPT = liferea-add-feed
@@ -95,6 +104,7 @@ Liferea_3_0_gir_FILES = \
 	itemlist.c itemlist.h \
 	itemset.c itemset.h \
 	liferea_application.h \
+	net_monitor.h net_monitor.c \
 	node.h node.c \
 	node_view.h \
 	social.c social.h \
@@ -103,7 +113,7 @@ Liferea_3_0_gir_FILES = \
 	ui/icons.c ui/icons.h \
 	ui/itemview.c ui/itemview.h \
 	ui/item_list_view.c ui/item_list_view.h \
-	ui/liferea_htmlview.c ui/liferea_htmlview.h \
+	ui/liferea_browser.c ui/liferea_browser.h \
 	ui/liferea_shell.c ui/liferea_shell.h \
 	ui/liferea_shell_activatable.c ui/liferea_shell_activatable.h \
 	ui/media_player.c ui/media_player.h \
@@ -119,6 +129,7 @@ typelibdir = $(libdir)/liferea/girepository-1.0
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
 CLEANFILES = \
+	$(srcdir)/js.c $(srcdir)/js.h \
 	$(gir_DATA)	\
 	$(typelib_DATA)
 endif

@@ -1,33 +1,38 @@
-#
-# System Tray Icon Plugin
-#
-# Copyright (C) 2013-2020 Lars Windolf <lars.windolf@gmx.de>
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
-#
-# You should have received a copy of the GNU Library General Public License
-# along with this library; see the file COPYING.LIB.  If not, write to
-# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
-#
+"""
+System Tray Icon Plugin
 
-import gi
-gi.require_version('Peas', '1.0')
-gi.require_version('PeasGtk', '1.0')
-gi.require_version('Liferea', '3.0')
-from gi.repository import GObject, Peas, PeasGtk, Gtk, Liferea
-from gi.repository import Gdk, GdkPixbuf
-import cairo
+Copyright (C) 2013-2020 Lars Windolf <lars.windolf@gmx.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
+import gettext
 import pathlib
 from collections import namedtuple
+import cairo
+import gi
+gi.require_version('Liferea', '3.0')
+from gi.repository import GObject, Gtk, Liferea
+from gi.repository import Gdk, GdkPixbuf
+
+_ = lambda x: x
+try:
+    t = gettext.translation("liferea")
+except FileNotFoundError:
+    pass
+else:
+    _ = t.gettext
 
 # Cairo text extents
 Extents = namedtuple("Extents", [
@@ -81,30 +86,54 @@ def pixbuf_text(width, height, text, font_size=16, bg_pix=None):
     pixbuf= Gdk.pixbuf_get_from_surface(surface, 0, 0, width, height)
     return pixbuf
 
+
+def get_config_path():
+    """Return data file path"""
+    data_dir = pathlib.Path.joinpath(
+        pathlib.Path.home(),
+        ".config/liferea/plugins/trayicon"
+    )
+    if not data_dir.exists():
+        data_dir.mkdir(0o700, True, True)
+
+    config_path = data_dir / "trayicon.conf"
+    return config_path
+
+
 class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
     __gtype_name__ = 'TrayiconPlugin'
 
     object = GObject.property(type=GObject.Object)
     shell = GObject.property(type=Liferea.Shell)
+    config_path = None
+    read_pix = None
+    unread_pix = None
+    staticon = None
+    menu = None
+    min_enabled = None
+    window = None
+    delete_signal_id = None
+    feedlist_new_items_cb_id = None
+    feedlist = None
 
     def do_activate(self):
-        self.staticon = Gtk.StatusIcon ()
+        self.read_pix = Liferea.icon_create_from_file("emblem-web.svg")
         # FIXME: Support a scalable image!
-        self.read_pix = Liferea.icon_create_from_file ("available.png")
-        self.unread_pix = Liferea.icon_create_from_file ("unread.png")
+        self.unread_pix = Liferea.icon_create_from_file("unread.png")
 
-        self.staticon.set_from_pixbuf(Liferea.icon_create_from_file("unread.png"))
+        self.staticon = Gtk.StatusIcon ()
         self.staticon.connect("activate", self.trayicon_click)
         self.staticon.connect("popup_menu", self.trayicon_popup)
         self.staticon.connect("size-changed", self.trayicon_size_changed)
         self.staticon.set_visible(True)
+        self.trayicon_set_pixbuf(self.read_pix)
 
         self.menu = Gtk.Menu()
-        menuitem_toggle = Gtk.MenuItem("Show / Hide")
-        menuitem_close_behavior = Gtk.CheckMenuItem("Minimize to tray on close")
-        menuitem_quit = Gtk.MenuItem("Quit")
+        menuitem_toggle = Gtk.MenuItem(_("Show / Hide"))
+        menuitem_close_behavior = Gtk.CheckMenuItem(_("Minimize to tray on close"))
+        menuitem_quit = Gtk.MenuItem(_("Quit"))
 
-        self.config_path = self.get_config_path()
+        self.config_path = get_config_path()
         self.min_enabled = self.get_config()
 
         if self.min_enabled == "True":
@@ -145,18 +174,6 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
             self.shell.save_position()
             self.window.hide()
 
-    def get_config_path(self):
-        """Return data file path"""
-        data_dir = pathlib.Path.joinpath(
-            pathlib.Path.home(),
-            ".config/liferea/plugins/trayicon"
-        )
-        if not data_dir.exists():
-            data_dir.mkdir(0o700, True, True)
-
-        config_path = data_dir / "trayicon.conf"
-        return config_path
-
     def get_config(self):
         """Load configuration file"""
         try:
@@ -182,9 +199,9 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
         self.shell.save_position()
         if self.min_enabled == "True":
             self.window.hide()
-            return True
         else:
             Liferea.Application.shutdown()
+        return True
 
     def trayicon_close_behavior(self, widget, data = None):
         if widget.get_active():
@@ -201,6 +218,21 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
 
     def trayicon_popup(self, widget, button, time, data = None):
         self.menu.popup(None, None, self.staticon.position_menu, self.staticon, 3, time)
+
+    def trayicon_set_pixbuf(self, pix):
+        if pix is None:
+            return
+
+        icon_size = self.staticon.props.size
+        if icon_size == 0:
+            return
+
+        if pix.props.height != icon_size:
+            pix = pix.scale_simple(icon_size, icon_size,
+                GdkPixbuf.InterpType.HYPER)
+
+        if self.staticon.props.pixbuf != pix:
+            self.staticon.props.pixbuf = pix
 
     def show_new_count(self, new_count):
         """display new count on status icon"""
@@ -225,16 +257,7 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
         else:
             pix = self.read_pix
 
-        if None == pix:
-            return
-
-        icon_size = self.staticon.props.size
-        if pix.props.height < icon_size:
-            pix = pix.scale_simple(icon_size, icon_size,
-                    GdkPixbuf.InterpType.HYPER)
-
-        if  self.staticon.props.pixbuf != pix:
-            self.staticon.props.pixbuf = pix
+        self.trayicon_set_pixbuf(pix)
 
     def trayicon_size_changed(self, widget, size):
         self.feedlist_new_items_cb()

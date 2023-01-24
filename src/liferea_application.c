@@ -1,7 +1,7 @@
 /**
  * @file main.c Liferea startup
  *
- * Copyright (C) 2003-2020 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2022 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * Some code like the command line handling was inspired by
@@ -34,6 +34,7 @@
 
 #include "conf.h"
 #include "common.h"
+#include "date.h"
 #include "db.h"
 #include "dbus.h"
 #include "debug.h"
@@ -114,8 +115,7 @@ on_app_activate (GtkApplication *gtk_app, gpointer user_data)
 	list = gtk_application_get_windows (gtk_app);
 
 	if (list) {
-		gtk_window_deiconify (GTK_WINDOW (list->data));
-		gtk_window_present (GTK_WINDOW (list->data));
+		liferea_shell_show_window ();
 	} else {
 		liferea_shell_create (gtk_app, app->initialStateOption, app->pluginsDisabled);
 	}
@@ -160,9 +160,10 @@ on_app_startup (GApplication *gapp, gpointer user_data)
 	update_init ();
 
 	/* order is important! */
-	db_init ();			/* initialize sqlite */
-	xml_init ();			/* initialize libxml2 */
-	social_init ();			/* initialize social bookmarking */
+	date_init ();
+	db_init ();
+	xml_init ();
+	social_init ();
 
 	app->dbus = liferea_dbus_new ();
 }
@@ -188,6 +189,8 @@ on_app_shutdown (GApplication *app, gpointer user_data)
 	db_deinit ();
 	social_free ();
 	conf_deinit ();
+	xml_deinit ();
+	date_deinit ();
 
 	debug_exit ("liferea_shutdown");
 }
@@ -347,9 +350,15 @@ liferea_application_new (int argc, char *argv[])
 
 	g_set_prgname ("liferea");
 	g_set_application_name (_("Liferea"));
-	gtk_window_set_default_icon_name ("liferea");	/* GTK theme support */
+	gtk_window_set_default_icon_name ("net.sourceforge.liferea");	/* GTK theme support */
 	status = g_application_run (G_APPLICATION (liferea_app), argc, argv);
 	g_object_unref (liferea_app);
 
 	return status;
+}
+
+void
+liferea_application_rebuild_css(void)
+{
+	liferea_shell_rebuild_css ();
 }

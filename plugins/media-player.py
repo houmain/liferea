@@ -1,24 +1,22 @@
-#
-# GStreamer based embedded Media Player
-#
-# Copyright (C) 2013 Lars Windolf <lars.lindner@gmail.com>
-# Copyright (C) 2013 Simon Kagedal Reimer <skagedal@gmail.com>
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Library General Public License for more details.
-#
-# You should have received a copy of the GNU Library General Public License
-# along with this library; see the file COPYING.LIB.  If not, write to
-# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
-#
+"""
+GStreamer based embedded Media Player
+
+Copyright (C) 2013 Lars Windolf <lars.lindner@gmail.com>
+Copyright (C) 2013 Simon Kagedal Reimer <skagedal@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -208,6 +206,7 @@ class MediaPlayerPlugin(GObject.Object, Liferea.MediaPlayerActivatable):
            self.prevButton = Gtk.Button.new()
            self.prevButton.add(image)
            self.prevButton.connect("clicked", self.prev)
+           self.prevButton.set_direction(Gtk.TextDirection.LTR)
            Gtk.Box.pack_start(vbox, self.prevButton, False, False, 0)
 
            self.playButtonImage = Gtk.Image()
@@ -215,6 +214,7 @@ class MediaPlayerPlugin(GObject.Object, Liferea.MediaPlayerActivatable):
            self.playButton = Gtk.Button.new()
            self.playButton.add(self.playButtonImage)
            self.playButton.connect("clicked", self.playToggled)
+           self.playButton.set_direction(Gtk.TextDirection.LTR)
            Gtk.Box.pack_start(vbox, self.playButton, False, False, 0)
 
            image = Gtk.Image()
@@ -222,6 +222,7 @@ class MediaPlayerPlugin(GObject.Object, Liferea.MediaPlayerActivatable):
            self.nextButton = Gtk.Button.new()
            self.nextButton.add(image)
            self.nextButton.connect("clicked", self.next)
+           self.nextButton.set_direction(Gtk.TextDirection.LTR)
            Gtk.Box.pack_start(vbox, self.nextButton, False, False, 0)
 
            self.slider = Gtk.Scale(orientation = Gtk.Orientation.HORIZONTAL)
@@ -233,7 +234,7 @@ class MediaPlayerPlugin(GObject.Object, Liferea.MediaPlayerActivatable):
                                self.on_slider_button_press)
            self.slider.connect("button-release-event",
                                self.on_slider_button_release)
-
+           self.slider.set_direction(Gtk.TextDirection.LTR)
            Gtk.Box.pack_start(vbox, self.slider, True, True, 0)
 
            self.label = Gtk.Label()

@@ -2,7 +2,7 @@
  * @file preferences_dialog.c Liferea preferences
  *
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
- * Copyright (C) 2004-2018 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2004-2023 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2009 Hubert Figuiere <hub@figuiere.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -71,7 +71,7 @@ static const gchar * enclosure_download_commands[] = {
 	"kget %s",
 	"uget-gtk %s",
 	"transmission-gtk %s",
-	"aria2 %s"
+	"aria2c %s"
 };
 
 /** order must match enclosure_download_commands[] */
@@ -109,6 +109,7 @@ static const gchar * browser_skim_key_options[] = {
 static const gchar * default_view_mode_options[] = {
 	N_("Normal View"),
 	N_("Wide View"),
+	N_("Automatic"),
 	NULL
 };
 
@@ -175,7 +176,7 @@ on_folderhidereadbtn_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	conf_set_bool_value (FOLDER_DISPLAY_HIDE_READ, enabled);
 
 	if (displayedNode && IS_FOLDER (displayedNode)) {
-		itemlist_unload (FALSE);
+		itemlist_unload ();
 		itemlist_load (displayedNode);
 
 		/* Note: For simplicity when toggling this preference we
@@ -360,7 +361,19 @@ on_skim_key_changed (gpointer user_data)
 static void
 on_default_view_mode_changed (gpointer user_data)
 {
-	conf_set_int_value (DEFAULT_VIEW_MODE, gtk_combo_box_get_active (GTK_COMBO_BOX (user_data)));
+	gint 	mode = gtk_combo_box_get_active (GTK_COMBO_BOX (user_data));
+	
+	conf_set_int_value (DEFAULT_VIEW_MODE, mode);
+	itemview_set_layout (mode);
+}
+
+void
+on_deferdeletemode_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+{
+	gboolean	enabled;
+
+	enabled = gtk_toggle_button_get_active (togglebutton);
+	conf_set_bool_value (DEFER_DELETE_MODE, enabled);
 }
 
 void
@@ -426,9 +439,21 @@ on_hidetoolbar_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 void
+on_readermodebtn_toggled (GtkToggleButton *button, gpointer user_data)
+{
+	conf_set_bool_value (ENABLE_READER_MODE, gtk_toggle_button_get_active (button));
+}
+
+void
 on_donottrackbtn_toggled (GtkToggleButton *button, gpointer user_data)
 {
 	conf_set_bool_value (DO_NOT_TRACK, gtk_toggle_button_get_active (button));
+}
+
+void
+on_itpbtn_toggled (GtkToggleButton *button, gpointer user_data)
+{
+	conf_set_bool_value (ENABLE_ITP, gtk_toggle_button_get_active (button));
 }
 
 static void
@@ -528,6 +553,9 @@ preferences_dialog_init (PreferencesDialog *pd)
 	                            default_view_mode_options,
 	                            G_CALLBACK (on_default_view_mode_changed),
 	                            iSetting);
+
+	conf_get_bool_value (DEFER_DELETE_MODE, &bSetting);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (liferea_dialog_lookup (pd->dialog, "deferdeletebtn")), bSetting?TRUE:FALSE);
 
 	/* Setup social bookmarking list */
 	i = 0;
@@ -669,10 +697,23 @@ preferences_dialog_init (PreferencesDialog *pd)
 
 	/* ================= panel 6 "Privacy" ======================== */
 
+	widget = liferea_dialog_lookup (pd->dialog, "readermodebtn");
+	conf_get_bool_value (ENABLE_READER_MODE, &bSetting);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), bSetting);
+
 	widget = liferea_dialog_lookup (pd->dialog, "donottrackbtn");
 	conf_get_bool_value (DO_NOT_TRACK, &bSetting);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), bSetting);
 
+#if WEBKIT_CHECK_VERSION (2, 30, 0)
+	gtk_widget_destroy (GTK_WIDGET (liferea_dialog_lookup (pd->dialog, "itpInfoBar")));
+	widget = liferea_dialog_lookup (pd->dialog, "itpbtn");
+	conf_get_bool_value (ENABLE_ITP, &bSetting);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), bSetting);
+#else
+	gtk_widget_set_sensitive (GTK_WIDGET (liferea_dialog_lookup (pd->dialog, "itpbtn")), FALSE);
+	gtk_widget_show (GTK_WIDGET (liferea_dialog_lookup (pd->dialog, "itpInfoBar")));
+#endif
 	/* ================= panel 7 "Enclosures" ======================== */
 
 	/* menu for download tool */

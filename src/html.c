@@ -26,15 +26,28 @@
 #include "common.h"
 #include "debug.h"
 #include "html.h"
+#include "render.h"
 #include "xml.h"
 
 enum {
-	LINK_FAVICON,
 	LINK_RSS_ALTERNATE,
 	LINK_AMPHTML
 };
 
-#define XPATH_LINK_RSS_ALTERNATE "/html/head/link[@rel='alternate'][@type='application/atom+xml' or @type='application/rss+xml' or @type='application/rdf+xml' or @type='text/xml']"
+#define XPATH_LINK_RSS_ALTERNATE    "/html/head/link[@rel='alternate'][@type='application/atom+xml' or @type='application/rss+xml' or @type='application/rdf+xml' or @type='text/xml']"
+
+#define XPATH_LINK_MS_TILE_IMAGE                "/html/head/meta[@name='msapplication-TileImage']"
+
+#define XPATH_LINK_SAFARI_MASK_ICON             "/html/head/link[@rel='mask-icon']"
+
+#define XPATH_LINK_LARGE_ICON                   "/html/head/link[@rel='icon' or @rel='shortcut icon'][@sizes='192x192' or @sizes='144x144' or @sizes='128x128']"
+#define XPATH_LINK_LARGE_ICON_OTHER_SIZES       "/html/head/link[@rel='icon' or @rel='shortcut icon'][@sizes]"
+#define XPATH_LINK_FAVICON                      "/html/head/link[@rel='icon' or @rel='shortcut icon' or @rel='SHORTCUT ICON'][not(@sizes)]"
+
+#define XPATH_LINK_APPLE_TOUCH_ICON             "/html/head/link[@rel='apple-touch-icon' or @rel='apple-touch-icon-precomposed'][@sizes='180x180' or @sizes='152x152' or @sizes='144x144' or @sizes='120x120']"
+#define XPATH_LINK_APPLE_TOUCH_ICON_NO_SIZE     "/html/head/link[@rel='apple-touch-icon' or @rel='apple-touch-icon-precomposed'][not(@sizes)]"
+#define XPATH_LINK_APPLE_TOUCH_ICON_OTHER_SIZES "/html/head/link[@rel='apple-touch-icon' or @rel='apple-touch-icon-precomposed'][@sizes]"
+
 
 /**
  * Fetch attribute of a html tag string
@@ -78,27 +91,7 @@ html_check_link_ref (const gchar* str, gint linkType)
 
 	res = html_get_attrib (str, "href");
 
-	if (linkType == LINK_FAVICON) {
-		/* The type attribute is optional, so don't check for it,
-		 * as according to the W3C, it must be must be png, gif or
-		 * ico anyway: http://www.w3.org/2005/10/howto-favicon
-		 * Instead, do stronger checks for the rel attribute. */
-		if (((NULL != common_strcasestr (str, "rel=\"shortcut icon\"")) ||
-		     (NULL != common_strcasestr (str, "rel=\"icon\"")) ||
-		     (NULL != common_strcasestr (str, "rel=\'shortcut icon\'")) ||
-		     (NULL != common_strcasestr (str, "rel=\'icon\'"))) /*&&
-		    ((NULL != common_strcasestr (str, "image/x-icon")) ||
-		     (NULL != common_strcasestr (str, "image/png")) ||
-		     (NULL != common_strcasestr (str, "image/gif")))*/)
-			return res;
-
-		/* Also support high res (~128px) device icons */
-		if((NULL != common_strcasestr (str, "rel=\"apple-touch-icon\"")) &&
-		   ((NULL != common_strcasestr (str, "sizes=\"152x152\"")) ||
-		    (NULL != common_strcasestr (str, "sizes=\"144x144\"")) ||
-		    (NULL != common_strcasestr (str, "sizes=\"120x120\""))))
-			return res;
-	} else if (linkType == LINK_RSS_ALTERNATE) {
+	if (linkType == LINK_RSS_ALTERNATE) {
 		if ((common_strcasestr (str, "alternate") != NULL) &&
 		    ((common_strcasestr (str, "text/xml") != NULL) ||
 		     (common_strcasestr (str, "rss+xml") != NULL) ||
@@ -109,6 +102,7 @@ html_check_link_ref (const gchar* str, gint linkType)
 		if (common_strcasestr (str, "amphtml") != NULL)
 			return res;
 	}
+
 	g_free (res);
 	return NULL;
 }
@@ -211,8 +205,17 @@ html_auto_discover_collect_links (xmlNodePtr match, gpointer user_data)
 {
 	GSList **links = (GSList **)user_data;
 	gchar *link = xml_get_attribute (match, "href");
-	if(link)
+	if (link)
 		*links = g_slist_append (*links, link);
+}
+
+static void
+html_auto_discover_collect_meta (xmlNodePtr match, gpointer user_data)
+{
+	GSList **values = (GSList **)user_data;
+	gchar *value = xml_get_attribute (match, "content");
+	if (value)
+		*values = g_slist_append (*values, value);
 }
 
 GSList *
@@ -258,67 +261,118 @@ html_auto_discover_feed (const gchar* data, const gchar *defaultBaseUri)
 	}
 
 	g_free (baseUri);
+	xmlFreeDoc (doc);
 
 	return links;
 }
 
-gchar *
-html_discover_favicon (const gchar * data, const gchar * baseUri)
+GSList *
+html_discover_favicon (const gchar * data, const gchar * defaultBaseUri)
 {
-	gchar			*res, *tmp;
+	xmlDocPtr	doc;
+	xmlNodePtr	node, root;
+	GSList		*results = NULL, *iter;
+	gchar		*baseUri = NULL;
+
+	doc = xhtml_parse ((gchar *)data, (size_t)strlen(data));
+	if (!doc)
+		return NULL;
+
+	root = xmlDocGetRootElement (doc);
+
+	// Base URL resolving
+	node = xpath_find (root, "/html/head/base");
+	if (node)
+		baseUri = xml_get_attribute (node, "href");
+	if (!baseUri)
+		baseUri = g_strdup (search_tag_link_dirty (data, "base", NULL));
+	if (!baseUri)
+		baseUri = g_strdup (defaultBaseUri);
 
 	debug0 (DEBUG_UPDATE, "searching through link tags");
-	res = search_links_dirty (data, LINK_FAVICON);
-	debug1 (DEBUG_UPDATE, "search result: %s", res? res : "none found");
 
-	// FIXME: take multiple links from search_links() and rank them by sizes
-	// and return an ordered list
+	/* First try icons with guaranteed sizes */
+	xpath_foreach_match (root, XPATH_LINK_LARGE_ICON,       html_auto_discover_collect_links, (gpointer)&results);
+	xpath_foreach_match (root, XPATH_LINK_APPLE_TOUCH_ICON, html_auto_discover_collect_links, (gpointer)&results);
+	xpath_foreach_match (root, XPATH_LINK_MS_TILE_IMAGE,    html_auto_discover_collect_meta,  (gpointer)&results);
+	xpath_foreach_match (root, XPATH_LINK_SAFARI_MASK_ICON, html_auto_discover_collect_links, (gpointer)&results);
 
-	if (res) {
-		/* turn relative URIs into absolute URIs */
-		tmp = res;
-		res = common_build_url (res, baseUri);
+	/* Next try probably larger ones */
+	xpath_foreach_match (root, XPATH_LINK_APPLE_TOUCH_ICON_NO_SIZE,     html_auto_discover_collect_links, (gpointer)&results); /* no size with Apple touch usually means 180x180px */
+	xpath_foreach_match (root, XPATH_LINK_LARGE_ICON_OTHER_SIZES,       html_auto_discover_collect_links, (gpointer)&results); /* usually 96x96px and below */
+	xpath_foreach_match (root, XPATH_LINK_APPLE_TOUCH_ICON_OTHER_SIZES, html_auto_discover_collect_links, (gpointer)&results); /* usually 96x96px and below */
+
+	/* Finally try to small favicon */
+	xpath_foreach_match (root, XPATH_LINK_FAVICON,          html_auto_discover_collect_links, (gpointer)&results);	/* has to be last! */
+
+	/* Turn relative URIs into absolute URIs */
+	iter = results;
+	while (iter) {
+		gchar *tmp = iter->data;
+		iter->data = common_build_url (tmp, baseUri);
 		g_free (tmp);
+		debug1 (DEBUG_UPDATE, "search result: %s", (gchar *)iter->data);
+		iter = g_slist_next (iter);
 	}
+	g_free (baseUri);
+	xmlFreeDoc (doc);
 
-	return res;
+	return results;
 }
 
 gchar *
 html_get_article (const gchar *data, const gchar *baseUri) {
 	xmlDocPtr	doc;
-	xmlNodePtr	node, root;
+	xmlNodePtr	root;
 	gchar		*result = NULL;
 
-	doc = xhtml_parse ((gchar *)data, (size_t)strlen(data));
+	doc = xhtml_parse ((gchar *)data, (size_t)strlen (data));
 	if (!doc) {
-		debug1 (DEBUG_PARSING, "XHTML parsing error during HTML5 fetch of '%s'\n", baseUri);
+		debug1 (DEBUG_PARSING, "XHTML parsing error on '%s'\n", baseUri);
 		return NULL;
 	}
 
 	root = xmlDocGetRootElement (doc);
 	if (root) {
-		// Find HTML5 <article>, we only expect a single article...
-		node = xpath_find (root, "//article");
+		xmlDocPtr article = xhtml_extract_doc (root, 1, baseUri);
+		if (article) {
+			/* For debug output
+			xmlSaveCtxt *s;
+			s = xmlSaveToFd(0, NULL, 0);
+			xmlSaveDoc(s, article);
+			xmlSaveClose(s);
+			*/
 
-		// Fallback to microformat <div property='articleBody'>
-		if (!node)
-			node = xpath_find (root, "//div[@property='articleBody']");
-
-		// Fallback to <div id='content'> which is a quite common
-		if (!node)
-			node = xpath_find (root, "//div[@id='content']");
-
-		if (node) {
-			// No HTML stripping here, as we rely on Readability.js
-			result = xhtml_extract (node, 1, baseUri);
-		} else {
-			debug1 (DEBUG_PARSING, "No article found during HTML5 parsing of '%s'\n", baseUri);
+			result = render_xml (article, "html5-extract", NULL);
+			xmlFreeDoc (article);
 		}
-
 		xmlFreeDoc (doc);
 	}
 
+	return result;
+}
+
+gchar *
+html_get_body (const gchar *data, const gchar *baseUri) {
+	xmlDocPtr	doc;
+	xmlNodePtr	root;
+	gchar		*result = NULL;
+
+	doc = xhtml_parse ((gchar *)data, (size_t)strlen (data));
+	if (!doc) {
+		debug1 (DEBUG_PARSING, "XHTML parsing error on '%s'\n", baseUri);
+		return NULL;
+	}
+
+	root = xmlDocGetRootElement (doc);
+	if (root) {
+		xmlDocPtr body = xhtml_extract_doc (root, 1, baseUri);
+		if (body) {
+			result = render_xml (body, "html-extract", NULL);
+			xmlFreeDoc (body);
+		}
+		xmlFreeDoc (doc);
+	}
 	return result;
 }
 

@@ -1,7 +1,7 @@
 /**
  * @file update.h  generic update request and state processing
  *
- * Copyright (C) 2003-2014 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2020 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -91,26 +91,25 @@ G_BEGIN_DECLS
 #define UPDATE_REQUEST_TYPE (update_request_get_type ())
 G_DECLARE_FINAL_TYPE (UpdateRequest, update_request, UPDATE, REQUEST, GObject)
 
-typedef struct _UpdateRequest {
+struct _UpdateRequest {
 	GObject		parent;
 
 	gchar 		*source;	/**< Location of the source. If it starts with
-		'|', it is a command. If it contains "://",
-		then it is parsed as a URL, otherwise it is a
-		filename. */
+					     '|', it is a command. If it contains "://",
+					     then it is parsed as a URL, otherwise it is a
+					     filename. */
 	gchar           *postdata;      /**< HTTP POST request data (NULL for non-POST requests) */
 	gchar           *authValue;     /**< Custom value for Authorization: header */
 	updateOptionsPtr options;	/**< Update options for the request */
 	gchar		*filtercmd;	/**< Command will filter output of URL */
 	updateStatePtr	updateState;	/**< Update state of the requested object (etags, last modified...) */
-} *updateRequestPtr;
+};
 
 /** structure to store results of the processing of an update request */
 typedef struct updateResult {
 	gchar 		*source;	/**< Location of the downloaded document, in case of redirects different from
 					     the one given along with the update request */
 
-	int		returncode;	/**< Download status (0=success, otherwise error) */
 	int		httpstatus;	/**< HTTP status. Set to 200 for any valid command, file access, etc.... Set to 0 for unknown */
 	gchar		*data;		/**< Downloaded data */
 	size_t		size;		/**< Size of downloaded data */
@@ -119,6 +118,17 @@ typedef struct updateResult {
 
 	updateStatePtr	updateState;	/**< New update state of the requested object (etags, last modified...) */
 } *updateResultPtr;
+
+/** structure to store state fo running command feeds */
+typedef struct updateCommandState {
+	GPid		pid;		/**< child PID */
+	guint		timeout_id;	/**< glib event source id for the timeout event */
+	guint		io_watch_id;	/**< glib event source id for stdout */
+	guint		child_watch_id;	/**< glib event source id for child termination */
+	gint		fd;		/**< fd for child stdout */
+	GIOChannel	*stdout_ch;	/**< child stdout as a channel */
+} updateCommandState;
+
 
 /** structure describing an HTTP update job */
 typedef struct updateJob {
@@ -129,14 +139,18 @@ typedef struct updateJob {
 	gpointer		user_data;	/**< result processing user data */
 	updateFlags		flags;		/**< request and result processing flags */
 	gint			state;		/**< State of the job (enum request_state) */
+	updateCommandState	cmd;		/**< values for command feeds */
 } *updateJobPtr;
 
 /**
- * Creates a new update state structure
- *
- * @return a new state structure (to be free'd using update_state_free())
+ * Create new update state
  */
 updateStatePtr update_state_new (void);
+
+/**
+ * Copy update state
+ */
+updateStatePtr update_state_copy (updateStatePtr state);
 
 glong update_state_get_lastmodified (updateStatePtr state);
 void update_state_set_lastmodified (updateStatePtr state, glong lastmodified);
@@ -151,16 +165,9 @@ const gchar * update_state_get_cookies (updateStatePtr state);
 void update_state_set_cookies (updateStatePtr state, const gchar *cookies);
 
 /**
- * Copies the given update state.
- *
- * @returns a new update state structure (to be free'd using update_state_free())
- */
-updateStatePtr update_state_copy (updateStatePtr state);
-
-/**
  * Frees the given update state.
  *
- * @param updateState	the update state
+ * @param updateState  the update state
  */
 void update_state_free (updateStatePtr updateState);
 
@@ -194,15 +201,22 @@ void update_deinit (void);
 /**
  * Creates a new request structure.
  *
+ * @oaram source	URI to download
+ * @param state		a previous update state of the requested URL (or NULL)
+ *                      will not be owned, but copied!
+ * @param options	update options to be used (or NULL)
+ *			will not be owned but copied!
+ *
  * @returns a new request GObject to be passed to update_execute_request()
  */
-UpdateRequest * update_request_new (void);
+UpdateRequest * update_request_new (const gchar *source, updateStatePtr state, updateOptionsPtr options);
 
 /**
- * Sets the source for an updateRequest
+ * Sets the source for an updateRequest. Only use this when the source
+ * is not known at update_request_new() calling time.
  *
  * @param request       the update request
- * @param source        the new source
+ * @param source        the new source URL
  */
 void update_request_set_source (UpdateRequest *request, const gchar* source);
 
@@ -269,6 +283,16 @@ void update_job_cancel_by_owner (gpointer owner);
  * @returns update job state (see enum request_state)
  */
 gint update_job_get_state (updateJobPtr job);
+
+/**
+* update_jobs_get_count:
+*
+* Query current count and max count of subscriptions in update queue
+*
+* @count:	gint ref to pass back nr of subscriptions in update
+* @maxcount:	gint ref to pass back max nr of subscriptions in update
+*/
+void update_jobs_get_count (guint *count, guint *maxcount);
 
 G_END_DECLS
 

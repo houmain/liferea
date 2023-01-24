@@ -2,27 +2,27 @@
  * @file liferea_shell.h  UI layout handling
  *
  * Copyright (C) 2004-2005 Nathan J. Conrad <t98502@users.sourceforge.net>
- * Copyright (C) 2007-2018 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2007-2022 Lars Windolf <lars.windolf@gmx.de>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _LIFEREA_SHELL_H
 #define _LIFEREA_SHELL_H
 
+#include <string.h>
 #include <glib-object.h>
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -79,13 +79,6 @@ void liferea_shell_create (GtkApplication *app, const gchar *overrideWindowState
 void liferea_shell_destroy (void);
 
 /**
- * liferea_shell_present:
- *
- * Presents the main window if it is hidden.
- */
-void liferea_shell_present (void);
-
-/**
  * liferea_shell_show_window:
  *
  * Show the main window.
@@ -126,18 +119,6 @@ void liferea_shell_update_toolbar (void);
 void liferea_shell_update_history_actions (void);
 
 /**
- * liferea_shell_update_feed_menu: (skip)
- * @add:                TRUE if subscribing is to be enabled
- * @enabled:    	TRUE if feed actions are to be enabled
- * @readWrite:  	TRUE if feed list modifying actions are enabled
- *
- * Update the sensitivity of options affecting single feeds.
- *
- * TODO: use signal instead
- */
-void liferea_shell_update_feed_menu (gboolean add, gboolean enabled, gboolean readWrite);
-
-/**
  * liferea_shell_update_item_menu: (skip)
  * @enabled:	TRUE if item actions are to be enabled
  *
@@ -146,27 +127,6 @@ void liferea_shell_update_feed_menu (gboolean add, gboolean enabled, gboolean re
  * TODO: use signal instead
  */
 void liferea_shell_update_item_menu (gboolean enabled);
-
-/**
- * liferea_shell_update_allitems_actions: (skip)
- * @isNotEmpty: 	TRUE if there is a non-empty item set active
- * @isRead:     	TRUE if there are no unread items in the item set
- *
- * Update the sensitivity of options affecting item sets.
- *
- * TODO: use signal instead
- */
-void liferea_shell_update_allitems_actions (gboolean isNotEmpty, gboolean isRead);
-
-/**
- * liferea_shell_update_update_menu: (skip)
- * @enabled:	TRUE if menu options are to be enabled
- *
- * Set the sensitivity of items in the update menu.
- *
- * TODO: use signal instead
- */
-void liferea_shell_update_update_menu (gboolean enabled);
 
 /**
  * liferea_shell_set_status_bar:
@@ -194,14 +154,11 @@ void liferea_shell_set_important_status_bar (const char *format, ...);
 GtkWidget * liferea_shell_get_window (void);
 
 /**
- * liferea_shell_set_view_mode:
- * @newMode:	the new mode
+ * liferea_shell_rebuild_css:
  *
- * Changes the view mode programmatically. Used to change the mode when
- * selecting another feed. Convenience function to trigger the stateful action
- * set-view-mode.
+ * Invokes a rebuild of the WebView CSS.
  */
-void liferea_shell_set_view_mode (nodeViewType newMode);
+void liferea_shell_rebuild_css (void);
 
 G_END_DECLS
 

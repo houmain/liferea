@@ -5,7 +5,7 @@
  * Rendering stylesheet for Liferea (item view: item rendering)
  *
  * Copyright (C) 2009-2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
- * Copyright (C) 2006-2020 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2006-2023 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,6 @@
 
 <!-- the local pixmap directory (e.g. /usr/share/liferea/pixmaps/) -->
 <xsl:param name="pixmapsDir"/>
-<!-- the local Javascript lib directory (e.g. /usr/share/liferea/js/) -->
-<xsl:param name="jsDir"/>
 
 <xsl:param name="baseUrl"/> <!-- item specific content base URL -->
 <xsl:param name="showFeedName"/>
@@ -42,18 +40,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <base href="{$baseUrl}"/>
 </head>
 <xsl:element name="body">
-
-<!-- base URL of the itemset -->
-<div class="item" href="{$baseUrl}">
 
 <xsl:for-each select="item">
   <xsl:call-template name="item"/>
 </xsl:for-each>
-
-</div> <!-- end of base URL div -->
 
 </xsl:element>
 </html>
@@ -64,14 +58,13 @@
 
 <xsl:template name="item">
 
-<!-- base URL of parent feed -->
-<div href="{/itemset/feed/feedSource}">
+<div class='item'>
 
 <!-- header table -->
 <table class="itemhead" cellspacing="0" cellpadding="0" dir="{$txtDirection}">
 <tbody>
 <tr>
-  <td valign="middle" class="headleft">
+  <td valign="middle" class="head_favicon">
     <!-- Feed link as favicon -->
 
     <xsl:variable name="favicon">
@@ -89,7 +82,7 @@
       <img src="{$favicon}"/>
     </a>
   </td>
-  <td width="100%" valign="middle" class="headright">
+  <td class="head_title">
     <!-- Item title as link -->
     <a class="itemhead" href="{source}">
       <xsl:value-of select="title"/>
@@ -274,35 +267,68 @@
 </tbody>
 </table> <!-- end of header metadata -->
 
-<div id='content' class='content'>
+<div dir="{$txtDirection}">
+<div class='content' id='content'>
+
   <!-- the item's content -->
-  <p dir="{$txtDirection}">
+  <p>
     <!-- optional gravatar -->
     <xsl:if test="attributes/attribute[ @name = 'gravatar' ]">
       <img align='left' class='gravatar' src="{attributes/attribute[ @name = 'gravatar' ]}"/>
     </xsl:if>
-    <!-- optional MediaRSS thumbnail -->
-    <xsl:if test="attributes/attribute[ @name = 'mediathumbnail' ]">
-      <img align='left' class='thumbnail' src="{attributes/attribute[ @name = 'mediathumbnail' ]}"/>
-    </xsl:if>
-    <!-- optional MediaRSS YouTube links-->
-    <xsl:variable name="url"><xsl:value-of select="source"/></xsl:variable>
-    <xsl:if test="contains($url,'https://www.youtube.com/watch?v=')">
-      <xsl:variable name="youtubeid" select="substring-after($url,'https://www.youtube.com/watch?v=')"/>
-      <p><iframe width="640" height="480" src="https://www.youtube.com/embed/{$youtubeid}" frameborder="0" allowfullscreen="1"></iframe></p>
+    <!-- add optional MediaRSS thumbnail (only if no image is in content, as it is often duplicated, e.g. on HTML5 fetch) -->
+    <xsl:if test="not(contains(description,'&lt;img') or contains(description,'&lt;IMG'))">
+      <xsl:if test="attributes/attribute[ @name = 'mediathumbnail' ]">
+        <img align='left' class='thumbnail' src="{attributes/attribute[ @name = 'mediathumbnail' ]}"/>
+      </xsl:if>
     </xsl:if>
     <!-- optional MediaRSS description -->
     <xsl:if test="attributes/attribute[ @name = 'mediadescription' ]">
-      <xsl:call-template name="add-newline">
-        <xsl:with-param name="input"  select="attributes/attribute[ @name = 'mediadescription' ]"/>
-       </xsl:call-template>
+      <p>
+        <xsl:call-template name="add-newline">
+          <xsl:with-param name="input"  select="attributes/attribute[ @name = 'mediadescription' ]/text()"/>
+        </xsl:call-template>
+      </p>
     </xsl:if>
-
     <!-- the real text content -->
     <xsl:value-of select="description" disable-output-escaping='yes'/>
   </p>
+</div> <!-- end of content -->
 
-  <!-- comment handling -->
+<!-- all content below is not subject to Readability.js, this is intentional and prevents
+     unintended stripping -->
+
+<!-- optional YouTube embed -->
+<xsl:variable name="url"><xsl:value-of select="source"/></xsl:variable>
+<xsl:if test="contains($url,'https://www.youtube.com/watch?v=')">
+  <xsl:variable name="youtubeid" select="substring-after($url,'https://www.youtube.com/watch?v=')"/>
+
+  <div class='content'>
+    <div class='video-embed' id="{$youtubeid}">
+      <xsl:element name='a'>
+        <xsl:attribute name='href'>javascript:youtube_embed('<xsl:value-of select="$youtubeid"/>');</xsl:attribute>
+        <!-- FIXME: translate  me -->
+        <xsl:attribute name='title'>Click to embed video</xsl:attribute>
+        <div class="play-btn">
+        <!-- button SVG from https://douglasgreen.com/demo/responsive-video-play-button/svg-play-button.html -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 311.69 311.69">
+            <path d="M155.84,0A155.85,155.85,0,1,0,311.69,155.84,155.84,155.84,0,0,0,155.84,0Zm0,296.42A140.58,140.58,0,1,1,296.42,155.84,140.58,140.58,0,0,1,155.84,296.42Z"/><polygon points="218.79 155.84 119.22 94.34 119.22 217.34 218.79 155.84"/>
+          </svg>
+        </div>
+      </xsl:element>
+      <xsl:element name='img'>
+        <xsl:attribute name='class'>thumb</xsl:attribute>
+        <xsl:attribute name='src'>https://i.ytimg.com/vi/<xsl:value-of select="$youtubeid"/>/hqdefault.jpg</xsl:attribute>
+        <!-- FIXME: translate  me -->
+        <xsl:attribute name='alt'>Youtube video image</xsl:attribute>
+      </xsl:element>
+      <!---->
+    </div>
+  </div>
+</xsl:if>
+
+<!-- comment feed display handling -->
+<div id='item_comments' class='item_comments'>
   <xsl:if test="attributes/attribute[ @name = 'commentFeedUri' ] and not(./commentsSuppressed)">
      <p>
         <xsl:if test="count(comments/item) != 0">
@@ -334,9 +360,9 @@
         </xsl:apply-templates>
      </p>
   </xsl:if>
-
-</div> <!-- end of content -->
-</div> <!-- end of base URL -->
+</div> <!-- end of comments -->
+</div> <!-- end of txtdirection div -->
+</div> <!-- end of item -->
 
 </xsl:template>
 
@@ -361,26 +387,6 @@
 </xsl:template>
 
 <!-- ==================================================================== -->
-
-<!--- substring after last occurance also from "XSLT Cookbook"... -->
-<xsl:template name="substring-after-last">
-  <xsl:param name="input" />
-  <xsl:param name="substr" />
-  <!-- Extract the string which comes after the first occurence -->
-  <xsl:variable name="temp" select="substring-after($input,$substr)"/>
-  <xsl:choose>
-    <!-- If it still contains the search string then recursively process -->
-    <xsl:when test="$substr and contains($temp,$substr)">
-      <xsl:call-template name="substring-after-last">
-        <xsl:with-param name="input"  select="$temp" />
-        <xsl:with-param name="substr" select="$substr" />
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="$temp" />
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
 
 <!-- newline to br based in https://stackoverflow.com/questions/3309746/how-to-convert-newline-into-br-with-xslt -->
 <xsl:template name="add-newline">

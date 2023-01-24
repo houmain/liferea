@@ -2,7 +2,7 @@
  * @file export.c  OPML feed list import & export
  *
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
- * Copyright (C) 2004-2015 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2004-2022 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 
 #include <errno.h>
 #include <glib.h>
+#include <glib/gstdio.h>
 #include <libxml/tree.h>
-#include <sys/stat.h>
 
 #include "auth.h"
 #include "common.h"
@@ -52,7 +52,6 @@ export_append_node_tag (nodePtr node, gpointer userdata)
 	xmlNodePtr 	cur = ((struct exportData*)userdata)->cur;
 	gboolean	internal = ((struct exportData*)userdata)->trusted;
 	xmlNodePtr	childNode;
-	gchar		*tmp;
 
 	/* When exporting external OPML do not export every node type... */
 	if (!(internal || (NODE_TYPE (node)->capabilities & NODE_CAPABILITY_EXPORT)))
@@ -95,16 +94,6 @@ export_append_node_tag (nodePtr node, gpointer userdata)
 
 		if (node->loadItemLink)
 			xmlNewProp (childNode, BAD_CAST"loadItemLink", BAD_CAST"true");
-
-		/* Do not export the default view mode setting to avoid making
-		   it permanent. Do not use node_get_view_mode () here to ensure
-		   that the comparison works as node_get_view_mode () returns
-		   the effective mode! */
-		if (NODE_VIEW_MODE_DEFAULT != node->viewMode) {
-			tmp = g_strdup_printf ("%u", node_get_view_mode(node));
-			xmlNewProp (childNode, BAD_CAST"viewMode", BAD_CAST tmp);
-			g_free (tmp);
-		}
 	}
 
 	/* 2. add node type specific stuff */
@@ -145,7 +134,7 @@ export_OPML_feedlist (const gchar *filename, nodePtr node, gboolean trusted)
 
 	backupFilename = g_strdup_printf ("%s~", filename);
 
-	doc = xmlNewDoc ("1.0");
+	doc = xmlNewDoc (BAD_CAST"1.0");
 	if (doc) {
 		opmlNode = xmlNewDocNode (doc, NULL, BAD_CAST"opml", NULL);
 		if (opmlNode) {
@@ -172,7 +161,7 @@ export_OPML_feedlist (const gchar *filename, nodePtr node, gboolean trusted)
 
 		xmlSetDocCompressMode (doc, 0);
 
-		if (-1 == xmlSaveFormatFile (backupFilename, doc, TRUE)) {
+		if (-1 == xmlSaveFormatFileEnc (backupFilename, doc, "utf-8", TRUE)) {
 			g_warning ("Could not export to OPML file!");
 			error = TRUE;
 		}
@@ -183,8 +172,7 @@ export_OPML_feedlist (const gchar *filename, nodePtr node, gboolean trusted)
 		xmlFreeDoc (doc);
 
 		if (!error) {
-			// FIXME: Use g_rename() once we've reached Glib 2.6+
-			if (rename (backupFilename, filename) < 0) {
+			if (g_rename (backupFilename, filename) < 0) {
 				g_warning (_("Error renaming %s to %s: %s\n"), backupFilename, filename, g_strerror (errno));
 				error = TRUE;
 			}
@@ -212,7 +200,7 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	debug_enter("import_parse_outline");
 
 	/* 1. determine node type */
-	typeStr = xmlGetProp (cur, BAD_CAST"type");
+	typeStr = (gchar *)xmlGetProp (cur, BAD_CAST"type");
 	if (typeStr) {
 		type = node_str_to_type (typeStr);
 		xmlFree (typeStr);
@@ -221,11 +209,11 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	/* if we didn't find a type attribute we use heuristics */
 	if (!type) {
 		/* check for a source URL */
-		tmp = xmlGetProp (cur, BAD_CAST"xmlUrl");
+		tmp = (gchar *)xmlGetProp (cur, BAD_CAST"xmlUrl");
 		if (!tmp)
-			tmp = xmlGetProp (cur, BAD_CAST"xmlurl");	/* AmphetaDesk */
+			tmp = (gchar *)xmlGetProp (cur, BAD_CAST"xmlurl");	/* AmphetaDesk */
 		if (!tmp)
-			tmp = xmlGetProp (cur, BAD_CAST"xmlURL");	/* LiveJournal */
+			tmp = (gchar *)xmlGetProp (cur, BAD_CAST"xmlURL");	/* LiveJournal */
 
 		if (tmp) {
 			debug0 (DEBUG_CACHE, "-> URL found assuming type feed");
@@ -253,7 +241,7 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	   multiple times. */
 	if (trusted) {
 		gchar *id = NULL;
-		id = xmlGetProp (cur, BAD_CAST"id");
+		id = (gchar *)xmlGetProp (cur, BAD_CAST"id");
 
 		/* If, for some reason, the OPML has been corrupted
 		   and there are two copies asking for a certain ID
@@ -274,11 +262,11 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	}
 
 	/* title */
-	title = xmlGetProp (cur, BAD_CAST"title");
-	if (!title || !xmlStrcmp (title, BAD_CAST"")) {
+	title = (gchar *)xmlGetProp (cur, BAD_CAST"title");
+	if (!title || !xmlStrcmp ((xmlChar *)title, BAD_CAST"")) {
 		if (title)
 			xmlFree (title);
-		title = xmlGetProp (cur, BAD_CAST"text");
+		title = (gchar *)xmlGetProp (cur, BAD_CAST"text");
 	}
 
 	if (title) {
@@ -287,37 +275,30 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	}
 
 	/* sorting order */
-	sortStr = xmlGetProp (cur, BAD_CAST"sortColumn");
+	sortStr = (gchar *)xmlGetProp (cur, BAD_CAST"sortColumn");
 	if (sortStr) {
-		if (!xmlStrcmp (sortStr, "title"))
+		if (!xmlStrcmp ((xmlChar *)sortStr, BAD_CAST"title"))
 			node->sortColumn = NODE_VIEW_SORT_BY_TITLE;
-		else if (!xmlStrcmp (sortStr, "parent"))
+		else if (!xmlStrcmp ((xmlChar *)sortStr, BAD_CAST"parent"))
 			node->sortColumn = NODE_VIEW_SORT_BY_PARENT;
-		else if (!xmlStrcmp (sortStr, "state"))
+		else if (!xmlStrcmp ((xmlChar *)sortStr, BAD_CAST"state"))
 			node->sortColumn = NODE_VIEW_SORT_BY_STATE;
 		else
 			node->sortColumn = NODE_VIEW_SORT_BY_TIME;
 		xmlFree (sortStr);
 	}
-	sortStr = xmlGetProp (cur, BAD_CAST"sortReversed");
+	sortStr = (gchar *)xmlGetProp (cur, BAD_CAST"sortReversed");
 	if (sortStr) {
-		if(!xmlStrcmp (sortStr, BAD_CAST"false"))
+		if(!xmlStrcmp ((xmlChar *)sortStr, BAD_CAST"false"))
 			node->sortReversed = FALSE;
 		xmlFree (sortStr);
 	}
 
 	/* auto item link loading flag */
-	tmp = xmlGetProp (cur, BAD_CAST"loadItemLink");
+	tmp = (gchar *)xmlGetProp (cur, BAD_CAST"loadItemLink");
 	if (tmp) {
-		if (!xmlStrcmp (tmp, BAD_CAST"true"))
+		if (!xmlStrcmp ((xmlChar *)tmp, BAD_CAST"true"))
 		node->loadItemLink = TRUE;
-		xmlFree (tmp);
-	}
-
-	/* viewing mode */
-	tmp = xmlGetProp (cur, BAD_CAST"viewMode");
-	if (tmp) {
-		node_set_view_mode (node, atoi (tmp));
 		xmlFree (tmp);
 	}
 
@@ -348,21 +329,14 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	/* 6. do node type specific parsing */
 	NODE_TYPE (node)->import (node, parentNode, cur, trusted);
 
-	if (node->subscription) {
-		/* Handle OPML auth info (imported from subscription_import() */
-		if(node->subscription->updateOptions->username) {
-			/* Write to password store (for migration) */
-			liferea_auth_info_store (node->subscription);
-		} else {
-			/* If no auth options in OPML try to import them from the key store */
-			liferea_auth_info_query (node->id);
-		}
+	if (node->subscription)
+		liferea_auth_info_query (node->id);
 
-		/* 7. update immediately if necessary */
-		if (needsUpdate) {
-			debug1 (DEBUG_CACHE, "seems to be an import, setting new id: %s and doing first download...", node_get_id(node));
-			subscription_update (node->subscription, 0);
-		}
+	/* 7. update immediately if necessary */
+	// FIXME: this should not be done here!!!
+	if (node->subscription && needsUpdate) {
+		debug1 (DEBUG_CACHE, "seems to be an import, setting new id: %s and doing first download...", node_get_id(node));
+		subscription_update (node->subscription, 0);
 	}
 
 	/* 8. Always update the node info in the DB to ensure a proper
@@ -433,7 +407,7 @@ import_OPML_feedlist (const gchar *filename, nodePtr parentNode, gboolean showEr
 				if (title) {
 					xmlChar *titleStr = xmlNodeListGetString (title->doc, title->xmlChildrenNode, 1);
 					if (titleStr) {
-						node_set_title (parentNode, titleStr);
+						node_set_title (parentNode, (gchar *)titleStr);
 						xmlFree (titleStr);
 					}
 				}

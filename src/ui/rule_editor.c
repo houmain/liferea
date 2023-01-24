@@ -1,7 +1,7 @@
 /**
  * @file rule_editor.c  rule editing dialog functionality
  *
- * Copyright (C) 2008-2012 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2008-2020 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2009 Hubert Figuiere <hub@figuiere.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include "ui/rule_editor.h"
 #include "ui/ui_common.h"
 
+#include "common.h"
 #include "rule.h"
 
 /*
@@ -85,11 +86,7 @@ rule_editor_destroy_param_widget (GtkWidget *widget, gpointer data)
 static void
 on_rulevalue_changed (GtkEditable *editable, gpointer user_data)
 {
-	rulePtr	rule = (rulePtr)user_data;
-
-	if (rule->value)
-		g_free (rule->value);
-	rule->value = g_strdup (gtk_editable_get_chars (editable,0,-1));
+	rule_set_value ((rulePtr)user_data, gtk_editable_get_chars (editable, 0, -1));
 }
 
 /* callback for rule additive option menu */
@@ -257,7 +254,7 @@ rule_editor_add_rule (RuleEditor *re, rulePtr rule)
 	changeRequest->hbox = hbox;
 	changeRequest->paramHBox = hbox2;
 	changeRequest->editor = re;
-	widget = gtk_button_new_with_label ("Remove");
+	widget = gtk_button_new_with_label (_("Remove"));
 	gtk_box_pack_end (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (widget), "clicked", G_CALLBACK (on_ruleremove_clicked), changeRequest);
 

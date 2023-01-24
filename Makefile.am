@@ -18,7 +18,7 @@ net.sourceforge.liferea.service: Makefile
 
 
 appdatadir = $(datadir)/metainfo
-appdata_in_files = $(PACKAGE_TARNAME).appdata.xml.in
+appdata_in_files = net.sourceforge.liferea.appdata.xml.in
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 
 @INTLTOOL_XML_RULE@
@@ -30,6 +30,9 @@ css_DATA = \
 
 jsdir = $(pkgdatadir)/js
 js_DATA = \
+	js/gresource.xml \
+	js/htmlview.js \
+	js/Readability-readerable.js \
 	js/Readability.js
 
 dtddir = $(pkgdatadir)/dtd
@@ -37,8 +40,13 @@ dtd_DATA = dtd/html.ent
 
 plugindir = $(pkglibdir)/plugins
 plugin_DATA = \
+	plugins/add-bookmark-site.py \
+	plugins/add-bookmark-site.plugin \
+	plugins/add-bookmark-site.ui \
 	plugins/bold-unread.py \
 	plugins/bold-unread.plugin \
+	plugins/getfocus.py \
+	plugins/getfocus.plugin \
 	plugins/gnome-keyring.py \
 	plugins/gnome-keyring.plugin \
 	plugins/headerbar.py \
@@ -47,6 +55,8 @@ plugin_DATA = \
 	plugins/libnotify.plugin \
 	plugins/media-player.py \
 	plugins/media-player.plugin \
+	plugins/pane.py \
+	plugins/pane.plugin \
 	plugins/plugin-installer.py \
 	plugins/plugin-installer.plugin \
 	plugins/trayicon.py \
@@ -75,14 +85,14 @@ EXTRA_DIST = \
 
 DISTCLEANFILES = \
 	liferea.desktop \
+	net.sourceforge.liferea.service \
 	intltool-extract \
 	intltool-merge \
-	intltool-update \
-	$(gsettings_SCHEMAS)
+	intltool-update
 
 CLEANFILES = \
 	$(gsettings_SCHEMAS) \
-	$(appdata_DATA) 
+	$(appdata_DATA)
 
 po/liferea.pot:
 	cd po && $(MAKE) liferea.pot

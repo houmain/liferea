@@ -1,7 +1,7 @@
 /*
  * @file item_list_view.c  presenting items in a GtkTreeView
  *
- * Copyright (C) 2004-2018 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2004-2022 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -70,8 +70,6 @@ enum is_columns {
 	IS_NR,			/*<< Item id, to lookup item ptr from parent feed */
 	IS_PARENT,		/*<< Parent node pointer */
 	IS_FAVICON,		/*<< Pixbuf reference to the item's feed's icon */
-	IS_ENCICON,		/*<< Pixbuf reference to the item's enclosure icon */
-	IS_ENCLOSURE,		/*<< Flag whether enclosure is attached or not */
 	IS_SOURCE,		/*<< Source node pointer */
 	IS_STATE,		/*<< Original item state (unread, flagged...) for sorting */
 	ITEMSTORE_WEIGHT,	/*<< Flag whether weight is to be bold and "unread" icon is to be shown */
@@ -122,7 +120,7 @@ struct _ItemListView {
 
 	GtkTreeView	*treeview;
 	GtkWidget 	*ilscrolledwindow;	/*<< The complete ItemListView widget */
-	GSList      *item_ids;		/*<< list of all currently known item ids */
+	GSList		*item_ids;		/*<< list of all currently known item ids */
 
 	gboolean	batch_mode;		/*<< TRUE if we are in batch adding mode */
 	GtkTreeStore	*batch_itemstore;	/*<< GtkTreeStore prepared unattached and to be set on update() */
@@ -295,8 +293,6 @@ item_list_view_create_tree_store (void)
 	                    G_TYPE_ULONG,	/* IS_NR */
 	                    G_TYPE_POINTER,	/* IS_PARENT */
 	                    G_TYPE_ICON,	/* IS_FAVICON */
-	                    G_TYPE_ICON,	/* IS_ENCICON */
-	                    G_TYPE_BOOLEAN,	/* IS_ENCLOSURE */
 	                    G_TYPE_POINTER,	/* IS_SOURCE */
 	                    G_TYPE_UINT,	/* IS_STATE */
 			    G_TYPE_INT,		/* ITEMSTORE_WEIGHT */
@@ -453,7 +449,7 @@ item_list_title_alignment (gchar *title)
 
 	/* debug5 (DEBUG_HTML, "title ***%s*** first bytes %02hhx%02hhx%02hhx pango %d",
 		title, title[0], title[1], title[2], pango_find_base_dir (title, -1)); */
-	int txt_direction = pango_find_base_dir (title, -1);
+	int txt_direction = common_find_base_dir (title, -1);
   	int app_direction = gtk_widget_get_default_direction ();
 	if ((txt_direction == PANGO_DIRECTION_LTR &&
 	     app_direction == GTK_TEXT_DIR_LTR) ||
@@ -464,13 +460,14 @@ item_list_title_alignment (gchar *title)
 		return 1.;
 }
 
-static void 
+static void
 item_list_view_update_item_internal (ItemListView *ilv, itemPtr item, GtkTreeIter *iter, nodePtr node)
 {
 	GtkTreeStore	*itemstore;
 	gchar		*title, *time_str;
 	const GIcon	*state_icon;
 	gint		state = 0;
+        int fontWeight = PANGO_WEIGHT_BOLD;
 
 	if (item->flagStatus)
 		state += 2;
@@ -503,6 +500,9 @@ item_list_view_update_item_internal (ItemListView *ilv, itemPtr item, GtkTreeIte
 	             !item->readStatus ? icon_get (ICON_UNREAD) :
 		     NULL;
 
+        if (item->readStatus)
+                fontWeight = item->isHidden ? PANGO_WEIGHT_ULTRALIGHT : PANGO_WEIGHT_NORMAL;
+
 	if (ilv->batch_mode)
 		itemstore = ilv->batch_itemstore;
 	else
@@ -516,10 +516,8 @@ item_list_view_update_item_internal (ItemListView *ilv, itemPtr item, GtkTreeIte
                             IS_NR, item->id,
 			    IS_STATEICON, state_icon,
 			    ITEMSTORE_ALIGN, item_list_title_alignment (title),
-                            IS_ENCICON, item->hasEnclosure?icon_get (ICON_ENCLOSURE):NULL,
-                            IS_ENCLOSURE, item->hasEnclosure,
 		            IS_STATE, state,
-	                    ITEMSTORE_WEIGHT, item->readStatus ? PANGO_WEIGHT_NORMAL : PANGO_WEIGHT_BOLD,
+	                    ITEMSTORE_WEIGHT, fontWeight,
 			    -1);
         } else {
                 gtk_tree_store_set (itemstore, iter,
@@ -530,11 +528,9 @@ item_list_view_update_item_internal (ItemListView *ilv, itemPtr item, GtkTreeIte
 			    IS_STATEICON, state_icon,
                             IS_PARENT, node,
                             IS_FAVICON, node_get_icon (node),
-                            IS_ENCICON, item->hasEnclosure?icon_get (ICON_ENCLOSURE):NULL,
-                            IS_ENCLOSURE, item->hasEnclosure,
                             IS_SOURCE, node,
                             IS_STATE, state,
-	                    ITEMSTORE_WEIGHT, item->readStatus ? PANGO_WEIGHT_NORMAL : PANGO_WEIGHT_BOLD,
+	                    ITEMSTORE_WEIGHT, fontWeight,
                             -1);
         }
 
@@ -551,22 +547,6 @@ item_list_view_update_item (ItemListView *ilv, itemPtr item)
 		return;
 
         item_list_view_update_item_internal (ilv, item, &iter, NULL);
-}
-
-static void
-item_list_view_update_item_foreach (gpointer key,
-                                    gpointer value,
-                                    gpointer user_data)
-{
-	itemPtr 	item;
-
-	item = item_load (GPOINTER_TO_UINT (key) /* id */);
-	if (!item)
-		return;
-
-	item_list_view_update_item (ITEM_LIST_VIEW (user_data), item);
-
-	item_unload (item);
 }
 
 void
@@ -589,11 +569,8 @@ item_list_view_update_all_items (ItemListView *ilv)
 }
 
 void
-item_list_view_update (ItemListView *ilv, gboolean hasEnclosures)
+item_list_view_update (ItemListView *ilv)
 {
-	/* we depend on the fact that the third column is the enclosure icon column!!! */
-	gtk_tree_view_column_set_visible (g_hash_table_lookup(ilv->columns, "enclosure"), hasEnclosures);
-
 	if (ilv->batch_mode) {
                 gtk_widget_thaw_child_notify((GtkWidget *)ilv->treeview);
 		item_list_view_set_tree_store (ilv, ilv->batch_itemstore);
@@ -768,12 +745,12 @@ on_item_list_view_columns_changed (GtkTreeView *treeview, ItemListView *ilv)
 	GList *columns;
 	GHashTableIter iter;
 	gpointer colname, colptr;
-	gchar *strv[6];
+	gchar *strv[5];
 
 	/* This handler is only used for drag and drop reordering, so it
 	   should not be hooked up with less than the full number of columns
 	   eg: on item_list_view creation or teardown */
-	if (gtk_tree_view_get_n_columns(treeview) != 5)
+	if (gtk_tree_view_get_n_columns(treeview) != 4)
 		return;
 
 	columns = gtk_tree_view_get_columns (treeview);
@@ -836,6 +813,7 @@ item_list_view_create (gboolean wide)
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (ilv->ilscrolledwindow), GTK_SHADOW_IN);
 
 	ilv->treeview = GTK_TREE_VIEW (gtk_tree_view_new ());
+	gtk_tree_view_set_show_expanders (ilv->treeview, FALSE);
 	if (wide) {
 		gtk_tree_view_set_fixed_height_mode (ilv->treeview, FALSE);
 		gtk_tree_view_set_grid_lines (ilv->treeview, GTK_TREE_VIEW_GRID_LINES_HORIZONTAL);
@@ -857,7 +835,6 @@ item_list_view_create (gboolean wide)
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	column = gtk_tree_view_column_new_with_attributes ("", renderer, "gicon", IS_FAVICON, NULL);
 	g_object_set (renderer, "stock-size", wide?GTK_ICON_SIZE_DIALOG:GTK_ICON_SIZE_SMALL_TOOLBAR, NULL);
-
 	gtk_tree_view_column_set_sort_column_id (column, IS_SOURCE);
 	g_hash_table_insert (ilv->columns, "favicon", column);
 
@@ -879,16 +856,12 @@ item_list_view_create (gboolean wide)
 		gtk_tree_view_column_add_attribute (headline_column, renderer, "weight", ITEMSTORE_WEIGHT);
 	}
 
-	renderer = gtk_cell_renderer_pixbuf_new ();
-	column = gtk_tree_view_column_new_with_attributes ("", renderer, "gicon", IS_ENCICON, NULL);
-	g_hash_table_insert (ilv->columns, "enclosure", column);
-
 	renderer = gtk_cell_renderer_text_new ();
 	column = gtk_tree_view_column_new_with_attributes (_("Date"), renderer,
 		                                           "text", IS_TIME_STR,
 	                                                   "weight", ITEMSTORE_WEIGHT,
 							   NULL);
-	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
 	g_hash_table_insert (ilv->columns, "date", column);
 	gtk_tree_view_column_set_sort_column_id(column, IS_TIME);
 	if (wide)
@@ -897,8 +870,10 @@ item_list_view_create (gboolean wide)
 	conf_get_strv_value (LIST_VIEW_COLUMN_ORDER, &conf_column_order);
 	for (gchar **li = conf_column_order; *li; li++) {
 		column = g_hash_table_lookup (ilv->columns, *li);
-		g_object_set (column, "reorderable", TRUE, NULL);
-		gtk_tree_view_append_column (ilv->treeview, column);
+		if (GTK_IS_TREE_VIEW_COLUMN (column)) {
+			g_object_set (column, "reorderable", TRUE, NULL);
+			gtk_tree_view_append_column (ilv->treeview, column);
+		}
 	}
 	g_strfreev (conf_column_order);
 
@@ -920,7 +895,6 @@ item_list_view_create (gboolean wide)
 static void
 item_list_view_add_item_to_tree_store (ItemListView *ilv, GtkTreeStore *itemstore, itemPtr item)
 {
-	gint		state = 0;
 	nodePtr		node;
 	GtkTreeIter	iter;
 	gboolean	exists = FALSE;
@@ -932,8 +906,7 @@ item_list_view_add_item_to_tree_store (ItemListView *ilv, GtkTreeStore *itemstor
         if (!ilv->batch_mode)
             exists = item_list_view_id_to_iter (ilv, item->id, &iter);
 
-	if (!exists)
-	{
+	if (!exists) {
 		gtk_tree_store_prepend (itemstore, &iter, NULL);
 		ilv->item_ids = g_slist_prepend (ilv->item_ids, GUINT_TO_POINTER (item->id));
 	}
@@ -1082,7 +1055,7 @@ item_list_view_select (ItemListView *ilv, itemPtr item)
 
 	selection = gtk_tree_view_get_selection (treeview);
 
-	if (item && item_list_view_id_to_iter(ilv, item->id, &iter)){
+	if (item && item_list_view_id_to_iter (ilv, item->id, &iter)) {
 		GtkTreePath	*path = NULL;
 
 		path = gtk_tree_model_get_path (gtk_tree_view_get_model (treeview), &iter);
