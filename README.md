@@ -1,3 +1,32 @@
+
+About this branch
+-----------------
+
+This is my personal branch of lifera, which has a patch applied, which won't make it into the official version:
+
+It remembers the time of the last update and uses that time to determine when the next update should occur.
+
+This way I can set the update interval of most of my feeds to one week and they get updated once per week, even when I shutdown my PC at night.
+
+__[wontfix]__ https://github.com/lwindolf/liferea/issues/171
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+-------
+
 [![Build Status](https://github.com/lwindolf/liferea/actions/workflows/cb.yml/badge.svg)](https://github.com/lwindolf/liferea/actions/workflows/cb.yml)
 
 [![Packages](https://repology.org/badge/latest-versions/liferea.svg)](https://repology.org/metapackage/liferea/versions)
