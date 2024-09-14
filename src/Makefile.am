@@ -74,10 +74,10 @@ liferea_LDADD =	parsers/libliparsers.a \
 		$(INTROSPECTION_LIBS) \
 		-lm
 
-js.h: $(top_srcdir)/js/gresource.xml $(top_srcdir)/js/htmlview.js $(top_srcdir)/js/Readability-readerable.js $(top_srcdir)/js/Readability.js $(main_dep)
+js.h: $(top_srcdir)/js/gresource.xml $(top_srcdir)/js/htmlview.js $(top_srcdir)/js/Readability-readerable.js $(top_srcdir)/js/Readability.js $(top_srcdir)/js/purify.min.js $(main_dep)
 	glib-compile-resources --generate --target=$@ --c-name js --sourcedir=$(top_srcdir)/js $<
 
-js.c: $(top_srcdir)/js/gresource.xml $(top_srcdir)/js/htmlview.js $(top_srcdir)/js/Readability-readerable.js $(top_srcdir)/js/Readability.js $(main_dep)
+js.c: $(top_srcdir)/js/gresource.xml $(top_srcdir)/js/htmlview.js $(top_srcdir)/js/Readability-readerable.js $(top_srcdir)/js/Readability.js $(top_srcdir)/js/purify.min.js $(main_dep)
 	glib-compile-resources --generate --target=$@ --c-name js --sourcedir=$(top_srcdir)/js $<
 
 js.o: js.c js.h
@@ -116,8 +116,6 @@ Liferea_3_0_gir_FILES = \
 	ui/liferea_browser.c ui/liferea_browser.h \
 	ui/liferea_shell.c ui/liferea_shell.h \
 	ui/liferea_shell_activatable.c ui/liferea_shell_activatable.h \
-	ui/media_player.c ui/media_player.h \
-	ui/media_player_activatable.c ui/media_player_activatable.h \
 	fl_sources/node_source.c fl_sources/node_source.h \
 	fl_sources/node_source_activatable.c fl_sources/node_source_activatable.h
 Liferea_3_0_gir_INCLUDES = Gtk-3.0 libxml2-2.0

@@ -98,6 +98,11 @@ feed_import (nodePtr node, nodePtr parent, xmlNodePtr xml, gboolean trusted)
 		feed->html5Extract = TRUE;
 	xmlFree (tmp);
 
+	tmp = xmlGetProp (xml, BAD_CAST"loadItemLink");
+	if (tmp && !xmlStrcmp ((xmlChar *)tmp, BAD_CAST"true"))
+		feed->loadItemLink = TRUE;
+	xmlFree (tmp);
+
 	title = xmlGetProp (xml, BAD_CAST"title");
 	if (!title || !xmlStrcmp (title, BAD_CAST"")) {
 		if (title)
@@ -109,7 +114,7 @@ feed_import (nodePtr node, nodePtr parent, xmlNodePtr xml, gboolean trusted)
 	xmlFree (title);
 
 	if (node->subscription)
-		debug4 (DEBUG_CACHE, "import feed: title=%s source=%s typeStr=%s interval=%d",
+		debug (DEBUG_CACHE, "import feed: title=%s source=%s typeStr=%s interval=%d",
 		        node_get_title (node),
 	        	subscription_get_source (node->subscription),
 		        typeStr,
@@ -145,10 +150,13 @@ feed_export (nodePtr node, xmlNodePtr xml, gboolean trusted)
 
 		if (feed->html5Extract)
 			xmlNewProp (xml, BAD_CAST"html5Extract", BAD_CAST"true");
+
+		if (feed->loadItemLink)
+			xmlNewProp (xml, BAD_CAST"loadItemLink", BAD_CAST"true");
 	}
 
 	if (node->subscription)
-		debug3 (DEBUG_CACHE, "adding feed: source=%s interval=%d cacheLimit=%s",
+		debug (DEBUG_CACHE, "adding feed: source=%s interval=%d cacheLimit=%s",
 		        subscription_get_source (node->subscription),
 			subscription_get_update_interval (node->subscription),
 		        (cacheLimit != NULL ? cacheLimit : ""));
@@ -256,14 +264,14 @@ feed_enrich_item_cb (const struct updateResult * const result, gpointer userdata
 		if (ampurl) {
 			UpdateRequest *request;
 
-			debug3 (DEBUG_PARSING, "Fetching AMP HTML %ld %s : %s", item->id, item->title, ampurl);
+			debug (DEBUG_PARSING, "Fetching AMP HTML %ld %s : %s", item->id, item->title, ampurl);
 			request = update_request_new (
 				ampurl,
 				NULL, 	// No update state needed? How do we prevent an endless redirection loop?
 				NULL 	// Explicitely do not the feed's proxy/auth options to 3rd parties like Google (AMP)!
 			);
 
-			update_execute_request (NULL, request, feed_enrich_item_cb, item, FEED_REQ_NO_FEED);
+			update_execute_request (NULL, request, feed_enrich_item_cb, GUINT_TO_POINTER (item->id), FEED_REQ_NO_FEED);
 
 			g_free (ampurl);
 		}
@@ -280,18 +288,18 @@ feed_enrich_item (subscriptionPtr subscription, itemPtr item)
 	UpdateRequest *request;
 
 	if (!item->source) {
-		debug1 (DEBUG_PARSING, "Cannot HTML5-enrich item %s because it has no source!\n", item->title);
+		debug (DEBUG_PARSING, "Cannot HTML5-enrich item %s because it has no source!", item->title);
 		return;
 	}
 
 	// Don't enrich twice
 	if (NULL != metadata_list_get (item->metadata, "richContent")) {
-		debug1 (DEBUG_PARSING, "Skipping already HTML5 enriched item %s\n", item->title);
+		debug (DEBUG_PARSING, "Skipping already HTML5 enriched item %s", item->title);
 		return;
 	}
 
 	// Fetch item->link document and try to parse it as XHTML
-	debug3 (DEBUG_PARSING, "Fetching HTML5 %ld %s : %s", item->id, item->title, item->source);
+	debug (DEBUG_PARSING, "Fetching HTML5 %ld %s : %s", item->id, item->title, item->source);
 	request = update_request_new (
 		item->source,
 		NULL,	// updateState
@@ -309,7 +317,6 @@ feed_process_update_result (subscriptionPtr subscription, const struct updateRes
 	feedParserCtxtPtr	ctxt;
 	nodePtr			node = subscription->node;
 
-	debug_enter ("feed_process_update_result");
 
 	ctxt = feed_parser_ctxt_new (subscription, result->data, result->size);
 
@@ -346,7 +353,6 @@ feed_process_update_result (subscriptionPtr subscription, const struct updateRes
 	if (FETCH_ERROR_NONE != subscription->error)
 		node->available = FALSE;
 
-	debug_exit ("feed_process_update_result");
 }
 
 static gboolean
@@ -460,7 +466,7 @@ feed_get_node_type (void)
 		NODE_CAPABILITY_EXPORT |
 		NODE_CAPABILITY_EXPORT_ITEMS,
 		"feed",		/* not used, feed format ids are used instead */
-		NULL,
+		ICON_DEFAULT,
 		feed_import,
 		feed_export,
 		feed_load,
@@ -472,7 +478,6 @@ feed_get_node_type (void)
 		feed_properties,
 		feed_free
 	};
-	nti.icon = icon_get (ICON_DEFAULT);
 
 	return &nti;
 }

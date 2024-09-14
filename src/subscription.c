@@ -42,7 +42,7 @@
 #define FEED_PROTOCOL_PREFIX "feed://"
 #define FEED_PROTOCOL_PREFIX2 "feed:"
 
-#define ONE_MONTH_MICROSECONDS (guint64)(60*60*24*31) * (guint64)G_USEC_PER_SEC
+#define ONE_MONTH_MICROSECONDS (gint64)(60*60*24*31) * (gint64)G_USEC_PER_SEC
 
 subscriptionPtr
 subscription_new (const gchar *source,
@@ -129,7 +129,7 @@ subscription_reset_update_counter (subscriptionPtr subscription, guint64 *now)
 		return;
 
 	subscription->updateState->lastPoll = *now;
-	debug2 (DEBUG_UPDATE, "Resetting last poll counter of %s to %lld.", subscription->source, subscription->updateState->lastPoll);
+	debug (DEBUG_UPDATE, "Resetting last poll counter of %s to %lld.", subscription->source, subscription->updateState->lastPoll);
 }
 
 /**
@@ -185,13 +185,16 @@ subscription_process_update_result (const struct updateResult * const result, gp
 	g_assert (subscription->updateJob);
 	/* update the subscription URL on permanent redirects */
 	if ((301 == result->httpstatus || 308 == result->httpstatus) && result->source && !g_str_equal (result->source, subscription->updateJob->request->source)) {
-		debug2 (DEBUG_UPDATE, "The URL of \"%s\" has changed permanently and was updated to \"%s\"", node_get_title(node), result->source);
+		debug (DEBUG_UPDATE, "The URL of \"%s\" has changed permanently and was updated to \"%s\"", node_get_title(node), result->source);
 		subscription_set_source (subscription, result->source);
     statusbar = g_strdup_printf (_("The URL of \"%s\" has changed permanently and was updated"), node_get_title(node));
   }
 
 	/* consider everything that prevents processing the data we got */
-	if (result->httpstatus >= 400 || !result->data) {
+	if (304 == result->httpstatus) {
+		node->available = TRUE;
+		statusbar = g_strdup_printf (_("\"%s\" has not changed since last update"), node_get_title(node));
+	} else if (result->httpstatus >= 400 || !result->data) {
 		/* Default */
 		subscription->error = FETCH_ERROR_NET;
 		node->available = FALSE;
@@ -205,9 +208,6 @@ subscription_process_update_result (const struct updateResult * const result, gp
 			subscription_set_discontinued (subscription, TRUE);
 			statusbar = g_strdup_printf (_("\"%s\" is discontinued. Liferea won't updated it anymore!"), node_get_title (node));
 		}
-	} else if (304 == result->httpstatus) {
-		node->available = TRUE;
-		statusbar = g_strdup_printf (_("\"%s\" has not changed since last update"), node_get_title(node));
 	} else if (result->filterErrors) {
 		node->available = FALSE;
 		subscription->error = FETCH_ERROR_NET;
@@ -276,7 +276,7 @@ subscription_update (subscriptionPtr subscription, guint flags)
 	if (subscription->updateJob)
 		return;
 
-	debug1 (DEBUG_UPDATE, "Scheduling %s to be updated", node_get_title (subscription->node));
+	debug (DEBUG_UPDATE, "Scheduling %s to be updated", node_get_title (subscription->node));
 
 	if (subscription_can_be_updated (subscription)) {
 		request = update_request_new (
@@ -284,6 +284,7 @@ subscription_update (subscriptionPtr subscription, guint flags)
 			subscription->updateState,
 			subscription->updateOptions
 		);
+		update_request_allow_commands (request, TRUE);
 
 		if (subscription_get_filter (subscription))
 			request->filtercmd = g_strdup (subscription_get_filter (subscription));

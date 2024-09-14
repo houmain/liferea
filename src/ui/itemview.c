@@ -1,7 +1,7 @@
 /*
  * @file itemview.c  viewing feed content in different presentation modes
  *
- * Copyright (C) 2006-2022 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2006-2024 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@
 #include "vfolder.h"
 #include "ui/ui_common.h"
 #include "ui/browser_tabs.h"
-#include "ui/enclosure_list_view.h"
 #include "ui/liferea_shell.h"
 #include "ui/item_list_view.h"
 #include "ui/liferea_browser.h"
@@ -58,7 +57,6 @@ struct _ItemView {
 
 	ItemListView	*itemListView;		/*<< widget instance used to present items in list mode */
 
-	EnclosureListView	*enclosureView;	/*<< Enclosure list widget */
 	LifereaBrowser		*htmlview;	/*<< HTML rendering widget instance used to render single items and summaries mode */
 
 	gfloat			zoom;		/*<< HTML rendering widget zoom level */
@@ -86,8 +84,6 @@ itemview_finalize (GObject *object)
 		g_object_unref (itemview->htmlview);
 	}
 
-	if (itemview->enclosureView)
-		g_object_unref (itemview->enclosureView);
 	if (itemview->itemListView)
 		g_object_unref (itemview->itemListView);
 }
@@ -144,7 +140,6 @@ itemview_clear (void)
 {
 	if (itemview->itemListView)
 		item_list_view_clear (itemview->itemListView);
-	enclosure_list_view_hide (itemview->enclosureView);
 	itemview->needsHTMLViewUpdate = TRUE;
 	itemview->browsing = FALSE;
 }
@@ -198,26 +193,7 @@ itemview_select_item (itemPtr item)
 		item_list_view_select (itemview->itemListView, item);
 
 	if (item)
-		enclosure_list_view_load (itemview->enclosureView, item);
-	else
-		enclosure_list_view_hide (itemview->enclosureView);
-
-	if (item)
 		item_history_add (item->id);
-}
-
-void
-itemview_select_enclosure (guint position)
-{
-	if (itemview->enclosureView)
-		enclosure_list_view_select (itemview->enclosureView, position);
-}
-
-void
-itemview_open_next_enclosure (ItemView *view)
-{
-	if (view->enclosureView)
-		enclosure_list_view_open_next (view->enclosureView);
 }
 
 void
@@ -352,12 +328,10 @@ itemview_move_cursor_to_first (void)
 static void
 itemview_init (ItemView *iv)
 {
-	debug_enter("itemview_init");
 
 	g_assert (NULL == itemview);
 	itemview = iv;
 
-	debug_exit("itemview_init");
 }
 
 static void
@@ -371,7 +345,7 @@ void
 itemview_set_layout (nodeViewType newMode)
 {
 	GtkWidget 	*previous_parent = NULL;
-	const gchar	*htmlWidgetName, *ilWidgetName, *encViewVBoxName;
+	const gchar	*htmlWidgetName, *ilWidgetName;
 	nodePtr		node;
 	itemPtr		item;
 	nodeViewType	effectiveMode = newMode;
@@ -400,30 +374,19 @@ itemview_set_layout (nodeViewType newMode)
 		itemlist_unload ();
 
 	/* Prepare widgets for layout */
-	if (!itemview->htmlview) {
-		debug0 (DEBUG_GUI, "Creating HTML widget");
-		itemview->htmlview = liferea_browser_new (FALSE);
-		g_signal_connect (itemview->htmlview, "statusbar-changed",
-		                  G_CALLBACK (on_important_status_message), NULL);
+	g_assert (itemview->htmlview);
+	liferea_browser_clear (itemview->htmlview);
 
-		/* Set initial zoom */
-		liferea_browser_set_zoom (itemview->htmlview, itemview->zoom/100.);
-	} else {
-		liferea_browser_clear (itemview->htmlview);
-	}
-
-	debug2 (DEBUG_GUI, "Setting item list layout mode: %d (auto=%d)", effectiveMode, itemview->autoLayout);
+	debug (DEBUG_GUI, "Setting item list layout mode: %d (auto=%d)", effectiveMode, itemview->autoLayout);
 
 	switch (effectiveMode) {
 		case NODE_VIEW_MODE_NORMAL:
 			htmlWidgetName = "normalViewHtml";
 			ilWidgetName = "normalViewItems";
-			encViewVBoxName = "normalViewVBox";
 			break;
 		case NODE_VIEW_MODE_WIDE:
 			htmlWidgetName = "wideViewHtml";
 			ilWidgetName = "wideViewItems";
-			encViewVBoxName = "wideViewVBox";
 			break;
 		default:
 			g_warning("fatal: illegal viewing mode!");
@@ -450,21 +413,6 @@ itemview_set_layout (nodeViewType newMode)
 	if (ilWidgetName) {
 		itemview->itemListView = item_list_view_create (effectiveMode == NODE_VIEW_MODE_WIDE);
 		gtk_container_add (GTK_CONTAINER (liferea_shell_lookup (ilWidgetName)), item_list_view_get_widget (itemview->itemListView));
-	}
-
-	/* Destroy previous enclosure list. */
-	if (itemview->enclosureView) {
-		gtk_widget_destroy (enclosure_list_view_get_widget (itemview->enclosureView));
-		itemview->enclosureView = NULL;
-	}
-
-	/* Create a new enclosure list GtkTreeView. */
-	if (encViewVBoxName) {
-		itemview->enclosureView = enclosure_list_view_new ();
-		gtk_grid_attach_next_to (GTK_GRID (liferea_shell_lookup (encViewVBoxName)),
-		                  enclosure_list_view_get_widget (itemview->enclosureView),
-				  NULL, GTK_POS_BOTTOM, 1,1);
-		gtk_widget_show_all (liferea_shell_lookup (encViewVBoxName));
 	}
 
 	/* Load previously selected node and/or item into new widgets */
@@ -506,6 +454,14 @@ itemview_create (GtkWidget *window)
 	}
 	itemview->zoom = zoom;
 	itemview->currentLayoutMode = 1000;	// something invalid
+
+	debug (DEBUG_GUI, "Creating HTML widget");
+	itemview->htmlview = liferea_browser_new (FALSE);
+	g_signal_connect (itemview->htmlview, "statusbar-changed",
+	                  G_CALLBACK (on_important_status_message), NULL);
+
+	/* Set initial zoom */
+	liferea_browser_set_zoom (itemview->htmlview, itemview->zoom/100.);
 
 	return itemview;
 }

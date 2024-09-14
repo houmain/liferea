@@ -12,7 +12,6 @@ libliui_a_CFLAGS = $(PACKAGE_CFLAGS) $(LIBINDICATE_CFLAGS)
 libliui_a_SOURCES = \
 	auth_dialog.c auth_dialog.h \
 	browser_tabs.c browser_tabs.h \
-	enclosure_list_view.c enclosure_list_view.h \
 	feed_list_view.c feed_list_view.h \
 	gedit-close-button.c gedit-close-button.h \
 	icons.c icons.h \
@@ -22,8 +21,6 @@ libliui_a_SOURCES = \
 	liferea_browser.c liferea_browser.h \
 	liferea_shell.c liferea_shell.h \
 	liferea_shell_activatable.c liferea_shell_activatable.h \
-	media_player.c media_player.h \
-	media_player_activatable.c media_player_activatable.h \
 	popup_menu.c popup_menu.h \
 	preferences_dialog.c preferences_dialog.h \
 	rule_editor.c rule_editor.h \

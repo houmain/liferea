@@ -1,7 +1,7 @@
 /**
- * @file html.c  Test cases for feed link auto discovery
+ * @file parse_html.c  Test cases for feed link auto discovery
  *
- * Copyright (C) 2014-2019 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2014-2023 Lars Windolf <lars.windolf@gmx.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include <glib.h>
 
+#include "debug.h"
 #include "html.h"
 
 /* We need two groups of autodiscovery test cases, one for the tag soup fuzzy
@@ -115,6 +116,13 @@ gchar *tc_xml_atom3[] = {
 	NULL
 };
 
+// Injection via "|"" command must not result in command subscription
+gchar *tc_xml_rce[] = {
+	"<html><head><link rel=\"alternate\" type=\"application/rss+xml\" href=\"|date &gt;/tmp/bad-feed-discovery.txt\"></html>",
+	NULL,
+	NULL
+};
+
 /* HTML5 extraction test cases */
 
 gchar *tc_article[] = {
@@ -182,10 +190,12 @@ static void
 tc_auto_discover_link (gconstpointer user_data)
 {
 	gchar **tc = (gchar **)user_data;
-	GSList *result;
+	g_autofree gchar *tmp;
+	GSList *list, *result;
 	guint	i = 2;
 
-	result = html_auto_discover_feed (g_strdup (tc[0]), tc[1]);
+	tmp = g_strdup (tc[0]);
+	list = result = html_auto_discover_feed (tmp, tc[1]);
 	do {
 		if (!tc[i]) {
 			g_assert_null (result);
@@ -194,6 +204,8 @@ tc_auto_discover_link (gconstpointer user_data)
 			result = g_slist_next (result);
 		}
 	} while(tc[i++]);
+
+	g_slist_free_full (list, g_free);
 }
 
 static void
@@ -214,6 +226,9 @@ main (int argc, char *argv[])
 {
 	g_test_init (&argc, &argv, NULL);
 
+	if (argv[1] && g_str_equal (argv[1], "--debug"))
+		debug_set_flags (DEBUG_UPDATE | DEBUG_HTML | DEBUG_PARSING);
+
 	g_test_add_data_func ("/html/auto_discover_link_xml", &tc_xml, &tc_auto_discover_link);
 	g_test_add_data_func ("/html/auto_discover_link_xml_base_url", &tc_xml_base_url, &tc_auto_discover_link);
 	g_test_add_data_func ("/html/auto_discover_link_rss", &tc_rss, &tc_auto_discover_link);
@@ -225,6 +240,7 @@ main (int argc, char *argv[])
 	g_test_add_data_func ("/html/auto_discover_link_xml_atom", &tc_xml_atom, &tc_auto_discover_link);
 	g_test_add_data_func ("/html/auto_discover_link_xml_atom2", &tc_xml_atom2, &tc_auto_discover_link);
 	g_test_add_data_func ("/html/auto_discover_link_xml_atom3", &tc_xml_atom3, &tc_auto_discover_link);
+	g_test_add_data_func ("/html/auto_discover_link_xml_rce", &tc_xml_rce, &tc_auto_discover_link);
 
 	g_test_add_data_func ("/html/html5_extract_article", &tc_article, &tc_get_article);
 	g_test_add_data_func ("/html/html5_extract_article_main", &tc_article_main, &tc_get_article);

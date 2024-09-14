@@ -1,7 +1,7 @@
 /**
  * @file feed_list_view.c  the feed list in a GtkTreeView
  *
- * Copyright (C) 2004-2022 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2004-2024 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  * Copyright (C) 2005 Raphael Slinckx <raphael@slinckx.net>
  *
@@ -33,7 +33,6 @@
 #include "folder.h"
 #include "net_monitor.h"
 #include "newsbin.h"
-#include "render.h"
 #include "vfolder.h"
 #include "ui/icons.h"
 #include "ui/liferea_dialog.h"
@@ -115,7 +114,7 @@ feed_list_view_selection_changed_cb (GtkTreeSelection *selection, gpointer data)
 	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
 	 	gtk_tree_model_get (model, &iter, FS_PTR, &node, -1);
 
-		debug1 (DEBUG_GUI, "feed list selection changed to \"%s\"", node?node_get_title (node):"Empty node");
+		debug (DEBUG_GUI, "feed list selection changed to \"%s\"", node?node_get_title (node):"Empty node");
 
 		if (!node) {
 			/* The selected iter is an "empty" node added to an empty folder. We get the parent's node
@@ -125,7 +124,7 @@ feed_list_view_selection_changed_cb (GtkTreeSelection *selection, gpointer data)
 			if (gtk_tree_model_iter_parent (model, &parent, &iter))
 				gtk_tree_model_get (model, &parent, FS_PTR, &node, -1);
 			else {
-				debug0 (DEBUG_GUI, "A selected null node has no parent. This should not happen.");
+				debug (DEBUG_GUI, "A selected null node has no parent. This should not happen.");
 				return;
 			}
 		}
@@ -298,7 +297,6 @@ feed_list_view_create (GtkTreeView *treeview)
 	GtkTreeViewColumn 	*column, *column2;
 	GtkTreeSelection	*select;
 
-	debug_enter ("feed_list_view_create");
 
 	/* Set up store */
 	g_assert (NULL == flv);
@@ -366,7 +364,6 @@ feed_list_view_create (GtkTreeView *treeview)
 
 	ui_dnd_setup_feedlist (flv->feedstore);
 
-	debug_exit ("feed_list_view_create");
 
 	return flv;
 }
@@ -651,7 +648,7 @@ feed_list_view_check_if_folder_is_empty (const gchar *nodeId)
 	GtkTreeIter	*iter;
 	int		count;
 
-	debug1 (DEBUG_GUI, "folder empty check for node id \"%s\"", nodeId);
+	debug (DEBUG_GUI, "folder empty check for node id \"%s\"", nodeId);
 
 	/* this function does two things:
 
@@ -684,7 +681,7 @@ feed_list_view_add_node (nodePtr node)
 	gint		position;
 	GtkTreeIter	*iter, *parentIter = NULL;
 
-	debug2 (DEBUG_GUI, "adding node \"%s\" as child of parent=\"%s\"", node_get_title(node), (NULL != node->parent)?node_get_title(node->parent):"feed list root");
+	debug (DEBUG_GUI, "adding node \"%s\" as child of parent=\"%s\"", node_get_title(node), (NULL != node->parent)?node_get_title(node->parent):"feed list root");
 
 	g_assert (NULL != node->parent);
 	g_assert (NULL == feed_list_view_to_iter (node->id));
@@ -779,25 +776,24 @@ feed_list_view_update_node (const gchar *nodeId)
 	gchar		*label, *count = NULL;
 	guint		labeltype;
 	nodePtr		node;
+	static		gchar *countColor = NULL;
 
-	static gchar	*countColor = NULL;
+	/* Until GTK3 we used real theme colors here. Nowadays GTK simply knows
+	   that we do not need to know about them and helpfully prevents us from
+	   accessing them. So we use hard-coded colors that hopefully fit all the 
+	   themes out there. 
+	
+	   And yes of course with to much time on my hand I could implement
+	   my own renderer widget... */
+	if (conf_get_dark_theme ())
+		countColor = "foreground='#ddd' background='#444'";
+	else
+		countColor = "foreground='#fff' background='#aaa'";
 
 	node = node_from_id (nodeId);
 	iter = feed_list_view_to_iter (nodeId);
 	if (!iter)
 		return;
-
-	/* Initialize unread item color Pango CSS */
-	if (!countColor) {
-		const gchar *bg = NULL, *fg = NULL;
-
-		bg = render_get_theme_color ("FEEDLIST_UNREAD_BG");
-		fg = render_get_theme_color ("FEEDLIST_UNREAD_FG");
-		if (fg && bg) {
-			countColor = g_strdup_printf ("foreground='#%s' background='#%s'", fg, bg);
-			debug1 (DEBUG_HTML, "Feed list unread CSS: %s\n", countColor);
-		}
-	}
 
 	labeltype = NODE_TYPE (node)->capabilities;
 	labeltype &= (NODE_CAPABILITY_SHOW_UNREAD_COUNT |
@@ -812,10 +808,10 @@ feed_list_view_update_node (const gchar *nodeId)
 		     NODE_CAPABILITY_SHOW_ITEM_COUNT:
 	     		/* treat like show unread count */
 		case NODE_CAPABILITY_SHOW_UNREAD_COUNT:
-			count = g_strdup_printf ("<span weight='bold' %s> %u </span>", countColor?countColor:"", node->unreadCount);
+			count = g_strdup_printf ("<span weight='bold' %s> %u </span>", countColor, node->unreadCount);
 			break;
 		case NODE_CAPABILITY_SHOW_ITEM_COUNT:
-			count = g_strdup_printf ("<span weight='bold' %s> %u </span>", countColor?countColor:"", node->itemCount);
+			count = g_strdup_printf ("<span weight='bold' %s> %u </span>", countColor, node->itemCount);
 		     	break;
 		default:
 			break;

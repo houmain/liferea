@@ -47,64 +47,83 @@ LifereaPluginsEngine *default_engine = NULL;
 static void
 liferea_plugins_engine_init (LifereaPluginsEngine * engine)
 {
-  gchar *typelib_dir;
-  GError *error = NULL;
-  PeasPluginInfo *plugin_installer_plugin_info = NULL;
+	gchar	*typelib_dir;
+	const gchar **names;
+	gsize	length;
+	GError *error = NULL;
+	GVariant *list;
+	PeasPluginInfo *plugin_installer_plugin_info = NULL;
+	GSettings *plugin_settings;
 
-  engine->priv = liferea_plugins_engine_get_instance_private (engine);
+	plugin_settings = g_settings_new ("net.sf.liferea.plugins");
 
-  peas_engine_enable_loader (PEAS_ENGINE (engine), "python3");
+	/* Disable incompatible webkit-settings plugin */
+	list = g_settings_get_value (plugin_settings, "active-plugins");
+	names = g_variant_get_strv (list, &length);
+	if (g_strv_contains (names, "webkit-settings")) {
+		GVariantBuilder b;
+		guint i;
 
-  engine->priv->plugin_settings = g_settings_new ("net.sf.liferea.plugins");
+		g_variant_builder_init (&b, G_VARIANT_TYPE_ARRAY);
+		for (i = 0; i < length; i++) {
+			if (!g_str_equal (names[i], "webkit-settings"))
+				g_variant_builder_add_parsed (&b, "%s", names[i]);
+		}
+		g_free (list);
+		list = g_variant_builder_end (&b);
+		g_settings_set_value (plugin_settings, "active-plugins", list);
+	}
+	g_free (names);
 
-  /* Require Lifereas's typelib. */
-  typelib_dir = g_build_filename (PACKAGE_LIB_DIR,
-                                  "girepository-1.0", NULL);
+	engine->priv = liferea_plugins_engine_get_instance_private (engine);
+	engine->priv->plugin_settings = plugin_settings;
+	peas_engine_enable_loader (PEAS_ENGINE (engine), "python3");
 
-  if (!g_irepository_require_private (g_irepository_get_default (),
-	  typelib_dir, "Liferea", "3.0", 0, &error))
-    {
-      g_warning ("Could not load Liferea repository: %s", error->message);
-      g_error_free (error);
-      error = NULL;
-    }
+	/* Require Lifereas's typelib. */
+	typelib_dir = g_build_filename (PACKAGE_LIB_DIR,
+					"girepository-1.0", NULL);
 
-  g_free (typelib_dir);
+	if (!g_irepository_require_private (g_irepository_get_default (),
+		typelib_dir, "Liferea", "3.0", 0, &error)) {
+		g_warning ("Could not load Liferea repository: %s", error->message);
+		g_error_free (error);
+		error = NULL;
+	}
 
-  /* This should be moved to libpeas */
-  if (!g_irepository_require (g_irepository_get_default (),
-                              "Peas", "1.0", 0, &error))
-    {
-      g_warning ("Could not load Peas repository: %s", error->message);
-      g_error_free (error);
-      error = NULL;
-    }
+	g_free (typelib_dir);
 
-  if (!g_irepository_require (g_irepository_get_default (),
-                              "PeasGtk", "1.0", 0, &error))
-    {
-      g_warning ("Could not load PeasGtk repository: %s", error->message);
-      g_error_free (error);
-      error = NULL;
-    }
+	/* This should be moved to libpeas */
+	if (!g_irepository_require (g_irepository_get_default (),
+				"Peas", "1.0", 0, &error)) {
+		g_warning ("Could not load Peas repository: %s", error->message);
+		g_error_free (error);
+		error = NULL;
+	}
 
-  peas_engine_add_search_path (PEAS_ENGINE (engine),
-                               g_build_filename (g_get_user_data_dir (), "liferea", "plugins", NULL),
-                               g_build_filename (g_get_user_data_dir (), "liferea", "plugins", NULL));
+	if (!g_irepository_require (g_irepository_get_default (),
+				"PeasGtk", "1.0", 0, &error)) {
+		g_warning ("Could not load PeasGtk repository: %s", error->message);
+		g_error_free (error);
+		error = NULL;
+	}
 
-  peas_engine_add_search_path (PEAS_ENGINE (engine),
-                               g_build_filename (PACKAGE_LIB_DIR,  "plugins", NULL),
-                               g_build_filename (PACKAGE_DATA_DIR, "plugins", NULL));
+	peas_engine_add_search_path (PEAS_ENGINE (engine),
+		g_build_filename (g_get_user_data_dir (), "liferea", "plugins", NULL),
+		g_build_filename (g_get_user_data_dir (), "liferea", "plugins", NULL));
 
-  g_settings_bind (engine->priv->plugin_settings,
-                   "active-plugins",
-                   engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT);
+	peas_engine_add_search_path (PEAS_ENGINE (engine),
+		g_build_filename (PACKAGE_LIB_DIR,  "plugins", NULL),
+		g_build_filename (PACKAGE_DATA_DIR, "plugins", NULL));
 
-  plugin_installer_plugin_info = peas_engine_get_plugin_info (PEAS_ENGINE (engine), "plugin-installer");
-  if (plugin_installer_plugin_info)
-	peas_engine_load_plugin (PEAS_ENGINE (engine), plugin_installer_plugin_info);
-  else
-	g_warning ("The plugin-installer plugin was not found.");
+	g_settings_bind (engine->priv->plugin_settings,
+			"active-plugins",
+			engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT);
+
+	plugin_installer_plugin_info = peas_engine_get_plugin_info (PEAS_ENGINE (engine), "plugin-installer");
+	if (plugin_installer_plugin_info)
+		peas_engine_load_plugin (PEAS_ENGINE (engine), plugin_installer_plugin_info);
+	else
+		g_warning ("The plugin-installer plugin was not found.");
 }
 
 /* Provide default signal handlers */

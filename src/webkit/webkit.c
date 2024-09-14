@@ -460,11 +460,16 @@ liferea_webkit_run_js (GtkWidget *widget, gchar *js, GAsyncReadyCallback cb)
 	// No matter what was before we need JS now
 	g_object_set (webkit_web_view_get_settings (WEBKIT_WEB_VIEW (widget)), "enable-javascript", TRUE, NULL);
 
-	webkit_web_view_run_javascript (WEBKIT_WEB_VIEW (widget),
-	                                js,
-	                                NULL,
-	                                cb,
-	                                g_object_get_data (G_OBJECT (widget), "htmlview"));
+	webkit_web_view_evaluate_javascript (
+		WEBKIT_WEB_VIEW (widget),
+		js,
+		-1,
+		NULL,
+		NULL,
+		NULL,
+		cb,
+		g_object_get_data (G_OBJECT (widget), "htmlview")
+	);
 	g_free (js);
 }
 
@@ -547,6 +552,9 @@ liferea_webkit_new (LifereaBrowser *htmlview)
 	liferea_webkit_default_settings (settings);
 	webkit_web_view_set_settings (view, settings);
 
+	/* Always drop cache on startup, so it does not grow over time */
+	webkit_web_context_clear_cache (webkit_web_context_get_default ());
+
 	g_signal_connect_object (
 		liferea_webkit,
 		"page-created",
@@ -617,14 +625,12 @@ liferea_webkit_scroll_pagedown (GtkWidget *webview)
 }
 
 void
-liferea_webkit_set_proxy (ProxyDetectMode mode, const gchar *host, guint port, const gchar *user, const gchar *pwd)
+liferea_webkit_set_proxy (ProxyDetectMode mode)
 {
 #if WEBKIT_CHECK_VERSION (2, 15, 3)
-	WebKitNetworkProxySettings *proxy_settings = NULL;
-	gchar *proxy_uri = NULL;
-	gchar *user_pass = NULL, *host_port = NULL;
-
 	switch (mode) {
+		default:
+		case PROXY_DETECT_MODE_MANUAL:
 		case PROXY_DETECT_MODE_AUTO:
 			webkit_website_data_manager_set_network_proxy_settings
 			    (webkit_web_context_get_website_data_manager (webkit_web_context_get_default ()),
@@ -636,43 +642,6 @@ liferea_webkit_set_proxy (ProxyDetectMode mode, const gchar *host, guint port, c
 			    (webkit_web_context_get_website_data_manager (webkit_web_context_get_default ()),
 			     WEBKIT_NETWORK_PROXY_MODE_NO_PROXY,
 			     NULL);
-			break;
-		case PROXY_DETECT_MODE_MANUAL:
-			/* Construct user:password part of the URI if specified. */
-			if (user) {
-				user_pass = g_uri_escape_string (user, NULL, TRUE);
-				if (pwd) {
-					gchar *enc_user = user_pass;
-					gchar *enc_pass = g_uri_escape_string (pwd, NULL, TRUE);
-					user_pass = g_strdup_printf ("%s:%s", enc_user, enc_pass);
-					g_free (enc_user);
-					g_free (enc_pass);
-				}
-			}
-
-			/* Construct the host:port part of the URI. */
-			if (port) {
-				host_port = g_strdup_printf ("%s:%d", host, port);
-			} else {
-				host_port = g_strdup (host);
-			}
-
-			/* Construct proxy URI. */
-			if (user) {
-				proxy_uri = g_strdup_printf("http://%s@%s", user_pass, host_port);
-			} else {
-				proxy_uri = g_strdup_printf("http://%s", host_port);
-			}
-
-			g_free (user_pass);
-			g_free (host_port);
-			proxy_settings = webkit_network_proxy_settings_new (proxy_uri, NULL);
-			g_free (proxy_uri);
-			webkit_website_data_manager_set_network_proxy_settings
-			    (webkit_web_context_get_website_data_manager (webkit_web_context_get_default ()),
-			     WEBKIT_NETWORK_PROXY_MODE_CUSTOM,
-			     proxy_settings);
-			webkit_network_proxy_settings_free (proxy_settings);
 			break;
 	}
 #endif
@@ -691,7 +660,7 @@ liferea_webkit_reload_style (GtkWidget *webview)
 	if (default_stylesheet)
 		webkit_user_style_sheet_unref (default_stylesheet);
 
-	gchar *css = render_get_default_css ();
+	const gchar *css = render_get_default_css ();
 	// default stylesheet should only apply to HTML written to the view,
 	// not when browsing
 	const gchar *deny[] = { "http://*/*", "https://*/*",  NULL };

@@ -61,7 +61,6 @@ newsbin_import (nodePtr node, nodePtr parent, xmlNodePtr cur, gboolean trusted)
 	newsbin_list = g_slist_append(newsbin_list, node);
 }
 
-
 static void
 newsbin_export (nodePtr node, xmlNodePtr xml, gboolean trusted)
 {
@@ -72,7 +71,6 @@ newsbin_export (nodePtr node, xmlNodePtr xml, gboolean trusted)
 			xmlNewProp (xml, BAD_CAST"alwaysShowInReducedMode", BAD_CAST"true");
 	}
 }
-
 
 static void
 newsbin_remove (nodePtr node)
@@ -93,7 +91,6 @@ newsbin_render (nodePtr node)
 
 	return output;
 }
-
 
 static void
 on_newsbin_common_btn_clicked (GtkButton *button, gpointer user_data)
@@ -150,20 +147,17 @@ ui_newsbin_common (nodePtr node)
 	return TRUE;
 }
 
-
 static gboolean
 ui_newsbin_add (void)
 {
 	return ui_newsbin_common(NULL);
 }
 
-
 static void
 ui_newsbin_properties (nodePtr node)
 {
 	ui_newsbin_common(node);
 }
-
 
 void
 on_action_copy_to_newsbin (GSimpleAction *action, GVariant *parameter, gpointer user_data)
@@ -217,7 +211,7 @@ newsbin_get_node_type (void)
 		                                  NODE_CAPABILITY_SHOW_ITEM_COUNT |
 		                                  NODE_CAPABILITY_EXPORT_ITEMS;
 		nodeType->id			= "newsbin";
-		nodeType->icon			= icon_get (ICON_NEWSBIN);
+		nodeType->icon			= ICON_NEWSBIN;
 		nodeType->load			= feed_get_node_type()->load;
 		nodeType->import		= newsbin_import;
 		nodeType->export		= newsbin_export;

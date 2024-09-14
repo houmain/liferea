@@ -27,18 +27,11 @@
 typedef enum {
 	ICON_UNREAD,
 	ICON_FLAG,
-	ICON_AVAILABLE,
-	ICON_AVAILABLE_OFFLINE,
 	ICON_UNAVAILABLE,
 	ICON_DEFAULT,
 	ICON_FOLDER,
 	ICON_VFOLDER,
 	ICON_NEWSBIN,
-	ICON_EMPTY,
-	ICON_EMPTY_OFFLINE,
-	ICON_ONLINE,
-	ICON_OFFLINE,
-	ICON_ENCLOSURE,
 	MAX_ICONS
 } lifereaIcon;
 
@@ -61,6 +54,16 @@ void icons_load (void);
  * Returns: (transfer none): GIcon
  */
 const GIcon * icon_get (lifereaIcon icon);
+
+/**
+ * icon_find_pixmap_file:
+ * @filename:	the name of the file
+ *
+ * Takes a file name relative to "pixmaps" directory and returns it's path.
+ *
+ * Returns: (transfer full): file path or NULL
+ */
+gchar * icon_find_pixmap_file (const gchar *filename);
 
 /**
  * icon_create_from_file:

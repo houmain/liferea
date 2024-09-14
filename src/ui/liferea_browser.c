@@ -289,13 +289,7 @@ liferea_browser_online_status_changed (NetworkMonitor *nm, gboolean online, gpoi
 static void
 liferea_browser_proxy_changed (NetworkMonitor *nm, gpointer userdata)
 {
-	liferea_webkit_set_proxy (
-		network_get_proxy_detect_mode (),
-		network_get_proxy_host (),
-		network_get_proxy_port (),
-		network_get_proxy_username (),
-		network_get_proxy_password ()
-	);
+	liferea_webkit_set_proxy (network_get_proxy_detect_mode ());
 }
 
 LifereaBrowser *
@@ -317,7 +311,7 @@ liferea_browser_new (gboolean forceInternalBrowsing)
 	                  G_CALLBACK (liferea_browser_proxy_changed),
 	                  browser);
 
-	debug0 (DEBUG_NET, "Setting initial HTML widget proxy...");
+	debug (DEBUG_NET, "Setting initial HTML widget proxy...");
 	liferea_browser_proxy_changed (network_monitor_get (), browser);
 
 	liferea_browser_update_stylesheet (browser);
@@ -412,31 +406,33 @@ liferea_browser_location_changed (LifereaBrowser *browser, const gchar *location
 static void
 liferea_browser_load_finished_cb (GObject *object, GAsyncResult *result, gpointer user_data)
 {
-	WebKitJavascriptResult *js_result;
-	JSCValue               *value;
-	GError                 *error = NULL;
+	JSCValue	*value;
+	GError		*error = NULL;
 
-	js_result = webkit_web_view_run_javascript_finish (WEBKIT_WEB_VIEW (object), result, &error);
-	if (!js_result) {
-		debug1 (DEBUG_HTML, "Error running javascript: %s", error->message);
+	value = webkit_web_view_evaluate_javascript_finish (WEBKIT_WEB_VIEW (object), result, &error);
+	if (!value) {
+		debug (DEBUG_HTML, "Error running javascript: %s", error->message);
 		g_error_free (error);
 		return;
 	}
 
-	value = webkit_javascript_result_get_js_value (js_result);
 	if (jsc_value_is_boolean (value)) {
-		LifereaBrowser *browser = LIFEREA_BROWSER (user_data);
-		gboolean result = jsc_value_to_boolean (value);
-
-		if (!result && browser->readerMode && browser->url) {
-			debug0 (DEBUG_HTML, "loadContent() reader mode fail -> reloading without reader");
-			browser->readerMode = FALSE;
-			liferea_browser_launch_URL_internal (browser, browser->url);
+        	JSCException *exception = jsc_context_get_exception (jsc_value_get_context (value));
+        	if (exception) {
+			g_warning ("Error running javascript: %s", jsc_exception_get_message (exception));
+        	} else {
+			LifereaBrowser *browser = LIFEREA_BROWSER (user_data);
+			gboolean result = jsc_value_to_boolean (value);
+			if (result && browser->readerMode && browser->url) {
+				debug (DEBUG_HTML, "loadContent() reader mode fail -> reloading without reader");
+				browser->readerMode = FALSE;
+				liferea_browser_launch_URL_internal (browser, browser->url);
+			}
 		}
 	} else {
 		g_warning ("Error running javascript: unexpected return value");
 	}
-	webkit_javascript_result_unref (js_result);
+	g_object_unref (value);
 }
 
 void
@@ -448,24 +444,27 @@ liferea_browser_load_finished (LifereaBrowser *browser, const gchar *location)
 	    - for internal content: always (Readability is enable on demand here)
 	 */
 	if (browser->readerMode || (location == strstr (location, "liferea://"))) {
-		g_autoptr(GBytes) b1 = NULL, b2 = NULL, b3 = NULL;
+		g_autoptr(GBytes) b1, b2, b3, b4;
 
 		// Return Readability.js and Liferea specific loader code
 		b1 = g_resources_lookup_data ("/org/gnome/liferea/readability/Readability-readerable.js", 0, NULL);
 		b2 = g_resources_lookup_data ("/org/gnome/liferea/readability/Readability.js", 0, NULL);
-		b3 = g_resources_lookup_data ("/org/gnome/liferea/htmlview.js", 0, NULL);
+		b3 = g_resources_lookup_data ("/org/gnome/liferea/dompurify/purify.min.js", 0, NULL);
+		b4 = g_resources_lookup_data ("/org/gnome/liferea/htmlview.js", 0, NULL);
 
 		g_assert(b1 != NULL);
 		g_assert(b2 != NULL);
 		g_assert(b3 != NULL);
+		g_assert(b4 != NULL);
 
-		debug1 (DEBUG_GUI, "Enabling reader mode for '%s'", location);
+		debug (DEBUG_GUI, "Enabling reader mode for '%s'", location);
 		liferea_webkit_run_js (
 			browser->renderWidget,
-			g_strdup_printf ("%s\n%s\n%s\nloadContent(%s, '%s');\n",
+			g_strdup_printf ("%s\n%s\n%s\n%s\nloadContent(%s, '%s');\n",
 		        (gchar *)g_bytes_get_data (b1, NULL),
 			(gchar *)g_bytes_get_data (b2, NULL),
 			(gchar *)g_bytes_get_data (b3, NULL),
+			(gchar *)g_bytes_get_data (b4, NULL),
 			(browser->readerMode?"true":"false"),
 			browser->content != NULL ? browser->content : ""),
 			liferea_browser_load_finished_cb
@@ -549,7 +548,7 @@ liferea_browser_handle_URL (LifereaBrowser *browser, const gchar *url)
 
 	conf_get_bool_value (BROWSE_INSIDE_APPLICATION, &browse_inside_application);
 
-	debug2 (DEBUG_GUI, "handle URL: %s %s",
+	debug (DEBUG_GUI, "handle URL: %s %s",
 	        browse_inside_application?"true":"false",
 	        browser->forceInternalBrowsing?"true":"false");
 
@@ -693,7 +692,7 @@ liferea_browser_refresh (LifereaBrowser *browser, guint mode)
 			break;
 	}
 
-	if (debug_level & DEBUG_HTML) {
+	if (debug_get_flags () & DEBUG_HTML) {
 		gchar *filename = common_create_cache_filename (NULL, "output", "html");
 		g_file_set_contents (filename, content, -1, NULL);
 		g_free (filename);

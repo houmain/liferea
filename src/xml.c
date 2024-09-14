@@ -49,7 +49,7 @@ xhtml_parse (const gchar *html, gint len)
 	   because it doesn't know how to handle NONET. But, it might
 	   learn in the future. */
 	out = htmlReadMemory (html, len, NULL, "utf-8", HTML_PARSE_RECOVER | HTML_PARSE_NONET |
-	                      ((debug_level & DEBUG_HTML)?0:(HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING)));
+	                      ((debug_get_flags () & DEBUG_HTML)?0:(HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING)));
 
 	return out;
 }
@@ -249,7 +249,8 @@ xhtml_regex_add (GSList **regex, const gchar *pattern, const gchar *replace)
 	GError *err = NULL;
         regexPtr expr = g_new0 (struct regex, 1);
 
-	expr->expr = g_regex_new (pattern, G_REGEX_CASELESS | G_REGEX_UNGREEDY | G_REGEX_DOTALL | G_REGEX_OPTIMIZE, 0, &err);
+	// Do not use G_REGEX_OPTIMIZE as valgrind would report errors!
+	expr->expr = g_regex_new (pattern, G_REGEX_CASELESS | G_REGEX_UNGREEDY | G_REGEX_DOTALL, 0, &err);
         expr->replace = replace;
 	if (err) {
 		g_warning ("xhtml_strip_setup: %s\n", err->message);
@@ -535,7 +536,7 @@ liferea_xml_errorSAXFunc (void * ctx, const char * msg,...)
 	va_start(valist,msg);
 	parser_error = g_strdup_vprintf (msg, valist);
 	va_end(valist);
-	debug1 (DEBUG_PARSING, "SAX parser error : %s", parser_error);
+	debug (DEBUG_PARSING, "SAX parser error : %s", parser_error);
 	g_free (parser_error);
 }
 
@@ -580,7 +581,7 @@ xml_parse_feed (feedParserCtxtPtr fpc)
 
 	/* we don't like no data */
 	if (0 == fpc->dataLength) {
-		debug1 (DEBUG_PARSING, "xml_parse_feed(): empty input while parsing \"%s\"!", fpc->subscription->node->title);
+		debug (DEBUG_PARSING, "xml_parse_feed(): empty input while parsing \"%s\"!", fpc->subscription->node->title);
 		g_string_append (fpc->feed->parseErrors, "Empty input!\n");
 		return NULL;
 	}
@@ -590,7 +591,7 @@ xml_parse_feed (feedParserCtxtPtr fpc)
 
 	doc = xml_parse (fpc->data, (size_t)fpc->dataLength, errors);
 	if (!doc) {
-		debug1 (DEBUG_PARSING, "xml_parse_feed(): could not parse feed \"%s\"!", fpc->subscription->node->title);
+		debug (DEBUG_PARSING, "xml_parse_feed(): could not parse feed \"%s\"!", fpc->subscription->node->title);
 		g_string_prepend (fpc->feed->parseErrors, _("XML Parser: Could not parse document:\n"));
 		g_string_append (fpc->feed->parseErrors, "\n");
 	}

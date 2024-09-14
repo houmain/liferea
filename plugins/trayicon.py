@@ -18,13 +18,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import gettext
+import os
 import pathlib
+from pathlib import Path
 from collections import namedtuple
 import cairo
 import gi
 gi.require_version('Liferea', '3.0')
-from gi.repository import GObject, Gtk, Liferea
+from gi.repository import Gio, GLib, GObject, Gtk, Liferea
 from gi.repository import Gdk, GdkPixbuf
+
+try:
+    gi.require_version('AyatanaAppIndicator3', '0.1')
+    from gi.repository import AyatanaAppIndicator3 as AppIndicator
+    APPINDICATOR_AVAILABLE = True
+except (ImportError, ValueError):
+    try:
+        gi.require_version('AppIndicator3', '0.1')
+        from gi.repository import AppIndicator3 as AppIndicator
+        APPINDICATOR_AVAILABLE = True
+    except (ImportError, ValueError):
+        APPINDICATOR_AVAILABLE = False
 
 _ = lambda x: x
 try:
@@ -88,16 +102,38 @@ def pixbuf_text(width, height, text, font_size=16, bg_pix=None):
 
 
 def get_config_path():
-    """Return data file path"""
-    data_dir = pathlib.Path.joinpath(
-        pathlib.Path.home(),
-        ".config/liferea/plugins/trayicon"
-    )
-    if not data_dir.exists():
-        data_dir.mkdir(0o700, True, True)
+    """Return config file path"""
+    trayicon_path = "liferea/plugins/trayicon"
+    config_home = os.getenv('XDG_CONFIG_HOME',Path.joinpath(Path.home(), ".config"))
+    config_dir = Path.joinpath(Path(config_home), trayicon_path)
 
-    config_path = data_dir / "trayicon.conf"
+    if not config_dir.exists():
+        config_dir.mkdir(0o700, True, True)
+
+    config_path = config_dir / "trayicon.conf"
     return config_path
+
+
+def status_notifier_available():
+    dbus = Gio.bus_get_sync(Gio.BusType.SESSION)
+    result = dbus.call_sync(
+        "org.freedesktop.DBus",  # bus name
+        "/",  # object path
+        "org.freedesktop.DBus",  # interface name
+        "NameHasOwner",  # method name
+        GLib.Variant.new_tuple(
+            GLib.Variant.new_string("org.kde.StatusNotifierWatcher"),
+        ),
+        None,  # reply_type
+        Gio.DBusCallFlags.NONE,
+        -1,
+    )
+
+    if not result:
+        return False
+
+    result = result.unpack()
+    return result and result[0]
 
 
 class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
@@ -115,18 +151,36 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
     delete_signal_id = None
     feedlist_new_items_cb_id = None
     feedlist = None
+    use_appindicator = None
 
     def do_activate(self):
-        self.read_pix = Liferea.icon_create_from_file("emblem-web.svg")
-        # FIXME: Support a scalable image!
-        self.unread_pix = Liferea.icon_create_from_file("unread.png")
+        self.use_appindicator = APPINDICATOR_AVAILABLE and status_notifier_available()
 
-        self.staticon = Gtk.StatusIcon ()
-        self.staticon.connect("activate", self.trayicon_click)
-        self.staticon.connect("popup_menu", self.trayicon_popup)
-        self.staticon.connect("size-changed", self.trayicon_size_changed)
-        self.staticon.set_visible(True)
-        self.trayicon_set_pixbuf(self.read_pix)
+        if self.use_appindicator:
+            self.indicator = AppIndicator.Indicator.new(
+                "Liferea",
+                Liferea.icon_find_pixmap_file("emblem-web.svg"),
+                AppIndicator.IndicatorCategory.APPLICATION_STATUS
+            )
+
+            self.indicator.set_attention_icon_full(
+                Liferea.icon_find_pixmap_file("unread.png"),
+                _("Liferea unread icon")
+            )
+            self.indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE)
+            self.indicator.set_title("Liferea")
+        else:
+            self.read_pix = Liferea.icon_create_from_file("emblem-web.svg")
+            # FIXME: Support a scalable image!
+            self.unread_pix = Liferea.icon_create_from_file("unread.png")
+
+            self.staticon = Gtk.StatusIcon ()
+            self.staticon.connect("activate", self.trayicon_click)
+            self.staticon.connect("popup_menu", self.trayicon_popup)
+            self.staticon.connect("size-changed", self.trayicon_size_changed)
+            self.staticon.set_visible(True)
+
+            self.trayicon_set_pixbuf(self.read_pix)
 
         self.menu = Gtk.Menu()
         menuitem_toggle = Gtk.MenuItem(_("Show / Hide"))
@@ -148,6 +202,10 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
         self.menu.append(menuitem_close_behavior)
         self.menu.append(menuitem_quit)
         self.menu.show_all()
+
+        if self.use_appindicator:
+            self.indicator.set_menu(self.menu)
+            self.indicator.set_secondary_activate_target(menuitem_toggle)
 
         self.window = self.shell.get_window()
         self.delete_signal_id = GObject.signal_lookup("delete_event", Gtk.Window)
@@ -251,20 +309,33 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
             if feedlist is None:
                 feedlist = self.shell.props.feed_list
             new_count = feedlist.get_new_item_count()
-        if new_count > 0:
-            double_figure = min(99, new_count) # show max 2 digit
-            pix = self.show_new_count(double_figure)
-        else:
-            pix = self.read_pix
 
-        self.trayicon_set_pixbuf(pix)
+        new_count = min(99, new_count) # show max 2 digit
+        if self.use_appindicator:
+            if new_count > 0:
+                self.indicator.set_label(str(new_count), "99")
+                self.indicator.set_status(AppIndicator.IndicatorStatus.ATTENTION)
+            else:
+                self.indicator.set_label("", "99")
+                self.indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE)
+        else:
+            if new_count > 0:
+                pix = self.show_new_count(new_count)
+            else:
+                pix = self.read_pix
+
+            self.trayicon_set_pixbuf(pix)
 
     def trayicon_size_changed(self, widget, size):
         self.feedlist_new_items_cb()
         return True
 
     def do_deactivate(self):
-        self.staticon.set_visible(False)
+        if self.use_appindicator:
+            self.indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE)
+        else:
+            self.staticon.set_visible(False)
+
         self.window.disconnect_by_func(self.trayicon_close_action)
         GObject.signal_handlers_unblock_matched (self.window,
                                                  GObject.SignalMatchType.ID | GObject.SignalMatchType.DATA,
@@ -277,6 +348,9 @@ class TrayiconPlugin (GObject.Object, Liferea.ShellActivatable):
         self.window.deiconify()
         self.window.show()
 
-        del self.staticon
+        if self.use_appindicator:
+            del self.indicator
+        else:
+            del self.staticon
         del self.window
         del self.menu

@@ -83,7 +83,7 @@ conf_get_dark_theme (void)
 
 		if (conf_schema_has_key (fdo_settings, "color-scheme")) {
 			conf_get_int_value_from_schema (fdo_settings, "color-scheme", &scheme);
-			debug1 (DEBUG_CONF, "FDO reports color-schema code '%d'", scheme);
+			debug (DEBUG_CONF, "FDO reports color-schema code '%d'", scheme);
 			if (1 == scheme)
 				dark = FALSE;
 			if (0 == scheme || 2 == scheme)
@@ -95,14 +95,14 @@ conf_get_dark_theme (void)
 		if (conf_schema_has_key (desktop_settings, "color-scheme")) {
 			conf_get_str_value_from_schema (desktop_settings, "color-scheme", &scheme);
 			if (scheme) {
-				debug1 (DEBUG_CONF, "GNOME reports color-schema '%s'", scheme);
+				debug (DEBUG_CONF, "GNOME reports color-schema '%s'", scheme);
 				dark = g_str_equal (scheme, "prefer-dark");
 				g_free (scheme);
 			}
 		}
 	}
 
-	debug1 (DEBUG_CONF, "Determined dark theme mode to be %d", dark);
+	debug (DEBUG_CONF, "Determined dark theme mode to be %d", dark);
 	return dark;
 }
 
@@ -126,60 +126,10 @@ conf_proxy_reset_settings_cb (GSettings *settings,
                               gchar *key,
                               gpointer user_data)
 {
-	gchar		*proxyname, *proxyusername, *proxypassword;
-	gint		proxyport;
-	gint		proxydetectmode;
-	gboolean	proxyuseauth;
+	gint	mode;
 
-	proxyname = NULL;
-	proxyport = 0;
-	proxyusername = NULL;
-	proxypassword = NULL;
-	conf_get_int_value (PROXY_DETECT_MODE, &proxydetectmode);
-
-#if !WEBKIT_CHECK_VERSION (2, 15, 3)
-	if (proxydetectmode != PROXY_DETECT_MODE_AUTO)
-	{
-		GtkWidget *dialog = gtk_message_dialog_new (NULL,
-			0,
-			GTK_MESSAGE_INFO,
-			GTK_BUTTONS_CLOSE,
-			_("Your version of WebKitGTK+ doesn't support changing the proxy settings from Liferea. The system's default proxy settings will be used."));
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-
-		conf_set_int_value (PROXY_DETECT_MODE, PROXY_DETECT_MODE_AUTO);
-		return;
-	}
-#endif
-	switch (proxydetectmode) {
-		default:
-		case 0:
-			debug0 (DEBUG_CONF, "proxy auto detect is configured");
-			/* nothing to do, all done by libproxy inside libsoup */
-			break;
-		case 1:
-			debug0 (DEBUG_CONF, "proxy is disabled by user");
-			/* nothing to do */
-			break;
-		case 2:
-			debug0 (DEBUG_CONF, "manual proxy is configured");
-
-			conf_get_str_value (PROXY_HOST, &proxyname);
-			conf_get_int_value (PROXY_PORT, &proxyport);
-			conf_get_bool_value (PROXY_USEAUTH, &proxyuseauth);
-			if (proxyuseauth) {
-				conf_get_str_value (PROXY_USER, &proxyusername);
-				conf_get_str_value (PROXY_PASSWD, &proxypassword);
-			}
-			break;
-	}
-	debug4 (DEBUG_CONF, "Manual proxy settings are now %s:%d %s:%s",
-	                    proxyname != NULL ? proxyname : "NULL", proxyport,
-	                    proxyusername != NULL ? proxyusername : "NULL",
-	                    proxypassword != NULL ? proxypassword : "NULL");
-
-	network_set_proxy (proxydetectmode, proxyname, proxyport, proxyusername, proxypassword);
+	conf_get_int_value (PROXY_DETECT_MODE, &mode);
+	network_set_proxy (mode);
 }
 
 /*----------------------------------------------------------------------*/
@@ -211,7 +161,7 @@ void
 conf_set_int_value (const gchar *key, gint value)
 {
 	g_assert (key != NULL);
-	debug2 (DEBUG_CONF, "Setting %s to %d", key, value);
+	debug (DEBUG_CONF, "Setting %s to %d", key, value);
 	g_settings_set_int (settings, key, value);
 }
 
@@ -388,6 +338,7 @@ conf_deinit (void)
 {
 	g_object_unref (settings);
 	g_object_unref (desktop_settings);
-	g_object_unref (fdo_settings);
+	if (fdo_settings)
+		g_object_unref (fdo_settings);
 }
 

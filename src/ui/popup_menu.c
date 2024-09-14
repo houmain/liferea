@@ -1,7 +1,7 @@
 /**
  * @file popup_menu.c popup menus
  *
- * Copyright (C) 2003-2013 Lars Windolf <lars.windolf@gmx.de>
+ * Copyright (C) 2003-2024 Lars Windolf <lars.windolf@gmx.de>
  * Copyright (C) 2004-2006 Nathan J. Conrad <t98502@users.sourceforge.net>
  * Copyright (C) 2009 Adrian Bunk <bunk@users.sourceforge.net>
  *
@@ -33,7 +33,6 @@
 #include "node.h"
 #include "social.h"
 #include "vfolder.h"
-#include "ui/enclosure_list_view.h"
 #include "ui/feed_list_view.h"
 #include "ui/item_list_view.h"
 #include "ui/itemview.h"
@@ -49,27 +48,6 @@ ui_popup_menu (GtkWidget *menu, const GdkEvent *event)
 	g_signal_connect_after (G_OBJECT(menu), "unmap-event", G_CALLBACK(gtk_widget_destroy), NULL);
 	gtk_widget_show_all (menu);
 	gtk_menu_popup_at_pointer (GTK_MENU(menu), event);
-}
-
-static GtkWidget*
-ui_popup_add_menuitem (GtkWidget *menu, const gchar *label, gpointer callback, gpointer data, gint toggle)
-{
-	GtkWidget	*item;
-
-	g_assert (label);
-	if (toggle) {
-		item = gtk_check_menu_item_new_with_mnemonic (label);
-		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM(item), toggle - UI_POPUP_ITEM_IS_TOGGLE);
-	} else {
-		item = gtk_menu_item_new_with_mnemonic (label);
-	}
-
-	if (callback)
-		g_signal_connect_swapped (G_OBJECT(item), "activate", G_CALLBACK(callback), data);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL(menu), item);
-
-	return item;
 }
 
 static const GActionEntry ui_popup_item_gaction_entries[] = {
@@ -187,20 +165,6 @@ ui_popup_item_menu (itemPtr item, const GdkEvent *event)
 	/* The menu has to be attached to an application window or one of its children for access to app actions.*/
 	gtk_menu_attach_to_widget (GTK_MENU (menu), liferea_shell_lookup ("mainwindow"), NULL);
 	g_object_unref (menu_model);
-	ui_popup_menu (menu, event);
-}
-
-void
-ui_popup_enclosure_menu (enclosurePtr enclosure, const GdkEvent *event)
-{
-	GtkWidget	*menu;
-
-	menu = gtk_menu_new ();
-
-	ui_popup_add_menuitem (menu, _("Open Enclosure..."), on_popup_open_enclosure, enclosure, 0);
-	ui_popup_add_menuitem (menu, _("Save As..."), on_popup_save_enclosure, enclosure, 0);
-	ui_popup_add_menuitem (menu, _("Copy Link Location"), on_popup_copy_enclosure, enclosure, 0);
-
 	ui_popup_menu (menu, event);
 }
 

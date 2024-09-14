@@ -269,7 +269,7 @@ atom10_parse_link (xmlNodePtr cur, feedParserCtxtPtr ctxt, struct atom10ParserSt
 	href = xml_get_ns_attribute (cur, "href", NULL);
 	if (href) {
 		xmlChar *baseURL = xmlNodeGetBase (cur->doc, cur);
-		gchar *url, *relation, *type, *escTitle = NULL, *title;
+		gchar *url, *relation, *type;
 		const gchar *feedURL = subscription_get_homepage (ctxt->subscription);
 
 		if (!baseURL && feedURL && feedURL[0] != '|' && strstr (feedURL, "://"))
@@ -278,9 +278,6 @@ atom10_parse_link (xmlNodePtr cur, feedParserCtxtPtr ctxt, struct atom10ParserSt
 
 		type = xml_get_ns_attribute (cur, "type", NULL);
 		relation = xml_get_ns_attribute (cur, "rel", NULL);
-		title = xml_get_ns_attribute (cur, "title", NULL);
-		if (title)
-			escTitle = g_markup_escape_text (title, -1);
 
 		if (!xmlHasNsProp (cur, BAD_CAST"rel", NULL) || !relation || g_str_equal (relation, BAD_CAST"alternate")) {
 			alternate = g_strdup (url);
@@ -312,9 +309,7 @@ atom10_parse_link (xmlNodePtr cur, feedParserCtxtPtr ctxt, struct atom10ParserSt
 		} else {
 			/* g_warning ("Unhandled Atom link with unexpected relation \"%s\"\n", relation); */
 		}
-		xmlFree (title);
 		xmlFree (baseURL);
-		g_free (escTitle);
 		g_free (url);
 		g_free(relation);
 		g_free(type);
@@ -530,14 +525,14 @@ atom10_parse_entry (feedParserCtxtPtr ctxt, xmlNodePtr cur)
 		/* check namespace of this tag */
 		if (!cur->ns->href) {
 			/* This is an invalid feed... no idea what to do with the current element */
-			debug1 (DEBUG_PARSING, "element with no namespace found in atom feed (%s)!", cur->name);
+			debug (DEBUG_PARSING, "element with no namespace found in atom feed (%s)!", cur->name);
 			cur = cur->next;
 			continue;
 		}
 
 
 		if (xmlStrcmp(cur->ns->href, ATOM10_NS)) {
-			debug1(DEBUG_PARSING, "unknown namespace %s found!", cur->ns->href);
+			debug (DEBUG_PARSING, "unknown namespace %s found!", cur->ns->href);
 			cur = cur->next;
 			continue;
 		}
@@ -546,7 +541,7 @@ atom10_parse_entry (feedParserCtxtPtr ctxt, xmlNodePtr cur)
 		if (func) {
 			(*func) (cur, ctxt, NULL);
 		} else {
-			debug1 (DEBUG_PARSING, "unknown entry element \"%s\" found", cur->name);
+			debug (DEBUG_PARSING, "unknown entry element \"%s\" found", cur->name);
 		}
 
 		cur = cur->next;
@@ -635,7 +630,7 @@ atom10_parse_feed_icon (xmlNodePtr cur, feedParserCtxtPtr ctxt, struct atom10Par
 	icon_uri = (gchar *)xmlNodeListGetString (cur->doc, cur->xmlChildrenNode, 1);
 
 	if (icon_uri) {
-		debug1 (DEBUG_PARSING, "icon URI found in atom feed: %s", icon_uri);
+		debug (DEBUG_PARSING, "icon URI found in atom feed: %s", icon_uri);
 		ctxt->subscription->metadata = metadata_list_append (ctxt->subscription->metadata,
 								     "icon", icon_uri);
 	}
@@ -812,13 +807,13 @@ atom10_parse_feed (feedParserCtxtPtr ctxt, xmlNodePtr cur)
 			/* check namespace of this tag */
 			if (!cur->ns->href) {
 				/* This is an invalid feed... no idea what to do with the current element */
-				debug1 (DEBUG_PARSING, "element with no namespace found in atom feed (%s)!", cur->name);
+				debug (DEBUG_PARSING, "element with no namespace found in atom feed (%s)!", cur->name);
 				cur = cur->next;
 				continue;
 			}
 
 			if (xmlStrcmp (cur->ns->href, ATOM10_NS)) {
-				debug1 (DEBUG_PARSING, "unknown namespace %s found in atom feed!", cur->ns->href);
+				debug (DEBUG_PARSING, "unknown namespace %s found in atom feed!", cur->ns->href);
 				cur = cur->next;
 				continue;
 			}

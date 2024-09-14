@@ -25,6 +25,26 @@ if command -v valgrind >/dev/null; then
 			     fun:_dl_init
 			     obj:/lib/x86_64-linux-gnu/ld-2.27.so
 			  }
+			  {
+   			     lzma_Debian_#1342_cond
+		 	     Memcheck:Cond
+			     obj:/usr/lib/*/liblzma.so.*
+			  }
+                          {
+ 	                     lzma_Debia_#1342_free
+			     Memcheck:Free
+			     obj:/usr/lib/*/liblzma.so.*
+			  }
+                          {
+ 	                     lzma_Debia_#1342_value
+			     Memcheck:Value8
+			     obj:/usr/lib/*/liblzma.so.*
+			  }
+                          {
+			     lzma_Debian_#1342_addr
+			     Memcheck:Addr8
+			     obj:/usr/lib/*/liblzma.so.*
+			  }
 EOT
 			) --error-markers=begin,end "./$tool" 2>&1
 		)
@@ -36,14 +56,18 @@ EOT
 		if [ "$output" != "" ]; then
 			error=1
 			echo "ERROR: memcheck reports problems for '$tool'!"
+			echo "Relevant error lines are:"
+			echo
 			echo "$output"
-			
-			# When in github provide extra details
-			if [ "$GITHUB_ACTION" != "" ]; then
-				echo "::group:: $tool details"
-				echo "$details"
-				echo "::endgroup::"
-			fi
+			echo
+			echo "Full valgrind details:"
+			echo
+			[ "$GITHUB_ACTION" != "" ] && echo "::group:: $tool details"
+			echo "$details"
+			[ "$GITHUB_ACTION" != "" ] && echo "::endgroup::"
+			echo
+		else
+			echo "memcheck '$tool' OK"
 		fi
 	done
 else

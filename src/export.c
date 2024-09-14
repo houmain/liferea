@@ -91,9 +91,6 @@ export_append_node_tag (nodePtr node, gpointer userdata)
 
 		if (FALSE == node->sortReversed)
 			xmlNewProp (childNode, BAD_CAST"sortReversed", BAD_CAST"false");
-
-		if (node->loadItemLink)
-			xmlNewProp (childNode, BAD_CAST"loadItemLink", BAD_CAST"true");
 	}
 
 	/* 2. add node type specific stuff */
@@ -130,7 +127,6 @@ export_OPML_feedlist (const gchar *filename, nodePtr node, gboolean trusted)
 	gchar		*backupFilename;
 	int		old_umask = 0;
 
-	debug_enter ("export_OPML_feedlist");
 
 	backupFilename = g_strdup_printf ("%s~", filename);
 
@@ -184,7 +180,6 @@ export_OPML_feedlist (const gchar *filename, nodePtr node, gboolean trusted)
 
 	g_free (backupFilename);
 
-	debug_exit ("export_OPML_feedlist");
 	return !error;
 }
 
@@ -197,7 +192,6 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	nodeTypePtr	type = NULL;
 	gboolean	needsUpdate = FALSE;
 
-	debug_enter("import_parse_outline");
 
 	/* 1. determine node type */
 	typeStr = (gchar *)xmlGetProp (cur, BAD_CAST"type");
@@ -216,13 +210,13 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 			tmp = (gchar *)xmlGetProp (cur, BAD_CAST"xmlURL");	/* LiveJournal */
 
 		if (tmp) {
-			debug0 (DEBUG_CACHE, "-> URL found assuming type feed");
+			debug (DEBUG_CACHE, "-> URL found assuming type feed");
 			type = feed_get_node_type();
 			xmlFree (tmp);
 		} else {
 			/* if the outline has no type and URL it just has to be a folder */
 			type = folder_get_node_type();
-			debug0 (DEBUG_CACHE, "-> must be a folder");
+			debug (DEBUG_CACHE, "-> must be a folder");
 		}
 	}
 
@@ -294,14 +288,6 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 		xmlFree (sortStr);
 	}
 
-	/* auto item link loading flag */
-	tmp = (gchar *)xmlGetProp (cur, BAD_CAST"loadItemLink");
-	if (tmp) {
-		if (!xmlStrcmp ((xmlChar *)tmp, BAD_CAST"true"))
-		node->loadItemLink = TRUE;
-		xmlFree (tmp);
-	}
-
 	/* expansion state */
 	if (xmlHasProp (cur, BAD_CAST"expanded"))
 		node->expanded = TRUE;
@@ -335,7 +321,7 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	/* 7. update immediately if necessary */
 	// FIXME: this should not be done here!!!
 	if (node->subscription && needsUpdate) {
-		debug1 (DEBUG_CACHE, "seems to be an import, setting new id: %s and doing first download...", node_get_id(node));
+		debug (DEBUG_CACHE, "seems to be an import, setting new id: %s and doing first download...", node_get_id(node));
 		subscription_update (node->subscription, 0);
 	}
 
@@ -344,7 +330,6 @@ import_parse_outline (xmlNodePtr cur, nodePtr parentNode, gboolean trusted)
 	   silentely fail to work without node entry. */
 	db_node_update (node);
 
-	debug_exit ("import_parse_outline");
 }
 
 static void
@@ -382,7 +367,7 @@ import_OPML_feedlist (const gchar *filename, nodePtr parentNode, gboolean showEr
 	xmlNodePtr 	cur;
 	gboolean	error = FALSE;
 
-	debug1 (DEBUG_CACHE, "Importing OPML file: %s", filename);
+	debug (DEBUG_CACHE, "Importing OPML file: %s", filename);
 
 	/* read the feed list */
 	doc = xmlParseFile (filename);

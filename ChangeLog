@@ -1,3 +1,189 @@
+To be released
+
+	Version 1.15.8
+
+	* Fixes #1359: Prevent passing "" as CLI argument causing a useless subscription.
+	  Also checks for duplicates when subscribing from CLI/DBUS.
+	  (Lars Windolf)
+
+
+2024-06-19  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.7
+
+	* Add Sec-GPC header support via new preference to prevent user data selling.
+	  (Lars Windolf)
+
+	* Drop enclosure list view in favour of embedded HTML5 <audio> and <video> elements
+	  (Lars Windolf)
+
+	* Fixes #1332: Improve "*** No title! ***" for items without title
+	  (Lars Windolf)
+
+
+2024-03-14  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.6
+
+	* Automatically drop empty content elements (e.g. placeholders
+          for images/iframes/ads not loaded)
+
+	* Automatically set inline SVG sizes from viewBox attribute
+	  to prevent max-width SVGs
+
+	* Hide <nav> elements extracted by HTML5 content extraction
+
+	* Remove G_REGEX_OPTIMIZE flag from DHTML stripping regex handling
+	  as valgrind reports memory errors with this.
+
+
+2023-12-23  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.5
+
+	* #1322 Remove Mate workaround from trayicon plugin
+	  (Yuri Konotopov)
+
+	* #1318 Set prgname to match application id (needed for KDE)
+	  (bbhtt)
+
+	* #1317 Support XDG_CONFIG_HOME for trayicon plugoin config
+	  (bbhtt)
+
+	* Update Readability.js to recent version
+	  (Lars Windolf)
+
+	* Added DOMPurify.js for content filtering
+	  (Lars Windolf)
+
+
+2023-10-22  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.4
+
+	* Improve on #1192 by doing pane sanity checks on each resize
+	  (Lars Windolf)
+
+	* Fixes #1297: Reorder loading plugins and deactivating webkit-settings
+	  (Lars Windolf)
+
+	* #1305 Refactoring of the trayicon plugin to support
+	  AppIndicator and libayatana
+	  (Yuri Konotopov)
+
+
+2023-09-15  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.3
+
+	* Fixes #1297: Enabling plugin 'webkit-settings' crashes Liferea
+	  (reported by Paul Gevers)
+
+	* Fixes #1294: Clicking 'remove item' caused a SIGSEGV
+	  (reported by Rich Coe)
+
+	* Fixes #1276: Old WebKitCache cache not cleaned
+	  (reported by hasezoey)
+
+
+2023-08-30  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.2
+
+	* Fixes #1291: Feed parsing is broken
+	  (Rich Coe)
+
+
+2023-08-14  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.1
+
+	* Update to libsoup3 and libwebkit2gtk-4.1
+	  (Lars Windolf)
+
+	* Fixes #1285: HTTP 304 incorrectly caused error state
+	  (Rich Coe)
+
+	* Fixes #1272: Crash on moving feed into new folder
+	  (Lars Windolf, reported by Jakub T. Jankiewicz)
+
+	* Fixes #1262: Plugin installer: duplicate punctuation
+	  (Christian Stadelmann)
+
+	* Fixes #1250: Incorrect item_id when downloading AMP URLs
+	  (Alexandre Erwin Ittner)
+
+	* Fixes #1248: Can't maximize for reading feeds
+	  (Lars Windolf)
+
+	* Fixes #1242: Dropping not-functioning Pocket bookmark URL
+	  (Lars Windolf)
+
+	* Fixes #1241: Dropping not-functioning identi.ca bookmark URL
+	  (Lars Windolf)
+
+	* Fixes #1240: TypeError on add-bookmark-site preferences
+	  (Lucidiot)
+
+	* Many fixes for static code analysis warnings
+	  (Lars Windolf)
+
+	* Simplified debug handling. Drop --debug-performance
+	  --debug-trace and --debug-verbose CLI parameters.
+	  (Lars Windolf)
+
+	* Removed stale Deutsche Welle Brasil feed from pt-BR default feed list
+	  (Alexandre Erwin Ittner)
+
+	* Updated appdata description and summary
+	  (bbhtt)
+
+	* Add Russian user documentation (slichtzzz)
+	* Updated Czech translation (Amerey)
+	* Updated Brazilian Portugese translation (Fúlvio Alves)
+
+
+2023-04-16  Lars Windolf <lars.windolf@gmx.de>
+
+	Version 1.15.0
+
+	* Fixes #1217, #1224: Endless recursion in 1.14.3
+	  (reported by uduecoder, mokraemer)
+
+	* Fixes #1214: crash in conf_get_bool_value_from_schema
+	  (mozbugbox, reported by Mikel Olasagasti)
+
+	* Fixes #1215: failed to build in launchpad PPA due to 
+	  auto_test permission issue (reported by PandaJim)
+
+	* Fixes #1212: 1.14.1 crash when refreshing feeds.
+	  (mozbugbox, reported by Froggy232)
+	  
+	* Fixes #1198: FreshRSS logging in correctly but can't get posts
+	  (reported by Roger Gonzalez)
+
+	* Fixes a memory leak when reloading CSS
+	  (Lars Windolf)
+
+	* Fixes CVE-2023-1350: RCE vulnerability on feed enrichment
+	  (patch by Alexander Erwin Ittner)
+
+	* Fixes #1200: Crash on double free
+	  (mozbugbox)
+
+	* Improve #1192 be reordering widget creation order
+	  (Lars Windolf)
+	  
+	* Improvements to the libnotify plugin
+	  (Tasos Sahanidis)
+
+	* Fixes a g_object_unref warning on shutdown
+	* Drops a debug output in the plugin installer
+	* Drop webkit inspector from installable plugins in favour of --debug-html
+	* Drop pane plugin from default plugins 
+	* Drop pane plugin (old workaround for pane issues)
+
+
 2023-01-10  Lars Windolf <lars.windolf@gmx.de>
 
 	Version 1.14.0

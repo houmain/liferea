@@ -23,6 +23,7 @@
 
 #include "node.h"
 
+#include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include <gtk/gtk.h>
 
@@ -54,7 +55,7 @@ enum {
 typedef struct nodeType {
 	gulong		capabilities;	/**< bitmask of node type capabilities */
 	const gchar	*id;		/**< type id (used for type attribute in OPML export) */
-	const GIcon	*icon;		/**< default icon for nodes of this type (if no favicon available) */
+	guint		icon;		/**< default icon for nodes of this type (if no favicon available) */
 	
 	/* For method documentation see the wrappers defined below! 
 	   All methods are mandatory for each node type. */

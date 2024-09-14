@@ -32,6 +32,7 @@ jsdir = $(pkgdatadir)/js
 js_DATA = \
 	js/gresource.xml \
 	js/htmlview.js \
+	js/purify.min.js \
 	js/Readability-readerable.js \
 	js/Readability.js
 
@@ -53,10 +54,6 @@ plugin_DATA = \
 	plugins/headerbar.plugin \
 	plugins/libnotify.py \
 	plugins/libnotify.plugin \
-	plugins/media-player.py \
-	plugins/media-player.plugin \
-	plugins/pane.py \
-	plugins/pane.plugin \
 	plugins/plugin-installer.py \
 	plugins/plugin-installer.plugin \
 	plugins/trayicon.py \
@@ -96,3 +93,6 @@ CLEANFILES = \
 
 po/liferea.pot:
 	cd po && $(MAKE) liferea.pot
+
+test:
+	cd src/tests && make test
